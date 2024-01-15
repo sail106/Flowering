@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { ButtonBox} from "./store/Button";
+import PWFindHeader from "./PWFind/PWFindHeader";
+import Input from "./store/Input";
 const OuterDiv = styled.div`
   padding-top: 80px;
   padding-left: 40px;
   width: 520px;
 `;
 
-const Input = styled.input`
+
+const aInput = styled.input`
   border: 1px solid gray;
   border-radius: 8px;
   width: 80%;
@@ -65,9 +68,7 @@ const PasswordFindForm = () => {
   return (
     <>
       <OuterDiv>
-        <h2>가입 시 입력한 이메일 주소를 알려주세요.</h2>
-        <p>입력하신 주소로 인증번호가 전송됩니다.</p>
-
+        <PWFindHeader />
         <form action="#">
           <ProfileDiv>
             <LeftDiv>
