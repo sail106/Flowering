@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyleCard = styled.div`
-  padding-top: 80px;
-  padding-left: 40px;
+  padding-top: 100px;
+  padding-left: 300px;
   width: 520px;
 `;
 

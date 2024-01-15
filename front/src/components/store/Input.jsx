@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const InputBox = styled.input`
   border: 1px solid gray;
   border-radius: 6px;
-  width: ${props => props.width || '500px'};
+  width: ${props => props.width || '400px'};
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
@@ -13,7 +13,7 @@ export const InputBox = styled.input`
 const Input = (props) => {
   return (
     <div>
-      <label htmlFor={props.htmlFor}></label>
+      <label htmlFor={props.htmlFor}>{props.children}</label>
       <InputBox
         type={props.type}
         id={props.id}
