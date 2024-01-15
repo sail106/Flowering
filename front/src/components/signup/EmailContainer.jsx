@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-const EmailCont = styled.div`
+const EmailContainter = styled.div`
   display: flex;
-
+  gap: 20px;
 `;
 
 const EmailContainer = (props) => {
   return (
-    <EmailCont>{props.children}</EmailCont>
+    <EmailContainter>{props.children}</EmailContainter>
   )
 }
 
