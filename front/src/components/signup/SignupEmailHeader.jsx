@@ -1,4 +1,4 @@
-const SignupHeader = () => {
+const SignupEmailHeader = () => {
   return (
     <>
       <h2>이메일 주소를 알려주세요.</h2>
@@ -7,4 +7,4 @@ const SignupHeader = () => {
   )
 };
 
-export default SignupHeader;
+export default SignupEmailHeader;
