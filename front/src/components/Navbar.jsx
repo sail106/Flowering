@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-const NavBox = styled.nav`
+const NavBox = styled.div`
   position: fixed;
   width: 100%;
   z-index: 3;
   height: 160px;
-  background: #FFE9E3;
+  background: #ffc8b9;
   display: flex;
   justify-content: space-between;
   letter-spacing: 1px;
