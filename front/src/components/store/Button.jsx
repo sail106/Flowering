@@ -16,7 +16,7 @@ export const ButtonBox = styled.button`
 
 const Button = (props) => {
   return (
-    <ButtonBox width={props.width} borderRadius={props.borderRadius} >{props.children}</ButtonBox>
+    <ButtonBox width={props.width} border-radius={props.borderRadius} >{props.children}</ButtonBox>
   )
 }
 
