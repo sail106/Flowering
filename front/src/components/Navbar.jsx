@@ -4,7 +4,7 @@ const NavBox = styled.div`
   position: fixed;
   width: 100%;
   z-index: 3;
-  height: 160px;
+  height: 100px;
   background: #ffc8b9;
   display: flex;
   justify-content: space-between;
