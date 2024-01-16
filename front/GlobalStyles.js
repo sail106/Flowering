@@ -7,7 +7,7 @@ import NotoSansRegular from './src/styles/fonts/noto-sans/NotoSansKR-Regular.ttf
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
-    margin-top: 160px;
+    margin-top: 100px;
     overflow-x:hidden;
   }
   button {
