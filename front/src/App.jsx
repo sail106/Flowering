@@ -5,12 +5,11 @@ import LoginForm from './components/LoginForm'
 import PasswordFindForm from './components/PasswordFindForm';
 import SpinnerTest from './components/SpinnerTest';
 import SignupForm from "./components/SignupForm";
-import MainPage from "./components/MainPage";
 import { Page } from "./components/store/Page";
 import MyInfo from './components/MyInfo';
 import Navbar from "./components/Navbar";
 import GlobalStyles from "../GlobalStyles";
-
+import MainPage from "./components/MainPage";
 function App() {
 
   return (
