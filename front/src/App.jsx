@@ -10,6 +10,8 @@ import MyInfo from './components/MyInfo';
 import Navbar from "./components/Navbar";
 import GlobalStyles from "../GlobalStyles";
 import MainPage from "./components/MainPage";
+import ConsultReservation from "./components/ConsultReservation";
+
 function App() {
 
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route path='/test' element={<SpinnerTest />} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/mypage' element={<MyInfo />} />
+          <Route path='/consulting' element={<ConsultReservation />} />
         </Routes>
       </Page>
     </>
