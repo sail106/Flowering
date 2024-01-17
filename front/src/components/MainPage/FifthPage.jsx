@@ -37,6 +37,7 @@ const SolutionDescr = styled.p`
   color: #6d6d6d;
   font-size: 16px;
   line-height: 145%;
+  font-family: Noto Sans KR;
 `;
 
 const ArrowDiv = styled.div`

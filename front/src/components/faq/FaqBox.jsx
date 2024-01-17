@@ -1,0 +1,80 @@
+import styled from "styled-components";
+import { useState } from "react";
+
+const FaqContainer = styled.div`
+  justify-content: center;
+  width: 50%;
+  cursor: pointer;
+  padding: 24px;
+  background-color: ${(props) => (props.open ? "#F5F5F5;" : "none")};
+  border-bottom: ${(props) => (props.open ? "none" : "1px solid #b1b1b1;")};
+`;
+
+const FaqWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FaqText = styled.div`
+  font-family: Noto Sans KR;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 27px; /* 135% */
+`;
+
+const Image = styled.img``;
+
+const FaqAnswer = styled.div`
+
+  color: #6d6d6d;
+  font-family: Noto Sans KR;
+  width: 50%;
+  line-height: 22px;
+  display: flex;
+  justify-content: start;
+  text-align: start;
+  margin-top: 1%;
+  display: ${(props) => (props.open ? "block" : "none")};
+  margin-bottom: 2%;
+`;
+
+const DropdownWrapper = styled.div`
+  width: 10%;
+  height: 10%;
+`;
+
+const NomarginP = styled.p`
+  margin:0;
+  line-height: 24px;
+`
+
+const FaQBox = ({question, answer}) => {
+  const answerLines = answer.split('/n');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+  return (
+    <>
+      <FaqContainer open={isOpen} onClick={toggleDropdown}>
+        <FaqWrapper>
+          <FaqText>{question}</FaqText>
+
+          <DropdownWrapper >
+            <Image src="src/assets/DropDown.png" alt="DropDown" />
+          </DropdownWrapper>
+        </FaqWrapper>
+      </FaqContainer>
+      <FaqAnswer open={isOpen}>
+      {answerLines.map((line, index) => (
+          <NomarginP key={index}>{line}</NomarginP>
+        ))}
+      </FaqAnswer>
+    </>
+  );
+};
+
+export default FaQBox;

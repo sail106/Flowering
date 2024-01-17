@@ -18,6 +18,7 @@ const Path = styled.span`
   font-weight: 500;
   padding: 3.5% 0% 2% 6%;
   justify-content: space-between;
+  z-index:2;
 `;
 
 const Info = styled.div`
@@ -59,7 +60,7 @@ const Footer = () => {
         <Link to={"/pw"}>Consulting</Link>
         <Link to={"#"}>Community</Link>
         <Link to={"#"}>Contents</Link>
-        <Link to={"#"}>FAQ</Link>
+        <Link to={'/faq'}>FAQ</Link>
       </Path>
       <Info>
         <Image src="src\assets\Call.svg" alt="Call" />
