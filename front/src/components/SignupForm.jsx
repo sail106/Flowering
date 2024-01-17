@@ -9,6 +9,8 @@ import SignupRequiredHeader from "./signup/SignupRequiredHeader"
 import NotAuthNumber from "./signup/NotAuthNumber"
 import LabelStyle from "./signup/LabelStyle"
 import LabelContainer from "./signup/LabelContainer"
+import LabelSignup from "./signup/LabelSignup"
+import RadioLabelText from "./signup/RadioLabelText"
 
 const SignupForm = () => {
   return (
@@ -49,15 +51,21 @@ const SignupForm = () => {
       <LabelStyle htmlFor="gender">성별</LabelStyle>
       
       <LabelContainer>
-        <label htmlFor="male">
-          <Input id="male" name="gender" type="radio" /> 남성
-        </label>
-        <label htmlFor="female">
-          <Input id="female" name="gender" type="radio" /> 여성
-        </label>
+        <LabelSignup htmlFor="male" >
+          <Input
+            id="male" name="gender"
+            type="radio" width="1"
+          />
+          <RadioLabelText>여성</RadioLabelText>
+        </LabelSignup>
+        <LabelSignup htmlFor="female">
+          <Input width="1" id="female" name="gender" type="radio" />
+          <RadioLabelText>남성</RadioLabelText>
+        </LabelSignup>
       </LabelContainer>
-      
-      <Button width="40%" borderRadius="25px">완료</Button>
+      <ButtonWrapper>
+        <Button width="40%" borderRadius="25px">완료</Button>
+      </ButtonWrapper>
     </Card>
   )
 }
