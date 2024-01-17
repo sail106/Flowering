@@ -26,7 +26,6 @@ const StyledButton = styled.input`
 `;
 
 const RadioButton = (props) => {
-  console.log(props.value);
   return (
     <>
       <StyledButton
