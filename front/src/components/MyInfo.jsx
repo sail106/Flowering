@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button, { ButtonBox } from "./store/Button";
+import { ButtonBox } from "./store/Button";
 
 const InfoDiv = styled.div`
   margin: 80px;

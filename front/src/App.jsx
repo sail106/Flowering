@@ -11,7 +11,6 @@ import Navbar from "./components/Navbar";
 import GlobalStyles from "../GlobalStyles";
 import MainPage from "./components/MainPage";
 import FaQ from "./components/FaQ";
-import FaqPage from "./components/FaqPage";
 import Footer from "./components/Footer";
 function App() {
 
@@ -28,7 +27,6 @@ function App() {
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/mypage' element={<MyInfo />} />
           <Route path='/faq' element={<FaQ />} />
-          <Route path='/fq' element={<FaqPage />} />
         </Routes>
       <Footer />
       </Page>
