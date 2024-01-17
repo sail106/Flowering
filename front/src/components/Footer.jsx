@@ -59,7 +59,7 @@ const Footer = () => {
         <Link to={"/pw"}>Consulting</Link>
         <Link to={"#"}>Community</Link>
         <Link to={"#"}>Contents</Link>
-        <Link to={"#"}>FAQ</Link>
+        <Link to={"/faq"}>FAQ</Link>
       </Path>
       <Info>
         <Image src="src\assets\Call.svg" alt="Call" />

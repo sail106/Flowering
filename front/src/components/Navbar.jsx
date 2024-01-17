@@ -59,7 +59,7 @@ const Navbar = () => {
         <Link to={'/pw'}>Consulting</Link>
         <Link to={'#'}>Community</Link>
         <Link to={'#'}>Contents</Link>
-        <Link to={'#'}>FAQ</Link>
+        <Link to={'/faq'}>FAQ</Link>
       </NavMenu>
       <NavInfoLogo>
         <Link to={'/'}>
