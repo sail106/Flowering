@@ -44,7 +44,7 @@ const ConsultantCard = styled.div`
 const ConsultantNameCard = styled(ConsultantCard)`
   background-color: white;
   height: 0vh;
-  font-family: Roboto;
+  font-family: Lexend Deca;
   font-size: 30px;
   font-style: normal;
   font-weight: 400;
