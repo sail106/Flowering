@@ -5,7 +5,7 @@ import ThirdPage from "./mainpage/ThirdPage";
 import FourthPage from "./mainpage/FourthPage";
 import FifthPage from "./mainpage/FifthPage";
 import SixthPage from "./mainpage/SixthPage";
-import Footer from "./Footer";
+
 
 const PinkCreamWrapper = styled.div`
   position: absolute;
@@ -57,8 +57,6 @@ const MainPage = () => {
       <WhiteCreamWrapper>
         <Image src="src/assets/whitecream.svg" alt="whitecream" />
       </WhiteCreamWrapper>
-
-      <Footer />
     </>
   );
 };
