@@ -5,6 +5,7 @@ const StyledLabel = styled.label`
   display:flex;
   padding-top: 13px;
   padding-bottom: 5px;
+  margin-top: 10px;
 `;
 
 const LabelStyle = (props) => {
