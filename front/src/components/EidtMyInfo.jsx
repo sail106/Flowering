@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Page } from "./store/Page";
 import Input from "./store/Input";
-import { ButtonBox } from "./store/Button";
-import MyModal from "./mui/MyModal";
+import Edit from "./mypage/Edit";
+import Withdrawal from "./mypage/Withdrawal";
+import NestedModal from "./mui/NestedModal";
+import New from "./mui/New";
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -30,7 +32,7 @@ const CameraImg = styled(MyImg)`
 const InfoContainer = styled.div`
   width: 20%;
   margin-top: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
 `;
 
 const Mylabel = styled.label`
@@ -44,11 +46,7 @@ const Margin = styled.div`
   height: 35%;
 `;
 
-const MyButton = styled(ButtonBox)`
-  border-radius: 100px;
-  width: 15%;
-  margin-top: 2%;
-`;
+
 
 const EditMyInfo = () => {
   return (
@@ -68,9 +66,10 @@ const EditMyInfo = () => {
             width="90%"
           ></Input>
         </InfoContainer>
-        <MyButton>수정하기</MyButton>
-        <MyButton>탈퇴하기</MyButton>
-        <MyModal/>
+        <Edit/>
+        <Withdrawal/>
+<NestedModal/>
+<New/>
       </MyPage>
       <Margin />
     </>
