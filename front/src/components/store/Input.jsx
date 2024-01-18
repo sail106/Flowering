@@ -10,7 +10,6 @@ const InputBox = styled.input`
 		color: #B1B1B1;
 	}
   border-width: 0 0 1px;
-  appearance: ${props => props.appearance};
 `;
 
 const Input = (props) => {
