@@ -8,7 +8,6 @@ const ConsultReservation = () => {
   return (
     <Card>
       <h1>Reservation</h1>
-      <div>달력달력달력</div>
       <MyCalendar />
       <RadioButton
         type="radio"
