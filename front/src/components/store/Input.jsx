@@ -1,11 +1,8 @@
 import styled from "styled-components"
 
-export const InputBox = styled.input`
+const InputBox = styled.input`
   border: 1px solid gray;
-
   width: ${props => props.width || '400px'};
-  /* padding-top: 15px;
-  padding-bottom: 15px; */
   padding:15px;
   &::placeholder{
 		color: #B1B1B1;

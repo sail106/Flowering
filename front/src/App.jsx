@@ -10,9 +10,11 @@ import MyPage from "./components/MyPage";
 import Navbar from "./components/Navbar";
 import GlobalStyles from "../GlobalStyles";
 import MainPage from "./components/MainPage";
+import ConsultReservation from "./components/ConsultReservation";
 import FaQ from "./components/FaQ";
 import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
+
 function App() {
 
   return (
@@ -26,6 +28,7 @@ function App() {
           <Route path='/pw' element={<PasswordFindForm />} />
           <Route path='/test' element={<SpinnerTest />} />
           <Route path='/signup' element={<SignupForm />} />
+          <Route path='/consulting' element={<ConsultReservation />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/editmyinfo' element={<EditMyInfo />} />
           <Route path='/faq' element={<FaQ />} />
