@@ -3,7 +3,6 @@ import { Page } from "./store/Page";
 import Input from "./store/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
-import NestedModal from "./mui/NestedModal";
 import New from "./mui/New";
 const MyPage = styled(Page)`
   display: flex;
