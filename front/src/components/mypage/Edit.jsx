@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { ButtonBox } from "../store/Button";
+
 // 스타일링된 컴포넌트들
 const Container = styled.div`
   display: flex;
@@ -58,12 +59,16 @@ function Edit() {
     setIsOpen(false);
   };
 
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <Container>
       <EditButton onClick={handleOpen}>수정하기</EditButton>
       {isOpen && (
-        <Modal>
-          <ModalContent>
+        <Modal onClick={handleClose}>
+          <ModalContent onClick={stopPropagation}>
             <Text>수정이 완료되었습니다.</Text>
             <OkayButtom onClick={handleClose}>확인</OkayButtom>
           </ModalContent>

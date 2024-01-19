@@ -1,56 +1,12 @@
-import { useState } from "react";
-import styled from "styled-components";
+import Button from "@mui/joy/Button";
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
 import { ButtonBox } from "../store/Button";
-import CloseIcon from "@mui/icons-material/Close";
+import styled from "styled-components";
 import Alert from "@mui/material/Alert";
-
-// 스타일링된 컴포넌트들
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const WithdrawalButton = styled(ButtonBox)`
-  border-radius: 100px;
-  width: 220px;
-  margin-top: 10%;
-`;
-
-const LeaveButtom = styled(WithdrawalButton)`
-  width: 50%;
-`;
-
-const OkayButtom = styled(WithdrawalButton)`
-  width: 50%;
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 25%;
-  text-align: center;
-`;
-
-const Warning = styled.div`
-  justify-content: center;
-  display: flex;
-  width: 80%;
-`;
-
+import { useState } from "react";
 const Text = styled.p`
   color: #000;
   font-family: "Noto Sans KR";
@@ -59,38 +15,104 @@ const Text = styled.p`
   font-weight: 500;
   line-height: normal;
 `;
+const Warning = styled.div`
+  text-align: start;
+  /* display: flex;
+  width: 80%; */
+`;
+const WithdrawalButton = styled(ButtonBox)`
+  border-radius: 100px;
+  width: 220px;
+  margin-top: 1.5%;
+`;
+const LeaveButtom = styled(WithdrawalButton)`
+  margin-top: 5%;
+  width: 50%;
+`;
 
-function Withdrawal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLeave, setisLeave] = useState(false);
+const MySheet = styled(Sheet)`
+  text-align: center;
+`;
+function WithdrawalCompleted(){
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+}
+export default function Withdrawal() {
+  const [open, setOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleClose = () => {
-    setIsOpen(false);
+    setOpen(false);
+  };
+
+  const handleConfirmOpen = () => {
+    setOpen(false); // 첫 번째 모달 닫기
+    setConfirmOpen(true); // 두 번째 모달 열기
+  };
+
+  const handleConfirmClose = () => {
+    setConfirmOpen(false); // 두 번째 모달 닫기
   };
 
   return (
-    <Container>
-      <WithdrawalButton onClick={handleOpen}>탈퇴하기</WithdrawalButton>
-      {isOpen && (
-        <Modal>
-          <ModalContent>
-            <Text>회원 탈퇴</Text>
-            <Warning>
-              <Alert severity="error">
-                회원 탈퇴 시 계정 정보 및 컨설팅 내역은 삭제되어 복구가
-                불가해요. 정말로 탈퇴하시겠어요?
-              </Alert>
-            </Warning>
-            <LeaveButtom onClick={handleClose}>떠날래요</LeaveButtom>
-          </ModalContent>
-        </Modal>
-      )}
-    </Container>
+    <>
+      <WithdrawalButton
+        color="neutral"
+        onClick={() => setOpen(true)}
+      >
+        탈퇴하기
+      </WithdrawalButton>
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-desc"
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <MySheet
+          sx={{
+            maxWidth: 400,
+            borderRadius: "md",
+            p: 2,
+            boxShadow: "lg",
+          }}
+        >
+          <ModalClose variant="plain" sx={{ m: 1 }} />
+          <Text>회원 탈퇴</Text>
+          <Warning>
+            <Alert severity="error">
+              회원 탈퇴 시 계정 정보 및 컨설팅 내역은 삭제되어 복구가 불가해요.
+              정말로 탈퇴하시겠어요?
+            </Alert>
+          </Warning>
+          <LeaveButtom onClick={handleConfirmOpen}>떠날래요</LeaveButtom>
+        </MySheet>
+      </Modal>
+      <Modal
+        aria-labelledby="confirm-modal-title"
+        aria-describedby="confirm-modal-desc"
+        open={confirmOpen}
+        onClose={handleConfirmClose}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <MySheet
+
+          sx={{
+            maxWidth: 400,
+            borderRadius: "md",
+            p: 2,
+            boxShadow: "lg",
+          }}
+        >
+          <ModalClose variant="plain" sx={{ m: 1 }} />
+          <Text>확인</Text>
+          <Warning>
+            <Alert severity="success">
+              확인되었습니다.
+            </Alert>
+          </Warning>
+          <LeaveButtom onClick={handleConfirmClose}>닫기</LeaveButtom>
+        </MySheet>
+      </Modal>
+    </>
   );
 }
-
-export default Withdrawal;
