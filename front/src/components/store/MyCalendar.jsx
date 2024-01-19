@@ -189,8 +189,8 @@ const MyCalendar = () => {
           moment(value).format('D')}
       />
 
-      <div>현재 선택한 날짜</div>
-      {moment(value).format("YYYY년 MM월 DD일")} 
+      {/* <div>현재 선택한 날짜</div>
+      <div>{moment(value).format("YYYY년 MM월 DD일")}</div>  */}
     </>
   )
 }
