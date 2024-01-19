@@ -9,7 +9,7 @@ const StyledCalendar = styled(Calendar)`
   &.react-calendar {
     width: 350px;
     max-width: 100%;
-    border: 10px solid purple;
+    border: none;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
     font-weight: 600;
@@ -102,7 +102,7 @@ const StyledCalendar = styled(Calendar)`
   & .react-calendar__month-view__days__day--neighboringMonth,
   & .react-calendar__decade-view__years__year--neighboringDecade,
   & .react-calendar__century-view__decades__decade--neighboringCentury {
-    display: none;
+    /* display: none; */
   }
 
   & .react-calendar__year-view .react-calendar__tile,
@@ -183,8 +183,10 @@ const MyCalendar = () => {
         locale="en"
         onChange={onChange}
         value={value}
+        calendarType="gregory"
+        showNeighboringMonth={false}
         formatDay={(locale, value) =>
-          moment(value).format("D")}
+          moment(value).format('D')}
       />
 
       <div>현재 선택한 날짜</div>
