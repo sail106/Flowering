@@ -3,7 +3,6 @@ import { Page } from "./store/Page";
 import Input from "./store/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
-import New from "./mui/New";
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -45,8 +44,6 @@ const Margin = styled.div`
   height: 35%;
 `;
 
-
-
 const EditMyInfo = () => {
   return (
     <>
@@ -65,10 +62,8 @@ const EditMyInfo = () => {
             width="90%"
           ></Input>
         </InfoContainer>
-        <Edit/>
-        <Withdrawal/>
-<NestedModal/>
-<New/>
+        <Edit />
+        <Withdrawal />
       </MyPage>
       <Margin />
     </>
