@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ButtonBox } from "../store/Button";
 import { Link } from "react-router-dom";
 
-const InfoDiv = styled.div`
+const InfoDiv = styled.span`
   margin: 80px;
   height: 695px;
   width: 565px;
