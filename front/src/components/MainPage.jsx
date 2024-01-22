@@ -24,7 +24,7 @@ const YellowCreamWrapper = styled(PinkCreamWrapper)`
 `;
 
 const WhiteCreamWrapper = styled(YellowCreamWrapper)`
-  bottom: -670%;
+  bottom: -700%;
   right: -10%;
 `;
 
