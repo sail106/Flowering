@@ -2,7 +2,7 @@ import Card from "./store/Card";
 import RadioButton from "./store/RadioButton";
 import MyCalendar from "./store/MyCalendar";
 import Button from "./store/Button"
-import ButtonWrapper from "./signup/ButtonWrapper";
+import CenterContainer from "./store/CenterContainer";
 
 const ConsultReservation = () => {
   
@@ -19,14 +19,14 @@ const ConsultReservation = () => {
         height="100px"
         htmlFor="myradio"
       />
-      <ButtonWrapper>
+      <CenterContainer>
         <Button
           width="40%"
           borderRadius="25px"
         >
           예약하기
         </Button>
-      </ButtonWrapper>
+      </CenterContainer>
     </Card>
   )
 }
