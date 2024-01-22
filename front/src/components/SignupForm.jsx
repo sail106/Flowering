@@ -4,7 +4,7 @@ import Button from "./store/Button"
 import EmailContainer from "./signup/EmailContainer"
 import Card from "./store/Card"
 import SignupPwHeader from "./signup/SignupPwHeader"
-import ButtonWrapper from "./signup/ButtonWrapper"
+import CenterContainer from "./store/CenterContainer"
 import SignupRequiredHeader from "./signup/SignupRequiredHeader"
 import NotAuthNumber from "./signup/NotAuthNumber"
 import LabelStyle from "./signup/LabelStyle"
@@ -24,9 +24,9 @@ const SignupForm = () => {
       <Input htmlFor="authNumber" id="authNumber" placeholder="인증번호"/>
       <p>✓ 인증 번호가 같아요</p>
       <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
-      <ButtonWrapper>
+      <CenterContainer>
         <Button width="40%" borderRadius="25px">다음</Button>
-      </ButtonWrapper>
+      </CenterContainer>
 
       {/* 회원가입 패스워드 */}
       <SignupPwHeader />
@@ -34,9 +34,9 @@ const SignupForm = () => {
       <p>✓ 영문 ✓ 숫자 ✓ 특수문자 ✓ 8~20자</p>
       <Input htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력"/>
       <p>✓ 비밀번호가 같아요</p>
-      <ButtonWrapper>
+      <CenterContainer>
         <Button width="40%" borderRadius="25px">다음</Button>
-      </ButtonWrapper>
+      </CenterContainer>
 
       <SignupRequiredHeader />
       <LabelStyle htmlFor="name">이름</LabelStyle>
@@ -63,9 +63,9 @@ const SignupForm = () => {
           <RadioLabelText>남성</RadioLabelText>
         </LabelSignup>
       </LabelContainer>
-      <ButtonWrapper>
+      <CenterContainer>
         <Button width="40%" borderRadius="25px">완료</Button>
-      </ButtonWrapper>
+      </CenterContainer>
     </Card>
   )
 }
