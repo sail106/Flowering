@@ -1,0 +1,77 @@
+import styled from "styled-components";
+import { Page } from "../store/Page";
+
+const MyPage = styled(Page)``;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const ImageWrapper3 = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 70px;
+  left: 0;
+  top: 50%;
+  width: 50%;
+  height: 75%;
+`;
+
+const SolutionDiv = styled.div`
+  position: absolute;
+  margin-left: 60%;
+  top: 65%;
+  width: 30%;
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const SolutionTitle = styled.p`
+  font-size: 40px;
+  font-family: Poppins;
+`;
+
+const SolutionDescr = styled.p`
+  color: #6d6d6d;
+  font-size: 16px;
+  line-height: 145%;
+  font-family: Noto Sans KR;
+`;
+
+const ArrowDiv = styled.div`
+  position: absolute;
+  width: 20%;
+  right: 25%;
+`;
+
+const FifthPage = () => {
+  return (
+    <MyPage>
+      <ImageWrapper3>
+        <Image src="src/assets/BeautySolution.png" alt="BIBI" />
+      </ImageWrapper3>
+
+      <SolutionDiv>
+        <SolutionTitle>
+          PERSONAL <br />
+          BEAUTY SOLUTION
+        </SolutionTitle>
+
+        <SolutionDescr>
+          Flowering만의 노하우로 고객의 현재 피부 상태
+          <br />와 고민을 점검하고 고객의 피부 유형, 색조, 취향
+          <br />및 요구에 맞는 메이크업 기술, 헤어스타일 등을
+          <br /> 추천해드립니다.
+        </SolutionDescr>
+
+        <ArrowDiv>
+          <Image src="src/assets/Arrow.png" alt="BIBI" />
+        </ArrowDiv>
+      </SolutionDiv>
+    </MyPage>
+  );
+};
+
+export default FifthPage;
