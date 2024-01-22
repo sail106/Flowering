@@ -4,6 +4,7 @@ import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.request.UserRegistRequest;
 import com.sail.back.user.model.dto.request.UserUpdateRequest;
+import com.sail.back.user.model.dto.response.MyConsultinglistResponse;
 import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.AuthProvider;
 import com.sail.back.user.model.entity.enums.UserRole;
@@ -13,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
@@ -27,7 +31,7 @@ public class UserController {
 
     @PostMapping("/regist")
     public ResponseEntity<MessageUtils> register(@RequestBody UserRegistRequest userRegistRequest) {
-        log.debug("UserRegistRequest={}",userRegistRequest);
+        log.debug("UserRegistRequest={}", userRegistRequest);
         userService.registUser(userRegistRequest, UserRole.USER, AuthProvider.GENERAL);
 
         return ResponseEntity.ok().body(MessageUtils.success());
@@ -38,6 +42,11 @@ public class UserController {
         return ResponseEntity.ok().body(MessageUtils.success(userService.infoUser(findRequest, user)));
     }
 
+    @GetMapping("/myconsultinglist")
+    public ResponseEntity<List<MyConsultinglistResponse>> myconsultinglist(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
+        return ResponseEntity.ok().body( userService.myconsultinglist(user.getId(), localDateTime));
+    }
+
     @DeleteMapping("/withdraw")
     public ResponseEntity<MessageUtils> delete(@AuthenticationPrincipal User user) {
         userService.withdrawUser(user);
@@ -45,7 +54,7 @@ public class UserController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<MessageUtils> update(@RequestBody UserUpdateRequest request, @AuthenticationPrincipal User user){
+    public ResponseEntity<MessageUtils> update(@RequestBody UserUpdateRequest request, @AuthenticationPrincipal User user) {
         userService.updateUser(request, user);
 
         return ResponseEntity.ok().body(MessageUtils.success());
