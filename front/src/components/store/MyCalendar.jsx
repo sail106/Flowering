@@ -7,11 +7,11 @@ import 'react-calendar/dist/Calendar.css'
 
 const StyledCalendar = styled(Calendar)`
   &.react-calendar {
-    width: 350px;
+    width: 500px;
     max-width: 100%;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.125em;
+    line-height: 3em;
     font-weight: 600;
   }
 
