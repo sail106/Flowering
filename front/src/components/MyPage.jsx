@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import { ButtonBox } from "./store/Button";
 import MyInfo from "./mypage/MyInfo";
+import MyConsulting from "./mypage/MyConsulting";
+import MyCommunity from "./mypage/MyCommunity";
 import { Page } from "./store/Page";
+import MyCalendar from "./store/MyCalendar";
+import "react-calendar/dist/Calendar.css";
 
 const BackPage = styled(Page)`
-  height:auto;
-`
+  height: auto;
+`;
 
-const Header = styled.div`
-display:flex;
+const Header = styled.span`
+  display: flex;
   font-family: Lexend Deca;
   font-size: 56px;
   margin-top: 12%;
@@ -16,11 +20,28 @@ display:flex;
   margin-bottom: 4%;
 `;
 
+const CalendarDiv = styled.span`
+  position: absolute;
+  top: 10%;
+  right: 15%;
+`;
+
+const Margin = styled.div`
+  margin-bottom : 10%;
+`
+
 const MyPage = () => {
   return (
     <BackPage>
       <Header>MY PAGE</Header>
-    <MyInfo />
+      <MyInfo />
+      <CalendarDiv>
+        <MyCalendar />
+      </CalendarDiv>
+      <MyConsulting />
+      <MyCommunity />
+      
+    <Margin/>
     </BackPage>
   );
 };

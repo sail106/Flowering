@@ -16,6 +16,8 @@ import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
 import  OneToOneVideoChat from "./components/OneToOneVideoChat";
  
+import CommunityPage from "./components/CommunityPage";
+
 function App() {
 
   return (
@@ -34,6 +36,7 @@ function App() {
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/editmyinfo' element={<EditMyInfo />} />
           <Route path='/faq' element={<FaQ />} />
+          <Route path='/communityHome' element={<CommunityPage />} />
         </Routes>
       <Footer />
       </Page>

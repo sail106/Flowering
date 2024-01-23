@@ -24,7 +24,6 @@ public class Consultant {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-
     private User user;
 
     public void update(User user,String self_introduce)

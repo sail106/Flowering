@@ -97,20 +97,20 @@ export default function Withdrawal() {
         <MySheet
 
           sx={{
-            maxWidth: 400,
+            width:300,
             borderRadius: "md",
             p: 2,
             boxShadow: "lg",
           }}
         >
           <ModalClose variant="plain" sx={{ m: 1 }} />
-          <Text>확인</Text>
+          <Text>회원 탈퇴</Text>
           <Warning>
             <Alert severity="success">
-              확인되었습니다.
+              회원 탈퇴가 완료되었습니다.
             </Alert>
           </Warning>
-          <LeaveButtom onClick={handleConfirmClose}>닫기</LeaveButtom>
+          <LeaveButtom onClick={handleConfirmClose}>확인</LeaveButtom>
         </MySheet>
       </Modal>
     </>
