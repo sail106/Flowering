@@ -22,7 +22,6 @@ const ConsultReservation = () => {
       <CenterContainer>
         <Button
           width="40%"
-          borderRadius="25px"
         >
           예약하기
         </Button>

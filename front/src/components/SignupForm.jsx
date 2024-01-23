@@ -19,13 +19,13 @@ const SignupForm = () => {
       <SignupEmailHeader />
       <EmailContainer>
         <Input htmlFor="signupEmail" width="250px" id="signupEmail" placeholder="이메일 입력" />
-        <Button width="25%" >인증 요청</Button>
+        <Button width="25%">인증 요청</Button>
       </EmailContainer>
       <Input htmlFor="authNumber" id="authNumber" placeholder="인증번호"/>
       <p>✓ 인증 번호가 같아요</p>
       <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
       <CenterContainer>
-        <Button width="40%" borderRadius="25px">다음</Button>
+        <Button width="40%">다음</Button>
       </CenterContainer>
 
       {/* 회원가입 패스워드 */}
@@ -35,7 +35,7 @@ const SignupForm = () => {
       <Input htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력"/>
       <p>✓ 비밀번호가 같아요</p>
       <CenterContainer>
-        <Button width="40%" borderRadius="25px">다음</Button>
+        <Button width="40%">다음</Button>
       </CenterContainer>
 
       <SignupRequiredHeader />
@@ -64,7 +64,7 @@ const SignupForm = () => {
         </LabelSignup>
       </LabelContainer>
       <CenterContainer>
-        <Button width="40%" borderRadius="25px">완료</Button>
+        <Button width="40%">완료</Button>
       </CenterContainer>
     </Card>
   )

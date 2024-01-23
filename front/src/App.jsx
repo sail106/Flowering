@@ -14,6 +14,7 @@ import ConsultReservation from "./components/ConsultReservation";
 import FaQ from "./components/FaQ";
 import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
+import CommunityPage from "./components/CommunityPage";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/editmyinfo' element={<EditMyInfo />} />
           <Route path='/faq' element={<FaQ />} />
+          <Route path='/communityHome' element={<CommunityPage />} />
         </Routes>
       <Footer />
       </Page>
