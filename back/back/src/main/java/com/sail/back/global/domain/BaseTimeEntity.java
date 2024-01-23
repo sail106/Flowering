@@ -18,23 +18,10 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @CreatedDate
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
-
-    private LocalDateTime deletedDate;
-    private boolean isActive;
-
-
-    protected void delete() {
-        isActive = false;
-        deletedDate = LocalDateTime.now();
-    }
 
 }
