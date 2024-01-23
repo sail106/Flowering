@@ -4,6 +4,7 @@ const Commod = styled.h1`
   display: flex;
   justify-content: center;
   padding : 10px;
+  margin: 100px;
 `;
 
 
