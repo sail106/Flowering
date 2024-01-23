@@ -8,9 +8,9 @@ import { appendMessageList } from '../consultSlice'
 
 const Chat = () => {
   const [msg, setMsg] = useState('')
-  const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-  const { session, messageId } = useSelector(state => state.consult)
-  const dispatch = useDispatch()
+  // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+  // const { session, messageId } = useSelector(state => state.consult)
+  // const dispatch = useDispatch()
 
   const handleMessage = () => {
     
@@ -44,26 +44,26 @@ const Chat = () => {
     
   }
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    if (session) {
-      session.on('signal:chat', textChat)
-    }
-    alert("in chat")
-  }, [session])
+  //   if (session) {
+  //     session.on('signal:chat', textChat)
+  //   }
+  //   alert("in chat")
+  // }, [session])
 
-  const textChat = (event) => {
-    const data = JSON.parse(event.data)
+  // const textChat = (event) => {
+  //   const data = JSON.parse(event.data)
 
-    if (data.role !== role) {
-      dispatch(appendMessageList(data))
-    }
-  }
+  //   if (data.role !== role) {
+  //     dispatch(appendMessageList(data))
+  //   }
+  // }
 
   return (
     <ChatGrid>
       <ChatContainer>
-        <ChatList />
+        {/* <ChatList /> */}
         <IContainer>
           <Input value={msg}
             onChange={(e) => { setMsg(e.target.value) }}

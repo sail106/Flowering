@@ -30,5 +30,9 @@ public class ConsultantDetailResponse {
 //                .user(consultantListResponse.user)
 //                .build();
 //    }
-
+    public ConsultantDetailResponse(Consultant consultant){
+        this.consultant_id = consultant.getConsultant_id();
+        this.self_introduce = consultant.getSelf_introduce();
+        this.user = consultant.getUser();
+    }
 }

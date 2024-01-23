@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from "styled-components";
 
-import { Box, Grid, styled, IconButton } from '@mui/material'
+import { Box, Grid, IconButton } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import ChatList from './ChatList'
+
 import { appendMessageList } from '../../consultingRoom/consultSlice'
 
 const SmallChat = () => {
   const [msg, setMsg] = useState('')
-  const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-  const { session, messageId } = useSelector(state => state.consult)
-  const dispatch = useDispatch()
+  // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+  // const { session, messageId } = useSelector(state => state.consult)
+  // const dispatch = useDispatch()
 
   const handleMessage = () => {
     if (session && msg.length > 0) {
@@ -18,17 +20,17 @@ const SmallChat = () => {
         id: messageId,
         role: role,
         imageUrl: '',
-        side: 'right',
+        // side: 'left',
         message: msg
       }
 
-      dispatch(appendMessageList(mine))
+      // dispatch(appendMessageList(mine))
 
       const data = {
         id: messageId,
         role: role,
         imageUrl: imageUrl,
-        side: 'left',
+        // side: 'left',
         message: msg
       }
 
@@ -41,16 +43,16 @@ const SmallChat = () => {
     }
   }
 
-  useEffect(() => {
-    if (session) {
-      session.on('signal:chat', textChat)
-    }
-  }, [session])
+  // useEffect(() => {
+  //   if (session) {
+  //     session.on('signal:chat', textChat)
+  //   }
+  // }, [session])
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
     if (data.role !== role) {
-      dispatch(appendMessageList(data))
+      // dispatch(appendMessageList(data))
     }
   }
 
@@ -66,6 +68,7 @@ const SmallChat = () => {
           <IconButton onClick={handleMessage} >
             <MessageIcon />
           </IconButton>
+          
         </IContainer>
       </ChatContainer>
     </ChatGrid>
@@ -73,46 +76,49 @@ const SmallChat = () => {
 }
 
 export default SmallChat
+const ChatGrid = styled(Grid)`
+  && {
+    width: 50%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: #F5F5F5;
+    border: 2px solid #5A4D4D99;
+    padding: 10px;
+  }
+`;
 
-const ChatGrid = styled(Grid)({
-  width: "100%",
-  height: "60%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-end",
-  overflow: "hidden",
-  borderRadius: "4px",
-  backgroundColor: "#F5F5F5",
-  border: '2px solid #5A4D4D99',
-  padding: '10px',
-})
+const ChatContainer = styled(Grid)`
+&&{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  overflow: hidden;
+}
+ 
+`;
 
-const ChatContainer = styled(Grid)({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  // backgroundColor: "#FFFFFF10",
-  // borderRadius: "4px",
-  // margin: "4px",
-  // padding: "4px",
-  overflow: "hidden",
-})
+const IContainer = styled(Box)`
+&&{
+  /* margin-top: 0.4rem; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-content: center;
+}
+`;
 
-const IContainer = styled(Box)({
-  marginTop: "0.4rem",
-  width: "100%",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignContent: "center"
-})
-
-const Input = styled('input')({
-  fontSize: "1rem",
-  padding: "0.2rem 1rem",
-  width: "calc(100% - 40px)",
-  border: "1px  solid",
-  borderRadius: "0.8rem",
-})
+const Input = styled.input`&&{
+  font-size: 1rem;
+  padding: 0.2rem 1rem;
+  width: calc(100% - 100px);
+  border: 1px solid;
+  border-radius: 0.8rem;
+}
+`;

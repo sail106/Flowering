@@ -72,12 +72,12 @@ public class ConsultantService {
 
     public ConsultantDetailResponse getConsultant(Long consultantid) {
         Consultant consultant = consultantRepository.findById(consultantid).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
-
-        return ConsultantDetailResponse.builder()
-                .consultant_id(consultant.getConsultant_id())
-                .self_introduce(consultant.getSelf_introduce())
-                .user(consultant.getUser())
-                .build();
+        return new ConsultantDetailResponse(consultant);
+//        return ConsultantDetailResponse.builder()
+//                .consultant_id(consultant.getConsultant_id())
+//                .self_introduce(consultant.getSelf_introduce())
+//                .user(consultant.getUser())
+//                .build();
     }
 
     public ConsultantDetailResponse update(User user, ConsultantUpdateRequest consultantUpdateRequest) {

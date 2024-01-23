@@ -6,15 +6,14 @@ import { CUSTOMER, CONSULTANT } from 'api/CustomConst'
 
 import CoverFilter from './CoverFilter'
 
-const UserVideoComponent = ({ streamManager }) => {
+const UserVideoComponent = ({  }) => {
   
-  alert('streammm'+streamManager)
+  // alert('streammm'+streamManager)
 
-  const subRole = JSON.parse(streamManager.stream.connection.data).clientRole;
-
-  const getNicknameTag = () => {
-    return JSON.parse(streamManager.stream.connection.data).clientData;
-  }
+ 
+  // const getNicknameTag = () => {
+  //   return JSON.parse(streamManager.stream.connection.data).clientData;
+  // }
 
   return (
     <div>
@@ -22,7 +21,7 @@ const UserVideoComponent = ({ streamManager }) => {
         <>
           {subRole === CONSULTANT &&
             <ConsultantStream>
-              <CustomTypography>{getNicknameTag()} 컨설턴트</CustomTypography>
+              <CustomTypography>{ } 컨설턴트</CustomTypography>
               <OpenViduVideoComponent streamManager={streamManager} />
 
             </ConsultantStream>
@@ -33,7 +32,7 @@ const UserVideoComponent = ({ streamManager }) => {
                 <OpenViduVideoComponent streamManager={streamManager} />
                 <CoverFilter />
               </div>
-              <CustomTypography>{getNicknameTag()} 님</CustomTypography>
+              <CustomTypography>{ } 님</CustomTypography>
             </CustomerStream>
           }
         </>
