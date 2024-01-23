@@ -1,6 +1,5 @@
 package com.sail.back.community.model.entity;
 
-//import com.sail.back.customerCommunity.model.entity.CustomerCommunity;
 
 import com.sail.back.global.domain.BaseTimeEntity;
 import com.sail.back.user.model.entity.User;
@@ -10,6 +9,7 @@ import lombok.*;
 import java.security.PrivateKey;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,25 +18,24 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Community extends BaseTimeEntity {
+public class Community {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long community_id;
+    @Column(name = "community_id")
+    private Long id;
 
     private String title;
     private String content;
-    private String sessionId;
-    private String imageurl;
+
+    @Column(name = "thumbnail_img_url")
+    private String thumbnailImgUrl;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Timestamp community_open_date;
-
-
-
-
+    @Column(name = "open_day")
+    private LocalDateTime dDay;
 
 }
