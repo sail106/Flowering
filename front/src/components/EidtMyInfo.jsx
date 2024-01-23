@@ -54,12 +54,13 @@ const EditMyInfo = () => {
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
           <Input placeholder="키티공주" id="nickname" width="90%"></Input>
           <Mylabel htmlFor="password">비밀번호</Mylabel>
-          <Input placeholder="키티공주" id="password" width="90%"></Input>
+          <Input placeholder="**********" id="password" width="90%" type="password"></Input>
           <Mylabel htmlFor="password confirm">비밀번호 확인</Mylabel>
           <Input
-            placeholder="키티공주"
+            placeholder="**********"
             id="password confirm"
             width="90%"
+            type="password"
           ></Input>
         </InfoContainer>
         <Edit />

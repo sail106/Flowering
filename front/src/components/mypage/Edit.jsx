@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ButtonBox } from "../store/Button";
 
-// 스타일링된 컴포넌트들
 const Container = styled.div`
   display: flex;
   justify-content: center;
