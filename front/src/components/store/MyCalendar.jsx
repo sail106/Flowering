@@ -11,7 +11,7 @@ const StyledCalendar = styled(Calendar)`
     max-width: 100%;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
-    line-height: 3em;
+    line-height: 2.5em;
     font-weight: 600;
   }
 
@@ -118,7 +118,7 @@ const StyledCalendar = styled(Calendar)`
     text-align: center;
     line-height: 16px;
     font: inherit;
-    font-size: 0.833em;
+    font-size: 1em;
   }
 
   & .react-calendar__tile:disabled {
@@ -160,7 +160,7 @@ const StyledCalendar = styled(Calendar)`
     color: white;
     border-radius: 50%;
     transform: scale(0.6);
-    font-size: 23px;
+    font-size: 27px;
   }
 
   & .react-calendar__tile--active:enabled:hover,
