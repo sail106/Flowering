@@ -16,7 +16,7 @@ const Calendar = styled(IoCalendarOutline)`
 const H2 = styled.h2`
   font-family: "Noto Sans KR";
   font-size: 30px;
-  padding-left:8px;
+  padding-left: 8px;
 `;
 
 const Consulting = styled.div`
@@ -27,6 +27,7 @@ const Consulting = styled.div`
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  margin-bottom:5%;
 `;
 
 const Thead = styled.thead``;
@@ -78,8 +79,6 @@ const FinalButton = styled(Button)`
 const MyConsulting = () => {
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "2024-01-19" },
-    { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "2024-01-20" },
-    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "2024-01-21" },
   ];
 
   return (

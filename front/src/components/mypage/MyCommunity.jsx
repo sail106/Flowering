@@ -98,7 +98,7 @@ const MyCommunity = () => {
               </Td>
               <ButtonTd></ButtonTd>
               <ButtonTd>
-                <Button>일정 변경</Button>
+                <Button>수정하기</Button>
               </ButtonTd>
               <ButtonTd>
                 <Button>바로가기</Button>

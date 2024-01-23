@@ -22,12 +22,8 @@ const Header = styled.span`
 
 const CalendarDiv = styled.span`
   position: absolute;
-  top: 17%;
-  right: 20%;
-`;
-
-const Calendar = styled(MyCalendar)`
-  scale: 1.5;
+  top: 10%;
+  right: 15%;
 `;
 
 const Margin = styled.div`
@@ -40,10 +36,11 @@ const MyPage = () => {
       <Header>MY PAGE</Header>
       <MyInfo />
       <CalendarDiv>
-        <Calendar />
+        <MyCalendar />
       </CalendarDiv>
       <MyConsulting />
       <MyCommunity />
+      
     <Margin/>
     </BackPage>
   );
