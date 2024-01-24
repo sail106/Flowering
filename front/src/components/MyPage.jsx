@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ButtonBox } from "./store/Button";
 import MyInfo from "./mypage/MyInfo";
 import MyConsulting from "./mypage/MyConsulting";
 import MyCommunity from "./mypage/MyCommunity";

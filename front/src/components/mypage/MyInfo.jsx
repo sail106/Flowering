@@ -66,8 +66,8 @@ const MyInfo = () => {
       <ProfileDiv>
         <LeftDiv>
           <StyledP>이{"     "}름</StyledP>
-          <StyledP>이 메 일</StyledP>
           <StyledP>닉 네 임</StyledP>
+          <StyledP>이 메 일</StyledP>
         </LeftDiv>
         <RightDiv>
           <p>김혜미</p>
