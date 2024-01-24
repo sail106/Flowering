@@ -1,17 +1,15 @@
 package com.sail.back.community.model.entity;
 
 
-import com.sail.back.global.domain.BaseTimeEntity;
+import com.sail.back.community.model.dto.request.CommunityEditRequest;
+import com.sail.back.community.model.dto.response.CommunityResponse;
+import com.sail.back.community.model.dto.response.enums.CommunityRole;
+import com.sail.back.community.model.entity.enums.CommunityStatus;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.PrivateKey;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,4 +36,31 @@ public class Community {
     @Column(name = "open_day")
     private LocalDateTime dDay;
 
+    @Enumerated(EnumType.STRING)
+    private CommunityStatus status = CommunityStatus.BEFORE_ACTIVE;
+
+    public CommunityResponse toResponse(User user, boolean isReserved) {
+        CommunityResponse.CommunityResponseBuilder temp = CommunityResponse.builder()
+                .communityId(this.id)
+                .title(this.title)
+                .content(this.content)
+                .createrName(this.user.getName())
+                .thumbnailImgUrl(this.thumbnailImgUrl)
+                .dDay(this.dDay)
+                .status(this.status);
+        if (user.getId() == this.user.getId()) return temp.role(CommunityRole.CREATOR).build();
+        if (isReserved) return temp.role(CommunityRole.RESERVER).build();
+        return temp.role(CommunityRole.NONE).build();
+    }
+
+    public void updateStatus(CommunityStatus status) {
+        this.status = status;
+    }
+
+    public void editCommunity(CommunityEditRequest request) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.dDay = request.getDDay();
+        this.thumbnailImgUrl = request.getThumbnailImgUrl();
+    }
 }
