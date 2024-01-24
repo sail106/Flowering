@@ -17,8 +17,10 @@ public class ReservationCommunity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "community_id")
     private Community community;
 }
