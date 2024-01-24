@@ -6,8 +6,10 @@ import { Box, Grid } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
+import { RiSendPlaneLine } from "react-icons/ri";
+import { VscFoldUp } from "react-icons/vsc";
 
-import { appendMessageList } from '../../consultingRoom/consultSlice'
+import { appendMessageList } from '../communitySlice'
 
 const SmallChat = () => {
   const [msg, setMsg] = useState('');
@@ -57,27 +59,61 @@ const SmallChat = () => {
     }
   }
 
+  const Foldpos = styled.div`
+  && {
+     position: absolute;
+     right: 10%;
+     top: 36%;
+     color: #df5050;
+  }
+  `;
   return (
-    <ChatGrid item xs={12}>
-      <TitleText>
-        채팅
-      </TitleText>
+    <ChatGrid item xs={12} >
+      <Header>
+
+        <TitleText>
+          채팅
+
+        </TitleText>
+        <Foldpos>
+
+          <VscFoldUp />
+
+        </Foldpos>
+
+      </Header>
+
 
       <ChatContainer>
         <ChatList />
+
+        {/* <Bottomcontent> */}
+
         <IContainer>
 
           <Input
             value={msg}
+            placeholder="내용을 입력하세요..."
             onChange={(e) => { setMsg(e.target.value) }}
             onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-          />
+          >
+
+          </Input>
 
           <IconButton onClick={handleMessage} >
-             <IoIosSend />
+            <PlanePos>
+              <RiSendPlaneLine />
+
+            </PlanePos>
+
           </IconButton>
 
         </IContainer>
+
+        {/* </Bottomcontent> */}
+
+
+
       </ChatContainer>
     </ChatGrid>
   )
@@ -85,73 +121,105 @@ const SmallChat = () => {
 
 export default SmallChat;
 
+const PlanePos = styled.div`
+  && {
+    position: absolute;
+    right: 25%;
+    top: 15%;
+  }
+`;
+
+const Header = styled.div`
+  && {
+   display: flex;
+   flex-direction: row;
+  /* border: 1px solid black; */
+   height: 11%;
+  }
+`;
+
 const IconButton = styled.div`
   && {
-    font-size: 2rem;
+    /* font-size: 2rem; */
+    height: 30px;
+    width: 30px;
     /* padding: 0.2rem 1rem; */
     /* width: calc(100% - 100px); */
     /* border: 11px solid; */
     border-radius: 50%;
     background-color: #f28482;
     font-weight: bold; /* 글자를 진하게 설정 */
+    align-items: center;
+    position: absolute;
+    right: 40%;
   }
 `;
 const TitleText = styled.div`
   && {
     font-size: 1rem;
-    padding: 0.2rem 1rem;
-     /* border: 11px solid; */
-     background-color: #ffffff;
-    font-weight: bold; /* 글자를 진하게 설정 */
+    padding: 0.9rem 1rem;
+    width: 100%;
+    /* border: 11px solid; */
+    background-color: #ffffff;
+     font-weight: bold; /* 글자를 진하게 설정 */
+     height: 39%;
+     align-items: center;
   }
 `;
 
+
 const ChatGrid = styled(Grid)`
   && {
-    width: 90%;
-    height: 60vh;  
+    width: 100%;
+    height: 66.5%;  
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
     border-radius: 4px;
     background-color: #F5F5F5;
-    /* border: 2px solid #5A4D4D99; */
-    padding: 10px;
+    /* border: 2px solid black; */
+     /* padding: 10px; */
+  }
+`;
+
+const Bottomcontent = styled`
+  && {
+   background-color: #ffffff;
+   /* border: 2px solid black; */
   }
 `;
 
 const ChatContainer = styled(Grid)`
   && {
-    width: 90%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* border: 2px solid #dacece99; */
-    overflow: hidden;
+     overflow: hidden;
   }
 `;
-
 const IContainer = styled(Box)`
   && {
-    /* width: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;  
-    background-color:  #cbcbcb;
-    border-radius: 0.8rem;
-
-    /* border: 2px #c9c5df; */
-  }
+    background-color:  #ffffff;
+     /* width: ; */
+     /* border: 1px solid black; */
+    height: 25%;
+   }
 `;
 
 const Input = styled.input`
   && {
     font-size: 1rem;
     padding: 0.2rem 1rem;
-    width: calc(100% - 10px);
-    /* border: 1px solid; */  
-    border-radius: 0.8rem;
-    background-color:  #cbcbcb;
+    width:  49%;
+      background-color:  #efeaea;
+    margin-left: 5%;
+    border-radius: 19px;
+    height: 31%;
   }
 `;

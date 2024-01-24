@@ -14,9 +14,9 @@ import ConsultReservation from "./components/ConsultReservation";
 import FaQ from "./components/FaQ";
 import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
-import  OneToOneVideoChat from "./components/OneToOneVideoChat";
- 
+  
 import CommunityPage from "./components/CommunityPage";
+import OneToManyVideoChat from "./components/community/OneToManyVideoChatVideoChat";
 
 function App() {
 
@@ -29,7 +29,7 @@ function App() {
           <Route path='/' element={<MainPage />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path='/pw' element={<PasswordFindForm />} />
-          <Route path='/OneToOneVideoChat' element={<OneToOneVideoChat />} />
+          <Route path='/OneToManyVideoChat' element={<OneToManyVideoChat />} />
           <Route path='/test' element={<SpinnerTest />} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/consulting' element={<ConsultReservation />} />

@@ -5,8 +5,10 @@ import styled from "styled-components";
 import { Box, Grid, IconButton } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import ChatList from '../chat/ChatList'
-
-import { appendMessageList } from '../consultSlice'
+import { GoPersonAdd } from "react-icons/go";
+import { VscFoldUp } from "react-icons/vsc";
+import { appendMessageList } from '../communitySlice'
+import ParticipantList from './ParticipantList';
 
 const Participant = () => {
 
@@ -60,34 +62,104 @@ const Participant = () => {
   return (
 
     <ChatGrid item xs={12}>
-      <TitleText>
-      참가자
-      </TitleText>
+      <Header>
+        <TitleText>
+          참가자
+        </TitleText>
+        <InviteButton>
+          초대하기
 
-      <ChatContainer>
-        <ChatList />
-        
-      </ChatContainer>
+          <Personpos>
+            <GoPersonAdd />
+
+          </Personpos>
+
+
+          {/* <VscFoldUp /> */}
+
+        </InviteButton>
+        <Foldpos>
+
+          <VscFoldUp />
+
+        </Foldpos>
+
+      </Header>
+
+
+      <ParticipantContainer>
+        <ParticipantList />
+
+      </ParticipantContainer>
+      
     </ChatGrid>
   )
 }
 
 export default Participant
 
+
+const Foldpos = styled.div`
+&& {
+   position: absolute;
+   right: 10%;
+   top: 3%;
+   color: #df5050;
+}
+`;
+
+const Personpos = styled.div`
+&& {
+   position: absolute;
+   right: 20%;
+   top: 0;
+}
+`;
+
 const TitleText = styled.div`
   && {
     font-size: 1rem;
-    padding: 0.2rem 1rem;
+    padding: 0.9rem 1rem;
     width: 100%;
     /* border: 11px solid; */
     background-color: #ffffff;
      font-weight: bold; /* 글자를 진하게 설정 */
+     height: 39%;
+     align-items: center;
   }
+`;
+
+const Header = styled.div`
+  && {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between; /* Add this line */
+
+   /* height: 31%; */
+  }
+`;
+
+const InviteButton = styled.div`
+  && {
+    font-size: 1rem;
+    /* padding: 0.9rem 1rem; */
+    width: 28%;
+    /* border: 11px solid; */
+       background-color   : #f5c8c7;
+    position: absolute;
+     font-weight: bold; /* 글자를 진하게 설정 */
+     height: 4%;
+     top: 2%;
+     right: 30%;
+     align-items: center;
+     border-radius: 9px;
+     margin-right: 3%;
+   }
 `;
 
 const ChatGrid = styled(Grid)`
   && {
-    width: 90%;
+    width: 100%;
     height: 30vh;  
     display: flex;
     flex-direction: column;
@@ -98,15 +170,15 @@ const ChatGrid = styled(Grid)`
     border-radius: 4px;
     background-color: #F5F5F5;
     /* border: 2px solid #ddcfcf99; */
-    padding: 10px;
+    /* padding: 10px; */
  
   }
 `;
 
 
-const ChatContainer = styled(Grid)`
+const ParticipantContainer = styled(Grid)`
 &&{
-  width: 90%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;

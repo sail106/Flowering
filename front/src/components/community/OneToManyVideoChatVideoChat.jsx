@@ -16,19 +16,19 @@ import { IoMdVideocam } from "react-icons/io";
 //   postConsultingResult, resetSessionName, resetMsg
 // } from 'features/consulting/consultingRoom/consultSlice'
 
-import { CONSULTANT, CUSTOMER } from '../api/CustomConst';
+import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
 
-import Chat from '../features/consulting/consultingRoom/chat/Chat'
-import SmallChat from '../features/consulting/consultingRoom/chat/SmallChat'
+import Chat from '../../features/consulting/consultingRoom/chat/Chat'
+import SmallChat from '../../features/consulting/consultingRoom/chat/SmallChat'
 import { Buffer } from 'buffer';
-import Participant from '../features/consulting/consultingRoom/participant/Participant';
+import Participant from '../../features/consulting/consultingRoom/participant/Participant';
 import { IoIosSend } from "react-icons/io";
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
 
 // rafce Arrow function style 
-const OneToOneVideoChat = () => {
+const OneToManyVideoChat = () => {
   //   // const { nickname, email, role } = useSelector(state => state.auth.logonUser)
   // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
   //   // const tmp = email?.replace(/[@\.]/g, '-')
@@ -377,9 +377,7 @@ const OneToOneVideoChat = () => {
   //         .catch((error) => reject(error));
   //     });
   //   }
-  const videoIconStyle = {
-    // color: '#32524', // 원하는 색상으로 변경
-  };
+
 
   // ---------- render
   return (
@@ -387,16 +385,22 @@ const OneToOneVideoChat = () => {
     <SContainer container >
       {
 
+
         // session !== undefined ?
         // (
 
         // 세션 연결시
 
         <SGridContainer container spacing={2}>
-          <IoMdVideocamIcon>
-            <IoMdVideocam />
+          <div>
 
-          </IoMdVideocamIcon>
+            <IoMdVideocamIcon>
+              <IoMdVideocam />
+
+            </IoMdVideocamIcon>
+          </div>
+
+
           {
 
             // consultant !== undefined ? ( 
@@ -463,6 +467,9 @@ const OneToOneVideoChat = () => {
           }
           {/* <SmallChat /> */}
 
+          <VideoGroup>
+
+          </VideoGroup>
 
           <SmallChatContainer>
 
@@ -668,6 +675,8 @@ const OneToOneVideoChat = () => {
                     { /* </BottomBtn> */}
                   </ExitButton>
 
+
+
                   {/* </ButtonGroup> */}
                 </MicCamExitGroup>
               </>
@@ -681,7 +690,7 @@ const OneToOneVideoChat = () => {
 
 }
 
-export default OneToOneVideoChat
+export default OneToManyVideoChat
 // 전체포함 margin으로 띄운 상태
 const IoMdVideocamIcon = styled(IoMdVideocam)`
   && {
@@ -689,17 +698,18 @@ const IoMdVideocamIcon = styled(IoMdVideocam)`
      color: #f28482;
     margin-left: 26px;
     margin-top: 26px;
+    
    }
 `;
 const SContainer = styled(Box)`
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  margin: 3vh;
-  height: 94vh;
-  border: 2px solid #18c24b99;
+  /* padding: 1rem; */
+  /* margin: 3vh; */
+  height: 100%;
+  /* border: 2px solid #18c24b99; */
   box-sizing: border-box;
   background-color: #fffafa;
   box-shadow: 1px 2px 9px #B1B7B7;
@@ -710,7 +720,7 @@ const SContainer = styled(Box)`
 // 공용버튼 제외 모두 포함 (상위)
 // height 90% / 나머지 10% 하단
 const SGridContainer = styled(Grid)`
-  height: 84vh; // "90%",
+  height: 100%; // "90%",
   display: flex;
    /* border: 12px solid #dc121299; */
   // columnGap: 2,
@@ -730,8 +740,11 @@ const SpinnerGrid = styled(Grid)`
 
 const SmallChatContainer = styled.div`
 position: absolute;
-/* top: 10; */
+width: 31%;
+top: 10%;
 right: 0;
+/* border: 2px solid black; */
+height: 90%;
 `;
 
 const BottomBox = styled(Box)`
@@ -742,7 +755,7 @@ const BottomBox = styled(Box)`
   align-items: center;
   width: 100%;
   max-width: 90%;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
 `;
 
 const CustomIconButton = styled(IconButton)`
@@ -759,6 +772,8 @@ const CustomIconButton = styled(IconButton)`
     font-weight: normal;
      border-radius: 50%;
     margin-right: 10px;
+    margin-bottom: 11px;
+    margin-top: 11px;
   }
 `;
 
@@ -776,6 +791,8 @@ const CustomIconButton2 = styled(IconButton)`
     font-weight: normal;
      border-radius: 50%;
     margin-right: 10px;
+    margin-bottom: 11px;
+    margin-top: 11px;
   }
 `;
 
@@ -789,30 +806,38 @@ const ExitButton = styled(Button)`
       font-weight: normal;
     }
     font-weight: normal;
-    /* border: 1px solid #66635c; */
-    border-radius: 15px;
+     border-radius: 15px;
     margin-left: 100px;
     height: 40px;
     width: 130px;
+    margin-bottom: 11px;
+    margin-top: 11px;
   }
 `;
 
-const BottomBtn = styled(Button)`
-  background-color: #99968d;
-  color: white;
-  &:hover {
-    background-color: #66635c;
-    color: black;
-    font-weight: normal;
-  }
-  font-weight: normal;
-  height: 3rem;
-`;
 
 const MicCamExitGroup = styled(Grid)`
   display: flex;
   flex-direction: row;
   gap: 3;
-  width: 1000px;  
-    background-color: #111111;
+  width: 69%;  
+    background-color: #ffffff;
+    position: absolute;
+bottom: 0;
+height: 11%;
+align-items: center;
+left: 0;
+ `;
+
+
+const VideoGroup = styled(Grid)`
+  display: flex;
+  flex-direction: row;
+  gap: 3;
+  width:  70%;  
+    background-color: #d1cbcb;
+    position: absolute;
+    height: 85%;
+top: 10%;
+left: 5;
 `;

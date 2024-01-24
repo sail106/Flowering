@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ChatItem from '../chat/ChatItem';
  
-const ChatList = () => {
+const ParticipantList = () => {
   // const { messageList } = useSelector(state => state.consult)
 
   const msgSetting = () => {
@@ -39,7 +39,7 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+export default ParticipantList;
 
 const ListBox = styled(Stack)`
   width: 100%;
