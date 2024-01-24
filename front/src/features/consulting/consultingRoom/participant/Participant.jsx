@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, IconButton } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
-import ChatList from './ChatList'
-import { IoIosSend } from "react-icons/io";
+import ChatList from '../chat/ChatList'
 
-import { appendMessageList } from '../../consultingRoom/consultSlice'
+import { appendMessageList } from '../consultSlice'
 
-const SmallChat = () => {
-  const [msg, setMsg] = useState('');
+const Participant = () => {
+
+  const [msg, setMsg] = useState('')
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
@@ -58,100 +58,81 @@ const SmallChat = () => {
   }
 
   return (
+
     <ChatGrid item xs={12}>
       <TitleText>
-        채팅
+      참가자
       </TitleText>
 
       <ChatContainer>
         <ChatList />
-        <IContainer>
-
-          <Input
-            value={msg}
-            onChange={(e) => { setMsg(e.target.value) }}
-            onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-          />
-
-          <IconButton onClick={handleMessage} >
-             <IoIosSend />
-          </IconButton>
-
-        </IContainer>
+        
       </ChatContainer>
     </ChatGrid>
   )
 }
 
-export default SmallChat;
+export default Participant
 
-const IconButton = styled.div`
-  && {
-    font-size: 2rem;
-    /* padding: 0.2rem 1rem; */
-    /* width: calc(100% - 100px); */
-    /* border: 11px solid; */
-    border-radius: 50%;
-    background-color: #f28482;
-    font-weight: bold; /* 글자를 진하게 설정 */
-  }
-`;
 const TitleText = styled.div`
   && {
     font-size: 1rem;
     padding: 0.2rem 1rem;
-     /* border: 11px solid; */
-     background-color: #ffffff;
-    font-weight: bold; /* 글자를 진하게 설정 */
+    width: 100%;
+    /* border: 11px solid; */
+    background-color: #ffffff;
+     font-weight: bold; /* 글자를 진하게 설정 */
   }
 `;
 
 const ChatGrid = styled(Grid)`
   && {
     width: 90%;
-    height: 60vh;  
+    height: 30vh;  
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow-y: auto; /* 수직 스크롤을 추가합니다 */
+
     overflow: hidden;
     border-radius: 4px;
     background-color: #F5F5F5;
-    /* border: 2px solid #5A4D4D99; */
+    /* border: 2px solid #ddcfcf99; */
     padding: 10px;
+ 
   }
 `;
+
 
 const ChatContainer = styled(Grid)`
-  && {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    /* border: 2px solid #dacece99; */
-    overflow: hidden;
-  }
-`;
+&&{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+      /* border: 1px solid #5A4D4D99; */
+      overflow-y: auto; /* 수직 스크롤을 추가합니다 */
 
+  overflow: hidden;
+}
+ 
+`;
 const IContainer = styled(Box)`
   && {
-    /* width: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;  
-    background-color:  #cbcbcb;
-    border-radius: 0.8rem;
-
-    /* border: 2px #c9c5df; */
+    
   }
 `;
 
-const Input = styled.input`
-  && {
-    font-size: 1rem;
-    padding: 0.2rem 1rem;
-    width: calc(100% - 10px);
-    /* border: 1px solid; */  
-    border-radius: 0.8rem;
-    background-color:  #cbcbcb;
-  }
+const Input = styled.input`&&{
+  font-size: 1rem;
+  padding: 0.2rem 1rem;
+  width: calc(100% - 100px);
+  /* border: 1px solid; */
+  border-radius: 0.8rem;
+}
 `;

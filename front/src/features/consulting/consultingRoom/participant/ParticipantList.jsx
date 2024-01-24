@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Stack } from '@mui/material';
-import ChatItem from './ChatItem';
-
+import ChatItem from '../chat/ChatItem';
+ 
 const ChatList = () => {
   // const { messageList } = useSelector(state => state.consult)
 

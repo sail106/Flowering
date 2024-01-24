@@ -9,6 +9,7 @@ import { CiMicrophoneOn } from "react-icons/ci";
 import { CiVideoOn } from "react-icons/ci";
 import { GoShare } from "react-icons/go";
 import { LiaComment } from "react-icons/lia";
+import { IoMdVideocam } from "react-icons/io";
 
 //  import {
 //   settingModalOn, setSession, setCustomer,
@@ -20,6 +21,8 @@ import { CONSULTANT, CUSTOMER } from '../api/CustomConst';
 import Chat from '../features/consulting/consultingRoom/chat/Chat'
 import SmallChat from '../features/consulting/consultingRoom/chat/SmallChat'
 import { Buffer } from 'buffer';
+import Participant from '../features/consulting/consultingRoom/participant/Participant';
+import { IoIosSend } from "react-icons/io";
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
@@ -390,35 +393,40 @@ const OneToOneVideoChat = () => {
         // 세션 연결시
 
         <SGridContainer container spacing={2}>
+          <IoMdVideocamIcon>
+            <IoMdVideocam />
 
+          </IoMdVideocamIcon>
           {
 
             // consultant !== undefined ? ( 
 
-            <Grid container item xs={12} sm={2}
-              sx={{
-                height: "80%",
-                justifyContent: "space-between",
-                gap: 2,
-              }}>
+            // <Grid container item xs={12} sm={2}
+            //   sx={{
+            //     height: "80%",
+            //     justifyContent: "space-between",
+            //     gap: 2,
 
-              <CiVideoOn />
+            //   }}>
 
-              <SGrid item >
-                {/* <VideoContainer>
-                  <UserVideoComponent
-                    streamManager={consultant}
-                     />
-                </VideoContainer> */}
-              </SGrid>
+            //   <CiVideoOn />
 
-              {
-                // role === CONSULTANT &&
-                // <SmallChat />
+            //   <SGrid item >
+            //     {/* <VideoContainer>
+            //       <UserVideoComponent
+            //         streamManager={consultant}
+            //          />
+            //     </VideoContainer> */}
+            //   </SGrid>
 
-              }
+            //   {
+            //     // role === CONSULTANT &&
 
-            </Grid>
+            //   }
+
+            // </Grid>
+
+
             // )
             // :
             // <SpinnerGrid item xs={12} sm={2}>
@@ -426,69 +434,78 @@ const OneToOneVideoChat = () => {
             // </SpinnerGrid>
           }
 
-          <UserVideoSGrid item xs={12} sm={6}>
-            {
-              // customer !== undefined ? (
+          {/* <UserVideoSGrid item xs={12} sm={6}> */}
+          {
+            // customer !== undefined ? (
 
-              // 유저 비디오 및 베스트 및 컬러셋
-              // <VideoContainer>
-              //   <UserVideoComponent
-              //     streamManager={customer} 
-              //     />
-              // </VideoContainer>
-              // )
-              //   :
-              //   <SpinnerGrid item xs={12} sm={6}>
-              //     <CircularProgress />
-              //   </SpinnerGrid>
-            }
-            {
-              // role === CONSULTANT &&
-              // <ColorButtonGroup
-              //   clickColorFirstFunc={clickColorFirstFunc}
-              //   clickColorFirst={clickColorFirst}
-              //   isBest={isBest}
-              //   isWorst={isWorst}
-              //   setIsBest={setIsBest}
-              //   setIsWorst={setIsWorst}
-              // />
-            }
-          </UserVideoSGrid>
+            // 유저 비디오 및 베스트 및 컬러셋
+            // <VideoContainer>
+            //   <UserVideoComponent
+            //     streamManager={customer} 
+            //     />
+            // </VideoContainer>
+            // )
+            //   :
+            //   <SpinnerGrid item xs={12} sm={6}>
+            //     <CircularProgress />
+            //   </SpinnerGrid>
+          }
+          {
+            // role === CONSULTANT &&
+            // <ColorButtonGroup
+            //   clickColorFirstFunc={clickColorFirstFunc}
+            //   clickColorFirst={clickColorFirst}
+            //   isBest={isBest}
+            //   isWorst={isWorst}
+            //   setIsBest={setIsBest}
+            //   setIsWorst={setIsWorst}
+            // />
+          }
+          {/* <SmallChat /> */}
+
+
+          <SmallChatContainer>
+
+            <Participant />
+            <SmallChat />
+
+          </SmallChatContainer>
+
+          {/* </UserVideoSGrid> */}
           {/* <Chat /> */}
-          <SmallChat />
+
           {/* 우측 컬러팔레트, 채팅*/}
           {
             // role === CONSULTANT &&
             // sgrid
-            <Grid item xs={12} sm={4}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                height: '100%',
-              }}>
-              {/* <ColorPalette
-                isBest={isBest}
-                isWorst={isWorst}
-              /> */}
+            // <Grid item xs={12} sm={4}
+            //   sx={{
+            //     display: "flex",
+            //     flexDirection: "column",
+            //     alignItems: "center",
+            //     height: '100%',
+            //   }}>
 
-            </Grid>
+
+            // </Grid>
 
           }
 
           {
             // role === CUSTOMER &&
-            <Grid item xs={12} sm={4}
-              sx={{
-                display: "flex",
-                justifyContent: "end",
-                height: "80%",
-                flexDirection: "column",
-                width: '100%',
-              }}>
+            // <Grid item xs={12} sm={4}
+            //   sx={{
+            //     display: "flex",
+            //     justifyContent: "end",
+            //     height: "80%",
+            //     flexDirection: "column",
+            //     width: '100%',
+            //     border: '2px solid #18c24b99'
+
+            //   }}>
 
 
-            </Grid>
+            // </Grid>
 
           }
 
@@ -572,6 +589,7 @@ const OneToOneVideoChat = () => {
                     setIsWorst={setIsWorst}
                   /> */}
                 {/* 마이크,캠 + 필터 + 종료*/}
+
                 <MicCamExitGroup>
                   {/* 마이크 */}
                   <CustomIconButton
@@ -581,7 +599,7 @@ const OneToOneVideoChat = () => {
                       setIsMic(!isMic)
                     }}
                     style={{
-                      marginLeft: '50%'
+                      marginLeft: '20%'
                     }}
                   >
                     {/* {isMic ? <Mic /> : <MicOff color="secondary" />} */}
@@ -665,6 +683,14 @@ const OneToOneVideoChat = () => {
 
 export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
+const IoMdVideocamIcon = styled(IoMdVideocam)`
+  && {
+    font-size: 3rem; // Adjust the font size as needed
+     color: #f28482;
+    margin-left: 26px;
+    margin-top: 26px;
+   }
+`;
 const SContainer = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -673,11 +699,9 @@ const SContainer = styled(Box)`
   padding: 1rem;
   margin: 3vh;
   height: 94vh;
-
+  border: 2px solid #18c24b99;
   box-sizing: border-box;
-  border: 2px solid #5A4D4D99;
-  background-color: #FAFAFA;
-  border-radius: 15px;
+  background-color: #fffafa;
   box-shadow: 1px 2px 9px #B1B7B7;
 `;
 
@@ -688,17 +712,10 @@ const SContainer = styled(Box)`
 const SGridContainer = styled(Grid)`
   height: 84vh; // "90%",
   display: flex;
-  align-items: center;
+   /* border: 12px solid #dc121299; */
   // columnGap: 2,
 `;
 
-// 하위 그리드
-const SGrid = styled(Grid)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // height: 100%;
-`;
 
 // 연결안됐을시 스피너
 const SpinnerGrid = styled(Grid)`
@@ -710,23 +727,13 @@ const SpinnerGrid = styled(Grid)`
   align-items: center;
 `;
 
-// 비디오 컨테이너
-const VideoContainer = styled(Box)`
-  width: 100%;
-  // borderRadius: 1rem;
-  // padding: 1rem;
+
+const SmallChatContainer = styled.div`
+position: absolute;
+/* top: 10; */
+right: 0;
 `;
 
-const UserVideoSGrid = styled(Grid)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-
-
-
-// 하단 10%
 const BottomBox = styled(Box)`
   height: 10vh;
   display: flex;
@@ -735,7 +742,9 @@ const BottomBox = styled(Box)`
   align-items: center;
   width: 100%;
   max-width: 90%;
+  background-color: aliceblue;
 `;
+
 const CustomIconButton = styled(IconButton)`
   && {
     background-color: #f28482;
@@ -745,11 +754,10 @@ const CustomIconButton = styled(IconButton)`
       color: black;
       font-weight: normal;
     }
-    height: 30px; /* Adjust the height as needed */
-    width: 30px;  /* Set the width to match the height for a circular button */
+    height: 40px;
+    width: 40px;
     font-weight: normal;
-    border: 1px solid #66635c;
-    border-radius: 50%;
+     border-radius: 50%;
     margin-right: 10px;
   }
 `;
@@ -763,32 +771,31 @@ const CustomIconButton2 = styled(IconButton)`
       color: black;
       font-weight: normal;
     }
-    height: 30px; /* Adjust the height as needed */
-    width: 30px;  /* Set the width to match the height for a circular button */
+    height: 40px;
+    width: 40px;
     font-weight: normal;
-    border: 1px solid #66635c;
-    border-radius: 50%;
+     border-radius: 50%;
     margin-right: 10px;
   }
 `;
 
 const ExitButton = styled(Button)`
-&& {
-  background-color: #f28482;
-  color: white;
-  &:hover {
-    background-color: #66635c;
-    color: black;
+  && {
+    background-color: #f28482;
+    color: white;
+    &:hover {
+      background-color: #66635c;
+      color: black;
+      font-weight: normal;
+    }
     font-weight: normal;
+    /* border: 1px solid #66635c; */
+    border-radius: 15px;
+    margin-left: 100px;
+    height: 40px;
+    width: 130px;
   }
-  font-weight: normal;
-  border: 1px solid #66635c;
-  border-radius: 10px; /* Adjust the border radius as needed */
-  margin-left: 100px;
-  height: 30px;
-}
 `;
-
 
 const BottomBtn = styled(Button)`
   background-color: #99968d;
@@ -802,9 +809,10 @@ const BottomBtn = styled(Button)`
   height: 3rem;
 `;
 
-// 1-2그룹 => 마이크,캠,종료
 const MicCamExitGroup = styled(Grid)`
   display: flex;
   flex-direction: row;
   gap: 3;
+  width: 1000px;  
+    background-color: #111111;
 `;
