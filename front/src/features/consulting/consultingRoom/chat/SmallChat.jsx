@@ -63,7 +63,7 @@ const SmallChat = () => {
   && {
      position: absolute;
      right: 10%;
-     top: 36%;
+     top: 33%;
      color: #df5050;
   }
   `;
@@ -134,7 +134,7 @@ const Group = styled.div`
   && {
     position: absolute;
     right: 50%;
-    top: 35%;
+    top: 32%;
     background-color: #F28482;;
     border-radius: 71px;;
     color: white;
@@ -150,7 +150,7 @@ const Person = styled.div`
   && {
     position: absolute;
     right: 22%;
-    top: 35%;
+    top: 32%;
     background-color: #f3d1d1;
     border-radius: 15px;
     color: #e25050;

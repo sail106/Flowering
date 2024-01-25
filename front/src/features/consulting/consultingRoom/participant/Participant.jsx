@@ -68,48 +68,50 @@ const Participant = () => {
   //   }
   // }, [session])
 
-  const textChat = (event) => {
-    const data = JSON.parse(event.data)
-    if (data.role !== role) {
-      // dispatch(appendNameList(data))
-    }
-  }
-
+  const ContentWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
   return (
 
-    <ChatGrid item xs={12}>
-      <Header>
-        <TitleText>
-          참가자
-        </TitleText>
+    <ChatGrid item xs={12} isParticipantContainerVisible={isParticipantContainerVisible}>
+      <ContentWrapper>
 
-        <InviteButton>
+        <Header>
+          <TitleText>
+            참가자
+          </TitleText>
 
-          <Myspan >
-            초대하기
+          <InviteButton>
 
-          </Myspan>
+            <Myspan >
+              초대하기
 
-          <Personpos>
+            </Myspan>
 
-            <GoPersonAdd />
+            <Personpos>
 
-          </Personpos>
+              <GoPersonAdd />
 
-        </InviteButton>
+            </Personpos>
 
-        <Foldpos onClick={handleFoldUp}>
+          </InviteButton>
+
+          <Foldpos onClick={handleFoldUp}>
 
 
-          <VscFoldUp />
+            <VscFoldUp />
 
-        </Foldpos>
+          </Foldpos>
 
-      </Header>
+        </Header>
+
+      </ContentWrapper>
 
 
       {isParticipantContainerVisible && (
-        <ParticipantContainer>
+        <ParticipantContainer >
           <ParticipantList />
         </ParticipantContainer>
       )}
@@ -152,7 +154,6 @@ const TitleText = styled.div`
      font-weight: bold; /* 글자를 진하게 설정 */
      height: 100%;
      align-items: center;
-     position: relative; /* absolute 제거 */
 
   }
 `;
@@ -189,8 +190,11 @@ const InviteButton = styled.div`
 const ChatGrid = styled(Grid)`
   && {
     width: 100%;
-    height: 30vh;  
-    display: flex;
+      height: 30%;  
+      
+    display: ${(props) => (props.isParticipantContainerVisible ? 'flex' : 'none')};
+
+    /* display: flex; */
     flex-direction: column;
     justify-content: flex-end;
     overflow-y: auto; /* 수직 스크롤을 추가합니다 */
