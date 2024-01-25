@@ -3,31 +3,35 @@ import { ButtonBox } from "../store/Button";
 import { Link } from "react-router-dom";
 
 const InfoDiv = styled.span`
-  margin: 80px;
+  margin: 0% 12%;
   height: 695px;
   width: 565px;
-  background-color: #fff8f7;
+
   display: flex;
   align-items: center;
   flex-direction: column;
 `;
 
 const MyImg = styled.img`
-  margin-top: 75px;
+  margin-top: 3%;
   border-radius: 500px;
-  height: 268px;
-  width: 239px;
+  height: 250px;
+  width: 250px;
 `;
 
 const ProfileDiv = styled.div`
   display: flex;
-  margin-top: 50px;
+  /* justify-content:center; */
+  margin: 10% 0;
   width: 100%;
+  font-family: "Noto Sans KR";
+  font-size: 18px;
 `;
 
 const LeftDiv = styled.div`
   padding-left: 20%;
-  text-align: justify;
+
+  white-space: pre;
   flex: 1;
 `;
 
@@ -42,8 +46,9 @@ const RightDiv = styled.div`
 `;
 
 const StyledButton = styled(ButtonBox)`
-  width: 100%;
+  width: 200px;
   border-radius: 30px;
+  margin: 0;
 `;
 
 const MyButton = () => {
@@ -57,12 +62,12 @@ const MyButton = () => {
 const MyInfo = () => {
   return (
     <InfoDiv>
-      <MyImg src="src/assets/googleFavicon.jpg" alt="프로필 사진" />
+      <MyImg src="src/assets/BIBI.png" alt="프로필 사진" />
       <ProfileDiv>
         <LeftDiv>
-          <StyledP>이름</StyledP>
-          <StyledP>이메일</StyledP>
-          <StyledP>닉네임</StyledP>
+          <StyledP>이{"     "}름</StyledP>
+          <StyledP>닉 네 임</StyledP>
+          <StyledP>이 메 일</StyledP>
         </LeftDiv>
         <RightDiv>
           <p>김혜미</p>

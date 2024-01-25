@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ButtonBox } from "./store/Button";
 import MyInfo from "./mypage/MyInfo";
 import MyConsulting from "./mypage/MyConsulting";
 import MyCommunity from "./mypage/MyCommunity";
@@ -9,6 +8,9 @@ import "react-calendar/dist/Calendar.css";
 
 const BackPage = styled(Page)`
   height: auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 `;
 
 const Header = styled.span`
@@ -22,12 +24,8 @@ const Header = styled.span`
 
 const CalendarDiv = styled.span`
   position: absolute;
-  top: 17%;
-  right: 20%;
-`;
-
-const Calendar = styled(MyCalendar)`
-  scale: 1.5;
+  top: 10%;
+  right: 15%;
 `;
 
 const Margin = styled.div`
@@ -39,11 +37,10 @@ const MyPage = () => {
     <BackPage>
       <Header>MY PAGE</Header>
       <MyInfo />
-      <CalendarDiv>
-        <Calendar />
-      </CalendarDiv>
+
       <MyConsulting />
       <MyCommunity />
+      
     <Margin/>
     </BackPage>
   );

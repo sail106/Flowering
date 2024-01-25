@@ -1,42 +1,13 @@
+import Modal from "@mui/joy/Modal";
+import Sheet from "@mui/joy/Sheet";
 import { useState } from "react";
 import styled from "styled-components";
 import { ButtonBox } from "../store/Button";
 
-// 스타일링된 컴포넌트들
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const EditButton = styled(ButtonBox)`
   border-radius: 100px;
-  width:220px;
+  width: 220px;
   margin-top: 2%;
-`;
-
-const OkayButtom = styled(EditButton)`
-    width:50%;
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-  text-align: center;
 `;
 
 const Text = styled.p`
@@ -48,34 +19,46 @@ const Text = styled.p`
   line-height: normal;
 `;
 
-function Edit() {
-  const [isOpen, setIsOpen] = useState(false);
+const OkayButtom = styled(EditButton)`
+  width: 50%;
+`;
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+export default function Edit() {
+  const [open, setOpen] = useState(false);
 
   const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const stopPropagation = (e) => {
-    e.stopPropagation();
+    setOpen(false);
   };
 
   return (
-    <Container>
-      <EditButton onClick={handleOpen}>수정하기</EditButton>
-      {isOpen && (
-        <Modal onClick={handleClose}>
-          <ModalContent onClick={stopPropagation}>
-            <Text>수정이 완료되었습니다.</Text>
-            <OkayButtom onClick={handleClose}>확인</OkayButtom>
-          </ModalContent>
-        </Modal>
-      )}
-    </Container>
+    <>
+      <EditButton onClick={() => setOpen(true)}>수정하기</EditButton>
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-desc"
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <Sheet
+          variant="outlined"
+          sx={{
+            width: 300,
+            borderRadius: "md",
+            p: 3,
+            boxShadow: "lg",
+          }}
+        >
+          
+          <Text>수정이 완료되었습니다.</Text>
+          <OkayButtom onClick={handleClose}>확인</OkayButtom>
+        </Sheet>
+      </Modal>
+    </>
   );
 }
-
-export default Edit;

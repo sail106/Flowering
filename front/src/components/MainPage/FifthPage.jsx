@@ -6,6 +6,7 @@ const MyPage = styled(Page)``;
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 0px 50px 0px 0px;
 `;
 
 const ImageWrapper3 = styled.div`

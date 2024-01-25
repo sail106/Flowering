@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 const CenterBox = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CenterContainer = (props) => {
   return (
     <CenterBox>{props.children}</CenterBox>
   )
-};
+}
 
 export default CenterContainer;
