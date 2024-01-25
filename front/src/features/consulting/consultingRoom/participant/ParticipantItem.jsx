@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid, Box } from '@mui/material'
 import OtherAvatar from '../../../../common/avatar/OtherAvatar';
+import { CiMicrophoneOff } from "react-icons/ci";
+import { BsCameraVideoOff } from "react-icons/bs";
 
 const ParticipantItem = ({
   avatar,
@@ -19,6 +21,10 @@ const ParticipantItem = ({
             />
           )}
           <Name side={side}>{name}</Name>
+
+          <CiMicrophoneOff style={{ marginLeft: '10px'  }} />
+          <BsCameraVideoOff style={{ marginLeft: '10px'  }} />
+
         </NameBox>
       </Grid>
     </GridContainer>
@@ -40,7 +46,7 @@ const Name = styled('p')((props) => ({
   color: (props.side === "right" ? "#5A4D4D" : "#55608E"),
   fontSize: '1rem',
   fontWeight: 'bold',
-  marginLeft : '13px',
+  marginLeft: '13px',
 }))
 
 const NameBox = styled(Box)((props) => ({
@@ -49,8 +55,8 @@ const NameBox = styled(Box)((props) => ({
   borderRadius: "31.5px",
   display: "flex",
   alignItems: "center",
-  width : '99%',
-  marginBottom : '4%',
+  width: '99%',
+  marginBottom: '4%',
   overflowY: 'auto', /* 수직 스크롤을 추가합니다 */
 
 }))

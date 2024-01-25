@@ -838,7 +838,7 @@ const MicCamExitGroup = styled(Grid)`
   display: flex;
   flex-direction: row;
   gap: 3;
-  width: 69%;  
+  width: 72%;  
     background-color: #ffffff;
     position: absolute;
 bottom: 0;

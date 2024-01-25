@@ -91,9 +91,7 @@ const Participant = () => {
             </Myspan>
 
             <Personpos>
-
               <GoPersonAdd />
-
             </Personpos>
 
           </InviteButton>
@@ -152,7 +150,7 @@ const TitleText = styled.div`
     /* border: 11px solid; */
     background-color: #ffffff;
      font-weight: bold; /* 글자를 진하게 설정 */
-     height: 100%;
+     height: 80%;
      align-items: center;
 
   }
@@ -218,7 +216,7 @@ const ParticipantContainer = styled(Grid)`
   /* justify-content: center; */
       /* border: 1px solid #5A4D4D99; */
       overflow-y: auto; /* 수직 스크롤을 추가합니다 */
-
+  margin-left: 5%;
   overflow: hidden;
 }
  

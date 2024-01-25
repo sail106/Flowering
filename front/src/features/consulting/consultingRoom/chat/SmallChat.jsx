@@ -114,7 +114,6 @@ const SmallChat = () => {
               <RiSendPlaneLine />
 
             </PlanePos>
-
           </IconButton>
 
         </IContainer>
@@ -163,7 +162,7 @@ const Person = styled.div`
 const PersonText = styled.div`
   && {
     position: absolute;
-    right: 22%;
+    right: 20%;
     top: 3%;
     background-color: #FFE9E3;;
     border-radius: 71px;;
@@ -204,7 +203,7 @@ const IconButton = styled.div`
     font-weight: bold; /* 글자를 진하게 설정 */
     align-items: center;
     position: absolute;
-    right: 40%;
+    right: 32%;
   }
 `;
 const TitleText = styled.div`
@@ -235,14 +234,7 @@ const ChatGrid = styled(Grid)`
      /* padding: 10px; */
   }
 `;
-
-const Bottomcontent = styled`
-  && {
-   background-color: #ffffff;
-   /* border: 2px solid black; */
-  }
-`;
-
+ 
 const ChatContainer = styled(Grid)`
   && {
     width: 100%;
@@ -250,6 +242,7 @@ const ChatContainer = styled(Grid)`
     display: flex;
     flex-direction: column;
      overflow: hidden;
+     margin-left: 7%;
   }
 `;
 const IContainer = styled(Box)`
@@ -261,7 +254,8 @@ const IContainer = styled(Box)`
     background-color:  #ffffff;
      /* width: ; */
      /* border: 1px solid black; */
-    height: 25%;
+    height: 17%;
+    /* margin-top: 3%; */
    }
 `;
 
@@ -273,6 +267,6 @@ const Input = styled.input`
       background-color:  #efeaea;
     margin-left: 5%;
     border-radius: 19px;
-    height: 31%;
+    height: 42%;
   }
 `;
