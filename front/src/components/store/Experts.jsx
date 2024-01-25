@@ -62,7 +62,7 @@ const StyledRating = styled(Rating)`
   }
 `;
 
-const StyledSmallDiv = styled.div`
+export const StyledSmallDiv = styled.div`
   width: 80px;
   height: 33px;
   left: 450px;

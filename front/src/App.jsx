@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
 import CommunityModify from "./components/modify/CommunityModify";
 import ExpertsIntroduction from "./components/experts/ExpertsIntroduction";
+import ExpertsProfile from "./components/experts/ExpertsProfile";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/faq" element={<FaQ />} />
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
+          <Route path="/expertsprofile" element={<ExpertsProfile />} />
         </Routes>
         <Footer />
       </Page>
