@@ -24,7 +24,8 @@ const ChatList = () => {
           // side={messageList[i].side ?? 'left'}
           side={'left'}
           // message={messageList[i].message}
-          message={'sdfdsf'}
+          message={'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}
+          name={'김싸피'}
         />
       );
     }
@@ -43,10 +44,11 @@ export default ChatList;
 
 const ListBox = styled(Stack)`
   width: 100%;
+  
   height: 90%;
   overflow-y: auto; /* 수직 스크롤을 추가합니다 */
-  overflow: hidden;
-  margin-top: 11px;
+  /* overflow: hidden; */
+  margin-top: 6%;
   /* border: 6px solid #decfda99; */
 `;
 `overflow-y: auto;` 

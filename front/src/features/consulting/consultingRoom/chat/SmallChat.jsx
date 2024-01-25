@@ -70,11 +70,20 @@ const SmallChat = () => {
   return (
     <ChatGrid item xs={12} >
       <Header>
-
         <TitleText>
           채팅
-
         </TitleText>
+
+        <Person>
+          <PersonText>
+            개인
+
+          </PersonText>
+        </Person>
+        <Group>
+          그룹
+        </Group>
+
         <Foldpos>
 
           <VscFoldUp />
@@ -121,6 +130,50 @@ const SmallChat = () => {
 
 export default SmallChat;
 
+const Group = styled.div`
+  && {
+    position: absolute;
+    right: 50%;
+    top: 35%;
+    background-color: #F28482;;
+    border-radius: 71px;;
+    color: white;
+    width: 19%;
+    height: 5%;
+    align-items: center;
+    padding-left: 15px; /* Adjust the padding-right value as needed */
+
+  }
+`;
+
+const Person = styled.div`
+  && {
+    position: absolute;
+    right: 22%;
+    top: 35%;
+    background-color: #f3d1d1;
+    border-radius: 15px;
+    color: #e25050;
+    width: 48%;
+    height: 5%;
+    align-items: center;
+   }
+`;
+
+const PersonText = styled.div`
+  && {
+    position: absolute;
+    right: 22%;
+    top: 3%;
+    background-color: #FFE9E3;;
+    border-radius: 71px;;
+    color: #e25050;
+    width: 54%;
+    height: 4%;
+    align-items: center;
+    text-align: right;
+  }
+`;
 const PlanePos = styled.div`
   && {
     position: absolute;
@@ -162,7 +215,7 @@ const TitleText = styled.div`
     /* border: 11px solid; */
     background-color: #ffffff;
      font-weight: bold; /* 글자를 진하게 설정 */
-     height: 39%;
+     height: 55%;
      align-items: center;
   }
 `;

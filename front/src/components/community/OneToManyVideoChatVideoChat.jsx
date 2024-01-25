@@ -398,7 +398,13 @@ const OneToManyVideoChat = () => {
               <IoMdVideocam />
 
             </IoMdVideocamIcon>
+
+
           </div>
+
+          <Myspan>
+            깐달걀 피부 만드는 추천템 공개
+          </Myspan>
 
 
           {
@@ -474,6 +480,7 @@ const OneToManyVideoChat = () => {
           <SmallChatContainer>
 
             <Participant />
+            
             <SmallChat />
 
           </SmallChatContainer>
@@ -692,6 +699,17 @@ const OneToManyVideoChat = () => {
 
 export default OneToManyVideoChat
 // 전체포함 margin으로 띄운 상태
+
+const Myspan = styled.div`
+  
+    font-size: 2rem; // Adjust the font size as needed
+     color: #000000;
+    margin-left: 26px;
+    margin-top: 26px;
+    font-family: "Noto Sans KR";
+font-weight: 500;
+`;
+
 const IoMdVideocamIcon = styled(IoMdVideocam)`
   && {
     font-size: 3rem; // Adjust the font size as needed

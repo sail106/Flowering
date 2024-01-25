@@ -3,18 +3,19 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ChatItem from '../chat/ChatItem';
+import ParticipantItem from './ParticipantItem';
  
 const ParticipantList = () => {
   // const { messageList } = useSelector(state => state.consult)
 
   const msgSetting = () => {
-    const msgList = [];
+    const participantList = [];
     // let i = messageList.length < 10 ? 0 : messageList.length - 10
     let i = 0;
     // for (; i < messageList.length; i++) {
     for (; i < 5; i++) {
-      msgList.push(
-        <ChatItem
+      participantList.push(
+        <ParticipantItem
           // key={messageList[i].id}
           key={i}
           // avatar={messageList[i].imageUrl}
@@ -24,12 +25,12 @@ const ParticipantList = () => {
           // side={messageList[i].side ?? 'left'}
           side={'left'}
           // message={messageList[i].message}
-          message={'sdfdsf'}
+          name={'김싸피'}
         />
       );
     }
 
-    return msgList;
+    return participantList;
   };
 
   return (
@@ -37,6 +38,7 @@ const ParticipantList = () => {
       {msgSetting()}
     </ListBox>
   );
+
 };
 
 export default ParticipantList;
@@ -45,8 +47,7 @@ const ListBox = styled(Stack)`
   width: 100%;
   height: 90%;
   overflow-y: auto; /* 수직 스크롤을 추가합니다 */
-  overflow: hidden;
-  margin-top: 11px;
+   margin-top: 11px;
   /* border: 6px solid #decfda99; */
 `;
-`overflow-y: auto;` 
+ 

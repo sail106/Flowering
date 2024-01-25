@@ -9,8 +9,23 @@ import { GoPersonAdd } from "react-icons/go";
 import { VscFoldUp } from "react-icons/vsc";
 import { appendMessageList } from '../communitySlice'
 import ParticipantList from './ParticipantList';
+import { Padding } from '@mui/icons-material';
 
+
+const Myspan = styled.span`
+display:flex;
+  justify-content:start;
+  padding-top:6px;
+  padding-left:5px;
+`
 const Participant = () => {
+  const [isParticipantContainerVisible, setParticipantContainerVisible] = useState(true);
+
+  const handleFoldUp = () => {
+    // Fold up 버튼을 누를 때 ParticipantContainer의 표시 여부를 토글합니다.
+    setParticipantContainerVisible((prevVisible) => !prevVisible);
+    console.log('Fold up 버튼 클릭!');
+  };
 
   const [msg, setMsg] = useState('')
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
@@ -24,17 +39,17 @@ const Participant = () => {
         role: role,
         imageUrl: '',
         // side: 'left',
-        message: msg
+        name: msg
       }
 
       // dispatch(appendMessageList(mine))
 
       const data = {
-        id: messageId,
+        id: nameId,
         role: role,
         imageUrl: imageUrl,
         // side: 'left',
-        message: msg
+        name: msg
       }
 
       session.signal({
@@ -42,6 +57,7 @@ const Participant = () => {
         to: [],
         type: 'chat'
       })
+
       setMsg('')
     }
   }
@@ -55,7 +71,7 @@ const Participant = () => {
   const textChat = (event) => {
     const data = JSON.parse(event.data)
     if (data.role !== role) {
-      // dispatch(appendMessageList(data))
+      // dispatch(appendNameList(data))
     }
   }
 
@@ -66,19 +82,24 @@ const Participant = () => {
         <TitleText>
           참가자
         </TitleText>
+
         <InviteButton>
-          초대하기
+
+          <Myspan >
+            초대하기
+
+          </Myspan>
 
           <Personpos>
+
             <GoPersonAdd />
 
           </Personpos>
 
-
-          {/* <VscFoldUp /> */}
-
         </InviteButton>
-        <Foldpos>
+
+        <Foldpos onClick={handleFoldUp}>
+
 
           <VscFoldUp />
 
@@ -87,11 +108,12 @@ const Participant = () => {
       </Header>
 
 
-      <ParticipantContainer>
-        <ParticipantList />
+      {isParticipantContainerVisible && (
+        <ParticipantContainer>
+          <ParticipantList />
+        </ParticipantContainer>
+      )}
 
-      </ParticipantContainer>
-      
     </ChatGrid>
   )
 }
@@ -105,14 +127,18 @@ const Foldpos = styled.div`
    right: 10%;
    top: 3%;
    color: #df5050;
+   cursor: pointer; // 클릭 가능하도록 커서를 포인터로 변경
+
 }
 `;
 
 const Personpos = styled.div`
 && {
    position: absolute;
-   right: 20%;
+   right: 12%;
    top: 0;
+       transform: translateY(30%); /* Move the button up by half of its height */
+
 }
 `;
 
@@ -124,8 +150,10 @@ const TitleText = styled.div`
     /* border: 11px solid; */
     background-color: #ffffff;
      font-weight: bold; /* 글자를 진하게 설정 */
-     height: 39%;
+     height: 100%;
      align-items: center;
+     position: relative; /* absolute 제거 */
+
   }
 `;
 
@@ -148,11 +176,12 @@ const InviteButton = styled.div`
        background-color   : #f5c8c7;
     position: absolute;
      font-weight: bold; /* 글자를 진하게 설정 */
-     height: 4%;
-     top: 2%;
+     height: 5%;
+     top: 1.5%;
      right: 30%;
      align-items: center;
-     border-radius: 9px;
+     border-radius:  61px;;
+     
      margin-right: 3%;
    }
 `;
