@@ -78,8 +78,15 @@ public class CommunityService {
         return CommunityListResponse.builder()
                 .beforeActiveCommunities(beforeActiveCommunities)
                 .activeCommunities(activeCommunities)
-                .beforeActiveCommunities(postActiveCommunities)
+                .postActiveCommunities(postActiveCommunities)
                 .build();
+    }
+
+    public List<CommunityResponse> getMyCreateCommunityList(User user){
+        return communityRepository.findByUser(user)
+                .stream()
+                .map(result -> result.toResponse(user))
+                .collect(Collectors.toList());
     }
 
 

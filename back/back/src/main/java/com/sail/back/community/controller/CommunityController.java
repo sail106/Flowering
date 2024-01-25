@@ -74,4 +74,13 @@ public class CommunityController {
         return ResponseEntity.ok()
                 .body(MessageUtils.success(communityService.getCommunitiesListWithReservationStatus(user)));
     }
+
+    @GetMapping("/findmylist")
+    public ResponseEntity<MessageUtils> findMyCommunityList(
+            @AuthenticationPrincipal User user
+    ){
+        return ResponseEntity.ok()
+                .body(MessageUtils.success(communityService.getMyCreateCommunityList(user)));
+    }
+
 }

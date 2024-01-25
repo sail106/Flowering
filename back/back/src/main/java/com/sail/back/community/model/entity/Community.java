@@ -56,6 +56,20 @@ public class Community {
         if (isReserved) return temp.role(CommunityRole.RESERVER).build();
         return temp.role(CommunityRole.NONE).build();
     }
+    public CommunityResponse toResponse(User user) {
+        return CommunityResponse.builder()
+                .communityId(this.id)
+                .title(this.title)
+                .content(this.content)
+                .createrName(this.user.getName())
+                .thumbnailImgUrl(this.thumbnailImgUrl)
+                .openDay(this.openDay)
+                .time(this.openTime)
+                .status(this.status)
+                .role(CommunityRole.CREATOR)
+                .build();
+
+    }
 
     public void updateStatus(CommunityStatus status) {
         this.status = status;
