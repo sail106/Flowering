@@ -8,19 +8,26 @@ import { appendMessageList } from '../communitySlice'
 
 const Chat = () => {
   const [msg, setMsg] = useState('')
+  
+
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
 
   const handleMessage = () => {
-    
+
     if (session && msg.length > 0) {
+
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+
       const mine = {
         id: messageId,
         role: role,
         imageUrl: '',
         side: 'right',
-        message: msg
+        message: msg,
+        date: formattedDate,
       }
 
       dispatch(appendMessageList(mine))
@@ -30,7 +37,9 @@ const Chat = () => {
         role: role,
         imageUrl: imageUrl,
         side: 'left',
-        message: msg
+        message: msg,
+        date: formattedDate,
+
       }
 
       session.signal({
@@ -38,14 +47,14 @@ const Chat = () => {
         to: [],
         type: 'chat'
       })
+
       setMsg('')
     }
 
-    
   }
 
   // useEffect(() => {
-    
+
   //   if (session) {
   //     session.on('signal:chat', textChat)
   //   }
@@ -63,8 +72,7 @@ const Chat = () => {
   return (
     <ChatGrid>
       <ChatContainer>
-        {/* <ChatList /> */}
-        <IContainer>
+         <IContainer>
           <Input value={msg}
             onChange={(e) => { setMsg(e.target.value) }}
             onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
@@ -72,8 +80,11 @@ const Chat = () => {
           <IconButton onClick={handleMessage} >
             <MessageIcon />
           </IconButton>
+
         </IContainer>
+
       </ChatContainer>
+
     </ChatGrid>
   )
 }

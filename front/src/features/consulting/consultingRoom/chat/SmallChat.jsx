@@ -16,6 +16,18 @@ const SmallChat = () => {
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
+  const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
+
+  const handlePersonalClick = () => {
+    setIsPersonalSelected(true); // Set personal button as selected
+
+  }
+
+
+  const handleGroupClick = () => {
+    setIsPersonalSelected(false); // Set personal button as unselected
+
+  }
 
   const handleMessage = () => {
     if (session && msg.length > 0) {
@@ -74,13 +86,11 @@ const SmallChat = () => {
           채팅
         </TitleText>
 
-        <Person>
-          <PersonText>
-            개인
-
-          </PersonText>
+        <Person onClick={handlePersonalClick} selected={isPersonalSelected}>
+          개인
         </Person>
-        <Group>
+
+        <Group onClick={handleGroupClick} selected={!isPersonalSelected}>
           그룹
         </Group>
 
@@ -132,15 +142,16 @@ export default SmallChat;
 const Group = styled.div`
   && {
     position: absolute;
-    right: 50%;
+    right: 55%;
     top: 32%;
-    background-color: #F28482;;
-    border-radius: 71px;;
-    color: white;
+    background-color: ${props => props.selected ? '#F28482' : '#f3d1d1'}; // 조건에 따라 배경색 변경
+    border-radius: 71px;
+    color: ${props => props.selected ? '#f5f5f5' : '#e40505'}; // 조건에 따라 텍스트 색상 변경
     width: 19%;
     height: 5%;
     align-items: center;
     padding-left: 15px; /* Adjust the padding-right value as needed */
+ 
 
   }
 `;
@@ -150,29 +161,18 @@ const Person = styled.div`
     position: absolute;
     right: 22%;
     top: 32%;
-    background-color: #f3d1d1;
-    border-radius: 15px;
-    color: #e25050;
+    background-color: ${props => props.selected ? '#F28482' : '#f3d1d1'}; // 조건에 따라 배경색 변경
+    border-radius: 71px;
+    color: ${props => props.selected ? '#f5f5f5' : '#e40505'}; // 조건에 따라 텍스트 색상 변경
     width: 48%;
     height: 5%;
     align-items: center;
-   }
-`;
+    justify-content: flex-end; /* 텍스트를 오른쪽으로 정렬 */
+    display: flex;
+     padding-right: 28px ; /* 텍스트 주변에 여백 추가 */
 
-const PersonText = styled.div`
-  && {
-    position: absolute;
-    right: 20%;
-    top: 3%;
-    background-color: #FFE9E3;;
-    border-radius: 71px;;
-    color: #e25050;
-    width: 54%;
-    height: 4%;
-    align-items: center;
-    text-align: right;
-  }
-`;
+   }
+`; 
 const PlanePos = styled.div`
   && {
     position: absolute;
@@ -186,7 +186,7 @@ const Header = styled.div`
    display: flex;
    flex-direction: row;
   /* border: 1px solid black; */
-   height: 11%;
+   height: 13%;
   }
 `;
 
@@ -234,7 +234,7 @@ const ChatGrid = styled(Grid)`
      /* padding: 10px; */
   }
 `;
- 
+
 const ChatContainer = styled(Grid)`
   && {
     width: 100%;

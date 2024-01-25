@@ -8,6 +8,8 @@ const ChatItem = ({
   message,
   side,
   name,
+  date,
+  
 }) => {
   return (
     <GridContainer

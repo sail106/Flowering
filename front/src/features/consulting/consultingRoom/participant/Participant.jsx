@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 
-import { Box, Grid, IconButton } from '@mui/material'
-import MessageIcon from '@mui/icons-material/Message';
-import ChatList from '../chat/ChatList'
+import { Box, Grid, IconButton } from '@mui/material' 
 import { GoPersonAdd } from "react-icons/go";
 import { VscFoldUp } from "react-icons/vsc";
-import { appendMessageList } from '../communitySlice'
-import ParticipantList from './ParticipantList';
-import { Padding } from '@mui/icons-material';
-
+ import ParticipantList from './ParticipantList';
+ 
 
 const Myspan = styled.span`
 display:flex;
@@ -18,8 +14,8 @@ display:flex;
   padding-top:6px;
   padding-left:5px;
 `
-const Participant = () => {
-  const [isParticipantContainerVisible, setParticipantContainerVisible] = useState(true);
+const Participant = ({ streamManager, audioPermission }) => {
+  const [isparticipantcontainervisible, setParticipantContainerVisible] = useState(true);
 
   const handleFoldUp = () => {
     // Fold up 버튼을 누를 때 ParticipantContainer의 표시 여부를 토글합니다.
@@ -75,7 +71,7 @@ const Participant = () => {
 `;
   return (
 
-    <ChatGrid item xs={12} isParticipantContainerVisible={isParticipantContainerVisible}>
+    <ChatGrid item xs={12} isparticipantcontainervisible={isparticipantcontainervisible}>
       <ContentWrapper>
 
         <Header>
@@ -108,7 +104,7 @@ const Participant = () => {
       </ContentWrapper>
 
 
-      {isParticipantContainerVisible && (
+      {isparticipantcontainervisible && (
         <ParticipantContainer >
           <ParticipantList />
         </ParticipantContainer>
@@ -190,8 +186,7 @@ const ChatGrid = styled(Grid)`
     width: 100%;
       height: 30%;  
       
-    display: ${(props) => (props.isParticipantContainerVisible ? 'flex' : 'none')};
-
+ 
     /* display: flex; */
     flex-direction: column;
     justify-content: flex-end;

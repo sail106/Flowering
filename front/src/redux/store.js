@@ -1,25 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
-import storage from 'redux-persist/lib/storage';
+ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 // import thunk from 'redux-thunk';
+
 // auth
 import AuthReducer from '../../features/auth/authSlice'
 // consulting
 import ConsultReducer from '../../features/consulting/consultingRoom/consultSlice'
-import ConsultantListReducer from '../../features/consulting/consultantListSlice'
-// mypage
-import MypageReducer from "../../features/mypage/mypageSlice";
+import ConsultantListReducer from '../../features/consulting/consultantListSlice' 
 // common
-import AvatarReducer from "../../common/avatar/avatarSlice"; 
+import AvatarReducer from "../common/avatar/avatarSlice"; 
+
 
 const reducers = combineReducers({
   // auth: AuthReducer,
-  // mypage: MypageReducer,
-  // consult: ConsultReducer,
-  // consultantList: ConsultantListReducer,
-  // avatar: AvatarReducer,
-  
+   // consult: ConsultReducer,
+   avatar: AvatarReducer,
+   permission: permissionReducer,
+
 });
 
 const persistConfig = {

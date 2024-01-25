@@ -16,7 +16,7 @@ import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
   
 import CommunityPage from "./components/CommunityPage";
-import OneToManyVideoChat from "./components/community/OneToManyVideoChatVideoChat";
+import OneToManyVideoChat from "./components/community/OneToManyVideoChat";
 
 function App() {
 

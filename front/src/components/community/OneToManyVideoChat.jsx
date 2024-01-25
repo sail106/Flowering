@@ -10,6 +10,7 @@ import { CiVideoOn } from "react-icons/ci";
 import { GoShare } from "react-icons/go";
 import { LiaComment } from "react-icons/lia";
 import { IoMdVideocam } from "react-icons/io";
+import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 
 //  import {
 //   settingModalOn, setSession, setCustomer,
@@ -22,7 +23,6 @@ import Chat from '../../features/consulting/consultingRoom/chat/Chat'
 import SmallChat from '../../features/consulting/consultingRoom/chat/SmallChat'
 import { Buffer } from 'buffer';
 import Participant from '../../features/consulting/consultingRoom/participant/Participant';
-import { IoIosSend } from "react-icons/io";
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
@@ -43,13 +43,24 @@ const OneToManyVideoChat = () => {
 
   //   const [myUserName, setMyUserName] = useState(nickname)
 
-  //   const [publisher, setPublisher] = useState(undefined)
+  const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
 
   //   const [OV, setOV] = useState(null)
 
   const [isMic, setIsMic] = useState(true)
   const [isCam, setIsCam] = useState(true)
+
+  // 목소리 권한을 변경하는 함수
+  const handleAudioPermissionChange = () => {
+    dispatch(setAudioPermission(isMic)); // 토글
+  };
+
+  // 영상 권한을 변경하는 함수
+  const handleVideoPermissionChange = () => {
+    dispatch(setVideoPermission(isCam)); // 토글
+  };
+
 
   //   // 코멘트, 진단결과 톤, 진단결과 이미지 정보
   //   // const { selectedColor, bestColor, worstColor,
@@ -480,7 +491,7 @@ const OneToManyVideoChat = () => {
           <SmallChatContainer>
 
             <Participant />
-            
+
             <SmallChat />
 
           </SmallChatContainer>
@@ -609,16 +620,18 @@ const OneToManyVideoChat = () => {
                   <CustomIconButton
                     color="inherit"
                     onClick={() => {
-                      publisher.publishAudio(!isMic)
                       setIsMic(!isMic)
+                      // publisher.publishAudio(isMic)
+
+                      handleAudioPermissionChange()
                     }}
+
                     style={{
                       marginLeft: '20%'
                     }}
                   >
-                    {/* {isMic ? <Mic /> : <MicOff color="secondary" />} */}
 
-                    <CiMicrophoneOn />
+                    {isMic ? <CiMicrophoneOn /> : <MicOff style={{ backgroundColor : '#e11515' }}  />}
 
                   </CustomIconButton>
 
@@ -626,10 +639,12 @@ const OneToManyVideoChat = () => {
                   <CustomIconButton
                     color="inherit"
                     onClick={() => {
-                      publisher.publishVideo(!isCam)
+                      // publisher.publishVideo(!isCam)
                       setIsCam(!isCam)
+                      handleVideoPermissionChange()
                     }}>
-                    {isCam ? <Videocam /> : <VideocamOff color="secondary" />}
+
+                    {isCam ? <Videocam /> : <HiOutlineVideoCameraSlash  style={{ backgroundColor : '#e11515' }} />}
 
                   </CustomIconButton>
 
@@ -778,7 +793,9 @@ const BottomBox = styled(Box)`
 
 const CustomIconButton = styled(IconButton)`
   && {
-    background-color: #f28482;
+    /* background-color: #f28482; */
+    background-color: #efc6c5;
+
     color: white;
     &:hover {
       background-color: #66635c;

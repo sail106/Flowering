@@ -58,14 +58,9 @@ public class ConsultantService {
 
 
         List<Consulting> consultings = consultingRepository.findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
-//        List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
-//                map(ConsultingmylistResponse::fromEntity ).collect(Collectors.toList());
 
         System.out.println("본인 상담내역조회" + consultings.toString());
 
-//        for (Consulting consulting : consultings) {
-//            consultingmylistResponses.add(ConsultingmylistResponse.fromEntity(consulting));
-//        }
 
         return consultings;
     }
