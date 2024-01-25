@@ -20,7 +20,7 @@ const H2 = styled.h2`
 `;
 
 const Consulting = styled.div`
-  padding: 0 10%;
+  width:80%;
   height: auto;
 `;
 
@@ -78,7 +78,7 @@ const FinalButton = styled(Button)`
 
 const MyConsulting = () => {
   const data = [
-    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "2024-01-19" },
+    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)" },
   ];
 
   return (
@@ -88,8 +88,8 @@ const MyConsulting = () => {
       <Table>
         <Thead>
           <Tr>
-            <Th>Title</Th> {/* y축 레이블 헤더 */}
-            <Th>Time</Th> {/* 데이터 헤더 (여기서는 숨길 수 있습니다) */}
+            <Th>Title</Th> 
+            <Th>Time</Th> 
           </Tr>
         </Thead>
         <Tbody>

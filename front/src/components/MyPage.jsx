@@ -8,6 +8,9 @@ import "react-calendar/dist/Calendar.css";
 
 const BackPage = styled(Page)`
   height: auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 `;
 
 const Header = styled.span`
@@ -34,9 +37,7 @@ const MyPage = () => {
     <BackPage>
       <Header>MY PAGE</Header>
       <MyInfo />
-      <CalendarDiv>
-        <MyCalendar />
-      </CalendarDiv>
+
       <MyConsulting />
       <MyCommunity />
       

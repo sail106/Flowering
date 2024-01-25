@@ -62,7 +62,7 @@ const MyButton = () => {
 const MyInfo = () => {
   return (
     <InfoDiv>
-      <MyImg src="src/assets/googleFavicon.jpg" alt="프로필 사진" />
+      <MyImg src="src/assets/BIBI.png" alt="프로필 사진" />
       <ProfileDiv>
         <LeftDiv>
           <StyledP>이{"     "}름</StyledP>

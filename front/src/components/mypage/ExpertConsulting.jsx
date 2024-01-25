@@ -16,12 +16,13 @@ const Calendar = styled(IoCalendarOutline)`
 const H2 = styled.h2`
   font-family: "Noto Sans KR";
   font-size: 30px;
-  padding-left: 3%;
+  padding-left: 2%;
 `;
 
 const Consulting = styled.div`
   padding: 0 10%;
   height: auto;
+  width:80%;
 `;
 
 const Table = styled.table`

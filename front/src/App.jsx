@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
 import CommunityPage from "./components/CommunityPage";
 import ExpertPage from "./components/ExpertPage";
+import BeautyConsulting from "./components/BeuatyConsulting";
 function App() {
 
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path='/test' element={<SpinnerTest />} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/consulting' element={<ConsultReservation />} />
+          <Route path='/beautyconsulting' element={<BeautyConsulting />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/mypage2' element={<ExpertPage />} />
           <Route path='/editmyinfo' element={<EditMyInfo />} />
