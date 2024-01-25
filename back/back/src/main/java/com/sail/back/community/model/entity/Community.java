@@ -43,6 +43,8 @@ public class Community {
     private CommunityStatus status;
 
     public CommunityResponse toResponse(User user, boolean isReserved) {
+        System.out.println(user.toString());
+        System.out.println(isReserved);
         CommunityResponse.CommunityResponseBuilder temp = CommunityResponse.builder()
                 .communityId(this.id)
                 .title(this.title)
@@ -56,7 +58,7 @@ public class Community {
         if (isReserved) return temp.role(CommunityRole.RESERVER).build();
         return temp.role(CommunityRole.NONE).build();
     }
-    public CommunityResponse toResponse(User user) {
+    public CommunityResponse toResponse(CommunityRole role) {
         return CommunityResponse.builder()
                 .communityId(this.id)
                 .title(this.title)
@@ -66,9 +68,8 @@ public class Community {
                 .openDay(this.openDay)
                 .time(this.openTime)
                 .status(this.status)
-                .role(CommunityRole.CREATOR)
+                .role(role)
                 .build();
-
     }
 
     public void updateStatus(CommunityStatus status) {

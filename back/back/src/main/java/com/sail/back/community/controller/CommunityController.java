@@ -83,4 +83,29 @@ public class CommunityController {
                 .body(MessageUtils.success(communityService.getMyCreateCommunityList(user)));
     }
 
+    @PostMapping("/check-in/{communityId}")
+    public ResponseEntity<MessageUtils> checkInCommunity(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long communityId
+    ){
+        communityService.checkInCommunity(user, communityId);
+        return ResponseEntity.ok().body(MessageUtils.success());
+    }
+
+    @DeleteMapping("/check-out/{reservationId}")
+    public ResponseEntity<MessageUtils> checkOutCommunity(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long reservationId
+    ){
+        communityService.checkOutCommunity(user, reservationId);
+        return ResponseEntity.ok().body(MessageUtils.success());
+    }
+
+    @GetMapping("/checkinlist")
+    public ResponseEntity<MessageUtils> findMyCheckInCommunities(
+            @AuthenticationPrincipal User user
+    ){
+        return ResponseEntity.ok()
+                .body(MessageUtils.success(communityService.getMyCheckInCommunities(user)));
+    }
 }
