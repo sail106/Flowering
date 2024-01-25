@@ -52,7 +52,7 @@ const ButtonContainer = styled.div`
 const CommunityModify = () => {
   return (
     <Cal>
-      <Title />
+      <Title text={"예약 수정"} />
       <MyCalendar />
       <M1>
         <RadioButton
