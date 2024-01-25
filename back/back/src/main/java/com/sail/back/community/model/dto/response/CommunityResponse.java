@@ -23,7 +23,8 @@ public class CommunityResponse {
     private String content;
     private String thumbnailImgUrl;
     private String createrName;
-    private LocalDateTime dDay;
+    private String openDay;
+    private String time;
     private CommunityStatus status;
     private CommunityRole role;
 }

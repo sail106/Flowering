@@ -9,7 +9,7 @@ import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,10 +34,13 @@ public class Community {
     private User user;
 
     @Column(name = "open_day")
-    private LocalDateTime dDay;
+    private String openDay;
+
+    @Column(name = "open_time")
+    private String openTime;
 
     @Enumerated(EnumType.STRING)
-    private CommunityStatus status = CommunityStatus.BEFORE_ACTIVE;
+    private CommunityStatus status;
 
     public CommunityResponse toResponse(User user, boolean isReserved) {
         CommunityResponse.CommunityResponseBuilder temp = CommunityResponse.builder()
@@ -46,7 +49,8 @@ public class Community {
                 .content(this.content)
                 .createrName(this.user.getName())
                 .thumbnailImgUrl(this.thumbnailImgUrl)
-                .dDay(this.dDay)
+                .openDay(this.openDay)
+                .time(this.openTime)
                 .status(this.status);
         if (user.getId() == this.user.getId()) return temp.role(CommunityRole.CREATOR).build();
         if (isReserved) return temp.role(CommunityRole.RESERVER).build();
@@ -60,7 +64,8 @@ public class Community {
     public void editCommunity(CommunityEditRequest request) {
         this.title = request.getTitle();
         this.content = request.getContent();
-        this.dDay = request.getDDay();
+        this.openDay = request.getOpenDay();
+        this.openTime = request.getOpenTime();
         this.thumbnailImgUrl = request.getThumbnailImgUrl();
     }
 }

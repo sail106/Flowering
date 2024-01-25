@@ -19,5 +19,6 @@ public class CommunityEditRequest {
     private String title;
     private String content;
     private String thumbnailImgUrl;
-    private LocalDateTime dDay;
+    private String openDay;
+    private String openTime;
 }

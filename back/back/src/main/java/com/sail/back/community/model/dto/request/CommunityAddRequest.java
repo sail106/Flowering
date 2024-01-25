@@ -3,6 +3,7 @@ package com.sail.back.community.model.dto.request;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.community.model.entity.Community;
+import com.sail.back.community.model.entity.enums.CommunityStatus;
 import com.sail.back.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,8 @@ public class CommunityAddRequest {
     private String title;
     private String content;
     private String thumbnailImgUrl;
-    private LocalDateTime dDay;
+    private String openDay;
+    private String openTime;
 
     public Community toEntity(User user){
         return Community.builder()
@@ -28,7 +30,9 @@ public class CommunityAddRequest {
                 .content(this.content)
                 .thumbnailImgUrl(this.thumbnailImgUrl)
                 .user(user)
-                .dDay(this.dDay)
+                .openDay(this.openDay)
+                .openTime(this.openTime)
+                .status(CommunityStatus.BEFORE_ACTIVE)
                 .build();
     }
 }
