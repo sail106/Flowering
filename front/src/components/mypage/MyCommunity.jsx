@@ -20,7 +20,7 @@ const H2 = styled.h2`
 `;
 
 const Community = styled.div`
-  padding: 0 10%;
+  width:80%;
   height: auto;
 `;
 
@@ -71,9 +71,9 @@ const Button = styled(ButtonBox)`
 
 const MyCommunity = () => {
   const data = [
-    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "2024-01-19" },
-    { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "2024-01-20" },
-    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "2024-01-21" },
+    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)" },
+    { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)" },
+    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "01.19(금)" },
   ];
 
   return (
