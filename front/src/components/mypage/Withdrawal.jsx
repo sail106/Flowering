@@ -1,24 +1,19 @@
-import Button from "@mui/joy/Button";
+
 import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
-import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import { ButtonBox } from "../store/Button";
 import styled from "styled-components";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
+
 const Text = styled.p`
-  color: #000;
   font-family: "Noto Sans KR";
   font-size: 20px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
 `;
 const Warning = styled.div`
   text-align: start;
-  /* display: flex;
-  width: 80%; */
 `;
 const WithdrawalButton = styled(ButtonBox)`
   border-radius: 100px;
@@ -45,12 +40,12 @@ export default function Withdrawal() {
   };
 
   const handleConfirmOpen = () => {
-    setOpen(false); // 첫 번째 모달 닫기
-    setConfirmOpen(true); // 두 번째 모달 열기
+    setOpen(false); 
+    setConfirmOpen(true); 
   };
 
   const handleConfirmClose = () => {
-    setConfirmOpen(false); // 두 번째 모달 닫기
+    setConfirmOpen(false); 
   };
 
   return (

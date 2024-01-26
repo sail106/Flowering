@@ -16,12 +16,13 @@ const Calendar = styled(IoCalendarOutline)`
 const H2 = styled.h2`
   font-family: "Noto Sans KR";
   font-size: 30px;
-  padding-left: 8px;
+  padding-left: 2%;
 `;
 
 const Consulting = styled.div`
-  width:80%;
+  padding: 0 10%;
   height: auto;
+  width:80%;
 `;
 
 const Table = styled.table`
@@ -39,14 +40,16 @@ const Tr = styled.tr``;
 const Th = styled.th`
   padding: 8px;
   text-align: left;
-  width: 20%;
+  width: 30%;
   font-family: Poppins;
   font-size: 20px;
   font-weight: 500;
-`;
+  padding-left:2%;
+  `;
 
 const Td = styled.td`
   padding: 8px;
+  padding-left:2%;
   white-space: pre;
   color: #383838;
   font-family: "Noto Sans KR";
@@ -54,11 +57,9 @@ const Td = styled.td`
 `;
 
 const ButtonTd = styled.td`
-  width: 15%;
+  width: 20%;
   padding: 8px;
-  vertical-align: middle;
-  align-items: center;
-  justify-content: center;
+  text-align:end;
 `;
 
 const Button = styled(ButtonBox)`
@@ -68,27 +69,30 @@ const Button = styled(ButtonBox)`
   font-family: "Noto Sans KR";
   font-size: 16px;
   border-radius: 30px;
-  margin: 0;
+
+  margin-right:10%;
 `;
 
 const FinalButton = styled(Button)`
   background-color: black;
   border: 1px solid black;
+  width:100%;
 `;
 
-const MyConsulting = () => {
+const ExpertConsulting = () => {
   const data = [
-    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
   ];
 
   return (
     <Consulting>
-      <H2>마이 컨설팅</H2>
+      <H2>나의 컨설팅</H2>
       <hr />
       <Table>
         <Thead>
           <Tr>
-            <Th>Title</Th> 
+            <Th>Title</Th>
             <Th>Time</Th> 
           </Tr>
         </Thead>
@@ -102,13 +106,8 @@ const MyConsulting = () => {
                 <Clock /> {row.time}
               </Td>
               <ButtonTd>
-                <FinalButton>최종 결과 보고서</FinalButton>
-              </ButtonTd>
-              <ButtonTd>
-                <Button>리뷰 작성</Button>
-              </ButtonTd>
-              <ButtonTd>
-                <Button>일정 변경</Button>
+
+                <FinalButton>최종 결과 보고서 작성하기</FinalButton>
               </ButtonTd>
               <ButtonTd>
                 <Button>바로가기</Button>
@@ -121,4 +120,4 @@ const MyConsulting = () => {
   );
 };
 
-export default MyConsulting;
+export default ExpertConsulting;

@@ -3,11 +3,11 @@ import Axios, { imgAxios } from '../../api/Axios'
 
 const initialState = {
   session: undefined,
-  customer: undefined,
-  isSetClear: false,
-  consultantSessionName: '',
-  reservationId: 0,
+   isSetClear: false,
+  creatorSessionName: '',
+  community_id: 0,
   messageId: 2,
+
   messageList: [
     {
       id: 1,
@@ -16,14 +16,32 @@ const initialState = {
       side: 'left', // '' : other, 'right' : mine
       message: '대화를 시작합니다.'
     }
+  ],
+
+  creator : 
+    {
+      id: 1,
+      role: '',
+      imageUrl: '',  
+      name: ' '
+    }
+  ,
+  participantList: [
+    {
+      id: 1,
+      role: '',
+      imageUrl: '',  
+      name: ' '
+    }
   ]
+
 }
 
 export const getConsultantSessionName = createAsyncThunk(
   'community/getConsultantSessionName',
   async (reservationId, { rejectWithValue }) => {
     try {
-      const response = await Axios.post(`consultings/join`, { reservationId: reservationId })      
+      const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
       return response.data // session id 를 리턴한다.
     } catch (err) {
       console.log(err)
@@ -32,22 +50,22 @@ export const getConsultantSessionName = createAsyncThunk(
   }
 )
 
-export const postConsultingResult = createAsyncThunk(
-  'community/postConsultingResult',
-  async (payload, { rejectWithValue }) => {
-    try {
-      let formData = new FormData()
-      formData.append('consultingFinishRequest', new Blob([JSON.stringify(payload.consultingFinishRequest)], { type: "application/json" }))
-      formData.append('file', payload.files[0])
-      console.log(formData)
-      const response = await imgAxios.post(`consultings`, formData)
-      alert('  커뮤니티를 종료합니다.')
-      return response.data
-    } catch (err) {
-      return rejectWithValue(err)
-    }
-  }
-)
+// export const postCommunityResult = createAsyncThunk(
+//   'community/postCommunityResult',
+//   async (payload, { rejectWithValue }) => {
+//     try {
+//       let formData = new FormData()
+//       formData.append('consultingFinishRequest', new Blob([JSON.stringify(payload.consultingFinishRequest)], { type: "application/json" }))
+//       formData.append('file', payload.files[0])
+//       console.log(formData)
+//       const response = await Axios.post(`consultings`)
+//       alert('  커뮤니티를 종료합니다.')
+//       return response.data
+//     } catch (err) {
+//       return rejectWithValue(err)
+//     }
+//   }
+// )
 
 const communitySlice = createSlice({
   name: 'community',
@@ -65,11 +83,11 @@ const communitySlice = createSlice({
     setSession: (state, { payload }) => {
       state.session = payload
     },
-    setReservationId: (state, { payload }) => {
-      state.reservationId = payload
+    setCommunityid: (state, { payload }) => {
+      state.community_id = payload
     },
     resetSessionName: (state) => {
-      state.consultantSessionName = ''
+      state.creatorSessionName = ''
     },
     resetMsg: (state) => {
       state.messageId = 2;
@@ -92,15 +110,29 @@ const communitySlice = createSlice({
         state.messageId = state.messageId + 1
       }
       state.messageList.push(payload)
+    },
+
+    appendParticipantList: (state, { payload }) => {
+      
+      if (payload.id > state.messageId) {
+        state.messageId = payload.id + 1
+      } else {
+        payload.id = state.messageId
+        state.messageId = state.messageId + 1
+      }
+
+      state.participantList.push(payload)
     }
+
   },
-  
+
   extraReducers: (builder) => {
     builder
       .addCase(getConsultantSessionName.fulfilled, (state, { payload }) => {
         state.consultantSessionName = payload.sessionId
       })
   }
+
 })
 
 export const { settingModalOn, settingModalOff, setSession, setCustomer,

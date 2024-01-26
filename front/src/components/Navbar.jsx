@@ -1,18 +1,27 @@
 import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const NavBox = styled.div`
+import { useLocation } from "react-router-dom";
+import { GoPerson } from "react-icons/go";
+import isPropValid from '@emotion/is-prop-valid';
+const NavBox = styled.div.withConfig({
+  shouldForwardProp: prop => isPropValid(prop) && prop !== 'backgroundColor' && prop !== 'textColor',
+})`
   position: fixed;
   width: 100%;
   z-index: 3;
   height: 100px;
-  background: #ffc8b9;
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor};
   display: flex;
   justify-content: space-between;
+  align-items: center;
   letter-spacing: 1px;
   top: 0;
 `;
 
 const Logo = styled.a`
+  color:inherit;
   padding: 40px;
   font-family: "Lexend Deca", sans-serif;
   font-weight: 400;
@@ -25,18 +34,19 @@ const NavMenu = styled.div`
   list-style: none;
   a {
     padding: 8px 12px;
+    color: inherit;
   }
   a:hover {
-    color: #F28482;
+    color: #f28482;
   }
   font-family: "Poppins", sans-serif;
   font-weight: 500;
+
   font-style: normal;
-  padding-top: 50px;
 `;
 
 const NavInfoLogo = styled.div`
-  padding-top: 50px;
+  color:inherit;
   padding-right: 100px;
   img {
     /* border: 1px solid black; */
@@ -48,29 +58,70 @@ const NavInfoLogo = styled.div`
   } */
 `;
 
+const StyledPerson = styled(GoPerson)`
+  font-size:30px;
+`
+
 const Navbar = () => {
+  const [backgroundColor, setBackgroundColor] = useState("white");
+  const [textColor, setTextColor] = useState("black");
+  const location = useLocation();
+  const checkScroll = () => {
+    const currentScrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+
+    if (currentScrollY >= 0 && currentScrollY < viewportHeight) {
+      setTextColor("white");
+      setBackgroundColor("#ffc8b9");
+    } else if (
+      currentScrollY >= viewportHeight &&
+      currentScrollY < viewportHeight * 2
+    ) {
+      setTextColor("white");
+      setBackgroundColor("#f8e4a9");
+    } else {
+      setTextColor("black");
+      setBackgroundColor('white');
+    }
+  };
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      checkScroll();
+    } else {
+      setTextColor('black')
+      setBackgroundColor("white");
+    }
+
+    const onScroll = () => {
+      if (location.pathname === "/") {
+        checkScroll();
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [location]);
   return (
-    <NavBox>
-      <Logo>
-        Flowering
-      </Logo>
+    <NavBox backgroundColor={backgroundColor} textColor={textColor}>
+      <Logo>Flowering</Logo>
       <NavMenu>
-        <Link to={'/'}>Home</Link>
-        <Link to={'/pw'}>Consulting</Link>
-        <Link to={'/OneToManyVideoChat'}>Community</Link>
-        <Link to={'#'}>Contents</Link>
-        <Link to={'/faq'}>FAQ</Link>
-      </NavMenu>
+ 
+        <Link to={"/"}>Home</Link>
+        <Link to={"/beautyconsulting"}>Consulting</Link>
+        <Link to={"/OneToManyVideoChat"}>Community</Link>
+        <Link to={"#"}>Contents</Link>
+        <Link to={"/faq"}>FAQ</Link>
+       </NavMenu>
       <NavInfoLogo>
-        <Link to={'/'}>
-          <img src="src\assets\cartIcon.svg" alt="cart" />
-        </Link>
-        <Link to={'/'}>
-          <img src="src\assets\userIcon.svg" alt="user" />
-        </Link>
+        
+        <StyledPerson />
       </NavInfoLogo>
     </NavBox>
-  )
-}
+  );
+};
 
 export default Navbar;
