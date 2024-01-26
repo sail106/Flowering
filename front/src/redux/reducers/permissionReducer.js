@@ -9,19 +9,23 @@ const initialState = {
 
 const permissionReducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case SET_AUDIO_PERMISSION:
       return {
         ...state,
         audioPermission: action.payload,
       };
+
     case SET_VIDEO_PERMISSION:
       return {
         ...state,
         videoPermission: action.payload,
       };
+
     default:
       return state;
   }
+
 };
 
 export default permissionReducer;

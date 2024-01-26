@@ -1,18 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { imgAxios } from '../../api/Axios'
 
-const initialState = {
-
-}
+const initialState = {}
 
 export const registAvatar = createAsyncThunk(
   'avatar/registAvatar',
-  async (formData, { rejectWithValur }) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await imgAxios.post('', formData)
       return response.data
     } catch (err) {
-      return rejectWithValur(err)
+      return rejectWithValue(err)
     }
   }
 )
@@ -20,13 +18,15 @@ export const registAvatar = createAsyncThunk(
 const avatarSlice = createSlice({
   name: 'avatar',
   initialState,
-  extraReducers: {
-    [registAvatar.fulfilled]: (state, { payload }) => {
-    },
-    [registAvatar.rejected]: (state) => {
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(registAvatar.fulfilled, (state, action) => {
+       })
+      .addCase(registAvatar.rejected, (state, action) => {
+        
+       });
   }
 })
 
 export default avatarSlice.reducer;
-

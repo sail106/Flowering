@@ -6,61 +6,65 @@ import { BsRecord2 } from "react-icons/bs";
 import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
 import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
 import { CiMicrophoneOn } from "react-icons/ci";
-import { CiVideoOn } from "react-icons/ci";
 import { GoShare } from "react-icons/go";
 import { LiaComment } from "react-icons/lia";
 import { IoMdVideocam } from "react-icons/io";
 import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 
-//  import {
-//   settingModalOn, setSession, setCustomer,
-//   postConsultingResult, resetSessionName, resetMsg
-// } from 'features/consulting/consultingRoom/consultSlice'
-
 import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
-
-import Chat from '../../features/consulting/consultingRoom/chat/Chat'
-import SmallChat from '../../features/consulting/consultingRoom/chat/SmallChat'
-import { Buffer } from 'buffer';
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
 import Participant from '../../features/consulting/consultingRoom/participant/Participant';
+import SmallChat from '../../features/consulting/consultingRoom/chat/SmallChat';
+import { setAudioPermission, setVideoPermission } from '../../redux/actions/permissionActions';
+
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
 
 // rafce Arrow function style 
 const OneToManyVideoChat = () => {
+
   //   // const { nickname, email, role } = useSelector(state => state.auth.logonUser)
   // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
   //   // const tmp = email?.replace(/[@\.]/g, '-')
 
   //   const [mySessionId, setMySessionId] = useState(
   //     role === CONSULTANT ? tmp : consultantSessionName
-  //   )
+  //   ) 
 
-  //   const [isBest, setIsBest] = useState(false)
-  //   const [isWorst, setIsWorst] = useState(false)
-  //   const [clickColorFirst, setClickColorFirst] = useState(false)
-
-  //   const [myUserName, setMyUserName] = useState(nickname)
+  const dispatch = useDispatch();
 
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
 
+  const [isMic, setIsMic] = useState(false);
+  const [isCam, setIsCam] = useState(false);
+
   //   const [OV, setOV] = useState(null)
 
-  const [isMic, setIsMic] = useState(true)
-  const [isCam, setIsCam] = useState(true)
 
-  // 목소리 권한을 변경하는 함수
+  // 마이크 권한을 변경하는 함수
   const handleAudioPermissionChange = () => {
-    dispatch(setAudioPermission(isMic)); // 토글
+    dispatch(setAudioPermission(!isMic)); // 토글
+    console.log(isMic)
   };
 
-  // 영상 권한을 변경하는 함수
+  // 카메라 권한을 변경하는 함수
   const handleVideoPermissionChange = () => {
-    dispatch(setVideoPermission(isCam)); // 토글
+    dispatch(setVideoPermission(!isCam)); // 토글
+    console.log(isCam)
+
   };
 
+  useEffect(() => {
+
+    setIsMic(isMic);
+    setIsCam(isCam);
+    console.log('ismicchanged'+isMic)
+    console.log('iscamchanged'+isCam)
+
+  }, [isMic, isCam]);
 
   //   // 코멘트, 진단결과 톤, 진단결과 이미지 정보
   //   // const { selectedColor, bestColor, worstColor,
@@ -616,11 +620,13 @@ const OneToManyVideoChat = () => {
                 {/* 마이크,캠 + 필터 + 종료*/}
 
                 <MicCamExitGroup>
+
                   {/* 마이크 */}
-                  <CustomIconButton
+
+                  <CustomMicButton
                     color="inherit"
                     onClick={() => {
-                      setIsMic(!isMic)
+                      // setIsMic(!isMic)
                       // publisher.publishAudio(isMic)
 
                       handleAudioPermissionChange()
@@ -631,22 +637,21 @@ const OneToManyVideoChat = () => {
                     }}
                   >
 
-                    {isMic ? <CiMicrophoneOn /> : <MicOff style={{ backgroundColor : '#e11515' }}  />}
-
-                  </CustomIconButton>
+                    {isMic ? <CiMicrophoneOn /> : <MicOff style={{ backgroundColor: '#0a0909' }} />}
+                  </CustomMicButton>
 
                   {/* 캠 */}
-                  <CustomIconButton
+                  <CustomVideoButton
                     color="inherit"
                     onClick={() => {
                       // publisher.publishVideo(!isCam)
-                      setIsCam(!isCam)
+                      // setIsCam(!isCam)
                       handleVideoPermissionChange()
                     }}>
 
-                    {isCam ? <Videocam /> : <HiOutlineVideoCameraSlash  style={{ backgroundColor : '#e11515' }} />}
+                    {isCam ? <Videocam /> : <HiOutlineVideoCameraSlash style={{ backgroundColor: '#1a1818' }} />}
 
-                  </CustomIconButton>
+                  </CustomVideoButton>
 
 
                   <CustomIconButton2
@@ -791,10 +796,10 @@ const BottomBox = styled(Box)`
   /* background-color: aliceblue; */
 `;
 
-const CustomIconButton = styled(IconButton)`
+const CustomMicButton = styled(IconButton)`
   && {
     /* background-color: #f28482; */
-    background-color: #efc6c5;
+    background-color: ${({ isCam }) => (isCam ? '#df6060' : '#0c0c0c')}; // Conditional background color
 
     color: white;
     &:hover {
@@ -812,9 +817,30 @@ const CustomIconButton = styled(IconButton)`
   }
 `;
 
+const CustomVideoButton = styled(IconButton)`
+  && {
+    /* background-color: #f28482; */
+    background-color: ${({ isCam }) => (isCam ? '#df6060' : '#0c0c0c')}; // Conditional background color
+
+    color: white;
+    &:hover {
+      background-color: #66635c;
+      color: black;
+      font-weight: normal;
+    }
+    height: 40px;
+    width: 40px;
+    font-weight: normal;
+     border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: 11px;
+    margin-top: 11px;
+  }
+`;
 const CustomIconButton2 = styled(IconButton)`
   && {
     background-color: #efc6c5;
+    
     color: white;
     &:hover {
       background-color: #66635c;

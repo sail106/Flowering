@@ -67,10 +67,10 @@ const Participant = ({ streamManager, audioPermission }) => {
   const ContentWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
 `;
-  return (
 
+  return (
     <ChatGrid item xs={12} isparticipantcontainervisible={isparticipantcontainervisible}>
       <ContentWrapper>
 

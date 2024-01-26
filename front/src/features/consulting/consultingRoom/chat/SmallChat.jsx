@@ -9,7 +9,7 @@ import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
 
-import { appendMessageList } from '../communitySlice'
+import { appendMessageList } from '../../../../redux/slices/communitySlice'
 
 const SmallChat = () => {
   const [msg, setMsg] = useState('');
@@ -139,6 +139,7 @@ const SmallChat = () => {
 
 export default SmallChat;
 
+
 const Group = styled.div`
   && {
     position: absolute;
@@ -151,7 +152,7 @@ const Group = styled.div`
     height: 5%;
     align-items: center;
     padding-left: 15px; /* Adjust the padding-right value as needed */
- 
+    
 
   }
 `;
@@ -172,7 +173,7 @@ const Person = styled.div`
      padding-right: 28px ; /* 텍스트 주변에 여백 추가 */
 
    }
-`; 
+`;
 const PlanePos = styled.div`
   && {
     position: absolute;

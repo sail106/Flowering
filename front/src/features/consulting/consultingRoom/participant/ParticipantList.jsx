@@ -6,7 +6,7 @@ import ChatItem from '../chat/ChatItem';
 import ParticipantItem from './ParticipantItem';
  
 const ParticipantList = () => {
-  // const { messageList } = useSelector(state => state.consult)
+  // const { messageList } = useSelector(state => state.community)
 
   const msgSetting = () => {
     const participantList = [];

@@ -1,36 +1,34 @@
- import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
-// import thunk from 'redux-thunk';
+import { configureStore   } from '@reduxjs/toolkit';  
+// import thunk from 'redux-thunk';  
 
-// auth
-import AuthReducer from '../../features/auth/authSlice'
-// consulting
-import ConsultReducer from '../../features/consulting/consultingRoom/consultSlice'
-import ConsultantListReducer from '../../features/consulting/consultantListSlice' 
-// common
-import AvatarReducer from "../common/avatar/avatarSlice"; 
+ import AvatarReducer from "../components/avatar/avatarSlice"; 
+import permissionReducer from './reducers/permissionReducer';
 
-
+// Combine reducers
 const reducers = combineReducers({
-  // auth: AuthReducer,
-   // consult: ConsultReducer,
-   avatar: AvatarReducer,
-   permission: permissionReducer,
-
+  avatar: AvatarReducer,
+  permission: permissionReducer,
+  
 });
 
+// Redux Persist configuration
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ["auth"]
 };   
 
+// Wrap reducers with persistReducer
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-// const store = configureStore({
-  // reducer: persistedReducer,
-  // middleware: [thunk],
-// });
+// Configure store with Redux Toolkit
+const store = configureStore({
+  reducer: persistedReducer,
+  // middleware: [  thunk], // Include thunk in middleware
+});
 
-// export default store;
+
+export default store;

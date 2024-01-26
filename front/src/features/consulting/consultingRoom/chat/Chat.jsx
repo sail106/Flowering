@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, styled, IconButton } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message';
 import ChatList from './ChatList'
-import { appendMessageList } from '../communitySlice'
+import { appendMessageList } from '../../../../redux/slices/communitySlice'
 
 const Chat = () => {
   const [msg, setMsg] = useState('')

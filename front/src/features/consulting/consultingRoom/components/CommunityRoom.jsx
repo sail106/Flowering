@@ -39,10 +39,7 @@
 //   const [mySessionId, setMySessionId] = useState(
 //     role === CONSULTANT ? tmp : consultantSessionName
 //   )
-
-//   const [isBest, setIsBest] = useState(false)
-//   const [isWorst, setIsWorst] = useState(false)
-//   const [clickColorFirst, setClickColorFirst] = useState(false)
+ 
 
 //   const [myUserName, setMyUserName] = useState(nickname)
 

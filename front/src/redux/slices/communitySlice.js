@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import Axios, { imgAxios } from '../../../api/Axios'
+import Axios, { imgAxios } from '../../api/Axios'
 
 const initialState = {
   session: undefined,
@@ -20,7 +20,7 @@ const initialState = {
 }
 
 export const getConsultantSessionName = createAsyncThunk(
-  'consult/getConsultantSessionName',
+  'community/getConsultantSessionName',
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })      
@@ -33,7 +33,7 @@ export const getConsultantSessionName = createAsyncThunk(
 )
 
 export const postConsultingResult = createAsyncThunk(
-  'consult/postConsultingResult',
+  'community/postConsultingResult',
   async (payload, { rejectWithValue }) => {
     try {
       let formData = new FormData()
@@ -41,7 +41,7 @@ export const postConsultingResult = createAsyncThunk(
       formData.append('file', payload.files[0])
       console.log(formData)
       const response = await imgAxios.post(`consultings`, formData)
-      alert('진단 결과가 저장되었습니다. 컨설팅을 종료합니다.')
+      alert('  커뮤니티를 종료합니다.')
       return response.data
     } catch (err) {
       return rejectWithValue(err)
@@ -49,8 +49,8 @@ export const postConsultingResult = createAsyncThunk(
   }
 )
 
-export const consultSlice = createSlice({
-  name: 'consult',
+const communitySlice = createSlice({
+  name: 'community',
   initialState,
   reducers: {
     settingModalOn: (state) => {
@@ -83,6 +83,7 @@ export const consultSlice = createSlice({
         }
       ]
     },
+
     appendMessageList: (state, { payload }) => {
       if (payload.id > state.messageId) {
         state.messageId = payload.id + 1
@@ -94,15 +95,15 @@ export const consultSlice = createSlice({
     }
   },
   
-  extraReducers: {
-    [getConsultantSessionName.fulfilled]: (state, { payload }) => {
-      state.consultantSessionName = payload.sessionId
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getConsultantSessionName.fulfilled, (state, { payload }) => {
+        state.consultantSessionName = payload.sessionId
+      })
   }
-
 })
 
 export const { settingModalOn, settingModalOff, setSession, setCustomer,
-  resetSessionName, appendMessageList, setReservationId, resetMsg } = consultSlice.actions;
+  resetSessionName, appendMessageList, setReservationId, resetMsg } = communitySlice.actions;
 
-export default consultSlice.reducer
+export default communitySlice.reducer
