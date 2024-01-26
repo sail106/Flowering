@@ -57,7 +57,7 @@ const Footer = () => {
   return (
     <FooterBox>
       <Path>
-        <Link to={"/pw"}>Consulting</Link>
+        <Link to={"/beautyconsulting"}>Consulting</Link>
         <Link to={"#"}>Community</Link>
         <Link to={"#"}>Contents</Link>
         <Link to={'/faq'}>FAQ</Link>
