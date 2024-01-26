@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Grid, Box } from '@mui/material'
-import OtherAvatar from '../../../../components/avatar/OtherAvatar';
+import OtherAvatar from '../avatar/OtherAvatar';
 import { CiMicrophoneOff } from "react-icons/ci";
 import { BsCameraVideoOff } from "react-icons/bs";
 

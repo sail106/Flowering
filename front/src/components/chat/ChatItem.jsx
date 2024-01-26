@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Grid, Box, styled } from '@mui/material'
-import OtherAvatar from '../../../../components/avatar/OtherAvatar';
-
+import OtherAvatar from '../avatar/OtherAvatar';
+ 
 const ChatItem = ({
   avatar,
   message,

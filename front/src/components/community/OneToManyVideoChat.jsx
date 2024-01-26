@@ -14,9 +14,9 @@ import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
-import Participant from '../../features/consulting/consultingRoom/participant/Participant';
-import SmallChat from '../../features/consulting/consultingRoom/chat/SmallChat';
-import { setAudioPermission, setVideoPermission } from '../../redux/actions/permissionActions';
+import Participant from '../participant/Participant';
+ import { setAudioPermission, setVideoPermission } from '../../redux/actions/permissionActions';
+import SmallChat from '../chat/SmallChat';
 
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';

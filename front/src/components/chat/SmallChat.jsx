@@ -9,8 +9,7 @@ import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
 
-import { appendMessageList } from '../../../../redux/slices/communitySlice'
-
+ 
 const SmallChat = () => {
   const [msg, setMsg] = useState('');
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
