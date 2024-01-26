@@ -26,9 +26,8 @@ function App() {
     <>
       <GlobalStyles />
       <Page>
-      <Navbar />
+        <Navbar />
         <Routes>
-<<<<<<< front/src/App.jsx
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/pw" element={<PasswordFindForm />} />
@@ -36,14 +35,14 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path='/mypage2' element={<ExpertPage />} />
+          <Route path="/mypage2" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
           <Route path="/faq" element={<FaQ />} />
-          <Route path='/beautyconsulting' element={<BeautyConsulting />} />
+          <Route path="/beautyconsulting" element={<BeautyConsulting />} />
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofile" element={<ExpertsProfile />} />
-          <Route path='/communityHome' element={<CommunityPage />} />
+          <Route path="/communityHome" element={<CommunityPage />} />
         </Routes>
         <Footer />
       </Page>
