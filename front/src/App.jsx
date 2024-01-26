@@ -20,6 +20,7 @@ import ExpertsProfile from "./components/experts/ExpertsProfile";
 import CommunityPage from "./components/CommunityPage";
 import ExpertPage from "./components/ExpertPage";
 import BeautyConsulting from "./components/BeuatyConsulting";
+import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofile" element={<ExpertsProfile />} />
           <Route path="/communityHome" element={<CommunityPage />} />
+          <Route
+            path="/expertsprofileregistration"
+            element={<ExpertsProfileRegistration />}
+          />
         </Routes>
         <Footer />
       </Page>
