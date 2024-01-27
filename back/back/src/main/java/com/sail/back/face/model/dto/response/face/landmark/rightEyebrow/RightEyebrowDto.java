@@ -2,10 +2,17 @@ package com.sail.back.face.model.dto.response.face.landmark.rightEyebrow;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sail.back.face.model.dto.response.CoordinateDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Map;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class RightEyebrowDto {
     @JsonProperty("right_eyebrow_0")
     private CoordinateDto right_eyebrow_0;

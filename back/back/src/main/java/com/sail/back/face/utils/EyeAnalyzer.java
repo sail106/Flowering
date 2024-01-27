@@ -12,18 +12,12 @@ import java.util.List;
 
 public class EyeAnalyzer {
 
-    public String EyeShapeAnalyze(LeftEyeEyelidDto leftEyeEyelid, RightEyeEyelidDto rightEyeEyelid, LeftEyeDto leftEye, RightEyeDto rightEye){
-        ArrayList<Float> leftEyeIncline = new ArrayList<>();
-        ArrayList<Float> rightEyeIncline = new ArrayList<>();
+    public String EyeShapeAnalyze(LeftEyeEyelidDto leftEyelid, RightEyeEyelidDto rightEyelid, LeftEyeDto leftEye, RightEyeDto rightEye){
+        ArrayList<Double> leftEyeSlope = new ArrayList<>();
+        ArrayList<Double> rightEyeSlope = new ArrayList<>();
 
-        for (int i = 0; i < leftEyeEyelid. - 1; i++) {
-            CoordinateDto currentPoint = coordinates[i];
-            CoordinateDto nextPoint = coordinates[i + 1];
 
-            double slope = CoordinateDto.calculateSlopeBetweenPoints(currentPoint, nextPoint);
-            slopes.add(slope);
-        }
-
+        return  "";
     }
 
 
