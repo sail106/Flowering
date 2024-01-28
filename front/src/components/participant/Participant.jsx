@@ -71,7 +71,7 @@ const Participant = ({ streamManager, audioPermission }) => {
 `;
 
   return (
-    <ChatGrid item xs={12} isparticipantcontainervisible={isparticipantcontainervisible}>
+    <ChatGrid item xs={12} isparticipantcontainervisible={isparticipantcontainervisible.toString()}>
       <ContentWrapper>
 
         <Header>

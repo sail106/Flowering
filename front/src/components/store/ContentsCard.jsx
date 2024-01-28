@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
+import Button from "./Button";
+
 const Card = styled.div`
   margin-left: 4%;
-  margin-top: 20%;
+  margin-top: ${props => props['margin-top'] || '20%'};
   display: flex;
   width: 377px;
   height: 415px;
@@ -24,7 +26,7 @@ const ContentsImage = styled.img`
 
 const ContentsCategory = styled.span`
   color: #6d6d6d;
-  font-family: Noto Sans KR;
+  font-family: "Noto Sans KR";
   font-size: 13px;
   padding: 10% 0% 0% 5%;
 `;
@@ -33,22 +35,53 @@ const ContentsTitle = styled(ContentsCategory)`
   color: black;
   font-size: 23px;
   padding: 5% 0% 0% 5%;
+  padding-top: ${props => props['padding-top'] || '5%'};
 `;
 
 const ContentsDate = styled(ContentsCategory)`
   font-family: Poppins;
 `;
 
-const ContentsCard = ({category, title, date, imageSrc, imageAlt}) => {
+const ContentDiscription = styled(ContentsCategory)`
+  color: black;
+  font-size: 16px;
+  padding-top: ${props => props['padding-top'] || '5%'};
+`;
+
+const ContentsCard = ({
+  category, title, date, imageSrc,
+  imageAlt, cardMarginTop, paddingTop,
+  description, isButton, buttonText,
+  borderColor, backgroundColor, color
+}) => {
   return (
-    <Card>
+    <Card margin-top={cardMarginTop}>
+      
       <ContentsImage
-       src={imageSrc}
-       alt={imageAlt}
+        src={imageSrc}
+        alt={imageAlt}
       />
-      <ContentsCategory>{category}</ContentsCategory>
-      <ContentsTitle>{title}</ContentsTitle>
-      <ContentsDate>{date}</ContentsDate>
+      {category && <ContentsCategory>{category}</ContentsCategory>}
+      
+      <ContentsTitle
+        padding-top={paddingTop}
+      >
+        {title}
+      </ContentsTitle>
+      {date && <ContentsDate>{date}</ContentsDate>}
+      {description && <ContentDiscription>{description}</ContentDiscription>}
+      {isButton &&
+        <Button
+          width="200px"
+          marginTop="20px"
+          marginLeft="90px"
+          borderColor={borderColor}
+          background-color={backgroundColor}
+          color={color}
+        >
+          {buttonText}
+        </Button>
+      }
     </Card>
   );
 };

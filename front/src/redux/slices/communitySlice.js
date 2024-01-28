@@ -3,10 +3,11 @@ import Axios, { imgAxios } from '../../api/Axios'
 
 const initialState = {
   session: undefined,
-   isSetClear: false,
+  isSetClear: false,
   creatorSessionName: '',
   community_id: 0,
   messageId: 2,
+  participantId: 0,
 
   messageList: [
     {
@@ -18,19 +19,20 @@ const initialState = {
     }
   ],
 
-  creator : 
-    {
-      id: 1,
-      role: '',
-      imageUrl: '',  
-      name: ' '
-    }
+  creator:
+  {
+    id: 0,
+    role: '',
+    imageUrl: '',
+    name: ' '
+  }
   ,
+  
   participantList: [
     {
-      id: 1,
+      id: 0,
       role: '',
-      imageUrl: '',  
+      imageUrl: '',
       name: ' '
     }
   ]
@@ -70,6 +72,7 @@ export const getConsultantSessionName = createAsyncThunk(
 const communitySlice = createSlice({
   name: 'community',
   initialState,
+
   reducers: {
     settingModalOn: (state) => {
       state.isSetClear = true;
@@ -89,6 +92,7 @@ const communitySlice = createSlice({
     resetSessionName: (state) => {
       state.creatorSessionName = ''
     },
+
     resetMsg: (state) => {
       state.messageId = 2;
       state.messageList = [
@@ -113,14 +117,9 @@ const communitySlice = createSlice({
     },
 
     appendParticipantList: (state, { payload }) => {
-      
-      if (payload.id > state.messageId) {
-        state.messageId = payload.id + 1
-      } else {
-        payload.id = state.messageId
-        state.messageId = state.messageId + 1
-      }
 
+      payload.id = state.participantId
+      state.participantId = state.participantId + 1
       state.participantList.push(payload)
     }
 

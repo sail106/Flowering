@@ -112,7 +112,7 @@ const Navbar = () => {
  
         <Link to={"/"}>Home</Link>
         <Link to={"/beautyconsulting"}>Consulting</Link>
-        <Link to={"/OneToManyVideoChat"}>Community</Link>
+        <Link to={"/"}>Community</Link>
         <Link to={"#"}>Contents</Link>
         <Link to={"/faq"}>FAQ</Link>
        </NavMenu>

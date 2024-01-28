@@ -6,12 +6,14 @@ import { configureStore   } from '@reduxjs/toolkit';
 
  import AvatarReducer from "../components/avatar/avatarSlice"; 
 import permissionReducer from './reducers/permissionReducer';
+import communityReducer from './slices/communitySlice';
 
 // Combine reducers
 const reducers = combineReducers({
   avatar: AvatarReducer,
   permission: permissionReducer,
-  
+  community: communityReducer,
+
 });
 
 // Redux Persist configuration
