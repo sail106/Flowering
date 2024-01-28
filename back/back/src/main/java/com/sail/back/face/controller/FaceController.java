@@ -12,6 +12,7 @@ import com.sail.back.face.model.dto.response.face.landmark.nose.NoseDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEye.RightEyeDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyeEyelid.RightEyeEyelidDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyebrow.RightEyebrowDto;
+import com.sail.back.face.utils.EyeAnalyzer;
 import com.sail.back.face.utils.MakeListFromDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +33,11 @@ import static com.sail.back.face.utils.FaceCoordinate.sendPostRequest;
 public class FaceController {
 
     static final MakeListFromDto makeListFromDto = new MakeListFromDto();
+    static final EyeAnalyzer eyeAnalyzer = new EyeAnalyzer();
 
     @GetMapping("/love")
     public static void start() throws IOException{
-        String imageUrl = "https://cdn.thebk.co.kr/news/photo/201411/114415_18295_4418.jpg";
+        String imageUrl = "https://img.allurekorea.com/allure/2018/02/style_5a92dac2bdc8b.jpg";
         FaceApiResponseDto faceApiResponseDto = sendPostRequest(imageUrl);
 
         FaceDto face = faceApiResponseDto.getLandmarkDto().getFaceDto();
@@ -72,7 +74,7 @@ public class FaceController {
         ArrayList<CoordinateDto> upperLipList = makeListFromDto.upperLipList(mouth);
         ArrayList<CoordinateDto> lowerLipList = makeListFromDto.lowerLipList(mouth);
 
-        log.info(lowerLipList.toString());
+        eyeAnalyzer.EyeShapeAnalyze(leftEyelidList, rightEyelidList, leftEyeList, rightEyeList, faceContourLeftList, faceContourRightList, leftEyebrowList, rightEyebrowList);
 
     }
 
