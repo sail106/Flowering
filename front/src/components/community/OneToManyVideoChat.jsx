@@ -15,13 +15,12 @@
   import { useDispatch } from "react-redux";
   import { useSelector } from 'react-redux';
   import Participant from '../participant/Participant';
-  import { setAudioPermission, setVideoPermission } from '../../redux/actions/permissionActions';
-  import SmallChat from '../chat/SmallChat';
+   import SmallChat from '../chat/SmallChat';
 import { OpenVidu } from 'openvidu-browser';
 
 
   const OPENVIDU_SERVER_URL = 'http://localhost:4443';
-  const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
+  const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   // rafce Arrow function style 
   const OneToManyVideoChat = () => {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import Axios, { imgAxios } from '../../api/Axios'
+import Axios from '../../api/Axios';
 
 const initialState = {
   session: undefined,
@@ -13,61 +13,41 @@ const initialState = {
     {
       id: 1,
       role: '',
-      imageUrl: '', // '' : mine, '/images/d~' : other
-      side: 'left', // '' : other, 'right' : mine
+      imageUrl: '',
+      side: 'left',
       message: '대화를 시작합니다.'
     }
   ],
 
-  creator:
-  {
+  creator: {
     id: 0,
     role: '',
     imageUrl: '',
-    name: ' '
-  }
-  ,
+    name: ''
+  },
   
   participantList: [
     {
       id: 0,
       role: '',
       imageUrl: '',
-      name: ' '
+      name: ''
     }
   ]
-
 }
 
-export const getConsultantSessionName = createAsyncThunk(
-  'community/getConsultantSessionName',
+export const getCreatorSessionName = createAsyncThunk(
+  'community/getCreatorSessionName',
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
-      return response.data // session id 를 리턴한다.
+      return response.data
     } catch (err) {
       console.log(err)
-      return err
+      return rejectWithValue(err)
     }
   }
 )
-
-// export const postCommunityResult = createAsyncThunk(
-//   'community/postCommunityResult',
-//   async (payload, { rejectWithValue }) => {
-//     try {
-//       let formData = new FormData()
-//       formData.append('consultingFinishRequest', new Blob([JSON.stringify(payload.consultingFinishRequest)], { type: "application/json" }))
-//       formData.append('file', payload.files[0])
-//       console.log(formData)
-//       const response = await Axios.post(`consultings`)
-//       alert('  커뮤니티를 종료합니다.')
-//       return response.data
-//     } catch (err) {
-//       return rejectWithValue(err)
-//     }
-//   }
-// )
 
 const communitySlice = createSlice({
   name: 'community',
@@ -99,8 +79,8 @@ const communitySlice = createSlice({
         {
           id: 1,
           role: '',
-          imageUrl: '', // '' : mine, '/images/d~' : other
-          side: 'left', // '' : other, 'right' : mine
+          imageUrl: '',
+          side: 'left',
           message: '대화를 시작합니다.'
         }
       ]
@@ -117,7 +97,6 @@ const communitySlice = createSlice({
     },
 
     appendParticipantList: (state, { payload }) => {
-
       payload.id = state.participantId
       state.participantId = state.participantId + 1
       state.participantList.push(payload)
@@ -127,8 +106,8 @@ const communitySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getConsultantSessionName.fulfilled, (state, { payload }) => {
-        state.consultantSessionName = payload.sessionId
+      .addCase(getCreatorSessionName .fulfilled, (state, { payload }) => {
+        state.creatorSessionName = payload.sessionId
       })
   }
 
@@ -137,4 +116,4 @@ const communitySlice = createSlice({
 export const { settingModalOn, settingModalOff, setSession, setCustomer,
   resetSessionName, appendMessageList, setReservationId, resetMsg } = communitySlice.actions;
 
-export default communitySlice.reducer
+export default communitySlice.reducer;

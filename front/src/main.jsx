@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}> { /* Wrap your App component with Provider and pass the Redux store */}
+    <Provider store={store}>  
       <BrowserRouter>
         <App />
       </BrowserRouter>

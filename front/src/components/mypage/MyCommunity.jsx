@@ -7,8 +7,8 @@ import { setSession } from "../../redux/slices/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
- import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';  
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -77,20 +77,22 @@ const Button = styled(ButtonBox)`
 `;
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
-const OPENVIDU_SERVER_SECRET = 'OPENVIDU_SECRET';
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 const MyCommunity = () => {
   const [OV, setOV] = useState(null)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { session, community_id } = useSelector(state => state.community)
+  const [publisher, setPublisher] = useState(undefined)
+  const [creator, setCreator] = useState(undefined)
 
   const streamCreated = (event) => {
 
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole
     if (role === CONSULTANT && subRole === CUSTOMER) { dispatch(setCustomer(subscriber)) }
-    else if (role === CUSTOMER && subRole === CONSULTANT) { setConsultant(subscriber) }
+    else if (role === CUSTOMER && subRole === CONSULTANT) { setCreator(subscriber) }
   }
 
   const streamDestroyed = (event) => {
@@ -103,21 +105,28 @@ const MyCommunity = () => {
 
   useEffect(() => {
     if (session) {
+
       session.on('streamCreated', streamCreated)
       session.on('streamDestroyed', streamDestroyed)
       session.on('exception', exception)
       getToken().then(sessionConnect)
-      navigate('/OneToManyVideoChat')
+      // 
+    }
+    else {
+      console.log('seesion is  ' + session)
     }
   }, [session])
 
 
   const sessionConnect = (token) => {
+
     session
       .connect(
         token, { clientData: myUserName, clientRole: role },
       )
       .then(() => {
+        console.log('tokk' + token)
+
         let publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
@@ -131,23 +140,35 @@ const MyCommunity = () => {
         publisher.subscribeToRemote()
         session.publish(publisher);
         setPublisher(publisher);
-        if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-        if (role === CONSULTANT) { setConsultant(publisher) }
+        // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
+        if (role === CUSTOMER) { setCreator(publisher) }
         dispatch(setSession(session))
+
+        // 이벤트 리스너 추가
+        session.on('streamCreated', streamCreated)
+        session.on('streamDestroyed', streamDestroyed)
+        session.on('exception', exception)
+
+        navigate('/OneToManyVideoChat')
       })
       .catch((error) => { });
   }
-  const joinSession = (communityId) => {  // Modified the argument to communityId
+
+  const joinSession = (communityId) => {
     const getOV = new OpenVidu();
     dispatch(setSession(getOV.initSession()))
     setOV(getOV)
-    console.log(communityId);
 
+    // console.log('session added'+session)
+
+    console.log(communityId);
   }
 
 
   const getToken = () => {
+    console.log('commid' + community_id)
     return createSession(community_id).then((sessionId) => createToken(sessionId));
+
   }
 
   const createToken = (sessionId) => {
@@ -187,7 +208,15 @@ const MyCommunity = () => {
 
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
+
       const data = JSON.stringify({ customSessionId: sessionId });
+
+      console.log('Basic ' + btoa(
+        'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
+      console.log('session added' + session)
+      console.log(data)
+      console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
+
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
@@ -205,21 +234,22 @@ const MyCommunity = () => {
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
-            console.warn(
-              'No connection to OpenVidu Server. This may be a certificate error at ' +
-              OPENVIDU_SERVER_URL,
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"',
-              )
-            ) {
-              window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
+            // console.warn(
+            //   'No connection to OpenVidu Server. This may be a certificate error at ' +
+            //   OPENVIDU_SERVER_URL,
+            // );
+            // if (
+            //   window.confirm(
+            //     'No connection to OpenVidu Server. This may be a certificate error at "' +
+            //     OPENVIDU_SERVER_URL +
+            //     '"\n\nClick OK to navigate and accept it. ' +
+            //     'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+            //     OPENVIDU_SERVER_URL +
+            //     '"',
+            //   )
+            // ) 
+            {
+              // window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
             }
           }
         });
@@ -227,8 +257,8 @@ const MyCommunity = () => {
   }
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },
-    { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 1 },
-    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "01.19(금)", community_id: 1 },
+    { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 2 },
+    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "01.19(금)", community_id: 3 },
   ];
 
   return (
