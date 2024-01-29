@@ -3,13 +3,9 @@ package com.sail.back.consulting.controller;
 import com.sail.back.consulting.exception.ConsultingErrorCode;
 import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
-import com.sail.back.consulting.model.dto.request.ConsultingUpdateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
-import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.consulting.model.service.ConsultingService;
 import com.sail.back.global.utils.MessageUtils;
-import com.sail.back.user.exception.UserErrorCode;
-import com.sail.back.user.exception.UserException;
 import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +28,6 @@ public class ConsultingController {
 
 
     private final ConsultingService consultingService;
-
     //상담예약등록
     @PostMapping("/{consultantId}")
     public ResponseEntity<ConsultingCreateResponse> createReservation(
