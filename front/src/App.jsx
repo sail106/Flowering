@@ -21,6 +21,7 @@ import CommunityPage from "./components/CommunityPage";
 import ExpertPage from "./components/ExpertPage";
 import BeautyConsulting from "./components/BeuatyConsulting";
 import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
+import ExpertsReservation from "./components/experts/ExpertsReservation";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofile" element={<ExpertsProfile />} />
           <Route path="/communityHome" element={<CommunityPage />} />
+          <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route
             path="/expertsprofileregistration"
             element={<ExpertsProfileRegistration />}
