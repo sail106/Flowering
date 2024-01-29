@@ -48,21 +48,28 @@ const ContentDiscription = styled(ContentsCategory)`
   padding-top: ${props => props['padding-top'] || '5%'};
 `;
 
+
+
 const ContentsCard = ({
   category, title, date, imageSrc,
   imageAlt, cardMarginTop, paddingTop,
   description, isButton, buttonText,
-  borderColor, backgroundColor, color
+  borderColor, backgroundColor, color,onClick,community_id
 }) => {
+
+  const onButtonClick = () => {
+    console.log('버튼클릭')
+  };
   return (
+
     <Card margin-top={cardMarginTop}>
-      
+
       <ContentsImage
         src={imageSrc}
         alt={imageAlt}
       />
       {category && <ContentsCategory>{category}</ContentsCategory>}
-      
+
       <ContentsTitle
         padding-top={paddingTop}
       >
@@ -78,7 +85,8 @@ const ContentsCard = ({
           borderColor={borderColor}
           background-color={backgroundColor}
           color={color}
-        >
+          onClick={onClick} 
+          >
           {buttonText}
         </Button>
       }

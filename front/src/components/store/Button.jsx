@@ -16,6 +16,7 @@ export const ButtonBox = styled.button`
   font-weight: bold;
 `;
 
+
 const Button = (props) => {
   return (
     <ButtonBox
@@ -26,6 +27,7 @@ const Button = (props) => {
       borderColor={props.borderColor}
       background-color={props['background-color']}
       color={props.color}
+      onClick={props.onClick} // 클릭 이벤트 핸들러 전달
     >
       {props.children}
     </ButtonBox>

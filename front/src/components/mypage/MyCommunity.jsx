@@ -3,7 +3,7 @@ import { ButtonBox } from "../store/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setSession } from "../../redux/slices/communitySlice";
+import { setCustomer, setSession } from "../../redux/slices/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -83,17 +83,23 @@ const MyCommunity = () => {
   const [OV, setOV] = useState(null)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { session, community_id } = useSelector(state => state.community)
   const [publisher, setPublisher] = useState(undefined)
   const [creator, setCreator] = useState(undefined)
   const { nickname, email, role } = useSelector(state => state.auth.logonUser)
 
-  const streamCreated = (event) => {
 
+  const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
-    const subRole = JSON.parse(event.stream.connection.data).clientRole
-    if (role === CONSULTANT && subRole === CUSTOMER) { dispatch(setCustomer(subscriber)) }
-    else if (role === CUSTOMER && subRole === CONSULTANT) { setCreator(subscriber) }
+
+    const subRole = JSON.parse(event.stream.connection.data).clientRole  //스트림의 구독자
+
+    // if (role === "CONSULTANT" && subRole === "CUSTOMER") { dispatch(setCustomer(subscriber)) }
+    // // else 
+
+    // if (role === "CUSTOMER" && subRole === "CONSULTANT") { setCreator(subscriber) }
+
   }
 
   const [myUserName, setMyUserName] = useState(nickname)
@@ -127,8 +133,9 @@ const MyCommunity = () => {
       .connect(
         token, { clientData: myUserName, clientRole: role },
       )
+
       .then(() => {
-        console.log('tokk' + token)
+        console.log('tokk  ' + token)
 
         let publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
@@ -144,14 +151,17 @@ const MyCommunity = () => {
         publisher.subscribeToRemote()
         session.publish(publisher);
         setPublisher(publisher);
+
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-        if (role === CUSTOMER) { setCreator(publisher) }
+        // if (role === CUSTOMER) 
+        setCreator(publisher)
         dispatch(setSession(session))
 
         // 이벤트 리스너 추가
         session.on('streamCreated', streamCreated)
         session.on('streamDestroyed', streamDestroyed)
         session.on('exception', exception)
+        console.log(' OneToManyVideoChat')
 
         navigate('/OneToManyVideoChat')
       })
@@ -216,7 +226,6 @@ const MyCommunity = () => {
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
 
-
       const data = JSON.stringify({ customSessionId: String(sessionId) });
 
 
@@ -230,15 +239,15 @@ const MyCommunity = () => {
       console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
 
       axios
-        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, { 
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
             Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
             'Content-Type': 'application/json',
- 
+
             // 'Access-Control-Allow-Origin': '*',
             // 'Access-Control-Allow-Methods': 'GET,POST',
           },
-          
+
         })
 
         .then((response) => {

@@ -23,6 +23,12 @@ const Styledh2 = styled.h2`
 `;
 
 const CommunityPage = () => {
+
+  const handleEnterButtonClick = (community_id) => {
+    console.log('버튼클릭'+community_id)
+
+  };
+
   return (
     <>
       <Card>
@@ -34,13 +40,14 @@ const CommunityPage = () => {
             margin-bottom="40px"
           />
           <h3>키티공주님,</h3>
-          <StyledDiv>화상 미팅을 열어 나만의 뷰티 노하우를<br/>
-          친구들에게 공유해보세요.</StyledDiv>
+          <StyledDiv>화상 미팅을 열어 나만의 뷰티 노하우를<br />
+            친구들에게 공유해보세요.</StyledDiv>
           <Button width="300px">커뮤니티 방 개설하기</Button>
         </CenterContainer>
       </Card>
       <TempCard>
         <Styledh2>실시간 인기 커뮤니티</Styledh2>
+
         <ContentsCard
           cardMarginTop="0px"
           // paddingTop="0px"
@@ -50,8 +57,10 @@ const CommunityPage = () => {
           description="여드름 피부였던 제가
           깐달걀 피부가 될 수 있었던 화장품을 공개합니다!!"
           isButton="true"
-          buttonText="입장하기"
+          buttonText="입장하기" 
+           onClick={() => handleEnterButtonClick("0")} 
         />
+
         <Styledh2>미공개 커뮤니티</Styledh2>
         <ContentsCard
           cardMarginTop="0px"
@@ -66,6 +75,7 @@ const CommunityPage = () => {
           backgroundColor="white"
           color="#383838"
         />
+
       </TempCard>
     </>
   );
