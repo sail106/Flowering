@@ -1,8 +1,8 @@
 import Title from "./Title";
 import MyCalendar from "../store/MyCalendar";
+import { ButtonBox } from "../store/Button";
 import RadioButton from "../store/RadioButton";
 import styled from "styled-components";
-import { ButtonBox } from "../store/Button";
 import Input from "../store/Input";
 
 const MyButton = styled(ButtonBox)`
@@ -23,6 +23,10 @@ const M1 = styled.div`
   display: flex;
   padding-top: 10px;
   margin: 20px;
+`;
+
+const Margin = styled.div`
+  margin: -20px;
 `;
 
 const AddImageButton = styled.button`
@@ -52,7 +56,8 @@ const ButtonContainer = styled.div`
 const CommunityModify = () => {
   return (
     <Cal>
-      <Title text={"예약 수정"} />
+      <Title text={"Reservation"} />
+      <Margin />
       <MyCalendar />
       <M1>
         <RadioButton
