@@ -187,7 +187,7 @@ const MyCommunity = () => {
 
   const createToken = (sessionId) => {
     console.log(sessionId)
-    console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
+     console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",

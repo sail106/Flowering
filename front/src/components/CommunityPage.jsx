@@ -6,6 +6,7 @@ import CenterContainer from "./store/CenterContainer";
 import styled from "styled-components";
 import ContentsCard from "./store/ContentsCard";
 import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react';
 
 const StyledDiv = styled.div`
   color: #6D6D6D;
@@ -25,16 +26,147 @@ const Styledh2 = styled.h2`
 
 const CommunityPage = () => {
 
-  const { session } = useSelector(state => {
+  const { session } = useSelector(state => state.community)
 
-    return state.community.find
-  });
+  useEffect(() => {
+    if (session) {
+      session.on('streamCreated', streamCreated)
+      session.on('streamDestroyed', streamDestroyed)
+      session.on('exception', exception)
+       getToken().then(sessionConnect);
+    }
+  }, [session])
+
+
+  const sessionConnect = (token) => {
+
+    session
+      .connect(
+        token, { clientData: myUserName, clientRole: role },
+      )
+
+      .then(() => {
+        console.log('tokk  ' + token)
+
+        let publisher = OV.initPublisher(undefined, {
+          audioSource: undefined,
+          videoSource: undefined,
+          publishAudio: true,
+          publishVideo: true,
+          resolution: '1280x960',
+          frameRate: 30,
+          insertMode: 'APPEND',
+          mirror: false,
+        });
+
+        publisher.subscribeToRemote()
+        session.publish(publisher);
+        setPublisher(publisher);
+
+        // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
+        // if (role === CUSTOMER) 
+        setCreator(publisher)
+        dispatch(setSession(session))
+
+        // 이벤트 리스너 추가
+        session.on('streamCreated', streamCreated)
+        session.on('streamDestroyed', streamDestroyed)
+        session.on('exception', exception)
+        console.log(' OneToManyVideoChat')
+
+        navigate('/OneToManyVideoChat')
+      })
+      .catch((error) => { });
+  }
+
+  const createSession = (sessionId) => {
+    return new Promise((resolve, reject) => {
+
+      const data = JSON.stringify({ customSessionId: String(sessionId) });
+
+
+      console.log('Basic ' + btoa(
+        'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
+
+      console.log('session added' + session)
+      console.log(sessionId)
+
+      console.log(data)
+      console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
+
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+          headers: {
+            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+            'Content-Type': 'application/json',
+
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Methods': 'GET,POST',
+          },
+
+        })
+
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((response) => {
+          var error = Object.assign({}, response);
+          if (error?.response?.status === 409) {
+            resolve(sessionId);
+          }
+        });
+    });
+  }
+  const getToken = () => {
+    console.log('commid' + community_id)
+    return createSession(community_id).then((sessionId) => createToken(sessionId));
+
+  }
+  
+  const createToken = (sessionId) => {
+    console.log(sessionId)
+     console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
+    return new Promise((resolve, reject) => {
+      const data = {
+        "type": "WEBRTC",
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+          "videoMaxRecvBandwidth": 1000,
+          "videoMinRecvBandwidth": 300,
+          "videoMaxSendBandwidth": 1000,
+          "videoMinSendBandwidth": 300,
+          "allowedFilters": [
+            "GStreamerFilter",
+            "FaceOverlayFilter",
+            "ChromaFilter"
+          ]
+        }
+      };
+
+      axios
+        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
+          headers: {
+            Authorization: 'Basic ' + btoa(
+              'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
+            ),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST',
+          },
+        })
+        .then((response) => {
+          resolve(response.data.token);
+        })
+        .catch((error) => reject(error));
+    });
+  }
 
   const handleEnterButtonClick = (community_id) => {
     console.log('버튼클릭' + community_id)
-
-
-
+    if (session)
+      console.log('session' + session)
+    else
+      console.log('dsfsdf') 
   };
 
   return (
