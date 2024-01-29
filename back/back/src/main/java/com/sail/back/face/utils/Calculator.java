@@ -107,4 +107,39 @@ public class Calculator {
 
         return minX;
     }
+
+    public ArrayList<CoordinateDto> seperateUpper(ArrayList<CoordinateDto> list){
+        ArrayList<CoordinateDto> upperList = new ArrayList<>();
+        for(int i = 0; i <32; i++){
+            upperList.add(list.get(i));
+        }
+        return upperList;
+    }
+
+    public ArrayList<CoordinateDto> seperateLower(ArrayList<CoordinateDto> list){
+        ArrayList<CoordinateDto> lowerList = new ArrayList<>();
+        for(int i = 32; i < 64; i++){
+            lowerList.add(list.get(i));
+        }
+        return lowerList;
+    }
+
+    public int closestPoint(ArrayList<CoordinateDto> list, CoordinateDto p) {
+
+        double minDistance = Double.MAX_VALUE;
+        int closestIndex = 64;
+
+        for (int i = 0; i < 64; i++) {
+            CoordinateDto current = list.get(i);
+            double distance = distance(current, p);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        return closestIndex;
+    }
+
 }

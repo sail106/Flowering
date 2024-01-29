@@ -12,8 +12,13 @@ import com.sail.back.face.model.dto.response.face.landmark.nose.NoseDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEye.RightEyeDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyeEyelid.RightEyeEyelidDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyebrow.RightEyebrowDto;
+import com.sail.back.face.model.entity.enums.EyelidDirection;
+import com.sail.back.face.model.entity.enums.EyelidSize;
+import com.sail.back.face.model.entity.enums.EyelidWidth;
+import com.sail.back.face.model.entity.enums.NoseSize;
 import com.sail.back.face.utils.EyeAnalyzer;
 import com.sail.back.face.utils.MakeListFromDto;
+import com.sail.back.face.utils.NoseAnalyzer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +39,7 @@ public class FaceController {
 
     static final MakeListFromDto makeListFromDto = new MakeListFromDto();
     static final EyeAnalyzer eyeAnalyzer = new EyeAnalyzer();
+    static final NoseAnalyzer noseAnalyzer = new NoseAnalyzer();
 
     @GetMapping("/love")
     public static void start() throws IOException{
@@ -74,7 +80,19 @@ public class FaceController {
         ArrayList<CoordinateDto> upperLipList = makeListFromDto.upperLipList(mouth);
         ArrayList<CoordinateDto> lowerLipList = makeListFromDto.lowerLipList(mouth);
 
-        eyeAnalyzer.EyeShapeAnalyze(leftEyelidList, rightEyelidList, leftEyeList, rightEyeList, faceContourLeftList, faceContourRightList, leftEyebrowList, rightEyebrowList);
+        //눈꼬리 올라감, 내려감
+        EyelidDirection eyeDirection= eyeAnalyzer.eyeShapeAnalyzer(leftEyelidList, rightEyelidList);
+        //눈매 김 짧음
+        EyelidWidth eyeWidth = eyeAnalyzer.eyeWidthAnalyzer(leftEyelidList, rightEyelidList, faceContourLeftList, faceContourRightList);
+        //눈 크기
+        EyelidSize eyeSize = eyeAnalyzer.eyeSizeAnalyzer(leftEyelidList, rightEyelidList, leftEyebrowList, rightEyebrowList);
+        //코 크기
+        NoseSize noseSize = noseAnalyzer.noseSizeAnalyzer(noseLeftList, noseRightList, leftEyelidList.get(31), rightEyelidList.get(31));
+
+        log.info(eyeDirection.toString());
+        log.info(eyeWidth.toString());
+        log.info(eyeSize.toString());
+        log.info(noseSize.toString());
 
     }
 
