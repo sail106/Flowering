@@ -58,26 +58,21 @@ public class ConsultantService {
 
 
         List<Consulting> consultings = consultingRepository.findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
-//        List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
-//                map(ConsultingmylistResponse::fromEntity ).collect(Collectors.toList());
 
         System.out.println("본인 상담내역조회" + consultings.toString());
 
-//        for (Consulting consulting : consultings) {
-//            consultingmylistResponses.add(ConsultingmylistResponse.fromEntity(consulting));
-//        }
 
         return consultings;
     }
 
     public ConsultantDetailResponse getConsultant(Long consultantid) {
         Consultant consultant = consultantRepository.findById(consultantid).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
-
-        return ConsultantDetailResponse.builder()
-                .consultant_id(consultant.getConsultant_id())
-                .self_introduce(consultant.getSelf_introduce())
-                .user(consultant.getUser())
-                .build();
+        return new ConsultantDetailResponse(consultant);
+//        return ConsultantDetailResponse.builder()
+//                .consultant_id(consultant.getConsultant_id())
+//                .self_introduce(consultant.getSelf_introduce())
+//                .user(consultant.getUser())
+//                .build();
     }
 
     public ConsultantDetailResponse update(User user, ConsultantUpdateRequest consultantUpdateRequest) {

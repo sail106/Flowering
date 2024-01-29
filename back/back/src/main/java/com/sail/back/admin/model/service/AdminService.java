@@ -35,6 +35,11 @@ public class AdminService {
                 orElseThrow(() -> new UserException(UserErrorCode.NOT_EXISTS_USER));
 
         user.setRole(UserRole.CONSULTANT);
+
+        if(!user.getRole().equals(UserRole.ADMIN)){
+            throw new AdminException(AdminErrorCode.NOT_ADMIN);
+        }
+
         userRepository.save(user);
 
         Consultant consultant = Consultant.builder()
