@@ -4,7 +4,7 @@ import Experts from "../store/Experts";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { StyledSmallDiv } from "../store/Experts";
-import Review from "./review";
+import Review from "./ExpertsCard";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
