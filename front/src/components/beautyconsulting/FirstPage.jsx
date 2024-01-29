@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Page } from "../store/Page";
-import { ButtonBox } from "../store/Button";
+import  { ButtonBox } from "../store/Button";
 
 const MyPage = styled(Page)`
   width: 80%;
