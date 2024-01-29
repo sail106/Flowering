@@ -21,99 +21,95 @@ public class Report {
     private Consulting consulting;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "survey_type")
     private SurveyType surveyType;
 
     @Enumerated(EnumType.STRING)
-    private Analysis_face_type analysis_face_type;
+    @Column(name = "analysis_face_type")
+    private AnalysisFaceType analysisFaceType;
 
-    @Column(length = 255)
-    private String analysis_face_content;
-
-    @Enumerated(EnumType.STRING)
-    private Analysis_eyebrow_type analysis_eyebrow_type;
-
-    @Column(length = 255)
-    private String analysis_eyebrow_content;
 
     @Enumerated(EnumType.STRING)
-    private Analysis_eye_type analysis_eye_type;
+    @Column(name = "analysis_eyebrow_type")
+    private AnalysisEyebrowType analysisEyebrowType;
 
-    @Column(length = 255)
-    private String analysis_eye_content;
-
-    @Enumerated(EnumType.STRING)
-    private Analysis_nose_type analysis_nose_type;
-
-    @Column(length = 255)
-    private String analysis_nose_content;
 
     @Enumerated(EnumType.STRING)
-    private Analysis_lips_type analysis_lips_type;
+    @Column(name = "analysis_eye_type")
+    private AnalysisEyeType analysisEyeType;
 
-    @Column(length = 255)
-    private String analysis_lips_content;
 
-    @Column(length = 100)
-    private String analysis_result_pores;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "analysis_nose_type")
+    private AnalysisNoseType analysisNoseType;
 
-    @Column(length = 100)
-    private String analysis_result_wrinkles;
 
-    @Column(length = 100)
-    private String analysis_result_acne;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "analysis_lips_type")
+    private AnalysisLipsType analysisLipsType;
 
-    @Column(length = 100)
-    private String analysis_result_dark_circles;
 
-    @Column(length = 255)
-    private String analysis_result_photo;
+    @Column(length = 100, name = "analysis_result_pores")
+    private String analysisResultPores;
 
-    @Column(length = 50)
-    private String skincare_skinstate;
+    @Column(length = 100, name = "analysis_result_wrinkles")
+    private String analysisResultWrinkles;
 
-    @Column(length = 255)
-    private String skincare_solution;
+    @Column(length = 100, name = "analysis_result_acne")
+    private String analysisResultAcne;
 
-    @Column(length = 50)
-    private String skincare_morning;
+    @Column(length = 100, name = "analysis_result_dark_circles")
+    private String analysisResultDarkCircles;
 
-    @Column(length = 50)
-    private String skincare_night;
+    @Column(length = 255, name = "analysis_result_photo_url")
+    private String analysisResultPhotoUrl;
 
-    @Column(length = 50)
-    private String makeup_facetype;
+    @Column(length = 50, name = "skincare_skinstate")
+    private String skincareSkinState;
 
-    @Column(length = 50)
-    private String makeup_facialexpression;
+    @Column(length = 255, name = "skincare_solution")
+    private String skincareSolution;
 
-    @Column(length = 255)
-    private String makeup_solution;
+    @Column(length = 50, name = "skincare_morning")
+    private String skincareMorning;
 
-    @Column(length = 50)
-    private String makeup_shading;
+    @Column(length = 50, name = "skincare_night")
+    private String skincareNight;
 
-    @Column(length = 50)
-    private String makeup_blusher;
+    @Column(length = 50, name = "makeup_facetype")
+    private String makeUpFaceType;
 
-    @Column(length = 50)
-    private String makeup_highlighting;
+    @Column(length = 50, name = "makeup_facialexpression")
+    private String makeUpFacialExpression;
 
-    @Column(length = 50)
-    private String makeup_lipmakeup;
+    @Column(length = 255, name = "makeup_solution")
+    private String makeupSolution;
 
-    @Column(length = 50)
-    private String makeup_eyemakeup;
+    @Column(length = 50, name = "makeup_shading")
+    private String makeupShading;
 
-    @Column(length = 50)
-    private String makeup_skinmakeup;
+    @Column(length = 50, name = "makeup_blusher")
+    private String makeupBlusher;
 
-    @Column(length = 50)
-    private String hairstyle_haircolor;
+    @Column(length = 50, name = "makeup_highlighting")
+    private String makeupHighlighting;
 
-    @Column(length = 50)
-    private String hairstyle_hairstyle;
+    @Column(length = 50, name = "makeup_lipmakeup")
+    private String makeupLipMakeup;
 
-    @Column(length = 255)
-    private String hairstyle_solution;
+    @Column(length = 50,name = "makeup_eyemakeup")
+    private String makeupEyeMakeup;
+
+    @Column(length = 50, name = "makeup_skinmakeup")
+    private String makeupSkinMakeup;
+
+    @Column(length = 50, name = "hairstyle_haircolor")
+    private String hairstyleHairColor;
+
+    @Column(length = 50, name = "hairstyle_hairstyle")
+    private String hairstyleHairstyle;
+
+    @Column(length = 255, name = "hairstyle_solution")
+    private String hairstyleSolution;
 
 }
