@@ -28,7 +28,6 @@ function App() {
       <Page>
       <Navbar />
         <Routes>
-<<<<<<< front/src/App.jsx
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/pw" element={<PasswordFindForm />} />
