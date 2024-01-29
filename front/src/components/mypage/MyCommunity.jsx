@@ -3,7 +3,7 @@ import { ButtonBox } from "../store/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setCustomer, setSession } from "../../redux/slices/communitySlice";
+import { setCommunityid, setCustomer, setSession } from "../../redux/slices/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -92,12 +92,10 @@ const MyCommunity = () => {
 
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
-
     const subRole = JSON.parse(event.stream.connection.data).clientRole  //스트림의 구독자
 
     // if (role === "CONSULTANT" && subRole === "CUSTOMER") { dispatch(setCustomer(subscriber)) }
     // // else 
-
     // if (role === "CUSTOMER" && subRole === "CONSULTANT") { setCreator(subscriber) }
 
   }
@@ -116,14 +114,16 @@ const MyCommunity = () => {
     if (session) {
 
       session.on('streamCreated', streamCreated)
+      console.log('streamDestroyed '  )
       session.on('streamDestroyed', streamDestroyed)
+      console.log('exception '  )
       session.on('exception', exception)
-      getToken().then(sessionConnect)
-      // 
-    }
-    else {
       console.log('seesion is  ' + session)
+      console.log('community_id is  ' + community_id)
+      getToken().then(sessionConnect)
+
     }
+
   }, [session])
 
 
@@ -154,13 +154,8 @@ const MyCommunity = () => {
 
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
         // if (role === CUSTOMER) 
-        setCreator(publisher)
-        dispatch(setSession(session))
-
-        // 이벤트 리스너 추가
-        session.on('streamCreated', streamCreated)
-        session.on('streamDestroyed', streamDestroyed)
-        session.on('exception', exception)
+        dispatch(setCreator(publisher))
+ 
         console.log(' OneToManyVideoChat')
 
         navigate('/OneToManyVideoChat')
@@ -172,6 +167,7 @@ const MyCommunity = () => {
     const getOV = new OpenVidu();
     dispatch(setSession(getOV.initSession()))
     setOV(getOV)
+    dispatch(setCommunityid(communityId))
 
     // console.log('session added'+session)
 
@@ -182,12 +178,12 @@ const MyCommunity = () => {
   const getToken = () => {
     console.log('commid' + community_id)
     return createSession(community_id).then((sessionId) => createToken(sessionId));
-
   }
 
   const createToken = (sessionId) => {
+
     console.log(sessionId)
-     console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
+    console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",

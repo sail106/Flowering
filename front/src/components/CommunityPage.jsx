@@ -33,7 +33,7 @@ const CommunityPage = () => {
       session.on('streamCreated', streamCreated)
       session.on('streamDestroyed', streamDestroyed)
       session.on('exception', exception)
-       getToken().then(sessionConnect);
+      getToken().then(sessionConnect);
     }
   }, [session])
 
@@ -66,8 +66,7 @@ const CommunityPage = () => {
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
         // if (role === CUSTOMER) 
         setCreator(publisher)
-        dispatch(setSession(session))
-
+ 
         // 이벤트 리스너 추가
         session.on('streamCreated', streamCreated)
         session.on('streamDestroyed', streamDestroyed)
@@ -94,38 +93,40 @@ const CommunityPage = () => {
       console.log(data)
       console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
 
+      
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
             Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
             'Content-Type': 'application/json',
-
             // 'Access-Control-Allow-Origin': '*',
             // 'Access-Control-Allow-Methods': 'GET,POST',
           },
-
         })
 
         .then((response) => {
           resolve(response.data);
         })
+
         .catch((response) => {
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
             resolve(sessionId);
           }
         });
+
     });
   }
+  
   const getToken = () => {
     console.log('commid' + community_id)
     return createSession(community_id).then((sessionId) => createToken(sessionId));
 
   }
-  
+
   const createToken = (sessionId) => {
     console.log(sessionId)
-     console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
+    console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",
@@ -154,6 +155,7 @@ const CommunityPage = () => {
             'Access-Control-Allow-Methods': 'GET,POST',
           },
         })
+
         .then((response) => {
           resolve(response.data.token);
         })
@@ -163,10 +165,14 @@ const CommunityPage = () => {
 
   const handleEnterButtonClick = (community_id) => {
     console.log('버튼클릭' + community_id)
+    console.log('session' + session)
+
     if (session)
       console.log('session' + session)
+
     else
-      console.log('dsfsdf') 
+      console.log('dsfsdf')
+
   };
 
   return (

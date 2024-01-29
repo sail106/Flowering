@@ -22,6 +22,7 @@ import {
   settingModalOn, setSession, setCustomer,
   resetSessionName, resetMsg
 } from '../../redux/slices/communitySlice'
+import UserVideoComponent from './UserVideoComponent';
 
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
@@ -30,7 +31,7 @@ const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 const OneToManyVideoChat = () => {
 
   //   // const { nickname, email, role } = useSelector(state => state.auth.logonUser)
-  const { session} = useSelector(state => state.community)
+  const { session, creator } = useSelector(state => state.community)
   //   // const tmp = email?.replace(/[@\.]/g, '-')
 
   //   const [mySessionId, setMySessionId] = useState(
@@ -62,118 +63,25 @@ const OneToManyVideoChat = () => {
   };
 
   useEffect(() => {
+    console.log('sss', session);
+  }, [session]);
+
+  useEffect(() => {
+    console.log('sss', creator);
+  }, [creator]);
+
+
+  useEffect(() => {
 
     setIsMic(isMic);
     setIsCam(isCam);
 
     console.log('ismicchanged' + isMic)
     console.log('iscamchanged' + isCam)
-    console.log('session'+session)
+    console.log('session' + session)
 
   }, [isMic, isCam]);
 
-  //   // 코멘트, 진단결과 톤, 진단결과 이미지 정보
-  //   // const { selectedColor, bestColor, worstColor,
-  //     // consultingComment, tone, files
-  //   // } = useSelector(state => state.colorSetList)
-
-
-  //   const consultingFinishRequest = {
-  //     reservationId: reservationId,
-  //     consultingComment: consultingComment,
-  //     tone: tone,
-  //     bestColorSet: bestColor,
-  //     worstColorSet: worstColor
-  //   }
-
-  //   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //     // console.log('dsfsfsfsd')
-  //     window.addEventListener(
-  //       'beforeunload',
-  //       onbeforeunload);
-
-  //     return () => {
-  //       window.removeEventListener(
-  //         'beforeunload',
-  //         onbeforeunload);
-  //     }
-  //   }, [])
-
-  //   useEffect(() => {
-  //     if (role === CUSTOMER) {
-  //       // console.log('consultantSessionName'+consultantSessionName)
-  //       console.log('consultantSessionName'+consultantSessionName)
-
-  //       if (!consultantSessionName) {
-  //         console.log('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-  //         console.log('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-  //       }
-  //       else {
-  //         console.log(consultantSessionName)
-  //       }
-  //     }
-  //   }, [consultantSessionName])
-
-  // //방에 입장하고 싶은사람이 redux 에서 consultantsessioname 이 있으면 값출력, 없으면 종료한다.
-
-  // // consultantsessionname 이 바뀔때 실행된다.
-
-  //   useEffect( () => {
-
-  //     if(session) { //session 은 state.consult 에서 가져온값 
-  //       // console.log('in ifsessionn' )
-  //       console.log('in if session')
-
-  //       session.on('streamCreated', streamCreated) //session.on 은 useeffect 가 마운트될때, session 값 이 변경될때
-  //       // 실행된다
-  //       session.on('streamDestroyed', streamDestroyed)
-  //       session.on('exception', exception)
-  //       session.on('signal:colorset', shareColorset)
-  //       getToken().then(sessionConnect); //gettoken수행시 createsession,createtoken 수행.
-  //     }
-  //   }, [session])
-  // //session이 이미 존재하는 경우
-  // // getToken 함수가 호출되면 실제로는 새로운 세션을 만들지 않습니다.
-  // // createSession 함수 내에서 이미 생성된 세션이 있을 경우, 
-
-  // // 해당 세션의 ID를 반환하게 됩니다. 그러므로 getToken 함수는 이미 존재하는
-  // // 세션의 ID를 사용하여 토큰을 생성합니다.
-  //   const sessionConnect = (token) => { // setsession ,setcustomer 등을 수행.
-  //     // console.log('connnnect')
-  //     console.log('connnnect')
-  //     session
-  //       .connect(
-  //         token, { clientData: myUserName, clientRole: role },
-  //       )
-  //       .then(() => {
-  //         console.log('connect then')
-
-  //         let publisher = OV.initPublisher(undefined, {
-  //           audioSource: undefined,
-  //           videoSource: undefined,
-  //           publishAudio: true,
-  //           publishVideo: true,
-  //           resolution: '1280x960',
-  //           frameRate: 30,
-  //           insertMode: 'APPEND',
-  //           mirror: false,
-  //         }); //publisher 에 비디오 정보를 저장 
-
-  //         publisher.subscribeToRemote() 
-  //         session.publish(publisher); //session.publish를 호출하여 로컬 사용자의 미디어 스트림을 서버에 전송
-  //         setPublisher(publisher);
-  //         if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-  //         if (role === CONSULTANT) { setConsultant(publisher) }
-  //         dispatch(setSession(session))
-  //       })
-  //       .catch((error) => {
-  //         console.log('connect error')
-  //        });
-
-  //   }
 
   //   useEffect(() => {
   //     if (session && role === CONSULTANT) {
@@ -430,13 +338,13 @@ const OneToManyVideoChat = () => {
 
             //   <CiVideoOn />
 
-            //   <SGrid item >
-            //     {/* <VideoContainer>
-            //       <UserVideoComponent
-            //         streamManager={consultant}
-            //          />
-            //     </VideoContainer> */}
-            //   </SGrid>
+
+            // <VideoContainer>
+            //   <UserVideoComponent
+            //     streamManager={consultant}
+            //      />
+            // </VideoContainer>
+
 
             //   {
             //     // role === CONSULTANT &&
@@ -453,36 +361,11 @@ const OneToManyVideoChat = () => {
             // </SpinnerGrid>
           }
 
-          {/* <UserVideoSGrid item xs={12} sm={6}> */}
-          {
-            // customer !== undefined ? (
 
-            // 유저 비디오 및 베스트 및 컬러셋
-            // <VideoContainer>
-            //   <UserVideoComponent
-            //     streamManager={customer} 
-            //     />
-            // </VideoContainer>
-            // )
-            //   :
-            //   <SpinnerGrid item xs={12} sm={6}>
-            //     <CircularProgress />
-            //   </SpinnerGrid>
-          }
-          {
-            // role === CONSULTANT &&
-            // <ColorButtonGroup
-            //   clickColorFirstFunc={clickColorFirstFunc}
-            //   clickColorFirst={clickColorFirst}
-            //   isBest={isBest}
-            //   isWorst={isWorst}
-            //   setIsBest={setIsBest}
-            //   setIsWorst={setIsWorst}
-            // />
-          }
-          {/* <SmallChat /> */}
 
           <VideoGroup>
+            {/* <UserVideoComponent
+              streamManager={creator} /> */}
 
           </VideoGroup>
 

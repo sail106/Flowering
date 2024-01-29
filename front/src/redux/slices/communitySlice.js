@@ -7,7 +7,7 @@ const initialState = {
   creatorSessionName: '',
   community_id: 0,
   messageId: 2,
-  participantId: 0,
+  participantId: 1,
 
   personalmessageList: [
     {
@@ -28,6 +28,7 @@ const initialState = {
       message: '대화를 시작합니다.'
     }
   ],
+
   creator: {
     id: 0,
     role: '',
@@ -142,6 +143,6 @@ const communitySlice = createSlice({
 
 export const { settingModalOn, settingModalOff, setSession, setCustomer,
   resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
-  setReservationId, resetMsg } = communitySlice.actions;
+  setReservationId, resetMsg,setCommunityid } = communitySlice.actions;
 
 export default communitySlice.reducer;
