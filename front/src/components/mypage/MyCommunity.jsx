@@ -86,6 +86,7 @@ const MyCommunity = () => {
   const { session, community_id } = useSelector(state => state.community)
   const [publisher, setPublisher] = useState(undefined)
   const [creator, setCreator] = useState(undefined)
+  const { nickname, email, role } = useSelector(state => state.auth.logonUser)
 
   const streamCreated = (event) => {
 
@@ -94,6 +95,8 @@ const MyCommunity = () => {
     if (role === CONSULTANT && subRole === CUSTOMER) { dispatch(setCustomer(subscriber)) }
     else if (role === CUSTOMER && subRole === CONSULTANT) { setCreator(subscriber) }
   }
+
+  const [myUserName, setMyUserName] = useState(nickname)
 
   const streamDestroyed = (event) => {
     deleteSubscriber(event.stream.streamManager);
@@ -137,6 +140,7 @@ const MyCommunity = () => {
           insertMode: 'APPEND',
           mirror: false,
         });
+
         publisher.subscribeToRemote()
         session.publish(publisher);
         setPublisher(publisher);
@@ -172,6 +176,8 @@ const MyCommunity = () => {
   }
 
   const createToken = (sessionId) => {
+    console.log(sessionId)
+    console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",
@@ -188,8 +194,9 @@ const MyCommunity = () => {
           ]
         }
       };
+
       axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
           headers: {
             Authorization: 'Basic ' + btoa(
               'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
@@ -209,52 +216,43 @@ const MyCommunity = () => {
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
 
-      const data = JSON.stringify({ customSessionId: sessionId });
+
+      const data = JSON.stringify({ customSessionId: String(sessionId) });
+
 
       console.log('Basic ' + btoa(
         'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
+
       console.log('session added' + session)
+      console.log(sessionId)
+
       console.log(data)
       console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
 
       axios
-        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, { 
           headers: {
             Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,POST',
+ 
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Methods': 'GET,POST',
           },
+          
         })
+
         .then((response) => {
-          resolve(response.data.id);
+          resolve(response.data);
         })
         .catch((response) => {
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
             resolve(sessionId);
-          } else {
-            // console.warn(
-            //   'No connection to OpenVidu Server. This may be a certificate error at ' +
-            //   OPENVIDU_SERVER_URL,
-            // );
-            // if (
-            //   window.confirm(
-            //     'No connection to OpenVidu Server. This may be a certificate error at "' +
-            //     OPENVIDU_SERVER_URL +
-            //     '"\n\nClick OK to navigate and accept it. ' +
-            //     'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-            //     OPENVIDU_SERVER_URL +
-            //     '"',
-            //   )
-            // ) 
-            {
-              // window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
-            }
           }
         });
     });
   }
+
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },
     { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 2 },
