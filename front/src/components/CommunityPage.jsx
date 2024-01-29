@@ -5,6 +5,7 @@ import Card from "./store/Card";
 import CenterContainer from "./store/CenterContainer";
 import styled from "styled-components";
 import ContentsCard from "./store/ContentsCard";
+import { useSelector } from 'react-redux'
 
 const StyledDiv = styled.div`
   color: #6D6D6D;
@@ -24,8 +25,15 @@ const Styledh2 = styled.h2`
 
 const CommunityPage = () => {
 
+  const { session } = useSelector(state => {
+
+    return state.community.find
+  });
+
   const handleEnterButtonClick = (community_id) => {
-    console.log('버튼클릭'+community_id)
+    console.log('버튼클릭' + community_id)
+
+
 
   };
 
@@ -57,8 +65,8 @@ const CommunityPage = () => {
           description="여드름 피부였던 제가
           깐달걀 피부가 될 수 있었던 화장품을 공개합니다!!"
           isButton="true"
-          buttonText="입장하기" 
-           onClick={() => handleEnterButtonClick("0")} 
+          buttonText="입장하기"
+          onClick={() => handleEnterButtonClick("0")}
         />
 
         <Styledh2>미공개 커뮤니티</Styledh2>
