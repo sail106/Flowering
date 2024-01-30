@@ -12,13 +12,8 @@ import com.sail.back.face.model.dto.response.face.landmark.nose.NoseDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEye.RightEyeDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyeEyelid.RightEyeEyelidDto;
 import com.sail.back.face.model.dto.response.face.landmark.rightEyebrow.RightEyebrowDto;
-import com.sail.back.face.model.entity.enums.EyelidDirection;
-import com.sail.back.face.model.entity.enums.EyelidSize;
-import com.sail.back.face.model.entity.enums.EyelidWidth;
-import com.sail.back.face.model.entity.enums.NoseSize;
-import com.sail.back.face.utils.EyeAnalyzer;
-import com.sail.back.face.utils.MakeListFromDto;
-import com.sail.back.face.utils.NoseAnalyzer;
+import com.sail.back.face.model.entity.enums.*;
+import com.sail.back.face.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +35,8 @@ public class FaceController {
     static final MakeListFromDto makeListFromDto = new MakeListFromDto();
     static final EyeAnalyzer eyeAnalyzer = new EyeAnalyzer();
     static final NoseAnalyzer noseAnalyzer = new NoseAnalyzer();
+    static final MouthAnalyzer mouthAnalyzer = new MouthAnalyzer();
+    static final FaceShapeAnalyzer faceShapeAnalyzer = new FaceShapeAnalyzer();
 
     @GetMapping("/love")
     public static void start() throws IOException{
@@ -88,12 +85,20 @@ public class FaceController {
         EyelidSize eyeSize = eyeAnalyzer.eyeSizeAnalyzer(leftEyelidList, rightEyelidList, leftEyebrowList, rightEyebrowList);
         //코 크기
         NoseSize noseSize = noseAnalyzer.noseSizeAnalyzer(noseLeftList, noseRightList, leftEyelidList.get(31), rightEyelidList.get(31));
+        //입 크기
+        MouthSize mouthSize = mouthAnalyzer.mouthSizeAnalyzer(upperLipList, lowerLipList, leftEyePupilCenter, rightEyePupilCenter, leftEyePupilRadius, rightEyePupilRadius);
+        //입 비율
+        LipRatio lipRatio = mouthAnalyzer.mouthRatioAnalyzer(upperLipList, lowerLipList);
+        //얼굴 분류
+        FaceShape faceShape = faceShapeAnalyzer.shapeTypeAnalyzer(faceHairlineList, faceContourLeftList, faceContourRightList);
 
         log.info(eyeDirection.toString());
         log.info(eyeWidth.toString());
         log.info(eyeSize.toString());
         log.info(noseSize.toString());
-
+        log.info(mouthSize.toString());
+        log.info(lipRatio.toString());
+        log.info(faceShape.toString());
     }
 
 

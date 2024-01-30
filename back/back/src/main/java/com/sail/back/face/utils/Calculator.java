@@ -142,6 +142,19 @@ public class Calculator {
 
         return closestIndex;
     }
+    //이차방정식 생서하는 메서드
+    public DoubleUnaryOperator createQuadraticEquation(CoordinateDto p1, CoordinateDto p2, CoordinateDto p3) {
+        // 직선 방정식의 계수 계산
+        double a = (double) ((p2.getY() - p1.getY()) * (p3.getX() - p1.getX()) - (p2.getX() - p1.getX()) * (p3.getY() - p1.getY()))
+                / ((p2.getX() - p1.getX()) * (p3.getX() - p1.getX()) * (p2.getX() - p3.getX()));
+        double b = (p2.getY() - p1.getY() - a * (p2.getX() * p2.getX() - p1.getX() * p1.getX()))
+                / (p2.getX() - p1.getX());
+        double c = p1.getY() - a * p1.getX() * p1.getX() - b * p1.getX();
+
+        // 이차방정식 생성 및 반환
+        return x -> a * x * x + b * x + c;
+    }
+
 
     // 구간 [leftEnd, rightEnd]에서의 길이를 계산하는 메서드
     public double calculateLength(DoubleUnaryOperator function, double leftEnd, double rightEnd) {
