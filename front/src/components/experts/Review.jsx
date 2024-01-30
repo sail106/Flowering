@@ -100,6 +100,7 @@ const Review = () => {
         <StyledRating
           name="half-rating-read"
           // defaultValue={rate}
+          style={{ fontSize: "4rem" }}
           precision={0.5}
           readOnly
         />
