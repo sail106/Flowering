@@ -31,7 +31,7 @@ const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 const OneToManyVideoChat = () => {
 
   //   // const { nickname, email, role } = useSelector(state => state.auth.logonUser)
-  const { session, creator } = useSelector(state => state.community)
+  const { session, community_id } = useSelector(state => state.community)
   //   // const tmp = email?.replace(/[@\.]/g, '-')
 
   //   const [mySessionId, setMySessionId] = useState(
@@ -63,12 +63,12 @@ const OneToManyVideoChat = () => {
   };
 
   useEffect(() => {
-    console.log('sss', session);
+    console.log('session', session);
   }, [session]);
 
   useEffect(() => {
-    console.log('sss', creator);
-  }, [creator]);
+    console.log('community_id', community_id);
+  }, [community_id]);
 
 
   useEffect(() => {
@@ -78,7 +78,6 @@ const OneToManyVideoChat = () => {
 
     console.log('ismicchanged' + isMic)
     console.log('iscamchanged' + isCam)
-    console.log('session' + session)
 
   }, [isMic, isCam]);
 
@@ -151,30 +150,31 @@ const OneToManyVideoChat = () => {
 
   //   // 컨설턴트, 고객 종료시 분리 필요
   const leaveSession = () => {
+    console.log('session' + session)
 
-    if (session) {
-      session.disconnect();
-      dispatch(postConsultingResult({ files, consultingFinishRequest }))
-        .then(() => {
-          dispatch(changeComment(''))
-          dispatch(selectTone(''))
-          dispatch(setFiles(''))
-          dispatch(resetColor())
-          navigate('/')
-        })
-    }
+    // if (session) {
+    //   session.disconnect();
+    //   dispatch(postConsultingResult({ files, consultingFinishRequest }))
+    //     .then(() => {
+    //       dispatch(changeComment(''))
+    //       dispatch(selectTone(''))
+    //       dispatch(setFiles(''))
+    //       dispatch(resetColor())
+    //       navigate('/')
+    //     })
+    // }
 
-    if (role === CUSTOMER && session) {
-      session.disconnect();
-    }
+    // if (role === CUSTOMER && session) {
+    //   session.disconnect();
+    // }
 
-    setOV(null);
-    setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
-    dispatch(setSession(undefined))
-    dispatch(setCustomer(undefined))
-    dispatch(resetMsg())
-    setMyUserName(nickname)
-    setConsultant(undefined)
+    // setOV(null);
+    // setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
+    // dispatch(setSession(undefined))
+    // dispatch(setCustomer(undefined))
+    // dispatch(resetMsg())
+    // setMyUserName(nickname)
+    // setConsultant(undefined)
 
   }
 
@@ -575,12 +575,9 @@ const OneToManyVideoChat = () => {
 
                   {/* <BottomBtn variant="contained"  > */}
 
-                  <ExitButton>
+                  <ExitButton onClick={leaveSession}>
                     나가기
-                    { /* </BottomBtn> */}
                   </ExitButton>
-
-
 
                   {/* </ButtonGroup> */}
                 </MicCamExitGroup>
@@ -751,7 +748,10 @@ const ExitButton = styled(Button)`
       width: 130px;
       margin-bottom: 11px;
       margin-top: 11px;
+      
+      
     }
+    
   `;
 
 

@@ -91,12 +91,8 @@ const MyCommunity = () => {
 
 
   const streamCreated = (event) => {
-    const subscriber = session.subscribe(event.stream, undefined);
+    // const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole  //스트림의 구독자
-
-    // if (role === "CONSULTANT" && subRole === "CUSTOMER") { dispatch(setCustomer(subscriber)) }
-    // // else 
-    // if (role === "CUSTOMER" && subRole === "CONSULTANT") { setCreator(subscriber) }
 
   }
 
@@ -113,21 +109,21 @@ const MyCommunity = () => {
   useEffect(() => {
     if (session) {
 
-      session.on('streamCreated', streamCreated)
-      console.log('streamDestroyed '  )
-      session.on('streamDestroyed', streamDestroyed)
-      console.log('exception '  )
-      session.on('exception', exception)
-      console.log('seesion is  ' + session)
-      console.log('community_id is  ' + community_id)
+      // session.on('streamCreated', streamCreated)
+      // console.log('streamDestroyed '  )
+      // session.on('streamDestroyed', streamDestroyed)
+      // console.log('exception '  )
+      // session.on('exception', exception)
+      // console.log('seesion is  ' + session)
+      // console.log('community_id is  ' + community_id)
       getToken().then(sessionConnect)
-
     }
 
   }, [session])
 
 
   const sessionConnect = (token) => {
+    console.log('in connection  ')
 
     session
       .connect(
@@ -149,16 +145,20 @@ const MyCommunity = () => {
         });
 
         publisher.subscribeToRemote()
+        console.log(' OneToManyVideoChat')
+
         session.publish(publisher);
+
         setPublisher(publisher);
 
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
         // if (role === CUSTOMER) 
-        dispatch(setCreator(publisher))
- 
-        console.log(' OneToManyVideoChat')
+
+        setCreator(publisher)
+
 
         navigate('/OneToManyVideoChat')
+
       })
       .catch((error) => { });
   }
@@ -167,9 +167,10 @@ const MyCommunity = () => {
     const getOV = new OpenVidu();
     dispatch(setSession(getOV.initSession()))
     setOV(getOV)
+    console.log('  setCommunityid'+communityId)
+
     dispatch(setCommunityid(communityId))
 
-    // console.log('session added'+session)
 
     console.log(communityId);
   }

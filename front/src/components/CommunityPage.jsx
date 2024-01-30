@@ -7,6 +7,7 @@ import styled from "styled-components";
 import ContentsCard from "./store/ContentsCard";
 import { useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StyledDiv = styled.div`
   color: #6D6D6D;
@@ -27,6 +28,7 @@ const Styledh2 = styled.h2`
 const CommunityPage = () => {
 
   const { session } = useSelector(state => state.community)
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (session) {
@@ -66,7 +68,7 @@ const CommunityPage = () => {
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
         // if (role === CUSTOMER) 
         setCreator(publisher)
- 
+
         // 이벤트 리스너 추가
         session.on('streamCreated', streamCreated)
         session.on('streamDestroyed', streamDestroyed)
@@ -93,7 +95,7 @@ const CommunityPage = () => {
       console.log(data)
       console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
 
-      
+
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
@@ -117,7 +119,7 @@ const CommunityPage = () => {
 
     });
   }
-  
+
   const getToken = () => {
     console.log('commid' + community_id)
     return createSession(community_id).then((sessionId) => createToken(sessionId));
@@ -173,6 +175,13 @@ const CommunityPage = () => {
     else
       console.log('dsfsdf')
 
+    navigate('/OneToManyVideoChat')
+
+  };
+
+  const makeroom = ()=>{
+
+    
   };
 
   return (
@@ -188,7 +197,8 @@ const CommunityPage = () => {
           <h3>키티공주님,</h3>
           <StyledDiv>화상 미팅을 열어 나만의 뷰티 노하우를<br />
             친구들에게 공유해보세요.</StyledDiv>
-          <Button width="300px">커뮤니티 방 개설하기</Button>
+          <Button width="300px" onClick={makeroom}>
+            커뮤니티 방 개설하기</Button>
         </CenterContainer>
       </Card>
       <TempCard>

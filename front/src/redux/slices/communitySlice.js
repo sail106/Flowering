@@ -5,7 +5,7 @@ const initialState = {
   session: undefined,
   isSetClear: false,
   creatorSessionName: '',
-  community_id: 0,
+  community_id: '',
   messageId: 2,
   participantId: 1,
 
