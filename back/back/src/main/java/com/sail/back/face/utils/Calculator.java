@@ -3,6 +3,7 @@ package com.sail.back.face.utils;
 import com.sail.back.face.model.dto.response.CoordinateDto;
 
 import java.util.ArrayList;
+import java.util.function.DoubleUnaryOperator;
 
 public class Calculator {
     public double slope(CoordinateDto p1, CoordinateDto p2) {
@@ -142,4 +143,62 @@ public class Calculator {
         return closestIndex;
     }
 
+    // 구간 [leftEnd, rightEnd]에서의 길이를 계산하는 메서드
+    public double calculateLength(DoubleUnaryOperator function, double leftEnd, double rightEnd) {
+        double length = 0.0;
+
+        // 구간을 delta 간격으로 나누어 각 점에서의 접선의 길이를 계산하여 적분
+        for (double t = leftEnd; t < rightEnd; t += 0.0000001) {
+            double derivative = calculateDerivative(function, t);
+            double integrand = Math.sqrt(1 + Math.pow(derivative, 2));
+            length += integrand * 0.0000001;
+        }
+
+        return length;
+    }
+
+    // 주어진 함수 function에서 t에서의 미분값을 계산하는 메서드
+    private double calculateDerivative(DoubleUnaryOperator function, double t) {
+        // 수치적 미분을 사용하여 근사적으로 미분값 계산
+        double delta = 0.0001;
+        double valueAtT = function.applyAsDouble(t);
+        double valueAtTPlusDelta = function.applyAsDouble(t + delta);
+        return (valueAtTPlusDelta - valueAtT) / delta;
+    }
+
+    private double calculateX(double t, double elipsWidth) {
+        return elipsWidth * Math.cos(t);
+    }
+
+    // 타원의 방정식에 따른 y 값 계산
+    private double calculateY(double t, double elipsHeight) {
+        return elipsHeight * Math.sin(t);
+    }
+
+    // leftEnd와 rightEnd 사이의 길이를 계산하는 메서드
+    public double calculateLength(double elipsWidth, double elipsHeight, double leftEnd, double rightEnd, int segments) {
+        // 각 구간의 길이를 저장할 변수
+        double length = 0.0;
+
+        // 각 구간에서의 길이를 계산하여 합산
+        double deltaT = (rightEnd - leftEnd) / segments;
+        for (int i = 0; i < segments; i++) {
+            double t1 = leftEnd + i * deltaT;
+            double t2 = leftEnd + (i + 1) * deltaT;
+
+            // 각 구간에서의 점들을 계산하고 길이를 계산하여 합산
+            double x1 = calculateX(t1, elipsWidth);
+            double y1 = calculateY(t1, elipsHeight);
+            double x2 = calculateX(t2, elipsWidth);
+            double y2 = calculateY(t2, elipsHeight);
+
+            // 두 점 사이의 거리 계산
+            double segmentLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+            // 각 구간의 길이를 합산
+            length += segmentLength;
+        }
+
+        return length;
+    }
 }
