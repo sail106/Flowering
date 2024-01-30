@@ -52,7 +52,7 @@ tasks.named('test') {
 }
 tasks.register('copyPrivate', Copy) {
 	copy {
-		from '../secure-settings'
+		from '/secure-settings'
 		include "*.yml"
 		into 'src/main/resources'
 	}
