@@ -109,12 +109,13 @@ const Navbar = () => {
     <NavBox backgroundColor={backgroundColor} textColor={textColor}>
       <Logo>Flowering</Logo>
       <NavMenu>
+ 
         <Link to={"/"}>Home</Link>
         <Link to={"/beautyconsulting"}>Consulting</Link>
-        <Link to={"#"}>Community</Link>
+        <Link to={"/"}>Community</Link>
         <Link to={"#"}>Contents</Link>
         <Link to={"/faq"}>FAQ</Link>
-      </NavMenu>
+       </NavMenu>
       <NavInfoLogo>
         
         <StyledPerson />
