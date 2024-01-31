@@ -5,7 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AnalysisEyeType {
-    DEFAULT("이 타입의 내용을 적어주세요");
+public enum EyelidSize {
+    BIG_EYES("큰눈"),
+    PERFECT_EYES("보통눈"),
+    SMALL_EYES("작은 눈");
+
     String content;
 }

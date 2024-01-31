@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AnalysisEyebrowType {
-    눈썹형("타입별 내용을 적어주세요");
-
+public enum EyelidDirection  {
+    DOWNSID_EEYE_LID("눈꼬리가 내려감"),
+    MIDDLE_EYE_LID("보통"),
+    UPSIDE_EYE_LID("눈꼬리가 올라감");
     String content;
 }

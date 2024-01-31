@@ -2,6 +2,7 @@ package com.sail.back.consultant.model.entity;
 
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
+import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,6 @@ public class Consultant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long consultant_id;
-
 
     private String self_introduce;
 
@@ -50,5 +50,12 @@ public class Consultant {
 
     }
 
+    public ConsultantResponse toResponse(){
+        return ConsultantResponse.builder()
+                .consultantId(this.consultant_id)
+                .consultantDetailData(this.user.toResponse())
+                .selfIntroduce(this.self_introduce)
+                .build();
+    }
 
 }

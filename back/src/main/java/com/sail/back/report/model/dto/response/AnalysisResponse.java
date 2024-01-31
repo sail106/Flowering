@@ -13,10 +13,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
-public class SecondReportResponse {
-
-    private Long reportId;
-    private Long consultingId;
+public class AnalysisResponse {
 
     private AnalysisFaceType analysisFaceType;
     private String analysisFaceContent;

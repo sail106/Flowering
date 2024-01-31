@@ -136,4 +136,21 @@ public class User implements UserDetails {
         }
         return UserGender.FEMALE;
     }
+
+    public UserResponse toResponse(){
+        return UserResponse.builder()
+                .id(this.id)
+                .gender(this.gender)
+                .birthdateYear(this.birthdateYear)
+                .birthdateMonth(this.birthdateMonth)
+                .nickname(this.nickname)
+                .email(this.email)
+                .createAt(this.createAt)
+                .role(this.role)
+                .profileImgUrl(this.profileImgUrl)
+                .status(this.status)
+                .name(this.name)
+                .provider(this.provider)
+                .build();
+    }
 }

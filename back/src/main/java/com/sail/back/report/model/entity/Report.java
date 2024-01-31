@@ -1,6 +1,8 @@
 package com.sail.back.report.model.entity;
 
 import com.sail.back.consulting.model.entity.Consulting;
+import com.sail.back.report.model.dto.response.AnalysisResponse;
+import com.sail.back.report.model.dto.response.ReportResponse;
 import com.sail.back.report.model.entity.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,14 +10,15 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-
+@Builder
 @AllArgsConstructor
 @Table(name = "report")
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long report_id;
+    @Column(name = "report_id")
+    private Long reportId;
 
     @OneToOne
     private Consulting consulting;
@@ -112,4 +115,16 @@ public class Report {
     @Column(length = 255, name = "hairstyle_solution")
     private String hairstyleSolution;
 
+    public AnalysisResponse toAnalysisResponse(){
+        return AnalysisResponse.builder()
+                .analysisEyebrowContent(this.analysisEyeType)
+                .build();
+    }
+
+    public ReportResponse toResponse(){
+        return ReportResponse.builder()
+                .reportId(this.reportId)
+                .surveyData(this.surveyType.toResponse())
+                .consultingData(this.consulting.toResponse())
+    }
 }

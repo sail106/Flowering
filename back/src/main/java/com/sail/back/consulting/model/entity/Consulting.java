@@ -1,6 +1,7 @@
 package com.sail.back.consulting.model.entity;
 
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.user.model.dto.response.MyConsultinglistResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
@@ -59,7 +60,14 @@ public class Consulting {
                 .build();
     }
 
-    ;
+    public ConsultingResponse toResponse(){
+        return ConsultingResponse.builder()
+                .consultingId(this.consulting_id)
+                .consultantData(this.consultant.toResponse())
+                .userData(this.user.toResponse())
+                .reservationDateTime(this.time)
+                .build();
+    }
 
 
 }

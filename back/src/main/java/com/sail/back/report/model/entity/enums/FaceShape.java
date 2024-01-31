@@ -5,7 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AnalysisLipsType {
-    입술형("타입별 내용을 적어주세요");
+public enum FaceShape {
+    LONG("긴 얼굴"),
+    ROUND("동그란 얼굴"),
+    RECTANGLE("각진 얼굴"),
+    TRIANGLE("역삼각형 얼굴");
     String content;
 }
