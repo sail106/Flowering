@@ -23,13 +23,16 @@ import CommunityPage from "./components/CommunityPage";
 import ExpertPage from "./components/ExpertPage";
 import BeautyConsulting from "./components/BeuatyConsulting";
 import ExpertConsulting from "./components/mypage/ExpertConsulting";
+import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
+import ExpertsReservation from "./components/experts/ExpertsReservation";
+import Review from "./components/experts/review";
 
 function App() {
   return (
     <>
       <GlobalStyles />
       <Page>
-      <Navbar />
+        <Navbar />
         <Routes>
           <Route path='/OneToManyVideoChat' element={<OneToManyVideoChat />} />
           <Route path='/OneToOneVideoChat' element={<OneToOneVideoChat />} />
@@ -40,15 +43,21 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path='/mypage2' element={<ExpertPage />} />
+          <Route path="/mypage2" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
           <Route path="/faq" element={<FaQ />} />
-          <Route path='/beautyconsulting' element={<BeautyConsulting />} />
+          <Route path="/beautyconsulting" element={<BeautyConsulting />} />
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofile" element={<ExpertsProfile />} />
           <Route path="/expertconsulting" element={<ExpertConsulting />} />
           <Route path='/communityHome' element={<CommunityPage />} />
+          <Route path="/expertsReservation" element={<ExpertsReservation />} />
+          <Route path="/review" element={<Review />} />
+          <Route
+            path="/expertsprofileregistration"
+            element={<ExpertsProfileRegistration />}
+          />
         </Routes>
         <Footer />
       </Page>
