@@ -36,7 +36,7 @@ public class ConsultingUpdateRequest {
 
     public Consulting toEntity() {
         return Consulting.builder()
-                .sessionId(this.sessionId)
+//                .sessionId(this.sessionId)
                 .user(this.user)
                 .time(this.time)
                 .build();

@@ -79,10 +79,15 @@ const FinalButton = styled(Button)`
   width:100%;
 `;
 
+const buttonclick = () => {
+  console.log('click')
+
+}
+
 const ExpertConsulting = () => {
   const data = [
-    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
-    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" ,consulting_id :"1" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" ,consulting_id :"2"},
   ];
 
   return (
@@ -110,7 +115,7 @@ const ExpertConsulting = () => {
                 <FinalButton>최종 결과 보고서 작성하기</FinalButton>
               </ButtonTd>
               <ButtonTd>
-                <Button>바로가기</Button>
+                <Button onClick={buttonclick(row.consultant_id)}>바로가기</Button>
               </ButtonTd>
             </Tr>
           ))}

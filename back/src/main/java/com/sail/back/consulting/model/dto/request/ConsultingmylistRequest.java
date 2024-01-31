@@ -30,14 +30,15 @@ public class ConsultingmylistRequest {
 
     //세션아이디
     private String sessionId;
+    private Long consulting_id;
 
     public Consulting toEntity() {
         return Consulting.builder()
-                .sessionId(this.sessionId)
+//                .sessionId(this.sessionId)
                 .consultant(this.consultant)
                 .user(this.user)
                 .time(this.time)
-                .time(this.time)
+                .consulting_id(this.consulting_id)
                 .build();
     }
 

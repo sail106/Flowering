@@ -5,11 +5,22 @@ const initialState = {
   session: undefined,
   isSetClear: false,
   creatorSessionName: '',
-  community_id: 0,
+  community_id: '',
   messageId: 2,
-  participantId: 0,
+  participantId: 1,
+  creatorid: '',
+  personalmessageList: [
+    {
+      id: 1,
+      role: '',
+      imageUrl: '',
+      side: 'left',
+      message: '대화를 시작합니다.'
 
-  messageList: [
+    }
+  ],
+
+  communitymessageList: [
     {
       id: 1,
       role: '',
@@ -20,18 +31,21 @@ const initialState = {
   ],
 
   creator: {
-    id: 0,
+    creatorid: 0,
     role: '',
     imageUrl: '',
     name: ''
   },
-  
+
   participantList: [
     {
       id: 0,
       role: '',
       imageUrl: '',
-      name: ''
+      name: '',
+      ismic: '',
+      isAudio: '',
+
     }
   ]
 }
@@ -60,14 +74,18 @@ const communitySlice = createSlice({
     settingModalOff: (state) => {
       state.isSetClear = false;
     },
-    setCustomer: (state, { payload }) => {
-      state.customer = payload
-    },
+
+    // setCustomer: (state, { payload }) => {
+    //   state.customer = payload
+    // },
+
     setSession: (state, { payload }) => {
       state.session = payload
     },
     setCommunityid: (state, { payload }) => {
       state.community_id = payload
+    }, setCreatorid: (state, { payload }) => {
+      state.creatorid = payload
     },
     resetSessionName: (state) => {
       state.creatorSessionName = ''
@@ -75,7 +93,16 @@ const communitySlice = createSlice({
 
     resetMsg: (state) => {
       state.messageId = 2;
-      state.messageList = [
+      state.personalmessageList = [
+        {
+          id: 1,
+          role: '',
+          imageUrl: '',
+          side: 'left',
+          message: '대화를 시작합니다.'
+        }
+      ]
+      state.communitymessageList = [
         {
           id: 1,
           role: '',
@@ -86,14 +113,24 @@ const communitySlice = createSlice({
       ]
     },
 
-    appendMessageList: (state, { payload }) => {
+    appendpersonalmessageList: (state, { payload }) => {
       if (payload.id > state.messageId) {
         state.messageId = payload.id + 1
       } else {
         payload.id = state.messageId
         state.messageId = state.messageId + 1
       }
-      state.messageList.push(payload)
+      state.personalmessageList.push(payload)
+    },
+
+    appendcommunitymessageList: (state, { payload }) => {
+      if (payload.id > state.messageId) {
+        state.messageId = payload.id + 1
+      } else {
+        payload.id = state.messageId
+        state.messageId = state.messageId + 1
+      }
+      state.communitymessageList.push(payload)
     },
 
     appendParticipantList: (state, { payload }) => {
@@ -106,14 +143,14 @@ const communitySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getCreatorSessionName .fulfilled, (state, { payload }) => {
+      .addCase(getCreatorSessionName.fulfilled, (state, { payload }) => {
         state.creatorSessionName = payload.sessionId
       })
   }
 
 })
 
-export const { settingModalOn, settingModalOff, setSession, setCustomer,
-  resetSessionName, appendMessageList, setReservationId, resetMsg } = communitySlice.actions;
+export const { settingModalOn, settingModalOff, setSession,    resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
+  setReservationId, resetMsg, setCommunityid, appendParticipantList } = communitySlice.actions;
 
 export default communitySlice.reducer;

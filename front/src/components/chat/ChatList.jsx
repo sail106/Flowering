@@ -5,14 +5,18 @@ import { Stack } from '@mui/material';
 import ChatItem from './ChatItem';
 
 const ChatList = () => {
-  // const { messageList } = useSelector(state => state.consult)
+  const { messageList } = useSelector(state => state.consult)
 
   const msgSetting = () => {
+
     const msgList = [];
-    // let i = messageList.length < 10 ? 0 : messageList.length - 10
-    let i = 0;
-    // for (; i < messageList.length; i++) {
-    for (; i < 5; i++) {
+    let i = messageList.length < 10 ? 0 : messageList.length - 10
+
+    // let i = 0;
+
+    for (; i < messageList.length; i++) {
+
+    // for (; i < 5; i++) {
       msgList.push(
         <ChatItem
           // key={messageList[i].id}
@@ -23,8 +27,8 @@ const ChatList = () => {
           }
           // side={messageList[i].side ?? 'left'}
           side={'left'}
-          // message={messageList[i].message}
-          message={'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}
+          message={messageList[i].message}
+          // message={'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}
           name={'김싸피'}
         />
       );

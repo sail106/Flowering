@@ -2,6 +2,8 @@ package com.sail.back.consultant.model.entity;
 
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
+import com.sail.back.user.model.dto.request.FindRequest;
+import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,10 +44,22 @@ public class Consultant {
     }
     public ConsultantListResponse from(Consultant consultant)
     {
+        FindRequest findRequest= FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .build();
+
         return  ConsultantListResponse.builder()
                 .consultant_id(consultant.consultant_id)
                 .self_introduce(consultant.self_introduce)
-                .user(consultant.user)
+                .userResponse( UserResponse.of( findRequest ,consultant.user ) )
                 .build();
 
     }
