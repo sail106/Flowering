@@ -6,7 +6,7 @@ const initialState = {
   isSetClear: false,
   consultantSessionName: '',
   messageId: 2,
-  personalmessageList: [
+  messageList: [
     {
       id: 1,
       role: '',
@@ -64,7 +64,7 @@ const consultSlice = createSlice({
     },
     resetMsg: (state) => {
       state.messageId = 2;
-      state.personalmessageList = [
+      state.messageList = [
         {
           id: 1,
           role: '',
@@ -76,14 +76,14 @@ const consultSlice = createSlice({
 
     },
 
-    appendpersonalmessageList: (state, { payload }) => {
+    appendmessageList: (state, { payload }) => {
       if (payload.id > state.messageId) {
         state.messageId = payload.id + 1
       } else {
         payload.id = state.messageId
         state.messageId = state.messageId + 1
       }
-      state.personalmessageList.push(payload)
+      state.messageList.push(payload)
     },
 
 
@@ -99,7 +99,7 @@ const consultSlice = createSlice({
 
 })
 
-export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendpersonalmessageList, appendconsultmessageList,
+export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendmessageList, appendconsultmessageList,
   setReservationId, resetMsg, setconsultid, setCustomer } = consultSlice.actions;
 
 export default consultSlice.reducer;

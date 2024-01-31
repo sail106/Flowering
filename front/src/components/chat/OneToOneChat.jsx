@@ -8,18 +8,22 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
+import { appendmessageList } from '../../redux/slices/consultSlice';
 
- 
+
 const OneToOneChat = () => {
   const [msg, setMsg] = useState('');
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
   // const { session, messageId } = useSelector(state => state.consult)
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
+
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
+  const { session, messageId } = useSelector(state => state.consult)
+  const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+
 
   const handlePersonalClick = () => {
     setIsPersonalSelected(true); // Set personal button as selected
-
   }
 
 
@@ -29,44 +33,50 @@ const OneToOneChat = () => {
   }
 
   const handleMessage = () => {
+
     if (session && msg.length > 0) {
+
       const mine = {
         id: messageId,
         role: role,
         imageUrl: '',
-        // side: 'left',
+        side: 'left',
         message: msg
       }
 
-      // dispatch(appendMessageList(mine))
+      dispatch(appendmessageList(mine))
 
       const data = {
+
         id: messageId,
         role: role,
         imageUrl: imageUrl,
-        // side: 'left',
+        side: 'left',
         message: msg
       }
 
-      session.signal({
+      session.signal ({
         data: JSON.stringify(data),
         to: [],
         type: 'chat'
       })
+
       setMsg('')
     }
+
   }
 
-  // useEffect(() => {
-  //   if (session) {
-  //     session.on('signal:chat', textChat)
-  //   }
-  // }, [session])
+  useEffect(() => {
+    if (session) {
+      session.on('signal:chat', textChat)
+    }
+  }, [session])
+
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
     if (data.role !== role) {
-      // dispatch(appendMessageList(data))
+      dispatch(appendMessageList(data))
     }
   }
 
@@ -78,13 +88,14 @@ const OneToOneChat = () => {
      color: #df5050;
   }
   `;
+
   return (
     <ChatGrid item xs={12} >
       <Header>
         <TitleText>
           채팅
         </TitleText>
- 
+
 
         <Foldpos>
 
@@ -108,7 +119,6 @@ const OneToOneChat = () => {
             onChange={(e) => { setMsg(e.target.value) }}
             onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
           >
-
           </Input>
 
           <IconButton onClick={handleMessage} >

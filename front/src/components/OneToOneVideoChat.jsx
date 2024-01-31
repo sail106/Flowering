@@ -81,7 +81,7 @@ const OneToOneVideoChat = () => {
           videoSource: undefined,
           publishAudio: true,
           publishVideo: true,
-          resolution: '1232x760',
+          resolution: '1821x761',
           frameRate: 30,
           insertMode: 'APPEND',
           mirror: false,
@@ -350,17 +350,66 @@ const OneToOneVideoChat = () => {
             <SGridContainer container spacing={2}>
               <div>
 
-                <IoMdVideocamIcon>
-                  <IoMdVideocam />
+                <Header>
 
-                </IoMdVideocamIcon>
+                  <IoMdVideocamIcon>
+                    <IoMdVideocam />
+
+                  </IoMdVideocamIcon>
+                  <Myspan>
+                    뷰티 솔루션 컨설팅
+
+                  </Myspan>
+                </Header>
+                {
+
+                  consultant !== undefined ? (
+
+                    <Grid container item xs={12} sm={4}
+                      sx={{
+                        // height: "80%",
+                        // justifyContent: "space-between",
+                        // gap: 2,
+                        width: "70%",
+                        height: "150%",
+                        // display: "flex",
+                        // flexDirection: "row",
+                        // justifyContent: "center",
+                        // alignItems: "center",
+                        marginLeft: "7%",
+                        marginTop: "7%"
+                      }}>
+
+
+                      <VideoContainer>
+                        <UserVideoComponent
+                          streamManager={consultant}
+                        />
+                      </VideoContainer>
+
+                      {
+                        // role === CONSULTANT &&
+
+                      }
+
+                    </Grid>
+
+                  )
+                    :
+
+                    <SpinnerGrid item xs={12} sm={2}>
+
+                      <CircularProgress />
+                    </SpinnerGrid>
+                }
+
 
 
               </div>
-
+              {/* 
               <Myspan>
                 뷰티 솔루션 컨설팅
-              </Myspan>
+              </Myspan> */}
 
 
               {/* <VideoGroup>
@@ -368,45 +417,7 @@ const OneToOneVideoChat = () => {
 
               </VideoGroup> */}
 
-              {
 
-                consultant !== undefined ? (
-
-                  <Grid container item xs={12} sm={2}
-                    sx={{
-                      // height: "80%",
-                      // justifyContent: "space-between",
-                      // gap: 2,
-                      width: "100%",
-                      height: "100%",
-                      // display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-
-
-                    <VideoContainer>
-                      <UserVideoComponent
-                        streamManager={consultant}
-                      />
-                    </VideoContainer>
-
-                    {
-                      // role === CONSULTANT &&
-
-                    }
-
-                  </Grid>
-
-                )
-                  :
-
-                  <SpinnerGrid item xs={12} sm={2}>
-
-                    <CircularProgress />
-                  </SpinnerGrid>
-              }
 
 
 
@@ -493,37 +504,7 @@ const OneToOneVideoChat = () => {
             <>
               {/* 베스트,워스트 컬러셋 || 마이크,캠,종료버튼 */}
               {
-
-                // role === CONSULTANT ?
-                //   // 컨설턴트
-                //   <> 
-                //     <MicCamExitGroup>
-                //       {/* 마이크 */}
-                //       <CustomIconButton
-                //         color="inherit"
-                //         onClick={() => {
-                //           publisher.publishAudio(!isMic)
-                //           setIsMic(!isMic)
-                //         }}>
-                //         {isMic ? <Mic /> : <MicOff color="secondary" />}
-                //       </CustomIconButton>
-                //       {/* 캠 */}
-                //       <CustomIconButton
-                //         color="inherit"
-                //         onClick={() => {
-                //           publisher.publishVideo(!isCam)
-                //           setIsCam(!isCam)
-                //         }}>
-                //         {isCam ? <Videocam /> : <VideocamOff color="secondary" />}
-                //       </CustomIconButton>
-                //       {/* 종료 */}
-                //       <BottomBtn variant="contained" onClick={leaveSession}>
-                //         종료
-                //       </BottomBtn>
-                //     </MicCamExitGroup>
-                //   </>
-                // :
-                // 유저
+ 
                 <>
 
                   {/* 마이크,캠 + 필터 + 종료*/}
@@ -536,7 +517,7 @@ const OneToOneVideoChat = () => {
                       color="inherit"
                       onClick={() => {
                         setIsMic(!isMic)
-                        // publisher.publishAudio(isMic)
+                        publisher.publishAudio(isMic)
 
                         handleAudioPermissionChange()
                       }}
@@ -553,7 +534,7 @@ const OneToOneVideoChat = () => {
                     <CustomVideoButton
                       color="inherit"
                       onClick={() => {
-                        // publisher.publishVideo(!isCam)
+                        publisher.publishVideo(!isCam)
                         setIsCam(!isCam)
                         handleVideoPermissionChange()
                       }}>
@@ -632,7 +613,15 @@ const VideoContainer = styled(Box)({
   width: "100%",
   // borderRadius: "1rem",
   // padding: "1rem",
+  // position:
+
 })
+
+const Header = styled.div`
+    display: flex;
+    /* justify-content: ; */
+    width: 100%;
+`;
 
 const BottomBtn = styled(Button)((props) => ({
   backgroundColor: '#99968D',

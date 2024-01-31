@@ -19,23 +19,22 @@ const UserVideoComponent = ({ streamManager }) => {
         <div>
             {streamManager !== undefined ? (
                 <>
-                    {/* {subRole === "CONSULTANT" && */}
+                    {subRole === "CONSULTANT" &&
                         <ConsultantStream>
                             <CustomTypography>{ } 방장</CustomTypography>
                             <OpenViduVideoComponent streamManager={streamManager} />
 
                         </ConsultantStream>
-                    {/* } */}
+                    }
 
-                    {subRole === "CUSTOMER" &&
+                    {/* {subRole === "CUSTOMER" && */}
                         <CustomerStream>
                             <div style={{ position: 'relative', }}>
                                 <OpenViduVideoComponent streamManager={streamManager} />
-                                <CoverFilter />
                             </div>
-                            <CustomTypography>{ } 님</CustomTypography>
+                            <CustomTypography>{getNicknameTag() } 님</CustomTypography>
                         </CustomerStream>
-                    }
+                    {/* } */}
                 </>
             ) : null}
         </div>
@@ -45,10 +44,10 @@ const UserVideoComponent = ({ streamManager }) => {
 export default UserVideoComponent
 
 const ConsultantStream = styled(Box)({
-    width: '300%',
-    overflow: "hidden",
+    width: '100%',
+    // overflow: "hidden",
     border: '2px solid #5A4D4D99',
-    borderRadius: '10px',
+    borderRadius: '15px',
     video: {
         width: '100%',
     }
@@ -58,7 +57,8 @@ const CustomerStream = styled(Box)({
     width: '100%',
     overflow: "hidden",
     border: '2px solid #5A4D4D80',
-    borderRadius: '10px',
+    borderRadius: '15px',
+    
     video: {
         width: '100%',
     }

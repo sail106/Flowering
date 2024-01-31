@@ -15,6 +15,7 @@ display:flex;
   padding-left:5px;
 `
 const Participant = ({ streamManager, audioPermission }) => {
+  
   const [isparticipantcontainervisible, setParticipantContainerVisible] = useState(true);
 
   const handleFoldUp = () => {
