@@ -80,7 +80,7 @@ const Participant = ({ streamManager, audioPermission }) => {
             참가자
           </TitleText>
 
-          <InviteButton>
+          {/* <InviteButton>
 
             <Myspan >
               초대하기
@@ -91,7 +91,7 @@ const Participant = ({ streamManager, audioPermission }) => {
               <GoPersonAdd />
             </Personpos>
 
-          </InviteButton>
+          </InviteButton> */}
 
           <Foldpos onClick={handleFoldUp}>
 
