@@ -26,6 +26,7 @@ const YellowCreamWrapper = styled(PinkCreamWrapper)`
 const WhiteCreamWrapper = styled(YellowCreamWrapper)`
   bottom: -700%;
   right: -10%;
+  height:75%;
 `;
 
 const Image = styled.img`

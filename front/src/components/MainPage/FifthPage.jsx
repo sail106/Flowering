@@ -22,29 +22,20 @@ const ImageWrapper3 = styled.div`
 const SolutionDiv = styled.div`
   position: absolute;
   margin-left: 60%;
-  top: 65%;
+  top: 60%;
   width: 30%;
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 
 const SolutionTitle = styled.p`
-  font-size: 40px;
+  font-size: 50px;
   font-family: Poppins;
 `;
 
 const SolutionDescr = styled.p`
   color: #6d6d6d;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 145%;
   font-family: Noto Sans KR;
-`;
-
-const ArrowDiv = styled.div`
-  position: absolute;
-  width: 20%;
-  right: 25%;
 `;
 
 const FifthPage = () => {
@@ -67,9 +58,7 @@ const FifthPage = () => {
           <br /> 추천해드립니다.
         </SolutionDescr>
 
-        <ArrowDiv>
-          <Image src="src/assets/Arrow.png" alt="BIBI" />
-        </ArrowDiv>
+ 
       </SolutionDiv>
     </MyPage>
   );

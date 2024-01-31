@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Page } from "../store/Page";
 import { ButtonBox } from "../store/Button";
-
+import { Link } from "react-router-dom";
 const MyPage = styled(Page)`
   background-color: #ffc8b9;
 `;
@@ -64,9 +64,9 @@ const FirstPage = () => {
           form on your color.
         </span>
       </TextDiv1_2>
-
-      <MyButton>컨설팅 신청하기</MyButton>
-
+      <Link to="/beautyconsulting" reloadDocument>
+        <MyButton>컨설팅 신청하기</MyButton>
+      </Link>
       <ImageWrapper>
         <Image src="src/assets/page1girl.png" alt="girl1" />
       </ImageWrapper>
