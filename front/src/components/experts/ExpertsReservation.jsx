@@ -1,9 +1,8 @@
-import Title from "./Title";
+import Title from "../modify/Title";
 import MyCalendar from "../store/MyCalendar";
 import { ButtonBox } from "../store/Button";
 import RadioButton from "../store/RadioButton";
 import styled from "styled-components";
-import Input from "../store/Input";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -26,38 +25,22 @@ const M1 = styled.div`
 `;
 
 const Margin = styled.div`
-  margin: -20px;
+  margin: -50px;
 `;
-
-const AddImageButton = styled.button`
-  border: 1px solid #f5f5f5;
-  border-radius: 30px;
-  background-color: white;
-  color: black;
-  padding: 10px 10px;
-  text-align: center;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-`;
-
-const H3 = styled.h3`
-  padding-top: 30px;
-  text-align: start;
-`;
-const Center = styled.div`
-  text-align: start;
+const Margin2 = styled.div`
+  margin: 30px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
 `;
 
-const CommunityModify = () => {
+const ExpertsReservation = () => {
   return (
     <Cal>
-      <Title text={"Reservation"} />
       <Margin />
+      <Title text={"Reservation"} />
+      <Margin2 />
       <MyCalendar />
       <M1>
         <RadioButton
@@ -79,20 +62,11 @@ const CommunityModify = () => {
         <RadioButton value="18:00"></RadioButton>
       </M1>
 
-      <Center>
-        <H3>주제</H3>
-        <Input placeholder="주제를 입력하세요" />
-        <H3>설명</H3>
-        <Input placeholder="설명을 입력하세요" />
-        <H3>썸네일 이미지</H3>
-        <AddImageButton>+ 사진 추가</AddImageButton>
-      </Center>
       <ButtonContainer>
-        <MyButton>예약취소</MyButton>
-        <MyButton>수정완료</MyButton>
+        <MyButton>결제하기</MyButton>
       </ButtonContainer>
     </Cal>
   );
 };
 
-export default CommunityModify;
+export default ExpertsReservation;
