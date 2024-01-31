@@ -4,13 +4,17 @@ import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ChatItem from '../chat/ChatItem';
 import ParticipantItem from './ParticipantItem';
- 
+
 const ParticipantList = () => {
   // const { messageList } = useSelector(state => state.community)
 
   const msgSetting = () => {
     const participantList = [];
+
+    // const participantList = useSelector(state => state.community.participantList)
+    
     // let i = messageList.length < 10 ? 0 : messageList.length - 10
+
     let i = 0;
     // for (; i < messageList.length; i++) {
     for (; i < 5; i++) {
@@ -26,6 +30,7 @@ const ParticipantList = () => {
           side={'left'}
           // message={messageList[i].message}
           name={'김싸피'}
+
         />
       );
     }
@@ -51,4 +56,3 @@ const ListBox = styled(Stack)`
    margin-top: 11px;
   /* border: 6px solid #decfda99; */
 `;
- 

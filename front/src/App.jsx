@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
   
 import OneToManyVideoChat from "./components/community/OneToManyVideoChat";
+import OneToOneVideoChat from "./components/OneToOneVideoChat";
 import CommunityModify from "./components/modify/CommunityModify";
 import ExpertsIntroduction from "./components/experts/ExpertsIntroduction";
 import ExpertsProfile from "./components/experts/ExpertsProfile";
@@ -30,6 +31,7 @@ function App() {
       <Navbar />
         <Routes>
           <Route path='/OneToManyVideoChat' element={<OneToManyVideoChat />} />
+          <Route path='/OneToOneVideoChat' element={<OneToOneVideoChat />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/pw" element={<PasswordFindForm />} />

@@ -15,7 +15,8 @@ const initialState = {
         contact: '',
         role: '',
         licenseId: '',
-        licenseNumber: ''
+        licenseNumber: '',
+        id:'',
     },
     data: '',
 

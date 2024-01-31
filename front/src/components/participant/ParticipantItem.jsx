@@ -10,7 +10,9 @@ const ParticipantItem = ({
   side,
   name
 }) => {
+
   return (
+
     <GridContainer container alignItems="center">
       <Grid item xs={8}>
         <NameBox side={side}>
@@ -20,6 +22,7 @@ const ParticipantItem = ({
               imgUrl={avatar}
             />
           )}
+          
           <Name side={side}>{name}</Name>
 
           <CiMicrophoneOff style={{ marginLeft: '10px'  }} />

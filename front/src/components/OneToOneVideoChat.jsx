@@ -11,28 +11,31 @@ import { LiaComment } from "react-icons/lia";
 import { IoMdVideocam } from "react-icons/io";
 import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 
-import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
+import { CONSULTANT, CUSTOMER } from '../api/CustomConst';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
-import Participant from '../participant/Participant';
-import SmallChat from '../chat/SmallChat';
+import Participant from '../components/participant/Participant';
+
 import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, appendParticipantList
-} from '../../redux/slices/communitySlice'
-import UserVideoComponent from './UserVideoComponent';
-import axios from 'axios';
-import { CiVideoOn } from "react-icons/ci";
+  resetSessionName, resetMsg,
+} from '../redux/slices/consultSlice'
 
+import axios from 'axios';
+import UserVideoComponent from './community/UserVideoComponent';
+import SmallChat from './chat/SmallChat';
+import OneToOneChat from './chat/OneToOneChat';
+import { setCustomer } from '../redux/slices/consultSlice';
+import { useNavigate } from 'react-router-dom';
+import { CiVideoOn } from "react-icons/ci";
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
-const OneToManyVideoChat = () => {
+const OneToOneVideoChat = () => {
 
-  const { session, community_id } = useSelector(state => state.community)
   //   // const tmp = email?.replace(/[@\.]/g, '-')
   const [creator, setCreator] = useState(undefined)
 
@@ -42,6 +45,13 @@ const OneToManyVideoChat = () => {
   const [OV, setOV] = useState(null)
   const { nickname, role, id } = useSelector(state => state.auth.logonUser)
   const { creatorid } = useSelector(state => state.community.creator)
+  const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
+  const navigate = useNavigate();
+
+  const tmp = id
+  const [mySessionId, setMySessionId] = useState(
+    role === CONSULTANT ? tmp : consultantSessionName
+  )
 
   const dispatch = useDispatch();
   const [myUserName, setMyUserName] = useState(nickname)
@@ -82,25 +92,20 @@ const OneToManyVideoChat = () => {
         session.publish(publisher);
         setPublisher(publisher);
 
-        if (id === community_id) { setCreator(publisher) }
+        //밑에 부분은 임시로 조건문 주석 처리 한것이다..........
 
-        else { dispatch(appendParticipantList(publisher)) }
+        // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
+        // if (role === CONSULTANT) {
+        setConsultant(publisher)
+        // }
 
+        console.log('publisher' + publisher.stream)
         dispatch(setSession(session))
 
       })
       .catch((error) => { });
   }
 
-  useEffect(() => {
-    console.log('session' + session)
-    if (session) {
-      session.on('streamCreated', streamCreated)
-      session.on('streamDestroyed', streamDestroyed)
-      session.on('exception', exception)
-      getToken().then(sessionConnect);
-    }
-  }, [session])
 
   // 마이크 권한을 변경하는 함수
   const handleAudioPermissionChange = () => {
@@ -114,15 +119,6 @@ const OneToManyVideoChat = () => {
     console.log(isCam)
 
   };
-
-  useEffect(() => {
-    console.log('session', session);
-  }, [session]);
-
-  useEffect(() => {
-    console.log('community_id', community_id);
-  }, [community_id]);
-
 
   useEffect(() => {
 
@@ -149,6 +145,41 @@ const OneToManyVideoChat = () => {
 
   }
 
+  useEffect(() => {
+    window.addEventListener(
+      'beforeunload',
+      onbeforeunload);
+    return () => {
+      window.removeEventListener(
+        'beforeunload',
+        onbeforeunload);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (role === CUSTOMER) {
+      if (!consultantSessionName) {
+        alert('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
+      }
+      else {
+        console.log(consultantSessionName)
+      }
+    }
+  }, [consultantSessionName])
+
+  useEffect(() => {
+    console.log('inn')
+
+    if (session) {
+      console.log('inn')
+      session.on('streamCreated', streamCreated)
+      session.on('streamDestroyed', streamDestroyed)
+      session.on('exception', exception)
+      getToken().then(sessionConnect);
+    }
+  }, [session])
+
+
   // const streamCreated = (event) => {  //subscriber 는 
   //   const subscriber = session.subscribe(event.stream, undefined); //새로운 스트림 구독.
   //   //event.stream 은 생성된 스트림.
@@ -161,36 +192,18 @@ const OneToManyVideoChat = () => {
 
   // }
 
-  const [customers, setCustomers] = useState([]);  // 배열로 고객들을 관리합니다.
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
-    const subRole = JSON.parse(event.stream.connection.data).clientRole;
-    const customerId = event.stream.connection.connectionId;
+    const subRole = JSON.parse(event.stream.connection.data).clientRole
 
+    //밑에는 임시로 주석처리 한 코드......
+    // if (role === CONSULTANT && subRole === CUSTOMER) {
+    //  dispatch(setCustomer(subscriber)) 
+    // }
+    // else if (role === CUSTOMER && subRole === CONSULTANT)
+    { setConsultant(subscriber) }
 
-    if (id === community_id && customerId !== community_id) {
-      // 컨설턴트가 고객을 구독하고 있는 경우
-      const customerId = event.stream.connection.connectionId; // 고객 ID를 가져옵니다.
-      const newCustomer = {
-        id: customerId,
-        role: subRole,
-        // 필요한 다른 정보들도 이곳에 추가할 수 있습니다.
-      };
-      dispatch(appendParticipantList(newCustomer)); // 고객을 추가합니다.
-    } else if (role === CUSTOMER && customerId === community_id) {
-      // 고객이 컨설턴트를 구독하고 있는 경우
-      setCreator(subscriber); // 컨설턴트를 설정합니다.
-    } else if (role === CUSTOMER && subRole === CUSTOMER) {
-      // 여러 명의 고객이 서로를 구독하는 경우
-      const customerId = event.stream.connection.connectionId; // 고객 ID를 가져옵니다.
-      const newCustomer = {
-        id: customerId,
-        role: subRole,
-        // 필요한 다른 정보들도 이곳에 추가할 수 있습니다.
-      };
-      dispatch(appendParticipantList(newCustomer)); // 고객을 추가합니다.
-    }
-  };
+  }
 
 
 
@@ -211,9 +224,7 @@ const OneToManyVideoChat = () => {
       dispatch(postConsultingResult({ files, consultingFinishRequest }))
         .then(() => {
           dispatch(changeComment(''))
-          dispatch(selectTone(''))
           dispatch(setFiles(''))
-          dispatch(resetColor())
           navigate('/')
         })
     }
@@ -223,7 +234,7 @@ const OneToManyVideoChat = () => {
     }
 
     setOV(null);
-    // setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
+    setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
     dispatch(setSession(undefined))
     dispatch(setCustomer(undefined))
     dispatch(resetMsg())
@@ -245,7 +256,7 @@ const OneToManyVideoChat = () => {
   //    */
 
   const getToken = () => {
-    return createSession(community_id).then((sessionId) =>
+    return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId));
 
   }
@@ -347,36 +358,40 @@ const OneToManyVideoChat = () => {
               </div>
 
               <Myspan>
-                깐달걀 피부 만드는 추천템 공개
+                뷰티 솔루션 컨설팅
               </Myspan>
 
+
               <VideoGroup>
-                <UserVideoComponent
-                  streamManager={creator} />
+                {/* <UserVideoComponent
+                  streamManager={creator} /> */}
 
               </VideoGroup>
 
               {
 
-                creator !== undefined ? (
+
+                consultant !== undefined ? (
 
                   <Grid container item xs={12} sm={2}
                     sx={{
-                      height: "80%",
-                      justifyContent: "space-between",
-                      gap: 2,
-
+                      // height: "80%",
+                      // justifyContent: "space-between",
+                      // gap: 2,
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}>
-
-                    <CiVideoOn />
 
 
                     <VideoContainer>
                       <UserVideoComponent
-                        streamManager={creator}
+                        streamManager={consultant}
                       />
                     </VideoContainer>
-
 
                     {
                       // role === CONSULTANT &&
@@ -385,14 +400,14 @@ const OneToManyVideoChat = () => {
 
                   </Grid>
 
-
                 )
                   :
+
                   <SpinnerGrid item xs={12} sm={2}>
+
                     <CircularProgress />
                   </SpinnerGrid>
               }
-
 
 
 
@@ -400,7 +415,7 @@ const OneToManyVideoChat = () => {
 
                 <Participant />
 
-                <SmallChat />
+                <OneToOneChat />
 
               </SmallChatContainer>
 
@@ -610,8 +625,15 @@ const OneToManyVideoChat = () => {
 
 }
 
-export default OneToManyVideoChat
+export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
+
+// 비디오 컨테이너
+const VideoContainer = styled(Box)({
+  width: "100%",
+  // borderRadius: "1rem",
+  // padding: "1rem",
+})
 
 const BottomBtn = styled(Button)((props) => ({
   backgroundColor: '#99968D',

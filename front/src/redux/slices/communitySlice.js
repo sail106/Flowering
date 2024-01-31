@@ -8,7 +8,7 @@ const initialState = {
   community_id: '',
   messageId: 2,
   participantId: 1,
-
+  creatorid: '',
   personalmessageList: [
     {
       id: 1,
@@ -16,6 +16,7 @@ const initialState = {
       imageUrl: '',
       side: 'left',
       message: '대화를 시작합니다.'
+
     }
   ],
 
@@ -30,7 +31,7 @@ const initialState = {
   ],
 
   creator: {
-    id: 0,
+    creatorid: 0,
     role: '',
     imageUrl: '',
     name: ''
@@ -41,7 +42,10 @@ const initialState = {
       id: 0,
       role: '',
       imageUrl: '',
-      name: ''
+      name: '',
+      ismic: '',
+      isAudio: '',
+
     }
   ]
 }
@@ -70,14 +74,18 @@ const communitySlice = createSlice({
     settingModalOff: (state) => {
       state.isSetClear = false;
     },
-    setCustomer: (state, { payload }) => {
-      state.customer = payload
-    },
+
+    // setCustomer: (state, { payload }) => {
+    //   state.customer = payload
+    // },
+
     setSession: (state, { payload }) => {
       state.session = payload
     },
     setCommunityid: (state, { payload }) => {
       state.community_id = payload
+    }, setCreatorid: (state, { payload }) => {
+      state.creatorid = payload
     },
     resetSessionName: (state) => {
       state.creatorSessionName = ''
@@ -124,6 +132,7 @@ const communitySlice = createSlice({
       }
       state.communitymessageList.push(payload)
     },
+
     appendParticipantList: (state, { payload }) => {
       payload.id = state.participantId
       state.participantId = state.participantId + 1
@@ -141,8 +150,7 @@ const communitySlice = createSlice({
 
 })
 
-export const { settingModalOn, settingModalOff, setSession, setCustomer,
-  resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
-  setReservationId, resetMsg,setCommunityid } = communitySlice.actions;
+export const { settingModalOn, settingModalOff, setSession,    resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
+  setReservationId, resetMsg, setCommunityid, appendParticipantList } = communitySlice.actions;
 
 export default communitySlice.reducer;

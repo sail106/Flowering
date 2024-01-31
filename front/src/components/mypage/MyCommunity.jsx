@@ -3,7 +3,7 @@ import { ButtonBox } from "../store/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setCommunityid, setCustomer, setSession } from "../../redux/slices/communitySlice";
+import { setCommunityid,   setSession } from "../../redux/slices/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -167,7 +167,7 @@ const MyCommunity = () => {
     const getOV = new OpenVidu();
     dispatch(setSession(getOV.initSession()))
     setOV(getOV)
-    console.log('  setCommunityid'+communityId)
+    console.log('session setCommunityid'+session)
 
     dispatch(setCommunityid(communityId))
 

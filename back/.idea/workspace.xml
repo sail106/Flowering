@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/back.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/back.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/CommunityPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/CommunityPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantListResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantListResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/user/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/user/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/components/community/OneToManyVideoChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/community/OneToManyVideoChat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/community/UserVideoComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/community/UserVideoComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/components/mypage/MyCommunity.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/mypage/MyCommunity.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/participant/ParticipantItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/participant/ParticipantItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/participant/ParticipantList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/participant/ParticipantList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/redux/slices/authSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/redux/slices/authSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/redux/slices/communitySlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/redux/slices/communitySlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/redux/store.js" afterDir="false" />
     </list>
@@ -105,16 +108,6 @@
       <recent name="C:\Users\SSAFY\Downloads\0122\back\src\main" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="BackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="back.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.sail.back.BackApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -137,7 +130,7 @@
       <workItem from="1706141914856" duration="18849000" />
       <workItem from="1706227511149" duration="7853000" />
       <workItem from="1706486439627" duration="10683000" />
-      <workItem from="1706582579393" duration="1067000" />
+      <workItem from="1706582579393" duration="4443000" />
     </task>
     <task id="LOCAL-00001" summary="feat: #6 Community 생성 api 작성&#10;- repository 생성&#10;- service 생성&#10;- controller 수정&#10;- request dto 생성&#10;- response dto 생성">
       <option name="closed" value="true" />
