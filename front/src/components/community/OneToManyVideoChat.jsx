@@ -1,577 +1,480 @@
-  import React, { useState, useEffect } from 'react';
-  import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from "styled-components";
 
-  import { BsRecord2 } from "react-icons/bs";
+import { BsRecord2 } from "react-icons/bs";
 
-  import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
-  import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
-  import { CiMicrophoneOn } from "react-icons/ci";
-  import { GoShare } from "react-icons/go";
-  import { LiaComment } from "react-icons/lia";
-  import { IoMdVideocam } from "react-icons/io";
-  import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
+import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
+import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
+import { CiMicrophoneOn } from "react-icons/ci";
+import { GoShare } from "react-icons/go";
+import { LiaComment } from "react-icons/lia";
+import { IoMdVideocam } from "react-icons/io";
+import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 
-  import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
-  import { useDispatch } from "react-redux";
-  import { useSelector } from 'react-redux';
-  import Participant from '../participant/Participant';
-   import SmallChat from '../chat/SmallChat';
+import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import Participant from '../participant/Participant';
+import SmallChat from '../chat/SmallChat';
 import { OpenVidu } from 'openvidu-browser';
 
+import {
+  settingModalOn, setSession,
+  resetSessionName, resetMsg, appendParticipantList
+} from '../../redux/slices/communitySlice'
+import UserVideoComponent from './UserVideoComponent';
+import axios from 'axios';
+import { CiVideoOn } from "react-icons/ci";
 
-  const OPENVIDU_SERVER_URL = 'http://localhost:4443';
-  const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-  // rafce Arrow function style 
-  const OneToManyVideoChat = () => {
+// rafce Arrow function style 
+const OneToManyVideoChat = () => {
 
-    //   // const { nickname, email, role } = useSelector(state => state.auth.logonUser)
-    // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
-    //   // const tmp = email?.replace(/[@\.]/g, '-')
+  const { session, community_id } = useSelector(state => state.community)
+  //   // const tmp = email?.replace(/[@\.]/g, '-')
+  const [creator, setCreator] = useState(undefined)
 
-    //   const [mySessionId, setMySessionId] = useState(
-    //     role === CONSULTANT ? tmp : consultantSessionName
-    //   ) 
+  //   const [mySessionId, setMySessionId] = useState(
+  //     role === CONSULTANT ? tmp : consultantSessionName
+  //   )
+  const [OV, setOV] = useState(null)
+  const { nickname, role, id } = useSelector(state => state.auth.logonUser)
+  const { creatorid } = useSelector(state => state.community.creator)
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const [myUserName, setMyUserName] = useState(nickname)
 
-    const [publisher, setPublisher] = useState(undefined)
-    const [consultant, setConsultant] = useState(undefined)
+  const [publisher, setPublisher] = useState(undefined)
+  const [consultant, setConsultant] = useState(undefined)
 
-    const [isMic, setIsMic] = useState(false);
-    const [isCam, setIsCam] = useState(false);
+  const [isMic, setIsMic] = useState(false);
+  const [isCam, setIsCam] = useState(false);
 
-    //   const [OV, setOV] = useState(null)
-
-
-    // 마이크 권한을 변경하는 함수
-    const handleAudioPermissionChange = () => {
-      dispatch(setAudioPermission(isMic)); // 토글
-      console.log(isMic)
-    };
-
-    // 카메라 권한을 변경하는 함수
-    const handleVideoPermissionChange = () => {
-      dispatch(setVideoPermission(isCam)); // 토글
-      console.log(isCam)
-
-    };
-
-    useEffect(() => {
-
-      setIsMic(isMic);
-      setIsCam(isCam);
-
-      console.log('ismicchanged'+isMic)
-      console.log('iscamchanged'+isCam)
-
-    }, [isMic, isCam]);
-
-    //   // 코멘트, 진단결과 톤, 진단결과 이미지 정보
-    //   // const { selectedColor, bestColor, worstColor,
-    //     // consultingComment, tone, files
-    //   // } = useSelector(state => state.colorSetList)
+  //   const [OV, setOV] = useState(null)
 
 
-    //   const consultingFinishRequest = {
-    //     reservationId: reservationId,
-    //     consultingComment: consultingComment,
-    //     tone: tone,
-    //     bestColorSet: bestColor,
-    //     worstColorSet: worstColor
-    //   }
+  const sessionConnect = (token) => {
+    console.log('in connection  ')
 
-    //   const dispatch = useDispatch();
-    //   const navigate = useNavigate();
+    session
+      .connect(
+        token, { clientData: myUserName, clientRole: role },
+      )
 
-    //   useEffect(() => {
-    //     // console.log('dsfsfsfsd')
-    //     window.addEventListener(
-    //       'beforeunload',
-    //       onbeforeunload);
+      .then(() => {
+        console.log('tokk  ' + token)
 
-    //     return () => {
-    //       window.removeEventListener(
-    //         'beforeunload',
-    //         onbeforeunload);
-    //     }
-    //   }, [])
+        let publisher = OV.initPublisher(undefined, {
+          audioSource: undefined,
+          videoSource: undefined,
+          publishAudio: true,
+          publishVideo: true,
+          resolution: '1280x960',
+          frameRate: 30,
+          insertMode: 'APPEND',
+          mirror: false,
+        });
 
-    //   useEffect(() => {
-    //     if (role === CUSTOMER) {
-    //       // console.log('consultantSessionName'+consultantSessionName)
-    //       console.log('consultantSessionName'+consultantSessionName)
+        publisher.subscribeToRemote()
 
-    //       if (!consultantSessionName) {
-    //         console.log('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-    //         console.log('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-    //       }
-    //       else {
-    //         console.log(consultantSessionName)
-    //       }
-    //     }
-    //   }, [consultantSessionName])
+        session.publish(publisher);
+        setPublisher(publisher);
 
-    // //방에 입장하고 싶은사람이 redux 에서 consultantsessioname 이 있으면 값출력, 없으면 종료한다.
+        if (id === community_id) { setCreator(publisher) }
 
-    // // consultantsessionname 이 바뀔때 실행된다.
+        else { dispatch(appendParticipantList(publisher)) }
 
-    //   useEffect( () => {
+        dispatch(setSession(session))
 
-    //     if(session) { //session 은 state.consult 에서 가져온값 
-    //       // console.log('in ifsessionn' )
-    //       console.log('in if session')
+      })
+      .catch((error) => { });
+  }
 
-    //       session.on('streamCreated', streamCreated) //session.on 은 useeffect 가 마운트될때, session 값 이 변경될때
-    //       // 실행된다
-    //       session.on('streamDestroyed', streamDestroyed)
-    //       session.on('exception', exception)
-    //       session.on('signal:colorset', shareColorset)
-    //       getToken().then(sessionConnect); //gettoken수행시 createsession,createtoken 수행.
-    //     }
-    //   }, [session])
-    // //session이 이미 존재하는 경우
-    // // getToken 함수가 호출되면 실제로는 새로운 세션을 만들지 않습니다.
-    // // createSession 함수 내에서 이미 생성된 세션이 있을 경우, 
+  useEffect(() => {
+    console.log('session' + session)
+    if (session) {
+      session.on('streamCreated', streamCreated)
+      session.on('streamDestroyed', streamDestroyed)
+      session.on('exception', exception)
+      getToken().then(sessionConnect);
+    }
+  }, [session])
 
-    // // 해당 세션의 ID를 반환하게 됩니다. 그러므로 getToken 함수는 이미 존재하는
-    // // 세션의 ID를 사용하여 토큰을 생성합니다.
-    //   const sessionConnect = (token) => { // setsession ,setcustomer 등을 수행.
-    //     // console.log('connnnect')
-    //     console.log('connnnect')
-    //     session
-    //       .connect(
-    //         token, { clientData: myUserName, clientRole: role },
-    //       )
-    //       .then(() => {
-    //         console.log('connect then')
+  // 마이크 권한을 변경하는 함수
+  const handleAudioPermissionChange = () => {
+    // dispatch(setAudioPermission(isMic)); // 토글
+    console.log(isMic)
+  };
 
-    //         let publisher = OV.initPublisher(undefined, {
-    //           audioSource: undefined,
-    //           videoSource: undefined,
-    //           publishAudio: true,
-    //           publishVideo: true,
-    //           resolution: '1280x960',
-    //           frameRate: 30,
-    //           insertMode: 'APPEND',
-    //           mirror: false,
-    //         }); //publisher 에 비디오 정보를 저장 
+  // 카메라 권한을 변경하는 함수
+  const handleVideoPermissionChange = () => {
+    // dispatch(setVideoPermission(isCam)); // 토글
+    console.log(isCam)
 
-    //         publisher.subscribeToRemote() 
-    //         session.publish(publisher); //session.publish를 호출하여 로컬 사용자의 미디어 스트림을 서버에 전송
-    //         setPublisher(publisher);
-    //         if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-    //         if (role === CONSULTANT) { setConsultant(publisher) }
-    //         dispatch(setSession(session))
-    //       })
-    //       .catch((error) => {
-    //         console.log('connect error')
-    //        });
+  };
 
-    //   }
+  useEffect(() => {
+    console.log('session', session);
+  }, [session]);
 
-    //   useEffect(() => {
-    //     if (session && role === CONSULTANT) {
-    //       const data =
-    //         `${JSON.stringify(selectedColor)}$$${JSON.stringify(bestColor)}$$${JSON.stringify(worstColor)}`;
-
-    //       session.signal({
-    //         data,
-    //         to: [],
-    //         type: 'colorset'
-    //       }).then(() => { }).catch(() => { })
-    //     }
-    //   }, [selectedColor, bestColor, worstColor])
+  useEffect(() => {
+    console.log('community_id', community_id);
+  }, [community_id]);
 
 
-    //   const shareColorset = (event) => {
-    //     const data = event.data.split('$$')
-    //     const newSelectedColor = JSON.parse(data[0])
-    //     const newBestColor = JSON.parse(data[1])
-    //     const newWorstColor = JSON.parse(data[2])
-    //     dispatch(sharedColorSet({ newSelectedColor, newBestColor, newWorstColor }))
-    //   }
+  useEffect(() => {
 
-    //   // 하단 console.log관련
-    //   const clickColorFirstFunc = () => {
-    //     if (clickColorFirst === false) {
-    //       setClickColorFirst(true)
-    //       dispatch(setSnackbarMessage('컬러를 성공적으로 추가하였습니다! 컬러팔레트 안의 색상을 선택한 후 제거해보세요.'))
-    //       dispatch(setSnackBarOpen(true))
-    //     } else {
-    //       return
-    //     }
-    //   }
+    setIsMic(isMic);
+    setIsCam(isCam);
 
-    //   const onbeforeunload = () => {
-    //     leaveSession();
-    //   }
+    console.log('ismicchanged' + isMic)
+    console.log('iscamchanged' + isCam)
 
-    //   const deleteSubscriber = (streamManager) => {
-    //   }
+  }, [isMic, isCam]);
 
-      const joinSession = () => {  //세션 값 넣기.
-        const getOV = new OpenVidu();
-        dispatch(setSession(getOV.initSession()))
-        setOV(getOV)
+
+  //   const onbeforeunload = () => {
+  //     leaveSession();
+  //   }
+
+  //   const deleteSubscriber = (streamManager) => {
+  //   }
+
+  const joinSession = () => {  //세션 값 넣기.
+    const getOV = new OpenVidu();
+    dispatch(setSession(getOV.initSession()))
+    setOV(getOV)
+
+  }
+
+  // const streamCreated = (event) => {  //subscriber 는 
+  //   const subscriber = session.subscribe(event.stream, undefined); //새로운 스트림 구독.
+  //   //event.stream 은 생성된 스트림.
+  //   const subRole = JSON.parse(event.stream.connection.data).clientRole
+  //   //트림의 연결(connection) 객체에서 clientRole 값을 추출 
+  //   // 이 정보는 해당 스트림을 생성한 사용자의 역할 
+
+  //   if (subRole === CUSTOMER) { dispatch(appendParticipantList(subscriber)) }
+  //   else if (subRole === CUSTOMER) { setCreator(subscriber) }
+
+  // }
+
+  const [customers, setCustomers] = useState([]);  // 배열로 고객들을 관리합니다.
+  const streamCreated = (event) => {
+    const subscriber = session.subscribe(event.stream, undefined);
+    const subRole = JSON.parse(event.stream.connection.data).clientRole;
+    const customerId = event.stream.connection.connectionId;
+
+
+    if (id === community_id && customerId !== community_id) {
+      // 컨설턴트가 고객을 구독하고 있는 경우
+      const customerId = event.stream.connection.connectionId; // 고객 ID를 가져옵니다.
+      const newCustomer = {
+        id: customerId,
+        role: subRole,
+        // 필요한 다른 정보들도 이곳에 추가할 수 있습니다.
+      };
+      dispatch(appendParticipantList(newCustomer)); // 고객을 추가합니다.
+    } else if (role === CUSTOMER && customerId === community_id) {
+      // 고객이 컨설턴트를 구독하고 있는 경우
+      setCreator(subscriber); // 컨설턴트를 설정합니다.
+    } else if (role === CUSTOMER && subRole === CUSTOMER) {
+      // 여러 명의 고객이 서로를 구독하는 경우
+      const customerId = event.stream.connection.connectionId; // 고객 ID를 가져옵니다.
+      const newCustomer = {
+        id: customerId,
+        role: subRole,
+        // 필요한 다른 정보들도 이곳에 추가할 수 있습니다.
+      };
+      dispatch(appendParticipantList(newCustomer)); // 고객을 추가합니다.
+    }
+  };
+
+
+
+  const streamDestroyed = (event) => {
+    deleteSubscriber(event.stream.streamManager);
+  }
+
+  const exception = (exception) => {
+    console.warn(exception);
+  }
+
+  //   // 컨설턴트, 고객 종료시 분리 필요
+  const leaveSession = () => {
+    console.log('session' + session)
+
+    if (session) {
+      session.disconnect();
+      dispatch(postConsultingResult({ files, consultingFinishRequest }))
+        .then(() => {
+          dispatch(changeComment(''))
+          dispatch(selectTone(''))
+          dispatch(setFiles(''))
+          dispatch(resetColor())
+          navigate('/')
+        })
+    }
+
+    if (role === CUSTOMER && session) {
+      session.disconnect();
+    }
+
+    setOV(null);
+    // setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
+    dispatch(setSession(undefined))
+    dispatch(setCustomer(undefined))
+    dispatch(resetMsg())
+    // setMyUserName(nickname)
+    setConsultant(undefined)
+
+  }
+
+  //   /**
+  //    * --------------------------
+  //    * SERVER-SIDE RESPONSIBILITY
+  //    * --------------------------
+  //    * These methods retrieve the mandatory user token from OpenVidu Server.
+  //    * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
+  //    * the API REST, openvidu-java-client or openvidu-node-client):
+  //    *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
+  //    *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
+  //    *   3) The Connection.token must be consumed in Session.connect() method
+  //    */
+
+  const getToken = () => {
+    return createSession(community_id).then((sessionId) =>
+      createToken(sessionId));
+
+  }
+
+  const createSession = (sessionId) => {
+    return new Promise((resolve, reject) => {
+      const data = JSON.stringify({ customSessionId: String(sessionId) });
+
+      console.log('createsessionnn with sessionid' + sessionId)
+
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+          headers: {
+            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+            'Content-Type': 'application/json',
+
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Methods': 'GET,POST',
+          },
+
+        })
+
+        .then((response) => {
+          console.log('createsession then')
+          resolve(response.data.id); // consultatnt email == session id.
+        })
+
+        .catch((response) => {
+          // console.log('createsession catchhh')
+          console.log('createsession catchhh')
+
+          var error = Object.assign({}, response);
+          if (error?.response?.status === 409) {
+            resolve(sessionId);
+          }
+        });
+    });
+  }
+
+  const createToken = (sessionId) => {
+    console.log('tokennnnnn')
+    return new Promise((resolve, reject) => {
+      const data = {
+        "type": "WEBRTC",
+        "role": "PUBLISHER",
+        "kurentoOptions": {
+          "videoMaxRecvBandwidth": 1000,
+          "videoMinRecvBandwidth": 300,
+          "videoMaxSendBandwidth": 1000,
+          "videoMinSendBandwidth": 300,
+          "allowedFilters": [
+            "GStreamerFilter",
+            "FaceOverlayFilter",
+            "ChromaFilter"
+          ]
+        }
+      };
+
+      axios
+        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
+          headers: {
+            Authorization: 'Basic ' + btoa(
+              'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
+            ),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST',
+          },
+        })
+        .then((response) => {
+          resolve(response.data.token);
+        })
+        .catch((error) => reject(error));
+    });
+  }
+
+
+  // ---------- render
+  return (
+
+    <SContainer container >
+      {
+
+
+        session !== undefined ?
+          (
+
+            // 세션 연결시
+
+            <SGridContainer container spacing={2}>
+              <div>
+
+                <IoMdVideocamIcon>
+                  <IoMdVideocam />
+
+                </IoMdVideocamIcon>
+
+
+              </div>
+
+              <Myspan>
+                깐달걀 피부 만드는 추천템 공개
+              </Myspan>
+
+              <VideoGroup>
+                <UserVideoComponent
+                  streamManager={creator} />
+
+              </VideoGroup>
+
+              {
+
+                creator !== undefined ? (
+
+                  <Grid container item xs={12} sm={2}
+                    sx={{
+                      height: "80%",
+                      justifyContent: "space-between",
+                      gap: 2,
+
+                    }}>
+
+                    <CiVideoOn />
+
+
+                    <VideoContainer>
+                      <UserVideoComponent
+                        streamManager={creator}
+                      />
+                    </VideoContainer>
+
+
+                    {
+                      // role === CONSULTANT &&
+
+                    }
+
+                  </Grid>
+
+
+                )
+                  :
+                  <SpinnerGrid item xs={12} sm={2}>
+                    <CircularProgress />
+                  </SpinnerGrid>
+              }
+
+
+
+
+              <SmallChatContainer>
+
+                <Participant />
+
+                <SmallChat />
+
+              </SmallChatContainer>
+
+              {/* </UserVideoSGrid> */}
+              {/* <Chat /> */}
+
+              {/* 우측 컬러팔레트, 채팅*/}
+              {
+                // role === CONSULTANT &&
+                // sgrid
+                // <Grid item xs={12} sm={4}
+                //   sx={{
+                //     display: "flex",
+                //     flexDirection: "column",
+                //     alignItems: "center",
+                //     height: '100%',
+                //   }}>
+
+
+                // </Grid>
+
+              }
+
+              {
+                // role === CUSTOMER &&
+                // <Grid item xs={12} sm={4}
+                //   sx={{
+                //     display: "flex",
+                //     justifyContent: "end",
+                //     height: "80%",
+                //     flexDirection: "column",
+                //     width: '100%',
+                //     border: '2px solid #18c24b99'
+
+                //   }}>
+
+
+                // </Grid>
+
+              }
+
+            </SGridContainer>
+
+          )
+          :
+          // 세션 연결 안됐을시
+          <SpinnerGrid container>
+            <Typography variant="h3">"연결을 눌러 주세요."</Typography>
+          </SpinnerGrid>
+
       }
 
-    //   const streamCreated = (event) => {  //subscriber 는 
-    //     const subscriber = session.subscribe(event.stream,  undefined); //새로운 스트림 구독.
-    //     //event.stream 은 생성된 스트림.
-    //     const subRole = JSON.parse(event.stream.connection.data).clientRole
-    //     //트림의 연결(connection) 객체에서 clientRole 값을 추출 
-    //     // 이 정보는 해당 스트림을 생성한 사용자의 역할 
-
-    //     if (role === CONSULTANT && subRole === CUSTOMER) { dispatch(setCustomer(subscriber)) }
-    //     else if (role === CUSTOMER && subRole === CONSULTANT) { setConsultant(subscriber) }
-
-    //   }
-
-    //   const streamDestroyed = (event) => {
-    //     deleteSubscriber(event.stream.streamManager);
-    //   }
-
-    //   const exception = (exception) => {
-    //     console.warn(exception);
-    //   }
-
-    //   // 컨설턴트, 고객 종료시 분리 필요
-    //   const leaveSession = () => {
-
-    //     if (role === CONSULTANT) {
-    //       if (worstColor.length < 1 | bestColor.length < 1) {
-    //         console.log('베스트컬러와 워스트컬러 팔레트를 1개 이상씩 채워주세요.')
-    //         return;
-    //       }
-    //       if (tone === '') {
-    //         console.log('톤 정보를 입력해주세요.')
-    //         return;
-    //       }
-    //       if (files === '') {
-    //         console.log('진단 결과표를 등록해 주세요.')
-    //         return;
-    //       }
-    //       if (session) {
-    //         session.disconnect();
-    //         dispatch(postConsultingResult({ files, consultingFinishRequest }))
-    //           .then(() => {
-    //             dispatch(changeComment(''))
-    //             dispatch(selectTone(''))
-    //             dispatch(setFiles(''))
-    //             dispatch(resetColor())
-    //             navigate('/')
-    //           })
-    //       }
-    //     }
-    //     if (role === CUSTOMER && session) {
-    //       session.disconnect();
-    //     }
-
-    //     setOV(null);
-    //     setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
-    //     dispatch(setSession(undefined))
-    //     dispatch(setCustomer(undefined))
-    //     dispatch(resetMsg())
-    //     setMyUserName(nickname)
-    //     setConsultant(undefined)
-    //   }
-
-    //   /**
-    //    * --------------------------
-    //    * SERVER-SIDE RESPONSIBILITY
-    //    * --------------------------
-    //    * These methods retrieve the mandatory user token from OpenVidu Server.
-    //    * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-    //    * the API REST, openvidu-java-client or openvidu-node-client):
-    //    *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-    //    *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-    //    *   3) The Connection.token must be consumed in Session.connect() method
-    //    */
-
-    //   const getToken = () => {
-    //     return createSession(mySessionId).then((sessionId) => 
-    //     createToken(sessionId));
-
-    //   }
-
-    //   const createSession = (sessionId) => {
-    //     return new Promise((resolve, reject) => {
-    //       const data = JSON.stringify({ customSessionId: sessionId });
-    //       console.log('createsessionnn with sessionid'+sessionId)
-    //       console.log('buffffer'+ Buffer.from('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET).toString('base64'))
-
-    //       axios.post( OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-
-    //           headers: {
-    //             Authorization: 'Basic ' + 
-    //             // btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-    //             // Buffer.from('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET).toString('base64'),
-    //             'T1BFTlZJRFVBUFA6T1BFTlZJRFVfU0VDUkVU',
-
-    //             'Content-Type': 'application/json',
-    //             'Access-Control-Allow-Origin': '*',
-    //             'Access-Control-Allow-Methods': 'GET,POST',
-    //             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-    //           },
-    //         })
-
-    //         .then((response) => {
-    //           console.log('createsession then')
-    //           resolve(response.data.id); // consultatnt email == session id.
-    //         })
-
-    //         .catch((response) => {
-    //           // console.log('createsession catchhh')
-    //           console.log('createsession catchhh')
-
-    //           var error = Object.assign({}, response);
-    //           if (error?.response?.status === 409) {  
-    //             console.log('4099999999999999')
-    //             resolve(sessionId);
-    //           } else {
-    //             console.warn(
-    //               'No connection to OpenVidu Server. This may be a certificate error at ' +
-    //               OPENVIDU_SERVER_URL,
-    //             );
-    //             if (
-    //               window.confirm(
-    //                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-    //                 OPENVIDU_SERVER_URL +
-    //                 '"\n\nClick OK to navigate and accept it. ' +
-    //                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-    //                 OPENVIDU_SERVER_URL +
-    //                 '"',
-    //               )
-    //             ) {
-    //               window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
-    //             }
-    //           }
-    //         });
-    //     });
-    //   }
-
-    //   const createToken = (sessionId) => {
-    //     console.log('tokennnnnn')
-    //     return new Promise((resolve, reject) => {
-    //       const data = {
-    //         "type": "WEBRTC",
-    //         "role": "PUBLISHER",
-    //         "kurentoOptions": {
-    //           "videoMaxRecvBandwidth": 1000,
-    //           "videoMinRecvBandwidth": 300,
-    //           "videoMaxSendBandwidth": 1000,
-    //           "videoMinSendBandwidth": 300,
-    //           "allowedFilters": [
-    //             "GStreamerFilter",
-    //             "FaceOverlayFilter",
-    //             "ChromaFilter"
-    //           ]
-    //         }
-    //       };
-
-    //       console.log('createtokkkkk'+    Buffer.from('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET).toString('base64'))
-    //       console.log('buffer'+Buffer.from('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET).toString('base64'))
-    //       axios
-    //         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
-    //           headers: {
-    //             Authorization: 'Basic ' +
-    //             //  btoa(
-    //             //   'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
-    //             // ),
-    //             //  Buffer.from('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET).toString('base64'),
-    //              'T1BFTlZJRFVBUFA6T1BFTlZJRFVfU0VDUkVU',
-
-    //             'Content-Type': 'application/json'
-    //             // 'Access-Control-Allow-Origin': '*',
-    //             // 'Access-Control-Allow-Methods': 'GET,POST',
-    //           },
-    //         })
-    //         .then((response) => {
-    //           resolve(response.data.token);
-    //         })
-    //         .catch((error) => reject(error));
-    //     });
-    //   }
 
 
-    // ---------- render
-    return (
-
-      <SContainer container >
+      {/* 하단 || 선택된 베스트, 워스트 컬러팔레트 || 마이크, 카메라, 종료버튼 */}
+      <BottomBox>
         {
-
-
-          // session !== undefined ?
-          // (
-
-          // 세션 연결시
-
-          <SGridContainer container spacing={2}>
-            <div>
-
-              <IoMdVideocamIcon>
-                <IoMdVideocam />
-
-              </IoMdVideocamIcon>
-
-
-            </div>
-
-            <Myspan>
-              깐달걀 피부 만드는 추천템 공개
-            </Myspan>
-
-
-            {
-
-              // consultant !== undefined ? ( 
-
-              // <Grid container item xs={12} sm={2}
-              //   sx={{
-              //     height: "80%",
-              //     justifyContent: "space-between",
-              //     gap: 2,
-
-              //   }}>
-
-              //   <CiVideoOn />
-
-              //   <SGrid item >
-              //     {/* <VideoContainer>
-              //       <UserVideoComponent
-              //         streamManager={consultant}
-              //          />
-              //     </VideoContainer> */}
-              //   </SGrid>
-
-              //   {
-              //     // role === CONSULTANT &&
-
-              //   }
-
-              // </Grid>
-
-
-              // )
-              // :
-              // <SpinnerGrid item xs={12} sm={2}>
-              //   <CircularProgress />
-              // </SpinnerGrid>
-            }
-
-            {/* <UserVideoSGrid item xs={12} sm={6}> */}
-            {
-              // customer !== undefined ? (
-
-              // 유저 비디오 및 베스트 및 컬러셋
-              // <VideoContainer>
-              //   <UserVideoComponent
-              //     streamManager={customer} 
-              //     />
-              // </VideoContainer>
-              // )
-              //   :
-              //   <SpinnerGrid item xs={12} sm={6}>
-              //     <CircularProgress />
-              //   </SpinnerGrid>
-            }
-            {
-              // role === CONSULTANT &&
-              // <ColorButtonGroup
-              //   clickColorFirstFunc={clickColorFirstFunc}
-              //   clickColorFirst={clickColorFirst}
-              //   isBest={isBest}
-              //   isWorst={isWorst}
-              //   setIsBest={setIsBest}
-              //   setIsWorst={setIsWorst}
-              // />
-            }
-            {/* <SmallChat /> */}
-
-            <VideoGroup>
-
-            </VideoGroup>
-
-            <SmallChatContainer>
-
-              <Participant />
-
-              <SmallChat />
-
-            </SmallChatContainer>
-
-            {/* </UserVideoSGrid> */}
-            {/* <Chat /> */}
-
-            {/* 우측 컬러팔레트, 채팅*/}
-            {
-              // role === CONSULTANT &&
-              // sgrid
-              // <Grid item xs={12} sm={4}
-              //   sx={{
-              //     display: "flex",
-              //     flexDirection: "column",
-              //     alignItems: "center",
-              //     height: '100%',
-              //   }}>
-
-
-              // </Grid>
-
-            }
-
-            {
-              // role === CUSTOMER &&
-              // <Grid item xs={12} sm={4}
-              //   sx={{
-              //     display: "flex",
-              //     justifyContent: "end",
-              //     height: "80%",
-              //     flexDirection: "column",
-              //     width: '100%',
-              //     border: '2px solid #18c24b99'
-
-              //   }}>
-
-
-              // </Grid>
-
-            }
-
-          </SGridContainer>
-
-          // )
-          //   :
-          //   // 세션 연결 안됐을시
-          //   <SpinnerGrid container>
-          //     <Typography variant="h3">"연결을 눌러 주세요."</Typography>
-          //   </SpinnerGrid>
-
-        }
-
-
-
-        {/* 하단 || 선택된 베스트, 워스트 컬러팔레트 || 마이크, 카메라, 종료버튼 */}
-        <BottomBox>
-          {
-            // 세션연결 안됐을시
-            // !session ?
-            //   <>
-            //     <p />
-            //     <ButtonGroup>
-            //       <BottomBtn variant="contained" onClick={joinSession} sx={{ backgroundColor: "#EB8F90" }}>
-            //         연결
-            //       </BottomBtn>
-            //       <BottomBtn variant="contained" onClick={() => {
-            //         navigate('/')
-            //         dispatch(resetSessionName())
-            //       }}>
-            //         돌아가기
-            //       </BottomBtn>
-            //     </ButtonGroup>
-            //   </>
-            //   :
+          // 세션연결 안됐을시
+          !session ?
+            <>
+              <p />
+              <ButtonGroup>
+                <BottomBtn variant="contained" onClick={joinSession} sx={{ backgroundColor: "#EB8F90" }}>
+                  연결
+                </BottomBtn>
+                <BottomBtn variant="contained" onClick={() => {
+                  navigate('/')
+                  dispatch(resetSessionName())
+                }}>
+                  돌아가기
+                </BottomBtn>
+              </ButtonGroup>
+            </>
+            :
             // 세션 연결시 
             <>
               {/* 베스트,워스트 컬러셋 || 마이크,캠,종료버튼 */}
@@ -579,12 +482,7 @@ import { OpenVidu } from 'openvidu-browser';
 
                 // role === CONSULTANT ?
                 //   // 컨설턴트
-                //   <>
-                //     {/* 컬러셋 */}
-                //     <ConSelectedColorSet
-                //       setIsBest={setIsBest}
-                //       setIsWorst={setIsWorst}
-                //     />
+                //   <> 
                 //     <MicCamExitGroup>
                 //       {/* 마이크 */}
                 //       <CustomIconButton
@@ -613,11 +511,7 @@ import { OpenVidu } from 'openvidu-browser';
                 // :
                 // 유저
                 <>
-                  {/* 컬러셋 */}
-                  {/* <SelectedColorSet
-                      setIsBest={setIsBest}
-                      setIsWorst={setIsWorst}
-                    /> */}
+
                   {/* 마이크,캠 + 필터 + 종료*/}
 
                   <MicCamExitGroup>
@@ -698,31 +592,42 @@ import { OpenVidu } from 'openvidu-browser';
                     {/* </BottomBtn> */}
 
                     {/* <BottomBtn variant="contained"  > */}
-                  
-                    <ExitButton>
+
+                    <ExitButton onClick={leaveSession}>
                       나가기
-                      { /* </BottomBtn> */}
                     </ExitButton>
-
-
 
                     {/* </ButtonGroup> */}
                   </MicCamExitGroup>
                 </>
               }
             </>
-          }
-        </BottomBox>
+        }
+      </BottomBox>
 
-      </SContainer >
-    )
+    </SContainer >
+  )
 
-  }
+}
 
-  export default OneToManyVideoChat
-  // 전체포함 margin으로 띄운 상태
+export default OneToManyVideoChat
+// 전체포함 margin으로 띄운 상태
 
-  const Myspan = styled.div`
+const BottomBtn = styled(Button)((props) => ({
+  backgroundColor: '#99968D',
+  color: 'white',
+  '&:hover': {
+    backgroundColor: '#66635C',
+    color: 'black',
+    fontWeight: 'normal',
+  },
+  fontWeight: 'normal',
+  border: '1px solid #66635C70',
+  // width: `${props.wd}px`,
+  height: '3rem',
+}))
+
+const Myspan = styled.div`
     
       font-size: 2rem; // Adjust the font size as needed
       color: #000000;
@@ -732,7 +637,7 @@ import { OpenVidu } from 'openvidu-browser';
   font-weight: 500;
   `;
 
-  const IoMdVideocamIcon = styled(IoMdVideocam)`
+const IoMdVideocamIcon = styled(IoMdVideocam)`
     && {
       font-size: 3rem; // Adjust the font size as needed
       color: #f28482;
@@ -741,7 +646,7 @@ import { OpenVidu } from 'openvidu-browser';
       
     }
   `;
-  const SContainer = styled(Box)`
+const SContainer = styled(Box)`
     /* display: flex; */
     flex-direction: column;
     align-items: center;
@@ -757,9 +662,9 @@ import { OpenVidu } from 'openvidu-browser';
 
 
 
-  // 공용버튼 제외 모두 포함 (상위)
-  // height 90% / 나머지 10% 하단
-  const SGridContainer = styled(Grid)`
+// 공용버튼 제외 모두 포함 (상위)
+// height 90% / 나머지 10% 하단
+const SGridContainer = styled(Grid)`
     height: 100%; // "90%",
     display: flex;
     /* border: 12px solid #dc121299; */
@@ -767,8 +672,8 @@ import { OpenVidu } from 'openvidu-browser';
   `;
 
 
-  // 연결안됐을시 스피너
-  const SpinnerGrid = styled(Grid)`
+// 연결안됐을시 스피너
+const SpinnerGrid = styled(Grid)`
     width: 100%;
     height: 100%;
     display: flex;
@@ -778,7 +683,7 @@ import { OpenVidu } from 'openvidu-browser';
   `;
 
 
-  const SmallChatContainer = styled.div`
+const SmallChatContainer = styled.div`
   position: absolute;
   width: 31%;
   top: 10%;
@@ -787,7 +692,7 @@ import { OpenVidu } from 'openvidu-browser';
   height: 90%;
   `;
 
-  const BottomBox = styled(Box)`
+const BottomBox = styled(Box)`
     height: 10vh;
     display: flex;
     flex-direction: row;
@@ -798,7 +703,7 @@ import { OpenVidu } from 'openvidu-browser';
     /* background-color: aliceblue; */
   `;
 
-  const CustomMicButton = styled(IconButton)`
+const CustomMicButton = styled(IconButton)`
     && {
       /* background-color: #f28482; */
       background-color: ${({ isCam }) => (isCam ? '#df6060' : '#0c0c0c')}; // Conditional background color
@@ -819,7 +724,7 @@ import { OpenVidu } from 'openvidu-browser';
     }
   `;
 
-  const CustomVideoButton = styled(IconButton)`
+const CustomVideoButton = styled(IconButton)`
     && {
       /* background-color: #f28482; */
       background-color: ${({ isCam }) => (isCam ? '#df6060' : '#0c0c0c')}; // Conditional background color
@@ -839,7 +744,7 @@ import { OpenVidu } from 'openvidu-browser';
       margin-top: 11px;
     }
   `;
-  const CustomIconButton2 = styled(IconButton)`
+const CustomIconButton2 = styled(IconButton)`
     && {
       background-color: #efc6c5;
       
@@ -859,7 +764,7 @@ import { OpenVidu } from 'openvidu-browser';
     }
   `;
 
-  const ExitButton = styled(Button)`
+const ExitButton = styled(Button)`
     && {
       background-color: #f28482;
       color: white;
@@ -875,11 +780,14 @@ import { OpenVidu } from 'openvidu-browser';
       width: 130px;
       margin-bottom: 11px;
       margin-top: 11px;
+      
+      
     }
+    
   `;
 
 
-  const MicCamExitGroup = styled(Grid)`
+const MicCamExitGroup = styled(Grid)`
     display: flex;
     flex-direction: row;
     gap: 3;
@@ -893,7 +801,7 @@ import { OpenVidu } from 'openvidu-browser';
   `;
 
 
-  const VideoGroup = styled(Grid)`
+const VideoGroup = styled(Grid)`
     display: flex;
     flex-direction: row;
     gap: 3;

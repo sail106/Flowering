@@ -30,14 +30,16 @@ public class ConsultingmylistResponse {
     private LocalDateTime  time; //예약을 몇시에 할건지
 
     private String request;//요청사항
+    private Long consultingid;//요청사항
 
     //세션아이디
-    private String sessionId;
+//    private String sessionId;
 
     public static ConsultingmylistResponse fromEntity(Consulting consulting) {
         return ConsultingmylistResponse.builder()
                 .user(consulting.getUser())
                 .time(consulting.getTime())
+                .consultingid(consulting.getConsulting_id())
                 .build();
     }
 

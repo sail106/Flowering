@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
+import { Page } from "../common/Page";
 
 const MyPage = styled(Page)``;
 

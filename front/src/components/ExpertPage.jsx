@@ -2,7 +2,7 @@ import styled from "styled-components";
 import MyInfo from "./mypage/MyInfo";
 import ExpertConsulting from "./mypage/ExpertConsulting";
 import ExpertInfoNProfile from "./mypage/ExpertInfoNProfile";
-import { Page } from "./store/Page";
+import { Page } from "./common/Page";
 
 const BackPage = styled(Page)`
   height: auto;

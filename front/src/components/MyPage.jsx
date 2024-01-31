@@ -2,8 +2,8 @@ import styled from "styled-components";
 import MyInfo from "./mypage/MyInfo";
 import MyConsulting from "./mypage/MyConsulting";
 import MyCommunity from "./mypage/MyCommunity";
-import { Page } from "./store/Page";
-import MyCalendar from "./store/MyCalendar";
+import { Page } from "./common/Page";
+import MyCalendar from "./common/MyCalendar";
 import "react-calendar/dist/Calendar.css";
 
 const BackPage = styled(Page)`

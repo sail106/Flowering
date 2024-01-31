@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Input from "../store/Input";
-import { ButtonBox } from "../store/Button";
+import Input from "../common/Input";
+import { ButtonBox } from "../common/Button";
 import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
 const MyPage = styled.div`

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 

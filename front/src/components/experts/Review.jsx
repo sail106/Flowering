@@ -2,7 +2,7 @@ import Title from "../modify/Title";
 import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {

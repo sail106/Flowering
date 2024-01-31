@@ -1,10 +1,10 @@
 import LoginHeader from "./login/LoginHeader";
-import Button from "./store/Button";
+import Button from "./common/Button";
 import AccountManage from "./login/AccountManage";
 import SnsManage from "./login/SnsManage";
-import Input from "./store/Input";
-import Card from "./store/Card";
-import CenterContainer from "./store/CenterContainer";
+import Input from "./common/Input";
+import Card from "./common/Card";
+import CenterContainer from "./common/CenterContainer";
 
 const LoginForm = () => {
   return (

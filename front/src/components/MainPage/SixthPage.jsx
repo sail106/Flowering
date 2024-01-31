@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
-import ContentsCard from "../store/ContentsCard";
+import { Page } from "../common/Page";
+import ContentsCard from "../common/ContentsCard";
 
 const MyPage = styled(Page)`
   height: 150vh;

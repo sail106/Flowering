@@ -52,14 +52,14 @@ public class ConsultantController {
     @GetMapping("/mylist")
     public ResponseEntity<List<ConsultingmylistResponse>> getMyConsultingList(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime
     ) {
-        List<Consulting> consultingList = consultantService.getMyConsultingList(user.getId(), localDateTime);
+        List<ConsultingmylistResponse> consultingList = consultantService.getMyConsultingList(user.getId(), localDateTime);
         System.out.println("mylisttttt" + consultingList.size());
 
-        List<ConsultingmylistResponse> responseList = consultingList.stream()
-                .map(ConsultingmylistResponse::fromEntity)
-                .collect(Collectors.toList());
+//        List<ConsultingmylistResponse> responseList = consultingList.stream()
+//                .map(ConsultingmylistResponse::fromEntity)
+//                .collect(Collectors.toList());
 
-        return ResponseEntity.ok(responseList);
+        return ResponseEntity.ok(consultingList);
     }
 
 

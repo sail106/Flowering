@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
-import RightExpert from "../store/RightExpert";
-import LeftExpert from "../store/LeftExpert";
+import { Page } from "../common/Page";
+import RightExpert from "../common/RightExpert";
+import LeftExpert from "../common/LeftExpert";
 
 const MyPage = styled(Page)`
   width: 75%;

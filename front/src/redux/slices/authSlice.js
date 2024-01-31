@@ -15,7 +15,8 @@ const initialState = {
         contact: '',
         role: '',
         licenseId: '',
-        licenseNumber: ''
+        licenseNumber: '',
+        id: '',
     },
     data: '',
 
@@ -30,8 +31,7 @@ const initialState = {
         introduction: '',
         cost: '',
         consultingFile: '',
-        licenseName: '',
-        licenseNumber: ''
+
     },
 
     isLoading: false,
@@ -84,20 +84,6 @@ export const emailCheck = createAsyncThunk(
     }
 );
 
-// 이메일 발송 코드
-export const emailSendCheck = createAsyncThunk(
-    'members/email/1?email=',
-    async (email, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/email/1?email=${email}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
-        }
-    }
-);
 
 // 이메일 발송 후 토큰 체크 
 export const emailAuthCheck = createAsyncThunk(

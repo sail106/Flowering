@@ -52,17 +52,23 @@ public class ConsultantService {
     }
 
 
-    public List<Consulting> getMyConsultingList(Long consultantId, LocalDateTime localDateTime) {
+    public List<ConsultingmylistResponse> getMyConsultingList(Long consultantId, LocalDateTime localDateTime) {
 
         Consultant consultant = consultantRepository.findById(consultantId).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
 
-        List<Consulting> consultings = consultingRepository.findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
+        List<Consulting> consultings =   consultingRepository.
+                findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() ->
+                new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME)) ;
+
+        List<ConsultingmylistResponse>  consultingmylistResponses =consultings.stream().
+                map(ConsultingmylistResponse::fromEntity)
+                .collect(Collectors.toList());
 
         System.out.println("본인 상담내역조회" + consultings.toString());
 
 
-        return consultings;
+        return consultingmylistResponses;
     }
 
     public ConsultantDetailResponse getConsultant(Long consultantid) {

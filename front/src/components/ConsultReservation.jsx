@@ -1,9 +1,9 @@
-import Card from "./store/Card";
-import RadioButton from "./store/RadioButton";
-import MyCalendar from "./store/MyCalendar";
-import Button from "./store/Button"
+import Card from "./common/Card";
+import RadioButton from "./common/RadioButton";
+import MyCalendar from "./common/MyCalendar";
+import Button from "./common/Button"
 import ButtonWrapper from "./signup/ButtonWrapper";
-import CenterContainer from "./store/CenterContainer";
+import CenterContainer from "./common/CenterContainer";
 
 const ConsultReservation = () => {
   

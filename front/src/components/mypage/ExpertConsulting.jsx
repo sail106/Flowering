@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
+import { useSelector, useDispatch } from 'react-redux';
+import { setConsultantSessionName, setconsultid } from "../../redux/slices/consultSlice";
+import { useNavigate } from 'react-router-dom';
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -69,7 +72,7 @@ const Button = styled(ButtonBox)`
   font-family: "Noto Sans KR";
   font-size: 16px;
   border-radius: 30px;
-
+  
   margin-right:10%;
 `;
 
@@ -79,10 +82,20 @@ const FinalButton = styled(Button)`
   width:100%;
 `;
 
+
 const ExpertConsulting = () => {
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const buttonclick = (consultingid) => {
+    console.log('click' + consultingid)
+    dispatch(setConsultantSessionName(consultingid))
+    navigate('/OneToOneVideoChat')
+  }
   const data = [
-    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
-    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19", consultingid: "1" },
+    { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19", consultingid: "2" },
   ];
 
   return (
@@ -93,7 +106,7 @@ const ExpertConsulting = () => {
         <Thead>
           <Tr>
             <Th>Title</Th>
-            <Th>Time</Th> 
+            <Th>Time</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -109,8 +122,10 @@ const ExpertConsulting = () => {
 
                 <FinalButton>최종 결과 보고서 작성하기</FinalButton>
               </ButtonTd>
+
               <ButtonTd>
-                <Button>바로가기</Button>
+                <Button onClick={() => buttonclick(row.consultingid)}>바로가기</Button>
+
               </ButtonTd>
             </Tr>
           ))}

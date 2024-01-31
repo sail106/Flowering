@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Page } from "./store/Page";
+import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
 
 const MyPage = styled(Page)`
