@@ -81,7 +81,7 @@ const OneToOneVideoChat = () => {
           videoSource: undefined,
           publishAudio: true,
           publishVideo: true,
-          resolution: '1280x960',
+          resolution: '1232x760',
           frameRate: 30,
           insertMode: 'APPEND',
           mirror: false,
@@ -97,6 +97,7 @@ const OneToOneVideoChat = () => {
         // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
         // if (role === CONSULTANT) {
         setConsultant(publisher)
+
         // }
 
         console.log('publisher' + publisher.stream)
@@ -362,14 +363,12 @@ const OneToOneVideoChat = () => {
               </Myspan>
 
 
-              <VideoGroup>
-                {/* <UserVideoComponent
-                  streamManager={creator} /> */}
+              {/* <VideoGroup>
+                 
 
-              </VideoGroup>
+              </VideoGroup> */}
 
               {
-
 
                 consultant !== undefined ? (
 
@@ -380,7 +379,7 @@ const OneToOneVideoChat = () => {
                       // gap: 2,
                       width: "100%",
                       height: "100%",
-                      display: "flex",
+                      // display: "flex",
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",

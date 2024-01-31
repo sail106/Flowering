@@ -4,6 +4,7 @@ const OpenViduVideoComponent = (props) => {
   // streamManager state
   const [streamManager, setStreamManager] = useState(props.streamManager);
   const videoRef = useRef();
+  // alert('streammm'+streamManager)
 
   // streamManager useEffect
   useEffect(() => {
