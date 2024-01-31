@@ -62,8 +62,8 @@ const OneToOneVideoChat = () => {
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
 
-  const [isMic, setIsMic] = useState(false);
-  const [isCam, setIsCam] = useState(false);
+  const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
 
   //   const [OV, setOV] = useState(null)
 
@@ -126,11 +126,11 @@ const OneToOneVideoChat = () => {
 
   useEffect(() => {
 
-    setIsMic(isMic);
-    setIsCam(isCam);
+    // setIsMic(isMic);
+    // setIsCam(isCam);
 
-    console.log('ismicchanged' + isMic)
-    console.log('iscamchanged' + isCam)
+    console.log('ismic' + isMic)
+    console.log('iscam' + isCam)
 
   }, [isMic, isCam]);
 
@@ -193,7 +193,7 @@ const OneToOneVideoChat = () => {
   }, [consultantSessionName])
 
   useEffect(() => {
-    console.log('inn')
+    console.log('ssssssssssssss' + session)
 
     if (session) {
       console.log('inn')
@@ -206,7 +206,6 @@ const OneToOneVideoChat = () => {
       }
 
       dispatch(appendParticipantList(mine))
-      // alert('user added')
       session.on('streamCreated', streamCreated)
       session.on('streamDestroyed', streamDestroyed)
       session.on('exception', exception)
@@ -238,7 +237,6 @@ const OneToOneVideoChat = () => {
     {
       setConsultant(subscriber)
     }
-
     dispatch(appendParticipantList())
 
   }
@@ -460,12 +458,16 @@ const OneToOneVideoChat = () => {
 
                 <OneToOneChat />
 
-                <MyVideoContainer>
-                  <UserVideoComponent
-                    streamManager={consultant}
-                  />
-                </MyVideoContainer>
+                {
+                  isCam && consultant !== undefined &&
 
+                  <MyVideoContainer>
+                    <UserVideoComponent
+                      streamManager={consultant}
+                    />
+                  </MyVideoContainer>
+
+                }
               </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
@@ -555,9 +557,8 @@ const OneToOneVideoChat = () => {
                     <CustomMicButton
                       color="inherit"
                       onClick={() => {
+                        publisher.publishAudio(!isMic)
                         setIsMic(!isMic)
-                        publisher.publishAudio(isMic)
-
                         handleAudioPermissionChange()
                       }}
 
