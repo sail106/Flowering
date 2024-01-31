@@ -1,9 +1,9 @@
 import Title from "./Title";
-import MyCalendar from "../store/MyCalendar";
-import { ButtonBox } from "../store/Button";
-import RadioButton from "../store/RadioButton";
+import MyCalendar from "../common/MyCalendar";
+import RadioButton from "../common/RadioButton";
 import styled from "styled-components";
-import Input from "../store/Input";
+import { ButtonBox } from "../common/Button";
+import Input from "../common/Input";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;

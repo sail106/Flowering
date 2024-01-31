@@ -7,7 +7,6 @@ import { Box, styled, Typography } from '@mui/material'
 
 const UserVideoComponent = ({ streamManager }) => {
 
-    // alert('streammm'+streamManager)
 
     const subRole = JSON.parse(streamManager.stream.connection.data).clientRole;
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Page } from "./store/Page";
+import { Page } from "./common/Page";
 import FirstPage from "./beautyconsulting/FirstPage";
 import SecondPage from "./beautyconsulting/SecondPage";
 import ThirdPage from "./beautyconsulting/ThirdPage";

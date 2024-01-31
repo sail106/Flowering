@@ -4,7 +4,7 @@ import LoginForm from './components/LoginForm'
 import PasswordFindForm from './components/PasswordFindForm';
 import SpinnerTest from './components/SpinnerTest';
 import SignupForm from "./components/SignupForm";
-import { Page } from "./components/store/Page";
+import { Page } from "./components/common/Page";
 import MyPage from "./components/MyPage";
 import Navbar from "./components/Navbar";
 import GlobalStyles from "../GlobalStyles";
@@ -22,6 +22,7 @@ import ExpertsProfile from "./components/experts/ExpertsProfile";
 import CommunityPage from "./components/CommunityPage";
 import ExpertPage from "./components/ExpertPage";
 import BeautyConsulting from "./components/BeuatyConsulting";
+import ExpertConsulting from "./components/mypage/ExpertConsulting";
 import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
 import ExpertsReservation from "./components/experts/ExpertsReservation";
 import Review from "./components/experts/review";
@@ -49,7 +50,8 @@ function App() {
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofile" element={<ExpertsProfile />} />
-          <Route path="/communityHome" element={<CommunityPage />} />
+          <Route path="/expertconsulting" element={<ExpertConsulting />} />
+          <Route path='/communityHome' element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
           <Route

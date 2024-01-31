@@ -6,17 +6,32 @@ const initialState = {
   isSetClear: false,
   consultantSessionName: '',
   messageId: 2,
+  participantId: 1,
+
   messageList: [
     {
       id: 1,
       role: '',
       imageUrl: '',
       side: 'left',
-      message: '대화를 시작합니다.'
+      message: '대화를 시작합니다.',
+      name: 'bot',
 
     }
   ],
 
+  participantList: [
+    {
+      id: 0,
+      role: '',
+      imageUrl: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'
+      ,
+      name: 'bot',
+      isMic: 'false',
+      isCam: 'true',
+
+    }
+  ]
 }
 
 export const getConsultantSessionName = createAsyncThunk(
@@ -31,6 +46,7 @@ export const getConsultantSessionName = createAsyncThunk(
     }
   }
 )
+
 
 const consultSlice = createSlice({
   name: 'consult',
@@ -51,6 +67,10 @@ const consultSlice = createSlice({
     setSession: (state, { payload }) => {
       state.session = payload
     },
+    setConsultantSessionName: (state, { payload }) => {
+      state.consultantSessionName = payload
+    },
+
     setConsultid: (state, { payload }) => {
       state.consult_id = payload
     }, setCreatorid: (state, { payload }) => {
@@ -70,7 +90,8 @@ const consultSlice = createSlice({
           role: '',
           imageUrl: '',
           side: 'left',
-          message: '대화를 시작합니다.'
+          message: '대화를 시작합니다.',
+          name: 'bot',
         }
       ]
 
@@ -86,7 +107,12 @@ const consultSlice = createSlice({
       state.messageList.push(payload)
     },
 
+    appendParticipantList: (state, { payload }) => {
+      payload.id = state.participantId
+      state.participantId = state.participantId + 1
 
+      state.participantList.push(payload)
+    }
 
   },
 
@@ -100,6 +126,8 @@ const consultSlice = createSlice({
 })
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendmessageList, appendconsultmessageList,
-  setReservationId, resetMsg, setconsultid, setCustomer } = consultSlice.actions;
+  setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName
+  , appendParticipantList
+} = consultSlice.actions;
 
 export default consultSlice.reducer;

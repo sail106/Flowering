@@ -1,7 +1,7 @@
 import Title from "../modify/Title";
-import MyCalendar from "../store/MyCalendar";
-import { ButtonBox } from "../store/Button";
-import RadioButton from "../store/RadioButton";
+import MyCalendar from "../common/MyCalendar";
+import { ButtonBox } from "../common/Button";
+import RadioButton from "../common/RadioButton";
 import styled from "styled-components";
 
 const MyButton = styled(ButtonBox)`
