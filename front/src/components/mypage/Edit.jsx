@@ -2,7 +2,7 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import { useState } from "react";
 import styled from "styled-components";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 
 const EditButton = styled(ButtonBox)`
   border-radius: 100px;

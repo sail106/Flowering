@@ -1,10 +1,10 @@
 import CommunityHeader from "./community/CommunityHeader";
-import CircleImg from "./store/CircleImg";
-import Button from "./store/Button";
-import Card from "./store/Card";
-import CenterContainer from "./store/CenterContainer";
+import CircleImg from "./common/CircleImg";
+import Button from "./common/Button";
+import Card from "./common/Card";
+import CenterContainer from "./common/CenterContainer";
 import styled from "styled-components";
-import ContentsCard from "./store/ContentsCard";
+import ContentsCard from "./common/ContentsCard";
 import { useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

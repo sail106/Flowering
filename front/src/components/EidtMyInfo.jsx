@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Page } from "./store/Page";
-import Input from "./store/Input";
+import { Page } from "./common/Page";
+import Input from "./common/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
 const MyPage = styled(Page)`

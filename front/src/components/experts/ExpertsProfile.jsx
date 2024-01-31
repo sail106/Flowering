@@ -1,10 +1,10 @@
 import Title from "../modify/Title";
 
 import styled from "styled-components";
-import Experts from "../store/Experts";
+import Experts from "../common/Experts";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { StyledSmallDiv } from "../store/Experts";
+import { StyledSmallDiv } from "../common/Experts";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {

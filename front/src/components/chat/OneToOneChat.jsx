@@ -19,7 +19,7 @@ const OneToOneChat = () => {
 
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
   const { session, messageId } = useSelector(state => state.consult)
-  const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+  const { role, imageUrl, name } = useSelector(state => state.auth.logonUser)
 
 
   const handlePersonalClick = () => {
@@ -36,12 +36,14 @@ const OneToOneChat = () => {
 
     if (session && msg.length > 0) {
 
+
       const mine = {
         id: messageId,
         role: role,
         imageUrl: '',
         side: 'left',
-        message: msg
+        message: msg,
+        name: name,
       }
 
       dispatch(appendmessageList(mine))
@@ -55,7 +57,7 @@ const OneToOneChat = () => {
         message: msg
       }
 
-      session.signal ({
+      session.signal({
         data: JSON.stringify(data),
         to: [],
         type: 'chat'
@@ -131,7 +133,6 @@ const OneToOneChat = () => {
         </IContainer>
 
         {/* </Bottomcontent> */}
-
 
 
       </ChatContainer>

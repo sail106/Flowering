@@ -1,7 +1,7 @@
 import Title from "../modify/Title";
 
 import styled from "styled-components";
-import Experts from "../store/Experts";
+import Experts from "../common/Experts";
 
 const ExpertCard = styled.div`
   justify-content: center;

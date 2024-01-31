@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Page } from "../store/Page";
+import { Page } from "../common/Page";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // 캐러셀의 기본 스타일을 가져옵니다.
 

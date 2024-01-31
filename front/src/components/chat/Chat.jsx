@@ -58,7 +58,6 @@ const Chat = () => {
   //   if (session) {
   //     session.on('signal:chat', textChat)
   //   }
-  //   alert("in chat")
   // }, [session])
 
   // const textChat = (event) => {

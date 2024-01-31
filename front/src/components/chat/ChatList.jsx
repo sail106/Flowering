@@ -15,7 +15,6 @@ const ChatList = () => {
     // let i = 0;
 
     for (; i < messageList.length; i++) {
-
     // for (; i < 5; i++) {
       msgList.push(
         <ChatItem
@@ -29,7 +28,7 @@ const ChatList = () => {
           side={'left'}
           message={messageList[i].message}
           // message={'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}
-          name={'김싸피'}
+          name={messageList[i].name}
         />
       );
     }
