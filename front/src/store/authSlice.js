@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { saveToken, deleteToken } from '../../api/JWToken'
-import { OK, CUSTOMER, CONSULTANT } from '../../api/CustomConst'
-import Axios from '../../api/Axios';
+import { saveToken, deleteToken } from '../api/JWToken'
+import { OK, CUSTOMER, CONSULTANT } from '../api/CustomConst'
+import Axios from '../api/Axios';
 
 // state
 const initialState = {

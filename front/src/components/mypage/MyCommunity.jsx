@@ -3,7 +3,7 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setCommunityid,   setSession } from "../../redux/slices/communitySlice";
+import { setCommunityid,   setSession } from "../../store/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';

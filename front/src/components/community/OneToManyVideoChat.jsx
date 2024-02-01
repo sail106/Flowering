@@ -21,7 +21,7 @@ import { OpenVidu } from 'openvidu-browser';
 import {
   settingModalOn, setSession,
   resetSessionName, resetMsg, appendParticipantList
-} from '../../redux/slices/communitySlice'
+} from '../../store/communitySlice'
 import UserVideoComponent from './UserVideoComponent';
 import axios from 'axios';
 import { CiVideoOn } from "react-icons/ci";
