@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+import { setRole, setname } from "../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -80,6 +84,18 @@ const MyConsulting = () => {
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)" },
   ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const btnclick = () => {
+
+    console.log('sdfsd')
+    dispatch(setRole('CUSTOMER'))
+    dispatch(setname('CUSTOMER'))
+
+    navigate('/OneToOneVideoChat')
+
+  }
 
   return (
     <Consulting>
@@ -88,8 +104,8 @@ const MyConsulting = () => {
       <Table>
         <Thead>
           <Tr>
-            <Th>Title</Th> 
-            <Th>Time</Th> 
+            <Th>Title</Th>
+            <Th>Time</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -111,8 +127,9 @@ const MyConsulting = () => {
                 <Button>일정 변경</Button>
               </ButtonTd>
               <ButtonTd>
-                <Button>바로가기</Button>
+                <Button onClick={btnclick}>바로가기</Button>
               </ButtonTd>
+
             </Tr>
           ))}
         </Tbody>

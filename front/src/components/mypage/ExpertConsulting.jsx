@@ -5,6 +5,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
 import { setConsultantSessionName, setconsultid } from "../../redux/slices/consultSlice";
 import { useNavigate } from 'react-router-dom';
+import { setRole, setname } from "../../redux/slices/authSlice";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -87,10 +88,15 @@ const ExpertConsulting = () => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
 
   const buttonclick = (consultingid) => {
     console.log('click' + consultingid)
+    dispatch(setRole('CONSULTANT'))
+    dispatch(setname('CONSULTANT'))
     dispatch(setConsultantSessionName(consultingid))
+    console.log('consultingid', consultingid)
+
     navigate('/OneToOneVideoChat')
   }
   const data = [

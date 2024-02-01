@@ -8,8 +8,8 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
-import { appendmessageList } from '../../redux/slices/consultSlice';
-
+import { appendMessageList } from '../../redux/slices/consultSlice';
+ 
 
 const OneToOneChat = () => {
   const [msg, setMsg] = useState('');
@@ -46,7 +46,7 @@ const OneToOneChat = () => {
         name: name,
       }
 
-      dispatch(appendmessageList(mine))
+      dispatch(appendMessageList(mine))
 
       const data = {
 

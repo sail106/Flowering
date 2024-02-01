@@ -20,7 +20,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ["auth"] // 이 상태들을 저장합니다.
+  whitelist: ["auth","consult"] // 이 상태들을 저장합니다.
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
