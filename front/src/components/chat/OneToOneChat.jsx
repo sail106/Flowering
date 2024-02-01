@@ -54,6 +54,7 @@ const OneToOneChat = () => {
         role: role,
         imageUrl: imageUrl,
         side: 'left',
+        name: name,  
         message: msg
       }
 

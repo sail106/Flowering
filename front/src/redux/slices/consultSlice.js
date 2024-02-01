@@ -111,7 +111,6 @@ const consultSlice = createSlice({
     appendParticipantList: (state, { payload }) => {
       payload.id = state.participantId
       state.participantId = state.participantId + 1
-
       state.participantList.push(payload)
     }
 

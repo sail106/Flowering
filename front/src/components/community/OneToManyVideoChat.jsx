@@ -405,7 +405,7 @@ const OneToManyVideoChat = () => {
               </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
-              {/* <Chat /> */}
+               
 
               {/* 우측 컬러팔레트, 채팅*/}
               {

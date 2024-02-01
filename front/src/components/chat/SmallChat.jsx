@@ -8,7 +8,7 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
-
+ 
  
 const SmallChat = () => {
   const [msg, setMsg] = useState('');
@@ -16,6 +16,7 @@ const SmallChat = () => {
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
+  const { name, role, id, nickname } = useSelector(state => state.auth.logonUser)
 
   const handlePersonalClick = () => {
     setIsPersonalSelected(true); // Set personal button as selected
@@ -45,6 +46,7 @@ const SmallChat = () => {
         role: role,
         imageUrl: imageUrl,
         // side: 'left',
+        nickname:name,
         message: msg
       }
 
