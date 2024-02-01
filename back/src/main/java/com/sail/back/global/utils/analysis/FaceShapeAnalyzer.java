@@ -29,9 +29,8 @@ public class FaceShapeAnalyzer {
         CoordinateDto centerPoint = new CoordinateDto(pointY, pointX);
 
         DoubleUnaryOperator function = calculator.createQuadraticEquation(leftPoint, rightPoint, centerPoint);
-
+        double triLength = calculator.distance(leftPoint, centerPoint) + calculator.distance(leftPoint, centerPoint);
         double quadraticLength = calculator.calculateLength(function, leftEnd,  rightEnd);
-        double ellipseLength = calculator.calculateLength((double) (rightEnd-leftEnd), (double) (2*(pointY-Height)), (double) leftEnd, (double) rightEnd, 1000);
         double squareLength = 2*(rightEnd-leftEnd)+ pointY-Height;
         double faceLength = 0;
         for(int i = 0; i < 47; i++){
@@ -40,8 +39,8 @@ public class FaceShapeAnalyzer {
         }
         faceLength += calculator.distance(contourRight.get(0), contourLeft.get(0));
 
-        double triShape = Math.abs(faceLength-quadraticLength);
-        double ovalShape = Math.abs(faceLength-ellipseLength);
+        double triShape = Math.abs(faceLength-triLength);
+        double ovalShape = Math.abs(faceLength-quadraticLength);
         double squareShape = Math.abs(faceLength-squareLength);
 
         if (triShape <= ovalShape && triShape <= squareShape) {
