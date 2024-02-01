@@ -21,13 +21,13 @@ import { OpenVidu } from 'openvidu-browser';
 import {
   settingModalOn, setSession,
   resetSessionName, resetMsg, appendParticipantList,
-} from '../redux/slices/consultSlice'
+} from '../store/consultSlice'
 
 import axios from 'axios';
 import UserVideoComponent from './community/UserVideoComponent';
 import SmallChat from './chat/SmallChat';
 import OneToOneChat from './chat/OneToOneChat';
-import { setCustomer } from '../redux/slices/consultSlice';
+import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
