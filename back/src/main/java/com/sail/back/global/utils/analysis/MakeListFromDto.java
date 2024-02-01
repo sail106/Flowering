@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 @Service
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class MakeListFromDto {
 
     public ArrayList<CoordinateDto> leftEyeLidList(LeftEyeEyelidDto leftEyelid){

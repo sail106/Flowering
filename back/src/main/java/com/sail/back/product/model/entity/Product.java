@@ -28,13 +28,13 @@ public class Product {
     @Column(name = "recommended_product_type")
     private ProductType recommendedProductType;
 
-    @Column(name = "product_image_uri")
+    @Column(length = 500, name = "product_image_uri")
     private String productImageUri;
 
-    @Column(name = "product_description")
+    @Column(length = 500, name = "product_description")
     private String productDescription;
 
-    @Column(name = "product_purchase_link")
+    @Column(length = 500, name = "product_purchase_link")
     private String productPurchaseLink;
 
     public ProductResponse toResponse(){

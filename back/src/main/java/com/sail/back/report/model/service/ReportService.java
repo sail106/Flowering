@@ -45,7 +45,7 @@ public class ReportService {
     public ReportResponse findReport(Long consultingId, User user){
         Consulting consulting = consultingRepository
                 .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
-        if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
+        if (!(consulting.getUser().getId()==user.getId()||consulting.getConsultant().getUser().getId()==user.getId())) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(NOT_EXISTS));
 

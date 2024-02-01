@@ -141,34 +141,34 @@ public class Report {
     @Column(length = 50, name = "makeup_facialexpression")
     private String makeUpFacialExpression;
 
-    @Column(length = 255, name = "makeup_solution")
+    @Column(length = 500,  name = "makeup_solution")
     private String makeupSolution;
 
-    @Column(length = 50, name = "makeup_shading")
+    @Column(length = 500,  name = "makeup_shading")
     private String makeupShading;
 
-    @Column(length = 50, name = "makeup_blusher")
+    @Column(length = 500,  name = "makeup_blusher")
     private String makeupBlusher;
 
-    @Column(length = 50, name = "makeup_highlighting")
+    @Column(length = 500,  name = "makeup_highlighting")
     private String makeupHighlighting;
 
-    @Column(length = 50, name = "makeup_lipmakeup")
+    @Column(length = 500,  name = "makeup_lipmakeup")
     private String makeupLipMakeup;
 
-    @Column(length = 50,name = "makeup_eyemakeup")
+    @Column(length = 500, name = "makeup_eyemakeup")
     private String makeupEyeMakeup;
 
-    @Column(length = 50, name = "makeup_skinmakeup")
+    @Column(length = 500,  name = "makeup_skinmakeup")
     private String makeupSkinMakeup;
 
-    @Column(length = 50, name = "hairstyle_haircolor")
+    @Column(length = 500,  name = "hairstyle_haircolor")
     private String hairstyleHairColor;
 
-    @Column(length = 50, name = "hairstyle_hairstyle")
+    @Column(length = 500,  name = "hairstyle_hairstyle")
     private String hairstyleHairstyle;
 
-    @Column(length = 255, name = "hairstyle_solution")
+    @Column(length = 500,  name = "hairstyle_solution")
     private String hairstyleSolution;
 
 
