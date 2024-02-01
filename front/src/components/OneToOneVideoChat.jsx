@@ -67,6 +67,7 @@ const OneToOneVideoChat = () => {
   const [isCam, setIsCam] = useState(true);
 
   //   const [OV, setOV] = useState(null)
+  const [customerStream, setCustomerStream] = useState(null);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -230,7 +231,6 @@ const OneToOneVideoChat = () => {
   }, [session])
 
 
-
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole
@@ -239,7 +239,7 @@ const OneToOneVideoChat = () => {
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))
-      console.log('customer ' + customer.stream)
+      console.log('customer ' + subscriber.stream)
 
     }
 
@@ -251,6 +251,14 @@ const OneToOneVideoChat = () => {
     // dispatch(appendParticipantList())
 
   }
+
+  useEffect(() => {
+    if (customer) {
+      setCustomerStream(customer);
+    } else {
+      setCustomerStream(null);
+    }
+  }, [customer]); ////////
 
   const streamDestroyed = (event) => {
     deleteSubscriber(event.stream.streamManager);
