@@ -110,11 +110,11 @@ const Navbar = () => {
       <Logo>Flowering</Logo>
       <NavMenu>
  
-        <Link to={"/"}>Home</Link>
-        <Link to={"/beautyconsulting"}>Consulting</Link>
-        <Link to={"/"}>Community</Link>
-        <Link to={"#"}>Contents</Link>
-        <Link to={"/faq"}>FAQ</Link>
+        <Link to={"/"} reloadDocument>Home</Link>
+        <Link to={"/beautyconsulting"} reloadDocument>Consulting</Link>
+        <Link to={"/"} reloadDocument>Community</Link>
+        <Link to={"#"} reloadDocument>Contents</Link>
+        <Link to={"/faq"} reloadDocument>FAQ</Link>
        </NavMenu>
       <NavInfoLogo>
         

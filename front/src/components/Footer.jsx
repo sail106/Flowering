@@ -57,10 +57,10 @@ const Footer = () => {
   return (
     <FooterBox>
       <Path>
-        <Link to={"/beautyconsulting"}>Consulting</Link>
-        <Link to={"#"}>Community</Link>
-        <Link to={"#"}>Contents</Link>
-        <Link to={'/faq'}>FAQ</Link>
+        <Link to={"/beautyconsulting" } reloadDocument>Consulting</Link>
+        <Link to={"#"} reloadDocument>Community</Link>
+        <Link to={"#"}reloadDocument>Contents</Link>
+        <Link to={'/faq'} reloadDocument>FAQ</Link>
       </Path>
       <Info>
         <Image src="src\assets\Call.svg" alt="Call" />

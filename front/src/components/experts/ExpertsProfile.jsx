@@ -1,10 +1,10 @@
 import Title from "../modify/Title";
-
 import styled from "styled-components";
-import Experts from "../store/Experts";
+import Experts from "../common/Experts";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { StyledSmallDiv } from "../store/Experts";
+import { StyledSmallDiv } from "../common/Experts";
+import Review from "./ExpertsCard";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -21,6 +21,10 @@ const ExpertCard = styled.div`
 
 const Margin = styled.div`
   margin: 70px;
+`;
+
+const Margin2 = styled.div`
+  margin: 40px;
 `;
 
 const Text = styled.div`
@@ -40,16 +44,18 @@ const StyledSmallDiv2 = styled(StyledSmallDiv)`
   left: 340px;
 `;
 const H2 = styled.h2`
-  margin-top:100px;
-`
-const P = styled.p`
-font-family: "Noto Sans KR";
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 20px; /* 142.857% */
-`
+  margin-top: 100px;
+`;
 
+const Intro = styled.p`
+  font-family: "Noto Sans KR";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 299px;
+  height: 33px;
+`;
 
 const ExpertsProfile = () => {
   return (
@@ -88,7 +94,7 @@ const ExpertsProfile = () => {
         <StyledSmallDiv2>자연주의</StyledSmallDiv2>
 
         <Margin />
-        
+
         <H2>리뷰</H2>
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
@@ -99,11 +105,28 @@ const ExpertsProfile = () => {
           />
           <span>179</span>
         </Stack>
-        <p>실제 컨설팅을 이용하신 고객님들의 리뷰입니다.</p>
+        <Intro>실제 컨설팅을 이용하신 고객님들의 리뷰입니다.</Intro>
         <hr></hr>
-        <Margin />
-        <P>루루</P>
-
+        <Margin2 />
+        <Review
+          name={"루루라"}
+          date={"23/01/26"}
+          rate={4.6}
+          desc={`정말로 탁월했습니다. 내 피부 타입과 스킨케어 루틴에 대한 전문적인
+          조언을 받아서 피부 상태가 훨씬 개선되었어요. 감사합니다!`}
+        />
+        <Review
+          name={"미미로띠"}
+          date={"24/01/21"}
+          rate={4.8}
+          desc={`말로 인상적이었습니다. 나에게 딱 맞는 화장품과 메이크업 스타일에 대한 조언을 받아서 자신감이 생겼어요. 다시 한 번 감사드립니다!`}
+        />
+        <Review
+          name={"바비"}
+          date={"24/01/18"}
+          rate={4.8}
+          desc={`정말로 훌륭했습니다. 나에게 어울리는 헤어 스타일과 색조에 대한 조언을 받아서 완전히 새로운 모습으로 변할 수 있었어요.  너무 감사합니다!`}
+        />
       </Text>
     </>
   );

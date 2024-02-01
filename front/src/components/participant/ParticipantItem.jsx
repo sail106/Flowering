@@ -4,13 +4,20 @@ import { Grid, Box } from '@mui/material'
 import OtherAvatar from '../avatar/OtherAvatar';
 import { CiMicrophoneOff } from "react-icons/ci";
 import { BsCameraVideoOff } from "react-icons/bs";
+import { CiMicrophoneOn } from "react-icons/ci";
+import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
 
 const ParticipantItem = ({
   avatar,
   side,
-  name
+  name,
+  isMic,
+  isCam,
 }) => {
+
+
   return (
+
     <GridContainer container alignItems="center">
       <Grid item xs={8}>
         <NameBox side={side}>
@@ -20,10 +27,18 @@ const ParticipantItem = ({
               imgUrl={avatar}
             />
           )}
+
           <Name side={side}>{name}</Name>
 
-          <CiMicrophoneOff style={{ marginLeft: '10px'  }} />
-          <BsCameraVideoOff style={{ marginLeft: '10px'  }} />
+          {isMic === 'true' ? <CiMicrophoneOn style={{ marginLeft: '10px' }} /> : <CiMicrophoneOff style={{ marginLeft: '10px' }} />}
+
+          {/* {
+            <CiMicrophoneOff style={{ marginLeft: '10px' }} />
+
+          } */}
+          {isCam === 'true' ? <Videocam style={{ marginLeft: '10px' }} /> : <BsCameraVideoOff style={{ marginLeft: '10px' }} />}
+
+          {/* <BsCameraVideoOff style={{ marginLeft: '10px' }} /> */}
 
         </NameBox>
       </Grid>

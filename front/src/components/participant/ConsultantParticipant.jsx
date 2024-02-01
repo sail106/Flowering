@@ -6,6 +6,7 @@ import { Box, Grid, IconButton } from '@mui/material'
 import { GoPersonAdd } from "react-icons/go";
 import { VscFoldUp } from "react-icons/vsc";
  import ParticipantList from './ParticipantList';
+import ConsultantParticipantList from './ConsultantParticipantList';
  
 
 const Myspan = styled.span`
@@ -14,7 +15,7 @@ display:flex;
   padding-top:6px;
   padding-left:5px;
 `
-const Participant = ({ streamManager, audioPermission }) => {
+const ConsultantParticipant = ({ streamManager, audioPermission }) => {
   
   const [isparticipantcontainervisible, setParticipantContainerVisible] = useState(true);
 
@@ -107,7 +108,7 @@ const Participant = ({ streamManager, audioPermission }) => {
 
       {isparticipantcontainervisible && (
         <ParticipantContainer >
-          <ParticipantList />
+          <ConsultantParticipantList  />
         </ParticipantContainer>
       )}
 
@@ -115,7 +116,7 @@ const Participant = ({ streamManager, audioPermission }) => {
   )
 }
 
-export default Participant
+export default ConsultantParticipant
 
 
 const Foldpos = styled.div`

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
+import { Page } from "../common/Page";
 
 const MyPage = styled(Page)`
   height: 120vh;
@@ -39,19 +39,12 @@ const TextSection = styled.div`
 
 const PersonalBeauty = styled(TextSection)`
   margin-left: 23%;
-  top: 50%;
-  &:hover {
-    transform: scale(1.05);
-  }
+  top: 45%;
 `;
 
 const PersonalBeautyCard = styled(Card)`
   right: 18%;
   top: 45%;
-  ${PersonalBeauty}:hover + & {
-    transform: scale(1.05);
-    z-index: 2;
-  }
 `;
 
 const Community = styled(PersonalBeauty)`
@@ -63,10 +56,6 @@ const Community = styled(PersonalBeauty)`
 const CommunityCard = styled(Card)`
   right: 47%;
   top: 75%;
-  ${Community}:hover + & {
-    transform: scale(1.05);
-    z-index: 2;
-  }
 `;
 
 const SolutionText = styled.p`

@@ -36,9 +36,9 @@ public class Consulting {
     @NotNull
     private LocalDateTime time; //예약일
 
-    //세션아이디
-    @NotNull
-    private String sessionId;
+//    //세션아이디
+//    @NotNull
+//    private String sessionId;
 
     public void create(User user, Consultant consultant,
                        LocalDateTime time) {
@@ -47,14 +47,13 @@ public class Consulting {
         this.time = time;
     }
 
-    public void setSession(String sessionId) {
-        this.sessionId = sessionId;
-    }
+//    public void setSession(String sessionId) {
+//        this.sessionId = sessionId;
+//    }
 
     public static MyConsultinglistResponse  from(Consulting consulting) {
         return MyConsultinglistResponse.builder()
                 .consulting_id(consulting.getConsulting_id())
-                .sessionId(consulting.getSessionId())
                 .consultant(consulting.getConsultant())
                 .time(consulting.getTime())
                 .build();

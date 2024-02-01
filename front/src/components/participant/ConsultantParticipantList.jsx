@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ParticipantItem from './ParticipantItem';
 
-const ParticipantList = () => {
-  const participantList = useSelector(state => state.community.participantList);
+const ConsultantParticipantList = () => {
+  const participantList = useSelector(state => state.consult.participantList);
 
   return (
     <ListBox>
@@ -15,13 +15,15 @@ const ParticipantList = () => {
           avatar={participant.imageUrl}
           side={participant.side ?? 'left'}
           name={participant.name}
+          isMic={participant.isMic}
+          isCam={participant.isCam}
         />
       ))}
     </ListBox>
   );
 };
 
-export default ParticipantList;
+export default ConsultantParticipantList;
 
 const ListBox = styled(Stack)`
   width: 100%;

@@ -2,7 +2,7 @@
 import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import Sheet from "@mui/joy/Sheet";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 import styled from "styled-components";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";

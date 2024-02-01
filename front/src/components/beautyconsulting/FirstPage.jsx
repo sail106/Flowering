@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
-import  { ButtonBox } from "../store/Button";
-
+import { Page } from "../common/Page";
+import  { ButtonBox } from "../common/Button";
+import { Link } from "react-router-dom";
 const MyPage = styled(Page)`
   width: 80%;
 `;
@@ -73,8 +73,10 @@ const FirstPage = () => {
           대해 <br />
           AI와 전문가의 조언을 받는 서비스입니다.
         </SolutionDescr>
-        <Cost>￦99,000</Cost>
-        <MyButton>예약하기</MyButton>
+        <Cost>￦89,000</Cost>
+        <Link to={"/experts"} reloadDocument>
+        <MyButton>바로가기</MyButton>
+        </Link>
       </SolutionDiv>
     </MyPage>
   );

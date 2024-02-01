@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { ButtonBox} from "./store/Button";
+import { ButtonBox} from "./common/Button";
 import PWFindHeader from "./PWFind/PWFindHeader";
-import Input from "./store/Input";
+import Input from "./common/Input";
 const OuterDiv = styled.div`
   padding-top: 80px;
   padding-left: 40px;

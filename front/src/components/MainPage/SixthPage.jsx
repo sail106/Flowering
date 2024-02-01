@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Page } from "../store/Page";
-import ContentsCard from "../store/ContentsCard";
+import { Page } from "../common/Page";
+import ContentsCard from "../common/ContentsCard";
 
 const MyPage = styled(Page)`
   height: 150vh;
@@ -8,7 +8,11 @@ const MyPage = styled(Page)`
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: 100%; 
+   &:hover {
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    scale:1.2;
+   }
 `;
 
 const ContentsText = styled.div`
@@ -40,9 +44,7 @@ const ContentsArrow = styled.div`
   width: 5%;
   right: 15%;
   top: 20%;
-  &:hover {
-    transform: scale(1.2);
-  }
+
 `;
 
 const SixthPage = () => {

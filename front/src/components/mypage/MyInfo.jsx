@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonBox } from "../store/Button";
+import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
 
 const InfoDiv = styled.span`
