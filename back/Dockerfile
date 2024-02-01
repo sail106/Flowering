@@ -26,7 +26,7 @@ FROM azul/zulu-openjdk:17
 WORKDIR /app
 
 # 빌드 결과물을 이전 단계에서 복사
-COPY --from=build /app/build/libs/*.jar /app/spring-boot-application.jar
+COPY --from=build /app/build/libs/*.jar /app/back.jar
 
 # 서버 실행
-ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=${USE_PROFILE}", "-Djava.security.egd=file:/dev/./urandom","/app/spring-boot-application.jar"]
+ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=${USE_PROFILE}", "-Djava.security.egd=file:/dev/./urandom","/app/back.jar"]
