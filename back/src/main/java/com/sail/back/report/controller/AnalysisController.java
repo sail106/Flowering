@@ -31,7 +31,6 @@ public class AnalysisController {
             @AuthenticationPrincipal User user,
             @PathVariable Long consultingId
     ){
-
-        return ResponseEntity.ok().body(MessageUtils.success());
+        return ResponseEntity.ok().body(MessageUtils.success(analysisService.findAnalysis(user, consultingId)));
     }
 }

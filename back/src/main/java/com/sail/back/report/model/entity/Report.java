@@ -10,6 +10,7 @@ import com.sail.back.report.model.dto.request.SaveSurveyRequest;
 import com.sail.back.report.model.dto.response.AnalysisResponse;
 import com.sail.back.report.model.dto.response.ExpertOpinionResponse;
 import com.sail.back.report.model.dto.response.ReportResponse;
+import com.sail.back.report.model.dto.response.SurveyResponse;
 import com.sail.back.report.model.dto.response.analysis.*;
 import com.sail.back.report.model.entity.enums.*;
 import jakarta.persistence.*;
@@ -177,48 +178,7 @@ public class Report {
                 .reportId(this.reportId)
                 .surveyData(this.surveyType.toResponse())
                 .consultingData(this.consulting.toResponse())
-                .analysisData(AnalysisResponse.builder()
-                        .eyeData(EyeResponse.builder()
-                                .eyelidDirection(this.eyelidDirection)
-                                .eyelidSize(this.eyelidSize)
-                                .eyelidWidth(this.eyelidWidth)
-                                .x1(this.eyeX1)
-                                .y1(this.eyeY1)
-                                .x2(this.eyeX2)
-                                .y2(this.eyeY2)
-                                .build())
-                        .faceShapeData(FaceShapeResponse.builder()
-                                .faceShape(this.faceShape)
-                                .x1(this.faceX1)
-                                .y1(this.faceY1)
-                                .x2(this.faceX2)
-                                .y2(this.faceY2)
-                                .build())
-                        .mouthData(MouthResponse.builder()
-                                .mouthSize(this.mouthSize)
-                                .lipRatio(this.lipRatio)
-                                .x1(this.lipX1)
-                                .y1(this.lipY1)
-                                .x2(this.lipX2)
-                                .y2(this.lipY2)
-                                .build())
-                        .noseData(NoseResponse.builder()
-                                .alarSize(this.alarSize)
-                                .noseSize(this.noseSize)
-                                .x1(this.noseX1)
-                                .y1(this.noseY1)
-                                .x2(this.noseX2)
-                                .y2(this.noseY2)
-                                .build())
-                        .skinData(SkinResponse.builder()
-                                .analysisResultAcne(this.analysisResultAcne)
-                                .analysisResultPores(this.analysisResultPores)
-                                .analysisResultDarkCircles(this.analysisResultDarkCircles)
-                                .analysisResultForeheadWrinkle(this.analysisResultForeheadWrinkle)
-                                .analysisResultGlabellaWrinkle(this.analysisResultGlabellaWrinkle)
-                                .build())
-                        .analysisResultPhotoUrl(this.analysisResultPhotoUrl)
-                        .build())
+                .analysisData(this.toAnalysisResponse())
                 .expertOpinionData(ExpertOpinionResponse.builder()
                         .skincareSkinState(this.skincareSkinState)
                         .skincareSolution(this.skincareSolution)
@@ -244,6 +204,9 @@ public class Report {
 
     public void surveySave(SaveSurveyRequest request){
         this.surveyType = request.getSurveyType();
+    }
+    public SurveyResponse toSurveyResponse(){
+        return this.surveyType.toResponse();
     }
 
     public void expertOpinionSave(SaveExpertOpinionRequest request){
@@ -322,5 +285,49 @@ public class Report {
         this.analysisResultForeheadWrinkle = skin.getForeheadWrinkle();
         this.analysisResultAcne = skin.getAcne();
         this.analysisResultDarkCircles = skin.getDarkCircle();
+    }
+    public AnalysisResponse toAnalysisResponse(){
+        return AnalysisResponse.builder()
+                .eyeData(EyeResponse.builder()
+                        .eyelidDirection(this.eyelidDirection)
+                        .eyelidSize(this.eyelidSize)
+                        .eyelidWidth(this.eyelidWidth)
+                        .x1(this.eyeX1)
+                        .y1(this.eyeY1)
+                        .x2(this.eyeX2)
+                        .y2(this.eyeY2)
+                        .build())
+                .faceShapeData(FaceShapeResponse.builder()
+                        .faceShape(this.faceShape)
+                        .x1(this.faceX1)
+                        .y1(this.faceY1)
+                        .x2(this.faceX2)
+                        .y2(this.faceY2)
+                        .build())
+                .mouthData(MouthResponse.builder()
+                        .mouthSize(this.mouthSize)
+                        .lipRatio(this.lipRatio)
+                        .x1(this.lipX1)
+                        .y1(this.lipY1)
+                        .x2(this.lipX2)
+                        .y2(this.lipY2)
+                        .build())
+                .noseData(NoseResponse.builder()
+                        .alarSize(this.alarSize)
+                        .noseSize(this.noseSize)
+                        .x1(this.noseX1)
+                        .y1(this.noseY1)
+                        .x2(this.noseX2)
+                        .y2(this.noseY2)
+                        .build())
+                .skinData(SkinResponse.builder()
+                        .analysisResultAcne(this.analysisResultAcne)
+                        .analysisResultPores(this.analysisResultPores)
+                        .analysisResultDarkCircles(this.analysisResultDarkCircles)
+                        .analysisResultForeheadWrinkle(this.analysisResultForeheadWrinkle)
+                        .analysisResultGlabellaWrinkle(this.analysisResultGlabellaWrinkle)
+                        .build())
+                .analysisResultPhotoUrl(this.analysisResultPhotoUrl)
+                .build();
     }
 }

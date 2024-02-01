@@ -4,13 +4,13 @@ import com.sail.back.product.model.dto.response.ProductResponse;
 import com.sail.back.product.model.entity.enums.ProductType;
 import com.sail.back.report.model.entity.Report;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,5 @@
 package com.sail.back.report.model.service;
 
-import com.sail.back.consultant.model.repository.ConsultantRepository;
 import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.consulting.model.repository.ConsultingRepository;
@@ -8,7 +7,6 @@ import com.sail.back.product.model.dto.response.ProductResponse;
 import com.sail.back.product.model.entity.Product;
 import com.sail.back.product.model.entity.enums.ProductType;
 import com.sail.back.product.model.repository.ProductRepository;
-import com.sail.back.report.exception.ReportErrorCode;
 import com.sail.back.report.exception.ReportException;
 import com.sail.back.report.model.dto.response.ReportResponse;
 import com.sail.back.report.model.entity.Report;
@@ -46,7 +44,7 @@ public class ReportService {
     }
     public ReportResponse findReport(Long consultingId, User user){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(()->new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(NOT_EXISTS));

@@ -32,6 +32,6 @@ public class SurveyController {
             @AuthenticationPrincipal User user,
             @PathVariable Long consultingId
     ){
-        return
+        return ResponseEntity.ok().body(MessageUtils.success(surveyService.findSurvey(user,consultingId)));
     }
 }

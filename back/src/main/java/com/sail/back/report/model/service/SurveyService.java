@@ -46,5 +46,6 @@ public class SurveyService {
         if (consulting.getUser().getId() != user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));
+        return report.toSurveyResponse();
     }
 }

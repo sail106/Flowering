@@ -20,6 +20,7 @@ import com.sail.back.report.model.dto.request.analysis.landmark.nose.NoseDto;
 import com.sail.back.report.model.dto.request.analysis.landmark.rightEye.RightEyeDto;
 import com.sail.back.report.model.dto.request.analysis.landmark.rightEyeEyelid.RightEyeEyelidDto;
 import com.sail.back.report.model.dto.request.analysis.landmark.rightEyebrow.RightEyebrowDto;
+import com.sail.back.report.model.dto.response.AnalysisResponse;
 import com.sail.back.report.model.entity.Report;
 import com.sail.back.report.model.entity.enums.*;
 import com.sail.back.report.model.repository.ReportRepository;
@@ -103,4 +104,15 @@ public class AnalysisService {
             throw new ReportException(ReportErrorCode.NOT_EXISTS, e);
         }
     }
+
+    @Transactional
+    public AnalysisResponse findAnalysis(User user, Long consultingId){
+        Consulting consulting = consultingRepository
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
+        if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
+        Report report = reportRepository
+                .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));
+        return report.toAnalysisResponse();
+    }
+
 }
