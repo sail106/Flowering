@@ -58,7 +58,7 @@ const OneToOneVideoChat = () => {
   )
 
   const dispatch = useDispatch();
-  const [myUserName, setMyUserName] = useState(nickname)
+  const [myUserName, setMyUserName] = useState(name)
 
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
@@ -698,7 +698,7 @@ const VideoContainer = styled(Box)({
 })
 // 내 비디오 컨테이너
 const MyVideoContainer = styled(Box)({
-  width: "100%",
+  width: "33%",
   // borderRadius: "1rem",
   // padding: "1rem",
   // position:

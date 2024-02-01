@@ -20,7 +20,7 @@ const UserVideoComponent = ({ streamManager }) => {
                 <>
                     {subRole === "CONSULTANT" &&
                         <ConsultantStream>
-                            <CustomTypography>{ } 방장</CustomTypography>
+                            <CustomTypography>{ getNicknameTag()} 방장</CustomTypography>
                             <OpenViduVideoComponent streamManager={streamManager} />
 
                         </ConsultantStream>
