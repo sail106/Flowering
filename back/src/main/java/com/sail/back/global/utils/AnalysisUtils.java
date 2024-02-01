@@ -18,6 +18,7 @@ import com.sail.back.report.model.dto.request.analysis.landmark.rightEyeEyelid.R
 import com.sail.back.report.model.dto.request.analysis.landmark.rightEyebrow.RightEyebrowDto;
 import com.sail.back.report.model.entity.enums.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.ArrayList;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AnalysisUtils {
     private final AnalysisConfig analysisConfig;
@@ -39,7 +41,7 @@ public class AnalysisUtils {
     private final NoseAnalyzer noseAnalyzer;
     private final MakeListFromDto makeListFromDto;
     private final Calculator calculator;
-    public FaceLandMarkApiResult sendAnalysisApi(String imageUrl) throws JsonProcessingException {
+    public FaceLandMarkApiResult sendAnalysisFaceApi(String imageUrl) throws JsonProcessingException {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("api_key", analysisConfig.getKey());
         params.add("api_secret", analysisConfig.getSecret());
@@ -65,6 +67,46 @@ public class AnalysisUtils {
         FaceLandMarkApiResult result = mapper.treeToValue(faceJsonNode, FaceLandMarkApiResult.class);
         return result;
     }
+
+
+    public Skin sendAnalysisSkinApi(String imageUrl) throws JsonProcessingException {
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("api_key", analysisConfig.getKey());
+        params.add("api_secret", analysisConfig.getSecret());
+        params.add("image_url", imageUrl);
+
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        HttpEntity<?> requestEntity = new HttpEntity<>(params, header);
+
+
+        UriComponents uri = UriComponentsBuilder.fromHttpUrl("https://api-us.faceplusplus.com/facepp/v1/skinanalyze").build();
+
+        ResponseEntity<String> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, requestEntity, String.class);
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode responseJsonNode = mapper.readTree(resultMap.getBody());
+        JsonNode faceJsonNode = responseJsonNode.get("result");
+
+        JsonNode moleJsonNode = faceJsonNode.get("mole");
+        JsonNode glabellaWrinkleJsonNode = faceJsonNode.get("glabella_wrinkle");
+        JsonNode foreheadWrinkleJsonNode = faceJsonNode.get("forehead_wrinkle");
+        JsonNode acneJsonNode = faceJsonNode.get("acne");
+        JsonNode darkCircleJsonNode = faceJsonNode.get("dark_circle");
+
+        return new Skin(moleJsonNode.get("value").asInt(), glabellaWrinkleJsonNode.get("value").asInt(), foreheadWrinkleJsonNode.get("value").asInt(), acneJsonNode.get("value").asInt(), darkCircleJsonNode.get("value").asInt());
+    }
+
+
+
+
+
 
     @Transactional
     public EyelidDirection eyeLidDirectionAnalyzer(LeftEyeEyelidDto leftEyelid, RightEyeEyelidDto rightEyelid){
@@ -175,7 +217,7 @@ public class AnalysisUtils {
     }
 
     @Transactional
-    public XoneYoneXtwoYtwo getMouthCoordinate(FaceDto face){
+    public XoneYoneXtwoYtwo getFaceCoordinate(FaceDto face){
         ArrayList<CoordinateDto> faceHairlineList = makeListFromDto.faceHairlineList(face);
         ArrayList<CoordinateDto> faceContourRightList = makeListFromDto.faceContourRightList(face);
         return XoneYoneXtwoYtwo.builder()
