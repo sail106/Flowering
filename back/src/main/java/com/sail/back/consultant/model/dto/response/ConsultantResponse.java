@@ -1,9 +1,11 @@
-package com.sail.back.report.model.dto.response;
+package com.sail.back.consultant.model.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.sail.back.consulting.model.dto.response.ConsultingResponse;
+import com.sail.back.user.model.dto.response.UserResponse;
+import com.sail.back.user.model.entity.User;
+import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
@@ -13,15 +15,11 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
-public class ReportResponse {
+public class ConsultantResponse {
 
-    private Long reportId;
+    private Long consultantId;
 
-    private ConsultingResponse consultingData;
+    private String selfIntroduce;
 
-    private SurveyResponse surveyData;
-
-    private AnalysisResponse analysisData;
-
-    private ExpertOpinionResponse expertOpinionData;
+    private UserResponse consultantDetailData;
 }

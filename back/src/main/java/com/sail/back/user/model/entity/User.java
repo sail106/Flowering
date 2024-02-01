@@ -137,18 +137,20 @@ public class User implements UserDetails {
         return UserGender.FEMALE;
     }
 
-
-    public static User  from(UserResponse userResponse)
-    {
-        return User.builder()
-                .email(userResponse.getEmail())
-                .birthdateMonth(userResponse.getBirthdateMonth())
-                .birthdateYear(userResponse.getBirthdateYear())
-                .gender(userResponse.getGender())
-                .nickname(userResponse.getNickname())
-                .profileImgUrl(userResponse.getProfileImgUrl())
-                .role(userResponse.getRole())
-                .name(userResponse.getName())
+    public UserResponse toResponse(){
+        return UserResponse.builder()
+                .id(this.id)
+                .gender(this.gender)
+                .birthdateYear(this.birthdateYear)
+                .birthdateMonth(this.birthdateMonth)
+                .nickname(this.nickname)
+                .email(this.email)
+                .createAt(this.createAt)
+                .role(this.role)
+                .profileImgUrl(this.profileImgUrl)
+                .status(this.status)
+                .name(this.name)
+                .provider(this.provider)
                 .build();
     }
 }

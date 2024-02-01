@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AnalysisLipsType {
-    입술형("타입별 내용을 적어주세요");
-    String content;
+public enum AlarSize {
+    BIG_ALAR,
+    PERFECT_ALAR,
+    SMALL_ALAR;
 }
