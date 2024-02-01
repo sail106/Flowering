@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import AvatarReducer from "../components/avatar/avatarSlice";
 import communityReducer from './slices/communitySlice';
 import consultReducer from './slices/consultSlice';
+import consultsessionnameReducer from './slices/consultsessionnameSlice';
 import authReducer from './slices/authSlice';
 
 // 리듀서들을 합칩니다
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   avatar: AvatarReducer,
   community: communityReducer,
   consult: consultReducer,
+  consultsessionname: consultsessionnameReducer,
   auth: authReducer,
 });
 
@@ -20,7 +22,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ["auth","consult"] // 이 상태들을 저장합니다.
+  whitelist: ["auth","consultsessionname"] // 이 상태들을 저장합니다.
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

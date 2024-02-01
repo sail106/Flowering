@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setConsultantSessionName, setconsultid } from "../../redux/slices/consultSlice";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../redux/slices/authSlice";
+import { setConsultantSessionName2 } from "../../redux/slices/consultsessionnameSlice";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -94,7 +95,7 @@ const ExpertConsulting = () => {
     console.log('click' + consultingid)
     dispatch(setRole('CONSULTANT'))
     dispatch(setname('CONSULTANT'))
-    dispatch(setConsultantSessionName(consultingid))
+    dispatch(setConsultantSessionName2(consultingid))
     console.log('consultingid', consultingid)
 
     navigate('/OneToOneVideoChat')

@@ -50,11 +50,20 @@ const OneToOneVideoChat = () => {
 
   const { creatorid } = useSelector(state => state.community.creator)
   const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
+  const { consultantSessionName2 } = useSelector(state => state.consultsessionname)
   const navigate = useNavigate();
+
+  useEffect(() => {
+
+    // setIsMic(isMic);
+    // setIsCam(isCam);
+    console.log('consultantSessionName2' + consultantSessionName2)
+
+  }, [consultantSessionName2]);
 
 
   const [mySessionId, setMySessionId] = useState(
-    consultantSessionName
+    consultantSessionName2
   )
 
   const dispatch = useDispatch();
@@ -172,7 +181,7 @@ const OneToOneVideoChat = () => {
 
     if (role == 'CONSULTANT')
 
-      console.log('consultantSessionName', consultantSessionName)
+      console.log('consultantSessionName2', consultantSessionName2)
 
     const mine = {
       id: 11,
@@ -287,7 +296,7 @@ const OneToOneVideoChat = () => {
     }
 
     setOV(null);
-    setMySessionId(role === CONSULTANT ? tmp : consultantSessionName)
+    setMySessionId(role === CONSULTANT ? tmp : consultantSessionName2)
     dispatch(setSession(undefined))
     dispatch(setCustomer(undefined))
     dispatch(resetMsg())
@@ -519,7 +528,7 @@ const OneToOneVideoChat = () => {
               </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
-             
+
 
               {/* 우측 컬러팔레트, 채팅*/}
               {
