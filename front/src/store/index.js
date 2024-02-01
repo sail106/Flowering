@@ -4,9 +4,9 @@ import storage from 'redux-persist/lib/storage';
 import { configureStore } from '@reduxjs/toolkit';
 
 import AvatarReducer from "../components/avatar/avatarSlice";
-import communityReducer from './slices/communitySlice';
-import consultReducer from './slices/consultSlice';
-import authReducer from './slices/authSlice';
+import communityReducer from './communitySlice';
+import consultReducer from './consultSlice';
+import authReducer from './authSlice';
 
 // 리듀서들을 합칩니다
 const reducers = combineReducers({

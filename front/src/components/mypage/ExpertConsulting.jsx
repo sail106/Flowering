@@ -3,7 +3,7 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
-import { setConsultantSessionName, setconsultid } from "../../redux/slices/consultSlice";
+import { setConsultantSessionName, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
 
 const Clock = styled(LuClock3)`
