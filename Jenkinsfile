@@ -10,10 +10,10 @@ pipeline {
         
         stage('Build and Deploy') {
             steps {
-                dir('back') {
-                sh 'docker compose -f Docker-Compose.yml down'
-                sh 'docker compose -f Docker-Compose.yml pull'
-                sh 'docker compose -f Docker-Compose.yml up -d'
+                dir('/back') {
+                sh 'docker compose down'
+                sh 'docker compose pull'
+                sh 'docker compose up -d'
                 }
             }
         }
