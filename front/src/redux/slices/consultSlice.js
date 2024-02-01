@@ -28,7 +28,7 @@ const initialState = {
       ,
       name: 'bot',
       isMic: 'false',
-      isCam: 'true',
+      isCam: 'false',
 
     }
   ]
@@ -125,7 +125,7 @@ const consultSlice = createSlice({
 
 })
 
-export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendMessageList, appendconsultmessageList,
+export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendMessageList,
   setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName
   , appendParticipantList
 } = consultSlice.actions;

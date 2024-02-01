@@ -8,8 +8,8 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
-import { appendMessageList } from '../../redux/slices/consultSlice';
- 
+import { appendMessageList, appendParticipantList } from '../../redux/slices/consultSlice';
+
 
 const OneToOneChat = () => {
   const [msg, setMsg] = useState('');
@@ -18,8 +18,8 @@ const OneToOneChat = () => {
   const dispatch = useDispatch()
 
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
-  const { session, messageId } = useSelector(state => state.consult)
-  const { role, imageUrl, name } = useSelector(state => state.auth.logonUser)
+  const { session, messageId, participantList  } = useSelector(state => state.consult)
+  const { role, imageUrl, name, id, isMic, isCam } = useSelector(state => state.auth.logonUser)
 
 
   const handlePersonalClick = () => {
@@ -45,7 +45,7 @@ const OneToOneChat = () => {
         message: msg,
         name: name,
       }
-
+      
       dispatch(appendMessageList(mine))
 
       const data = {
@@ -53,9 +53,9 @@ const OneToOneChat = () => {
         id: messageId,
         role: role,
         imageUrl: imageUrl,
-        side: 'left',
-        name: name,  
+        name: name,
         message: msg
+
       }
 
       session.signal({
@@ -64,6 +64,12 @@ const OneToOneChat = () => {
         type: 'chat'
       })
 
+      // session.signal({
+      //   data: JSON.stringify(persondata),
+      //   to: [],
+      //   type: 'participant'
+      // })
+
       setMsg('')
     }
 
@@ -71,6 +77,16 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
+      
+      const persondata = {
+        imageUrl: imageUrl,
+        name: name,
+        isMic: isMic,
+        isCam: isCam,
+      };
+
+      dispatch(appendParticipantList(persondata));
+
       session.on('signal:chat', textChat)
     }
   }, [session])
@@ -78,6 +94,8 @@ const OneToOneChat = () => {
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
+    console.log('data role role'+data.role+' '+role)
+
     if (data.role !== role) {
       dispatch(appendMessageList(data))
     }

@@ -32,6 +32,8 @@ const initialState = {
         cost: '',
         consultingFile: '',
         role: '',
+        isMic:'false',
+        isCam:'false',
     },
 
     isLoading: false,
