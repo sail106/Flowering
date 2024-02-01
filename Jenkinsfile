@@ -11,9 +11,9 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 dir('back') {
-                sh 'docker-compose -f Dokcer-Compose.yml down'
-                sh 'docker-compose -f Dokcer-Compose.yml pull'
-                sh 'docker-compose -f Dokcer-Compose.yml up -d'
+                sh 'docker compose -f Dokcer-Compose.yml down'
+                sh 'docker compose -f Dokcer-Compose.yml pull'
+                sh 'docker compose -f Dokcer-Compose.yml up -d'
                 }
             }
         }
