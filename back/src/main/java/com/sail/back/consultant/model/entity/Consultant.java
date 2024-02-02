@@ -33,12 +33,24 @@ public class Consultant {
         this.user=user;
         this.self_introduce=self_introduce;
     }
-    public ConsultantDetailResponse toConsultantDetailResponse(   )
+    public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant   )
     {
+        FindRequest findRequest= FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .build();
+
         return  ConsultantDetailResponse.builder()
-                .consultant_id(  consultant_id)
-                .self_introduce( self_introduce)
-                .user(user)
+                .consultant_id(  consultant.getConsultant_id() )
+                .self_introduce(consultant.getSelf_introduce())
+                .userResponse(UserResponse.of( findRequest, consultant.getUser()))
                 .build();
 
     }

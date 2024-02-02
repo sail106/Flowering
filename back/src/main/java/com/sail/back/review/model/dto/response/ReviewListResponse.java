@@ -3,6 +3,7 @@ package com.sail.back.review.model.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ public class ReviewListResponse {
 
     private Long review_id;
 
-    private Consultant consultant;
+    private ConsultantDetailResponse consultantDetailResponse;
 
     private String content;
 

@@ -18,7 +18,7 @@ const OneToOneChat = () => {
   const dispatch = useDispatch()
 
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
-  const { session, messageId, participantList  } = useSelector(state => state.consult)
+  const { session, messageId, participantList } = useSelector(state => state.consult)
   const { role, imageUrl, name, id, isMic, isCam } = useSelector(state => state.auth.logonUser)
 
 
@@ -45,7 +45,7 @@ const OneToOneChat = () => {
         message: msg,
         name: name,
       }
-      
+
       dispatch(appendMessageList(mine))
 
       const data = {
@@ -58,17 +58,24 @@ const OneToOneChat = () => {
 
       }
 
+      const persondata = {
+        imageUrl: imageUrl,
+        name: name,
+        isMic: isMic,
+        isCam: isCam,
+      };
+
       session.signal({
         data: JSON.stringify(data),
         to: [],
         type: 'chat'
       })
 
-      // session.signal({
-      //   data: JSON.stringify(persondata),
-      //   to: [],
-      //   type: 'participant'
-      // })
+      session.signal({
+        data: JSON.stringify(persondata),
+        to: [],
+        type: 'participant'
+      })
 
       setMsg('')
     }
@@ -77,27 +84,31 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
-      
-      const persondata = {
-        imageUrl: imageUrl,
-        name: name,
-        isMic: isMic,
-        isCam: isCam,
-      };
 
-      dispatch(appendParticipantList(persondata));
+      // dispatch(appendParticipantList(persondata));
 
       session.on('signal:chat', textChat)
+      session.on('signal:participant', addparticiapnt)
+
     }
   }, [session])
 
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
-    console.log('data role role'+data.role+' '+role)
+    console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
       dispatch(appendMessageList(data))
+    }
+  }
+
+  const addparticiapnt = (event) => {
+    const data = JSON.parse(event.data)
+    // console.log('data length message role' + ' ' + data.length + data.message + data.role)
+
+    if (data.role !== role) {
+      // dispatch(appendParticipantList(data))
     }
   }
 
@@ -116,7 +127,6 @@ const OneToOneChat = () => {
         <TitleText>
           채팅
         </TitleText>
-
 
         <Foldpos>
 
@@ -142,7 +152,8 @@ const OneToOneChat = () => {
           >
           </Input>
 
-          <IconButton onClick={handleMessage} >
+          {/* <IconButton onClick={handleMessage} > */}
+          <IconButton  >
             <PlanePos>
               <RiSendPlaneLine />
 

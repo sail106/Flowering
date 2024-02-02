@@ -31,7 +31,7 @@ const ChatList = () => {
           name={messageList[i].name}
         />
       );
-      console.log(messageList[i].name)
+      console.log(messageList[i].message)
     }
 
     return msgList;
