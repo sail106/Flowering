@@ -12,7 +12,7 @@ pipeline {
             steps {
                 dir('/back') {
                 sh 'docker compose -f docker-compose.yml down'
-                sh 'docker compose -f docker-compose.yml pull'
+                // sh 'docker compose -f docker-compose.yml pull'
                 sh 'docker compose -f docker-compose.yml up -d'
                 }
             }
