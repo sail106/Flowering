@@ -1,7 +1,7 @@
 version: '3'
 services:
   back:
-    image: leikra/back:1.5
+    image: leikra/back:1.6
     build: .
     environment:
       - USE_PROFILE=prod
