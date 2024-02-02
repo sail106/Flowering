@@ -1,131 +1,131 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Grid, styled, IconButton } from '@mui/material'
-import MessageIcon from '@mui/icons-material/Message';
-import ChatList from './ChatList'
-import { appendMessageList } from '../../../../redux/slices/communitySlice'
+// import { Box, Grid, styled, IconButton } from '@mui/material'
+// import MessageIcon from '@mui/icons-material/Message';
+// import ChatList from './ChatList'
+// import { appendMessageList } from '../../../../redux/slices/communitySlice'
 
-const Chat = () => {
-  const [msg, setMsg] = useState('')
+// const Chat = () => {
+//   const [msg, setMsg] = useState('')
   
 
-  const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-  const { session, messageId } = useSelector(state => state.consult)
-  const dispatch = useDispatch()
+//   const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+//   const { session, messageId } = useSelector(state => state.consult)
+//   const dispatch = useDispatch()
 
-  const handleMessage = () => {
+//   const handleMessage = () => {
+//     console.log('click')
+//     if (session && msg.length > 0) {
 
-    if (session && msg.length > 0) {
+//       const currentDate = new Date();
+//       const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
 
-      const currentDate = new Date();
-      const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-
-      const mine = {
-        id: messageId,
-        role: role,
-        imageUrl: '',
-        side: 'right',
-        message: msg,
-        date: formattedDate,
+//       const mine = {
+//         id: messageId,
+//         role: role,
+//         imageUrl: '',
+//         side: 'right',
+//         message: msg,
+//         date: formattedDate,
         
-      }
+//       }
 
-      dispatch(appendMessageList(mine))
+//       dispatch(appendMessageList(mine))
 
-      const data = {
-        id: messageId,
-        role: role,
-        imageUrl: imageUrl,
-        side: 'left',
-        message: msg,
-        date: formattedDate,
+//       const data = {
+//         id: messageId,
+//         role: role,
+//         imageUrl: imageUrl,
+//         side: 'left',
+//         message: msg,
+//         date: formattedDate,
 
-      }
+//       }
 
-      session.signal({
-        data: JSON.stringify(data),
-        to: [],
-        type: 'chat'
-      })
+//       session.signal({
+//         data: JSON.stringify(data),
+//         to: [],
+//         type: 'chat'
+//       })
 
-      setMsg('')
-    }
+//       setMsg('')
+//     }
 
-  }
+//   }
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    if (session) {
-      session.on('signal:chat', textChat)
-    }
-  }, [session])
+//     if (session) {
+//       session.on('signal:chat', textChat)
+//     }
+//   }, [session])
 
-  const textChat = (event) => {
-    const data = JSON.parse(event.data)
+//   const textChat = (event) => {
+//     const data = JSON.parse(event.data)
 
-    if (data.role !== role) {
-      dispatch(appendMessageList(data))
-    }
-  }
+//     if (data.role !== role) {
+//       dispatch(appendMessageList(data))
+//     }
+//   }
 
-  return (
-    <ChatGrid>
-      <ChatContainer>
-         <IContainer>
-          <Input value={msg}
-            onChange={(e) => { setMsg(e.target.value) }}
-            onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-          />
-          <IconButton onClick={handleMessage} >
-            <MessageIcon />
-          </IconButton>
+//   return (
+//     <ChatGrid>
+//       <ChatContainer>
+//          <IContainer>
+//           <Input value={msg}
+//             onChange={(e) => { setMsg(e.target.value) }}
+//             onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
+//           />
+//           <IconButton onClick={handleMessage} >
+//             <MessageIcon />
+//           </IconButton>
 
-        </IContainer>
+//         </IContainer>
 
-      </ChatContainer>
+//       </ChatContainer>
 
-    </ChatGrid>
-  )
-}
+//     </ChatGrid>
+//   )
+// }
 
-export default Chat
+// export default Chat
 
-const ChatGrid = styled(Grid)({
-  height: "88%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-end",
-  overflow: "hidden",
-  backgroundColor: "#F5F5F5",
-  border: '2px solid #5A4D4D99',
-  borderRadius: '10px',
-  padding: '10px',
-})
+// const ChatGrid = styled(Grid)({
+//   height: "88%",
+//   display: "flex",
+//   flexDirection: "column",
+//   justifyContent: "flex-end",
+//   overflow: "hidden",
+//   backgroundColor: "#F5F5F5",
+//   border: '2px solid #5A4D4D99',
+//   borderRadius: '10px',
+//   padding: '10px',
+// })
 
-const ChatContainer = styled(Grid)({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  borderRadius: "4px",
-  overflow: "hidden",
-})
+// const ChatContainer = styled(Grid)({
+//   width: "100%",
+//   height: "100%",
+//   display: "flex",
+//   flexDirection: "column",
+//   justifyContent: "center",
+//   borderRadius: "4px",
+//   overflow: "hidden",
+// })
 
-const IContainer = styled(Box)({
-  marginTop: "0.4rem",
-  width: "100%",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignContent: "center",
-})
+// const IContainer = styled(Box)({
+//   marginTop: "0.4rem",
+//   width: "100%",
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "center",
+//   alignContent: "center",
+// })
 
-const Input = styled('input')({
-  fontSize: "1rem",
-  padding: "0.4rem 1rem",
-  width: "calc(100% - 40px)",
-  border: '2px solid #5A4D4D99',
-  borderRadius: "1rem",
-})
+// const Input = styled('input')({
+//   fontSize: "1rem",
+//   padding: "0.4rem 1rem",
+//   width: "calc(100% - 40px)",
+//   border: '2px solid #5A4D4D99',
+//   borderRadius: "1rem",
+// })

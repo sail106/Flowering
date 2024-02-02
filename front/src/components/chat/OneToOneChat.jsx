@@ -33,7 +33,7 @@ const OneToOneChat = () => {
   }
 
   const handleMessage = () => {
-
+    console.log('bbbbbbbb')
     if (session && msg.length > 0) {
 
 
@@ -99,6 +99,7 @@ const OneToOneChat = () => {
     console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
+      console.log('sent text save ')
       dispatch(appendMessageList(data))
     }
   }
@@ -152,8 +153,8 @@ const OneToOneChat = () => {
           >
           </Input>
 
-          {/* <IconButton onClick={handleMessage} > */}
-          <IconButton  >
+          <IconButton onClick={handleMessage} >
+          {/* <IconButton  > */}
             <PlanePos>
               <RiSendPlaneLine />
 
