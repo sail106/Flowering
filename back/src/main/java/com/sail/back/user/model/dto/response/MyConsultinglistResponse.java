@@ -27,4 +27,7 @@ public class MyConsultinglistResponse {
     private LocalDateTime time; //예약일
 
     private String sessionId;
+
+    private String title; //제목
+
 }

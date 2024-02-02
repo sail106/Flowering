@@ -34,6 +34,26 @@ const initialState = {
   ]
 }
 
+export const postConsultingResult = createAsyncThunk(
+  'consult/postConsultingResult',
+  async (payload, { rejectWithValue }) => {
+    try {
+      // let formData = new FormData()
+      // formData.append('consultingFinishRequest' )
+      // formData.append('file', payload.files[0])
+      // console.log(formData)
+      const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
+      
+      alert('진단 결과가 저장되었습니다. 컨설팅을 종료합니다.')
+      return response.data
+    } 
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+)
+
 export const getConsultantSessionName = createAsyncThunk(
   'consult/getCreatorSessionName',
   async (reservationId, { rejectWithValue }) => {
@@ -47,7 +67,7 @@ export const getConsultantSessionName = createAsyncThunk(
   }
 )
 
- 
+
 
 const consultSlice = createSlice({
   name: 'consult',
@@ -100,12 +120,17 @@ const consultSlice = createSlice({
     },
 
     appendMessageList: (state, { payload }) => {
-      if (payload.id > state.messageId) {
+      console.log('payload state' + payload.id + " " + state.messageId)
+
+      if (payload.id >= state.messageId) {
         state.messageId = payload.id + 1
-      } else {
-        payload.id = state.messageId
-        state.messageId = state.messageId + 1
       }
+
+      //  else {
+      //   console.log('payload state'+payload.id + " "+state.messageId)
+      //   payload.id = state.messageId
+      //   state.messageId = state.messageId + 1
+      // }
       state.messageList.push(payload)
     },
 
@@ -128,7 +153,7 @@ const consultSlice = createSlice({
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendMessageList,
   setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName
-  , appendParticipantList
+  , appendParticipantList,
 } = consultSlice.actions;
 
 export default consultSlice.reducer;

@@ -46,7 +46,10 @@ const OneToOneChat = () => {
         name: name,
       }
 
+      console.log('my text add ' + messageId)
+
       dispatch(appendMessageList(mine))
+
 
       const data = {
 
@@ -84,7 +87,6 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
-
       // dispatch(appendParticipantList(persondata));
 
       session.on('signal:chat', textChat)
@@ -96,13 +98,16 @@ const OneToOneChat = () => {
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
-    console.log('data length message role' + ' ' + data.length + data.message + data.role)
+
+    console.log('  data   message role' + ' ' + data.id + ' ' + data.message + data.role)
 
     if (data.role !== role) {
-      console.log('sent text save ')
-      dispatch(appendMessageList(data))
+
+      dispatch(appendMessageList(data));
     }
   }
+
+
 
   const addparticiapnt = (event) => {
     const data = JSON.parse(event.data)
@@ -154,7 +159,7 @@ const OneToOneChat = () => {
           </Input>
 
           <IconButton onClick={handleMessage} >
-          {/* <IconButton  > */}
+            {/* <IconButton  > */}
             <PlanePos>
               <RiSendPlaneLine />
 

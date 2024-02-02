@@ -5,6 +5,7 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
+import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
 
 
 const Clock = styled(LuClock3)`
@@ -82,16 +83,18 @@ const FinalButton = styled(Button)`
 
 const MyConsulting = () => {
   const data = [
-    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)" },
+
+    { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", consulting_id: "1" },
   ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const btnclick = () => {
+  const btnclick = (consulting_id) => {
 
-    console.log('sdfsd')
+    console.log('consulting_id ' + consulting_id)
     dispatch(setRole('CUSTOMER'))
     dispatch(setname('CUSTOMER'))
+    dispatch(setConsultantSessionName2(consulting_id))
 
     navigate('/OneToOneVideoChat')
 
@@ -127,7 +130,7 @@ const MyConsulting = () => {
                 <Button>일정 변경</Button>
               </ButtonTd>
               <ButtonTd>
-                <Button onClick={btnclick}>바로가기</Button>
+                <Button onClick={() => btnclick(row.consulting_id)}>바로가기</Button>
               </ButtonTd>
 
             </Tr>

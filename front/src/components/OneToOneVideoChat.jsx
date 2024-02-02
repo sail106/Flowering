@@ -20,7 +20,7 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, setConsultantSessionName,
+  resetSessionName, resetMsg,
 } from '../store/consultSlice'
 
 import axios from 'axios';
@@ -46,7 +46,7 @@ const OneToOneVideoChat = () => {
   //     role === CONSULTANT ? tmp : consultantSessionName
   //   )
   const [OV, setOV] = useState(null)
-  const { name, role, id, nickname,imageUrl } = useSelector(state => state.auth.logonUser)
+  const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const { creatorid } = useSelector(state => state.community.creator)
   const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
@@ -236,7 +236,7 @@ const OneToOneVideoChat = () => {
 
       session.on('exception', exception)
 
-      
+
       const persondata = {
         imageUrl: imageUrl,
         name: name,
@@ -292,16 +292,22 @@ const OneToOneVideoChat = () => {
     console.warn(exception);
   }
 
+  const consultingFinishRequest = {
+    consultingid: consultantSessionName2,
+    // consultingComment: consultingComment,
+
+
+  }
+
   //   // 컨설턴트, 고객 종료시 분리 필요
   const leaveSession = () => {
     console.log('session' + session)
-
-    if (session) {
+    // role==CONSULTANT &&
+    if (role == CONSULTANT && session) {
       session.disconnect();
-      dispatch(postConsultingResult({ files, consultingFinishRequest }))
+      dispatch(postConsultingResult({ consultingFinishRequest }))
         .then(() => {
-          dispatch(changeComment(''))
-          dispatch(setFiles(''))
+          // dispatch(changeComment(''))
           navigate('/')
         })
     }
@@ -311,7 +317,7 @@ const OneToOneVideoChat = () => {
     }
 
     setOV(null);
-    setMySessionId(role === CONSULTANT ? tmp : consultantSessionName2)
+    setMySessionId(consultantSessionName2)
     dispatch(setSession(undefined))
     dispatch(setCustomer(undefined))
     dispatch(resetMsg())
@@ -701,7 +707,7 @@ const OneToOneVideoChat = () => {
                     {/* <BottomBtn variant="contained"  > */}
 
                     <ExitButton onClick={leaveSession}>
-                      나가기
+                      상담 종료하기
                     </ExitButton>
 
                     {/* </ButtonGroup> */}
