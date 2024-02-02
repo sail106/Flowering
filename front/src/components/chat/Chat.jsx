@@ -10,12 +10,12 @@
 //   const [msg, setMsg] = useState('')
   
 
-//   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-//   // const { session, messageId } = useSelector(state => state.consult)
-//   // const dispatch = useDispatch()
+//   const { role, imageUrl } = useSelector(state => state.auth.logonUser)
+//   const { session, messageId } = useSelector(state => state.consult)
+//   const dispatch = useDispatch()
 
 //   const handleMessage = () => {
-
+//     console.log('click')
 //     if (session && msg.length > 0) {
 
 //       const currentDate = new Date();
@@ -54,20 +54,20 @@
 
 //   }
 
-//   // useEffect(() => {
+//   useEffect(() => {
 
-//   //   if (session) {
-//   //     session.on('signal:chat', textChat)
-//   //   }
-//   // }, [session])
+//     if (session) {
+//       session.on('signal:chat', textChat)
+//     }
+//   }, [session])
 
-//   // const textChat = (event) => {
-//   //   const data = JSON.parse(event.data)
+//   const textChat = (event) => {
+//     const data = JSON.parse(event.data)
 
-//   //   if (data.role !== role) {
-//   //     dispatch(appendMessageList(data))
-//   //   }
-//   // }
+//     if (data.role !== role) {
+//       dispatch(appendMessageList(data))
+//     }
+//   }
 
 //   return (
 //     <ChatGrid>

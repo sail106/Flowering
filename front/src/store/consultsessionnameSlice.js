@@ -70,9 +70,11 @@ const consultsessionnameSlice = createSlice({
     },
  
     appendParticipantList: (state, { payload }) => {
-      payload.id = state.participantId
+      payload.id = state.participantId //처음에 2
       state.participantId = state.participantId + 1
       state.participantList.push(payload)
+      console.log('participant pushed '+payload.name+" "+payload.id+
+      " state.participantId"+state.participantId)
     },
 
   },

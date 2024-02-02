@@ -38,6 +38,12 @@ public class Consulting {
     @NotNull
     private LocalDateTime time; //예약일
 
+    @NotNull
+    private String title; //제목
+
+
+
+
 //    //세션아이디
 //    @NotNull
 //    private String sessionId;
@@ -58,6 +64,7 @@ public class Consulting {
                 .consulting_id(consulting.getConsulting_id())
                 .consultant(consulting.getConsultant())
                 .time(consulting.getTime())
+                .title(consulting.getTitle())
                 .build();
     }
 

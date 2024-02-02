@@ -8,13 +8,14 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
+import { appendMessageList } from '../../store/consultSlice';
  
  
 const SmallChat = () => {
   const [msg, setMsg] = useState('');
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-  // const { session, messageId } = useSelector(state => state.consult)
-  // const dispatch = useDispatch()
+  const { session, messageId } = useSelector(state => state.consult)
+  const dispatch = useDispatch()
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
   const { name, role, id, nickname } = useSelector(state => state.auth.logonUser)
 
@@ -30,6 +31,7 @@ const SmallChat = () => {
   }
 
   const handleMessage = () => {
+    console.log('daaaaaaaa')
     if (session && msg.length > 0) {
       const mine = {
         id: messageId,
@@ -39,7 +41,7 @@ const SmallChat = () => {
         message: msg
       }
 
-      // dispatch(appendMessageList(mine))
+      dispatch(appendMessageList(mine))
 
       const data = {
         id: messageId,
@@ -59,16 +61,16 @@ const SmallChat = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (session) {
-  //     session.on('signal:chat', textChat)
-  //   }
-  // }, [session])
+  useEffect(() => {
+    if (session) {
+      session.on('signal:chat', textChat)
+    }
+  }, [session])
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
     if (data.role !== role) {
-      // dispatch(appendMessageList(data))
+      dispatch(appendMessageList(data))
     }
   }
 
