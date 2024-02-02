@@ -13,6 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @EnableWebSecurity
 @Configuration
@@ -32,6 +36,7 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
@@ -44,6 +49,20 @@ public class SecurityConfig{
                                 .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(customOAuth2Service))
                 );
         return http.build();
+    }
+
+
+    public CorsConfigurationSource corsConfigurationSource() {
+        return request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedHeaders(Collections.singletonList("*"));
+            config.setAllowedMethods(Collections.singletonList("*"));
+            // 모든 도메인 허용
+            config.setAllowedOrigins(Collections.singletonList("*")); // 모든 Origin 허용
+            // config.setAllowedOriginPatterns(Collections.singletonList("*")); // 이 방식은 패턴 사용 시 적합
+            config.setAllowCredentials(false); // 모든 도메인을 허용할 때는 false로 설정해야 함
+            return config;
+        };
     }
 
 }
