@@ -8,6 +8,7 @@ import com.sail.back.consultant.model.service.ConsultantService;
 import com.sail.back.consulting.model.dto.request.ConsultingmylistRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingmylistResponse;
 import com.sail.back.consulting.model.entity.Consulting;
+import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.user.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,46 +30,37 @@ public class ConsultantController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<List<ConsultantListResponse>> getConsultants() {
+    public ResponseEntity<MessageUtils<List<ConsultantListResponse>>> getConsultants() {
         List<ConsultantListResponse> responses = consultantService.getConsultants();
 
         log.info("컨설턴트 목록 조회 성공");
-        return ResponseEntity.ok()
-                .body(responses);
+//        return ResponseEntity.ok()
+//                .body(responses);
+        return ResponseEntity.ok().body(MessageUtils.success(responses));
+
+
     }
 
     @GetMapping("/detail/{consultantid}")
-    public ResponseEntity<ConsultantDetailResponse> getConsultant(@PathVariable Long consultantid) {
-
+    public ResponseEntity<MessageUtils<ConsultantDetailResponse>> getConsultant(@PathVariable Long consultantid) {
         ConsultantDetailResponse consultant = consultantService.getConsultant(consultantid);
-
-        log.info("컨설턴트 상세 조회  ");
-
-        return ResponseEntity.ok()
-                .body(consultant);
-
+        log.info("컨설턴트 상세 조회");
+        return ResponseEntity.ok().body(MessageUtils.success(consultant));
     }
 
     @GetMapping("/mylist")
-    public ResponseEntity<List<ConsultingmylistResponse>> getMyConsultingList(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime
-    ) {
+    public ResponseEntity<MessageUtils<List<ConsultingmylistResponse>>> getMyConsultingList(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
         List<ConsultingmylistResponse> consultingList = consultantService.getMyConsultingList(user.getId(), localDateTime);
-        System.out.println("mylisttttt" + consultingList.size());
-
-//        List<ConsultingmylistResponse> responseList = consultingList.stream()
-//                .map(ConsultingmylistResponse::fromEntity)
-//                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(consultingList);
+        log.info("나의 컨설팅 목록 조회");
+        return ResponseEntity.ok().body(MessageUtils.success(consultingList));
     }
 
 
     @PutMapping("/update")
-    public ResponseEntity<ConsultantDetailResponse> update(@AuthenticationPrincipal User user, @RequestBody ConsultantUpdateRequest consultantUpdateRequest
-     ) {
-         ConsultantDetailResponse update = consultantService.update(user, consultantUpdateRequest);
-
-        return ResponseEntity.ok(update);
+    public ResponseEntity<MessageUtils<ConsultantDetailResponse>> update(@AuthenticationPrincipal User user, @RequestBody ConsultantUpdateRequest consultantUpdateRequest) {
+        ConsultantDetailResponse update = consultantService.update(user, consultantUpdateRequest);
+        log.info("컨설턴트 정보 업데이트");
+        return ResponseEntity.ok().body(MessageUtils.success(update));
     }
 
 }

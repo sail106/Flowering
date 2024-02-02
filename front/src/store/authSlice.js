@@ -31,7 +31,9 @@ const initialState = {
         introduction: '',
         cost: '',
         consultingFile: '',
-
+        role: '',
+        isMic:'false',
+        isCam:'false',
     },
 
     isLoading: false,
@@ -262,7 +264,15 @@ const authSlice = createSlice({
         },
         modalOff: (state) => {
             state.isModal = false;
-        }
+        },
+
+        setRole: (state, { payload }) => {
+            state.logonUser.role = payload
+        },
+
+        setname: (state, { payload }) => {
+            state.logonUser.name = payload
+        },
     },
 
 
@@ -310,7 +320,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole,setname } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

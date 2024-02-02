@@ -20,7 +20,7 @@ public class ConsultingResponse {
 
     Long consultingId;
 
-    private UserResponse userData;
+    private UserResponse userResponse;
 
     private ConsultantResponse consultantData;
 

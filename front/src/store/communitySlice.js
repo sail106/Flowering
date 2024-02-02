@@ -150,7 +150,7 @@ const communitySlice = createSlice({
 
 })
 
-export const { settingModalOn, settingModalOff, setSession,    resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
+export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendpersonalmessageList, appendcommunitymessageList,
   setReservationId, resetMsg, setCommunityid, appendParticipantList } = communitySlice.actions;
 
 export default communitySlice.reducer;

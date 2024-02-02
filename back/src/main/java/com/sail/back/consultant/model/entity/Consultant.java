@@ -3,6 +3,8 @@ package com.sail.back.consultant.model.entity;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantResponse;
+import com.sail.back.user.model.dto.request.FindRequest;
+import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,12 +33,24 @@ public class Consultant {
         this.user=user;
         this.self_introduce=self_introduce;
     }
-    public ConsultantDetailResponse toConsultantDetailResponse(   )
+    public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant   )
     {
+        FindRequest findRequest= FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .build();
+
         return  ConsultantDetailResponse.builder()
-                .consultant_id(  consultant_id)
-                .self_introduce( self_introduce)
-                .user(user)
+                .consultant_id(  consultant.getConsultant_id() )
+                .self_introduce(consultant.getSelf_introduce())
+                .userResponse(UserResponse.of( findRequest, consultant.getUser()))
                 .build();
 
     }
@@ -63,9 +77,21 @@ public class Consultant {
     }
 
     public ConsultantResponse toResponse(){
+        FindRequest findRequest= FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .build();
+
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)
-                .consultantDetailData(this.user.toResponse())
+                .userResponse(UserResponse.of( findRequest,this.user) )
                 .selfIntroduce(this.self_introduce)
                 .build();
     }

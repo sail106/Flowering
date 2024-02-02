@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Getter
 @Setter
 @ToString
@@ -31,19 +31,19 @@ import java.util.Map;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", precision = 10, scale = 2)
+    @Column(name = "id", precision = 10, scale = 2)
     private Long id;
 
-    @Column(name="email", unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "nickname")
     private String nickname;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(name="profile_img_url")
+    @Column(name = "profile_img_url")
     private String profileImgUrl;
 
     @Enumerated(EnumType.STRING)
@@ -99,58 +99,57 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if(status == UserStatus.INACTIVE){
+        if (status == UserStatus.INACTIVE) {
             return false;
         }
         return true;
     }
 
-    public static User of(OAuth2User oAuth2User){
+    public static User of(OAuth2User oAuth2User) {
         Map<String, Object> map = oAuth2User.getAttributes();
         User user = new User();
-        String email =(String) map.get("email");
-        String name =(String) map.get("name");
-        String nickName =(String) map.get("nickName");
-        String birthDateMonth =(String) map.get("birthDateMonth");
-        String birthDateYear =(String) map.get("birthDateYear");
+        String email = (String) map.get("email");
+        String name = (String) map.get("name");
+        String nickName = (String) map.get("nickName");
+        String birthDateMonth = (String) map.get("birthDateMonth");
+        String birthDateYear = (String) map.get("birthDateYear");
         String gender = (String) map.get("gender");
-        String picture =(String) map.get("picture");
+        String picture = (String) map.get("picture");
         AuthProvider provider = (AuthProvider) map.get("provider");
 
-        if (email!=null) user.setEmail(email);
-        if (name!=null) user.setName(name);
-        if (nickName!=null) user.setNickname(nickName);
-        if (birthDateMonth!=null) user.setBirthdateMonth(birthDateMonth);
-        if (birthDateYear!=null) user.setBirthdateYear(birthDateYear);
-        if (gender!=null) user.setGender(ToMap(gender));
-        if (picture!=null) user.setProfileImgUrl(picture);
-        if (provider!=null) user.setProvider(provider);
+        if (email != null) user.setEmail(email);
+        if (name != null) user.setName(name);
+        if (nickName != null) user.setNickname(nickName);
+        if (birthDateMonth != null) user.setBirthdateMonth(birthDateMonth);
+        if (birthDateYear != null) user.setBirthdateYear(birthDateYear);
+        if (gender != null) user.setGender(ToMap(gender));
+        if (picture != null) user.setProfileImgUrl(picture);
+        if (provider != null) user.setProvider(provider);
         user.setStatus(UserStatus.ACTIVE);
         user.setRole(UserRole.USER);
         return user;
     }
 
-    static UserGender ToMap(String gender){
-        if (gender.equals("male")||gender.equals("MALE")||gender.equals("M")){
+    static UserGender ToMap(String gender) {
+        if (gender.equals("male") || gender.equals("MALE") || gender.equals("M")) {
             return UserGender.MALE;
         }
         return UserGender.FEMALE;
     }
 
-    public UserResponse toResponse(){
-        return UserResponse.builder()
-                .id(this.id)
-                .gender(this.gender)
-                .birthdateYear(this.birthdateYear)
-                .birthdateMonth(this.birthdateMonth)
-                .nickname(this.nickname)
-                .email(this.email)
-                .createAt(this.createAt)
-                .role(this.role)
-                .profileImgUrl(this.profileImgUrl)
-                .status(this.status)
-                .name(this.name)
-                .provider(this.provider)
+
+    public static User from(UserResponse userResponse) {
+        return User.builder()
+                .email(userResponse.getEmail())
+                .birthdateMonth(userResponse.getBirthdateMonth())
+                .birthdateYear(userResponse.getBirthdateYear())
+                .gender(userResponse.getGender())
+                .nickname(userResponse.getNickname())
+                .profileImgUrl(userResponse.getProfileImgUrl())
+                .role(userResponse.getRole())
+                .name(userResponse.getName())
                 .build();
     }
+
+
 }

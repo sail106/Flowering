@@ -4,12 +4,14 @@ import com.sail.back.admin.model.dto.request.UserToConsultantRequest;
 import com.sail.back.admin.model.service.AdminService;
 import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.user.model.dto.request.UserRegistRequest;
+import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.AuthProvider;
 import com.sail.back.user.model.entity.enums.UserRole;
 import com.sail.back.user.model.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,9 +22,9 @@ public class AdminController {
     private final AdminService adminService;
 
     @PutMapping("/toconsultant")
-    public ResponseEntity<MessageUtils> toconsultant(@RequestBody UserToConsultantRequest userToConsultantRequest) {
+    public ResponseEntity<MessageUtils> toconsultant(@AuthenticationPrincipal User user, @RequestBody UserToConsultantRequest userToConsultantRequest) {
         System.out.println("toconsult admincontrollerrr"+userToConsultantRequest.getId());
-        adminService.toConsultant(userToConsultantRequest);
+        adminService.toConsultant(user,userToConsultantRequest);
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 

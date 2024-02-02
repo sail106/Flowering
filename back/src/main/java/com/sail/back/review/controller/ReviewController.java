@@ -43,11 +43,11 @@ public class ReviewController {
 
 
     @PutMapping("/modify/{reviewid}")
-    public ResponseEntity<ReviewModifyResponse> modify(@AuthenticationPrincipal User user, @RequestBody ReviewModifyRequest modifyRequest,
-                                                       @PathVariable Long reviewid) {
-        return ResponseEntity.ok().body(reviewService.modify(user, modifyRequest,reviewid));
+    public ResponseEntity<MessageUtils<ReviewModifyResponse>> modify(@AuthenticationPrincipal User user, @RequestBody ReviewModifyRequest modifyRequest,
+                                                                     @PathVariable Long reviewid) {
+        ReviewModifyResponse response = reviewService.modify(user, modifyRequest, reviewid);
+        return ResponseEntity.ok().body(MessageUtils.success(response));
     }
-
 
     @DeleteMapping("/delete/{reviewId}")
     public ResponseEntity<MessageUtils> delete(@AuthenticationPrincipal User user, @PathVariable Long reviewId) {
@@ -55,12 +55,11 @@ public class ReviewController {
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 
-
     @GetMapping("/consultant/{consultantId}")
-    public ResponseEntity<List<ReviewListResponse>> get(@PathVariable Long consultantId) {
-
+    public ResponseEntity<MessageUtils<List<ReviewListResponse>>> get(@PathVariable Long consultantId) {
         List<ReviewListResponse> reviewListResponses = reviewService.get(consultantId);
-        return ResponseEntity.ok().body(reviewListResponses);
+        return ResponseEntity.ok().body(MessageUtils.success(reviewListResponses));
     }
+
 
 }

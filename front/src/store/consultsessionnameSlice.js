@@ -2,23 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../api/Axios';
 
 const initialState = {
-  session: undefined,
-  isSetClear: false,
-  consultantSessionName: '',
-  messageId: 2,
-  participantId: 1,
+  consultantSessionName2: '', 
 
-  messageList: [
-    {
-      id: 1,
-      role: '',
-      imageUrl: '',
-      side: 'left',
-      message: '대화를 시작합니다.',
-      name: 'bot',
-
-    }
-  ],
+  participantId: 2,
 
   participantList: [
     {
@@ -34,7 +20,7 @@ const initialState = {
   ]
 }
 
-export const getConsultantSessionName = createAsyncThunk(
+export const getConsultantSessionName2 = createAsyncThunk(
   'consult/getCreatorSessionName',
   async (reservationId, { rejectWithValue }) => {
     try {
@@ -48,8 +34,8 @@ export const getConsultantSessionName = createAsyncThunk(
 )
 
 
-const consultSlice = createSlice({
-  name: 'consult',
+const consultsessionnameSlice = createSlice({
+  name: 'consultsessionname',
   initialState,
 
   reducers: {
@@ -67,8 +53,8 @@ const consultSlice = createSlice({
     setSession: (state, { payload }) => {
       state.session = payload
     },
-    setConsultantSessionName: (state, { payload }) => {
-      state.consultantSessionName = payload
+    setConsultantSessionName2: (state, { payload }) => {
+      state.consultantSessionName2 = payload
     },
 
     setConsultid: (state, { payload }) => {
@@ -82,52 +68,27 @@ const consultSlice = createSlice({
     setCustomer: (state, { payload }) => {
       state.customer = payload
     },
-
-    resetMsg: (state) => {
-      state.messageId = 2;
-      state.messageList = [
-        {
-          id: 1,
-          role: '',
-          imageUrl: '',
-          side: 'left',
-          message: '대화를 시작합니다.',
-          name: 'bot',
-        }
-      ]
-
-    },
-
-    appendMessageList: (state, { payload }) => {
-      if (payload.id > state.messageId) {
-        state.messageId = payload.id + 1
-      } else {
-        payload.id = state.messageId
-        state.messageId = state.messageId + 1
-      }
-      state.messageList.push(payload)
-    },
-
+ 
     appendParticipantList: (state, { payload }) => {
       payload.id = state.participantId
       state.participantId = state.participantId + 1
       state.participantList.push(payload)
-    }
+    },
 
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(getConsultantSessionName.fulfilled, (state, { payload }) => {
-        state.consultantSessionName = payload.sessionId
+      .addCase(getConsultantSessionName2.fulfilled, (state, { payload }) => {
+        state.consultantSessionName2 = payload.sessionId
       })
   }
 
 })
 
-export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendMessageList,
-  setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName
+export const { settingModalOn, settingModalOff, setSession, resetSessionName,
+  setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName2
   , appendParticipantList
-} = consultSlice.actions;
+} = consultsessionnameSlice.actions;
 
-export default consultSlice.reducer;
+export default consultsessionnameSlice.reducer;

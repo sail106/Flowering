@@ -38,12 +38,12 @@ public class Review {
 
     }
 
-    public ReviewListResponse toreviewListResponse() {
+    public static ReviewListResponse toreviewListResponse(Review review) {
         return ReviewListResponse.builder()
-                .review_id(review_id)
-                .star(star)
-                .consultant(consultant)
-                .content(content)
+                .review_id(review.getReview_id() )
+                .star(review.getStar())
+                .consultantDetailResponse( Consultant.toConsultantDetailResponse(review.getConsultant()))
+                .content(review.getContent())
                 .build();
     }
 
@@ -51,7 +51,7 @@ public class Review {
         return ReviewModifyResponse.builder()
                 .review_id(review_id)
                 .star(star)
-                .consultant(consultant)
+                .consultantDetailResponse(Consultant.toConsultantDetailResponse(consultant))
                 .content(content)
                 .build();
     }

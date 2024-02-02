@@ -87,6 +87,7 @@ const MyCommunity = () => {
   const { session, community_id } = useSelector(state => state.community)
   const [publisher, setPublisher] = useState(undefined)
   const [creator, setCreator] = useState(undefined)
+  
   const { nickname, email, role } = useSelector(state => state.auth.logonUser)
 
 

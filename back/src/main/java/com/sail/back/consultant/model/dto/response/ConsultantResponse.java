@@ -21,5 +21,5 @@ public class ConsultantResponse {
 
     private String selfIntroduce;
 
-    private UserResponse consultantDetailData;
+    private UserResponse userResponse;
 }
