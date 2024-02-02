@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/user/model/dto/response/MyConsultinglistResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/user/model/dto/response/MyConsultinglistResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/mypage/ExpertConsulting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/mypage/ExpertConsulting.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/redux/slices/consultSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/redux/slices/consultSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/chat/OneToOneChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/chat/OneToOneChat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/mypage/MyConsulting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/mypage/MyConsulting.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/consultSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/consultSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +135,7 @@
       <workItem from="1706227511149" duration="7853000" />
       <workItem from="1706486439627" duration="10683000" />
       <workItem from="1706582579393" duration="12707000" />
+      <workItem from="1706834989045" duration="6064000" />
     </task>
     <task id="LOCAL-00001" summary="feat: #6 Community 생성 api 작성&#10;- repository 생성&#10;- service 생성&#10;- controller 수정&#10;- request dto 생성&#10;- response dto 생성">
       <option name="closed" value="true" />

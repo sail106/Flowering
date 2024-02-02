@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 //import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import lombok.*;
 
@@ -21,9 +23,9 @@ import java.time.LocalTime;
 @Builder
 public class ConsultingCreateResponse  {
 
-    private User user;
+    private UserResponse userResponse;
 
-    private Consultant consultant;
+    private ConsultantDetailResponse consultantDetailResponse;
 
 
     private LocalDateTime  time; //예약을 몇시에 할건지

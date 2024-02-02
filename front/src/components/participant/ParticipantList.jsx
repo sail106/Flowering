@@ -4,10 +4,21 @@ import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ParticipantItem from './ParticipantItem';
 
+// import { fetchParticipantList } from '../../store/consultSlice';  
+
 const ParticipantList = () => {
+  const dispatch = useDispatch();
+
   const participantList = useSelector(state => state.community.participantList);
 
+
+  // useEffect(() => {
+  //   // 컴포넌트가 마운트되거나 participantList가 변경될 때마다 participantList를 가져옴
+  //   dispatch(fetchParticipantList());
+  // }, [dispatch]);
+
   return (
+
     <ListBox>
       {participantList.map((participant, index) => (
         <ParticipantItem
@@ -17,6 +28,7 @@ const ParticipantList = () => {
           name={participant.name}
         />
       ))}
+
     </ListBox>
   );
 };

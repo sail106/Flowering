@@ -8,7 +8,7 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
-import { appendmessageList } from '../../redux/slices/consultSlice';
+import { appendMessageList, appendParticipantList } from '../../store/consultSlice';
 
 
 const OneToOneChat = () => {
@@ -18,8 +18,8 @@ const OneToOneChat = () => {
   const dispatch = useDispatch()
 
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
-  const { session, messageId } = useSelector(state => state.consult)
-  const { role, imageUrl, name } = useSelector(state => state.auth.logonUser)
+  const { session, messageId, participantList } = useSelector(state => state.consult)
+  const { role, imageUrl, name, id, isMic, isCam } = useSelector(state => state.auth.logonUser)
 
 
   const handlePersonalClick = () => {
@@ -33,7 +33,7 @@ const OneToOneChat = () => {
   }
 
   const handleMessage = () => {
-
+    console.log('bbbbbbbb')
     if (session && msg.length > 0) {
 
 
@@ -46,21 +46,38 @@ const OneToOneChat = () => {
         name: name,
       }
 
-      dispatch(appendmessageList(mine))
+      console.log('my text add ' + messageId)
+
+      dispatch(appendMessageList(mine))
+
 
       const data = {
 
         id: messageId,
         role: role,
         imageUrl: imageUrl,
-        side: 'left',
+        name: name,
         message: msg
+
       }
+
+      const persondata = {
+        imageUrl: imageUrl,
+        name: name,
+        isMic: isMic,
+        isCam: isCam,
+      };
 
       session.signal({
         data: JSON.stringify(data),
         to: [],
         type: 'chat'
+      })
+
+      session.signal({
+        data: JSON.stringify(persondata),
+        to: [],
+        type: 'participant'
       })
 
       setMsg('')
@@ -70,15 +87,34 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
+      // dispatch(appendParticipantList(persondata));
+
       session.on('signal:chat', textChat)
+      session.on('signal:participant', addparticiapnt)
+
     }
   }, [session])
 
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
+
+    console.log('  data   message role' + ' ' + data.id + ' ' + data.message + data.role)
+
     if (data.role !== role) {
-      dispatch(appendMessageList(data))
+
+      dispatch(appendMessageList(data));
+    }
+  }
+
+
+
+  const addparticiapnt = (event) => {
+    const data = JSON.parse(event.data)
+    // console.log('data length message role' + ' ' + data.length + data.message + data.role)
+
+    if (data.role !== role) {
+      // dispatch(appendParticipantList(data))
     }
   }
 
@@ -97,7 +133,6 @@ const OneToOneChat = () => {
         <TitleText>
           채팅
         </TitleText>
-
 
         <Foldpos>
 
@@ -124,6 +159,7 @@ const OneToOneChat = () => {
           </Input>
 
           <IconButton onClick={handleMessage} >
+            {/* <IconButton  > */}
             <PlanePos>
               <RiSendPlaneLine />
 

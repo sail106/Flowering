@@ -30,12 +30,12 @@ public class ConsultingController {
     private final ConsultingService consultingService;
     //상담예약등록
     @PostMapping("/{consultantId}")
-    public ResponseEntity<ConsultingCreateResponse> createReservation(
+    public ResponseEntity<MessageUtils<ConsultingCreateResponse>> createReservation(
             @PathVariable Long consultantId,
             @AuthenticationPrincipal User user,
             @RequestBody ConsultingCreateRequest reservationCreateRequest) {
 
-        System.out.println("userrr"+user.toString());
+        log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
 
         UserRole userRole = user.getRole();
 
@@ -43,12 +43,11 @@ public class ConsultingController {
             throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
         }
 
-        Long customerid = user.getId();
-        ConsultingCreateResponse response = consultingService.createReservation(String.valueOf(userRole), customerid, consultantId, reservationCreateRequest);
+        Long customerId = user.getId();
+        ConsultingCreateResponse response = consultingService.createReservation(String.valueOf(userRole), customerId, consultantId, reservationCreateRequest);
 
         log.info("예약 등록 성공");
-        return ResponseEntity.ok()
-                .body(response);
+        return ResponseEntity.ok().body(MessageUtils.success(response));
     }
 
 

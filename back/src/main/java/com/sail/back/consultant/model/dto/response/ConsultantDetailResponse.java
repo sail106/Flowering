@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.user.model.dto.request.FindRequest;
+import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import lombok.*;
 
@@ -21,8 +23,9 @@ public class ConsultantDetailResponse {
 
     private String self_introduce;
 
-    private User user;
-//
+    private UserResponse userResponse;
+
+    //
 //    public Consultant from(ConsultantDetailResponse consultantListResponse) {
 //        return Consultant.builder().
 //                self_introduce(consultantListResponse.self_introduce)
@@ -30,9 +33,26 @@ public class ConsultantDetailResponse {
 //                .user(consultantListResponse.user)
 //                .build();
 //    }
-    public ConsultantDetailResponse(Consultant consultant){
+    public ConsultantDetailResponse(Consultant consultant) {
         this.consultant_id = consultant.getConsultant_id();
         this.self_introduce = consultant.getSelf_introduce();
-        this.user = consultant.getUser();
+        FindRequest findRequest = FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .name(true)
+                .build();
+
+        this.userResponse = UserResponse.of(findRequest, consultant.getUser());
+
     }
+
+
+
 }

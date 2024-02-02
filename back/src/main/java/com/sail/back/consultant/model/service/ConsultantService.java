@@ -91,7 +91,7 @@ public class ConsultantService {
 
         consultantRepository.save(consultant);
 
-        return consultant.toConsultantDetailResponse();
+        return Consultant.toConsultantDetailResponse(consultant);
     }
 
 }
