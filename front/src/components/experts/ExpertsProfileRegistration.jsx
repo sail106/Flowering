@@ -30,15 +30,17 @@ const MyImg = styled.img`
   width: 250px;
   margin-top: 80px;
   height: 250px;
+  cursor: pointer;
 `;
 
 const CameraImg = styled(MyImg)`
   position: absolute;
-  top: 13%;
+  top: 12%;
   right: 43%;
   width: 3%;
   height: auto;
   background-color: #e2dfd8;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
@@ -56,7 +58,7 @@ const PP = styled.p`
 `;
 
 const Nic = styled.div`
-  left: 515px;
+  left: 595px;
   top: 534px;
   position: absolute;
 `;
@@ -65,44 +67,44 @@ const H3 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
+  left: 402px;
   top: 538px;
 `;
 const H32 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
+  left: 402px;
   top: 585px;
 `;
 const H33 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
-  top: 633px;
+  left: 402px;
+  top: 753px;
 `;
 
 const H4 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
-  top: 890px;
+  left: 402px;
+  top: 1125px;
 `;
 
 const H42 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
-  top: 937px;
+  left: 402px;
+  top: 1170px;
 `;
 const H5 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
+  left: 402px;
   top: 1006px;
 `;
 
@@ -110,11 +112,11 @@ const H52 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 362px;
+  left: 402px;
   top: 1052px;
 `;
 const Put = styled.div`
-  margin-left: 140px;
+  margin-left: 180px;
 `;
 const Put2 = styled.div`
   margin-left: 65px;
@@ -155,16 +157,41 @@ const ButtonContainer = styled.div`
 const Plus = styled(GoPlus)`
   font-size: 30px;
   position: absolute;
-  left: 1145px;
-  top: 1074px;
+  left: 1245px;
+  top: 1190px;
   color: gray;
+  cursor: pointer;
 `;
 const Remove = styled(IoMdRemove)`
   font-size: 27px;
   position: absolute;
-  left: 1145px;
-  top: 951px;
+  left: 1245px;
+  top: 1081px;
   color: gray;
+  cursor: pointer;
+`;
+
+const ReviewInput = styled.textarea`
+  width: 600px;
+  height: 120px;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 180px;
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  border: 1px solid #8e8c8c;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 10px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #b7b5b5;
+  }
 `;
 const ExpertsProfileRegistration = () => {
   return (
@@ -184,21 +211,22 @@ const ExpertsProfileRegistration = () => {
             <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
           </Put>
           <H32>자세한 소개</H32>
-          <Put>
-            <Input width={"587px"} placeholder="자세한 소개를 입력하세요" />
-          </Put>
+          <ReviewInput placeholder=" 자세한 소개를 입력하세요" />
           <H33>전문 분야</H33>
           <Put>
-            <Input width={"587px"} placeholder="#태그 입력 (최대5개)" />
+            <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
           </Put>
         </PP>
         <Container>경력 사항</Container>
+
         <Margin />
+
         <H4>회사명</H4>
         <Career>아모레퍼시픽</Career>
         <H42>근무기간</H42>
         <Career2>2018.08 ~ 2022.03</Career2>
         <Remove />
+
         <Plus />
         <br />
         <H5>회사명</H5>

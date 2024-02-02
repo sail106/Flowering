@@ -35,12 +35,12 @@ const Text = styled.div`
 `;
 
 const StyledSmallDiv1 = styled(StyledSmallDiv)`
-  top: 1070px;
+  top: 1100px;
   left: 250px;
 `;
 
 const StyledSmallDiv2 = styled(StyledSmallDiv)`
-  top: 1070px;
+  top: 1100px;
   left: 340px;
 `;
 const H2 = styled.h2`
@@ -63,35 +63,36 @@ const ExpertsProfile = () => {
       <Title text={"experts profile"} />
       <ExpertCard>
         <Experts
-          nickname={"BIBI"}
-          text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
-          rate={4.9}
+          nickname={"LUNA"}
+          text={"건강하고 자연스러운 아름다움을 선물해드립니다."}
+          rate={4.8}
           ratenum={172}
-          tag1={"스킨케어"}
-          tag2={"자연주의"}
-          imgsrc={"src/assets/BIBI.png"}
-          width={"280px"}
-          height={"405px"}
+          tag1={"에코뷰티"}
+          tag2={"컬러리스트"}
+          imgsrc={"src/assets/RUNA.png"}
+          width={"294px"}
+          height={"363px"}
+          path={"/expertsReservation"}
         />
       </ExpertCard>
 
       <Text>
         <h2>소개</h2>
         <p>
-          고객의 피부 타입, 피부 상태, 고객의 습관 및 요구에 맞는 스킨케어 제품
-          및 루틴을 추천하여 피부 건강에 도움을 드립니다. 또한, 적절한 메이크업
-          및 스킨케어 기술을 가르치고, 피부 문제에 대한 조언과 해결책을
-          제시하기도 합니다. 고객들이 건강하고 아름다운 피부를 유지할 수 있도록
-          지원합니다.
+          환경 제품과 자연스러운 컬러감을 통해 고객님의 아름다움을 끌어올리는
+          것을 목표로 하고 있습니다. 고객님의 피부 타입과 취향에 맞게 맞춤형
+          뷰티 권고를 제공하여, 고객님이 자신만의 아름다움을 발견할 수 있도록
+          도와드리고 있습니다. 언제든지 저에게 연락 주세요. 함께 더 아름다워지는
+          여정을 함께 나눠보아요!
         </p>
         <Margin />
         <h2>경력사항</h2>
-        <p>아모레퍼시픽 | 2018.08 ~ 2022.03</p>
+        <p>샤넬 뷰티 | 2017.08 ~ 2022.08</p>
         <Margin />
         <h2>전문분야</h2>
 
-        <StyledSmallDiv1>스킨케어</StyledSmallDiv1>
-        <StyledSmallDiv2>자연주의</StyledSmallDiv2>
+        <StyledSmallDiv1>에코뷰티</StyledSmallDiv1>
+        <StyledSmallDiv2>컬러리스트</StyledSmallDiv2>
 
         <Margin />
 

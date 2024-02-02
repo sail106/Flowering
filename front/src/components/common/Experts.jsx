@@ -2,6 +2,7 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { ButtonBox } from "./Button";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -102,6 +103,7 @@ const Experts = ({
   imgsrc,
   width,
   height,
+  path,
 }) => {
   return (
     <Container>
@@ -122,7 +124,9 @@ const Experts = ({
       </OneText>
       <StyledSmallDiv>{tag1}</StyledSmallDiv>
       <StyledSmallDiv2>{tag2}</StyledSmallDiv2>
-      <MyButton>예약하기</MyButton>
+      <Link to={path} reloadDocument>
+        <MyButton>예약하기</MyButton>
+      </Link>
     </Container>
   );
 };

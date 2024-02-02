@@ -35,6 +35,11 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
+const StyledRadioButton = styled(RadioButton)`
+  margin-right: 20px;
+  margin: 0 10px; /* 여백을 조절할 값 설정 */
+`;
+
 const ExpertsReservation = () => {
   return (
     <Cal>
@@ -43,23 +48,24 @@ const ExpertsReservation = () => {
       <Margin2 />
       <MyCalendar />
       <M1>
-        <RadioButton
+        <StyledRadioButton
           type="radio"
           id="myradio"
           value="10:00"
-          width="200px"
-          height="100px"
+          // width="200px"
+          // height="100px"
           htmlFor="myradio"
-        ></RadioButton>
-        <RadioButton value="11:00"></RadioButton>
-        <RadioButton value="12:00"></RadioButton>
-        <RadioButton value="13:00"></RadioButton>
+        ></StyledRadioButton>
+
+        <StyledRadioButton value="11:00" />
+        <StyledRadioButton value="12:00" />
+        <StyledRadioButton value="13:00" />
       </M1>
       <M1>
-        <RadioButton value="15:00"></RadioButton>
-        <RadioButton value="16:00"></RadioButton>
-        <RadioButton value="17:00"></RadioButton>
-        <RadioButton value="18:00"></RadioButton>
+        <StyledRadioButton value="15:00" />
+        <StyledRadioButton value="16:00" />
+        <StyledRadioButton value="17:00" />
+        <StyledRadioButton value="18:00" />
       </M1>
 
       <ButtonContainer>
