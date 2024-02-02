@@ -39,7 +39,7 @@ const SmallChat = () => {
         message: msg
       }
 
-      // dispatch(appendMessageList(mine))
+      dispatch(appendMessageList(mine))
 
       const data = {
         id: messageId,
@@ -68,7 +68,7 @@ const SmallChat = () => {
   const textChat = (event) => {
     const data = JSON.parse(event.data)
     if (data.role !== role) {
-      // dispatch(appendMessageList(data))
+      dispatch(appendMessageList(data))
     }
   }
 
