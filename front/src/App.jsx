@@ -29,6 +29,7 @@ import Review from "./components/experts/review";
 import ExpertsProfileLeina from "./components/experts/ExpertsProfileLeina";
 import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
+import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
 
 function App() {
@@ -67,10 +68,12 @@ function App() {
           <Route path="/communityHome" element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/consulting1stepresult" element={<consulting1stepresult />} />
           <Route
             path="/expertsprofileregistration"
             element={<ExpertsProfileRegistration />}
           />
+          <Route path="/manager" element={<Manager />} />
         </Routes>
         <Footer />
       </Page>
