@@ -3,7 +3,6 @@ import Input from "../common/Input";
 import { ButtonBox } from "../common/Button";
 import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
-import { useState } from "react";
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -172,20 +171,6 @@ const Remove = styled(IoMdRemove)`
   cursor: pointer;
 `;
 
-const TagContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-`;
-
-const Tag = styled.div`
-  background-color: #e2dfd8;
-  padding: 5px 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-`;
-
 const ReviewInput = styled.textarea`
   width: 600px;
   height: 120px;
@@ -209,23 +194,6 @@ const ReviewInput = styled.textarea`
   }
 `;
 const ExpertsProfileRegistration = () => {
-  const [tags, setTags] = useState([]); // 입력된 태그를 관리하는 상태 추가
-  const [newTag, setNewTag] = useState(""); // 새로 입력되는 태그를 관리하는 상태 추가
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // 기본 엔터 행동 방지
-      addTag();
-    }
-  };
-
-  const addTag = () => {
-    if (newTag) {
-      setTags([...tags, newTag]);
-      setNewTag(""); // 입력 후 초기화
-    }
-  };
-
   return (
     <>
       <MyPage>
@@ -246,20 +214,8 @@ const ExpertsProfileRegistration = () => {
           <ReviewInput placeholder=" 자세한 소개를 입력하세요" />
           <H33>전문 분야</H33>
           <Put>
-            <Input
-              width={"587px"}
-              placeholder="#태그 입력 (최대5개)"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <GoPlus onClick={addTag} />
+            <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
           </Put>
-          <TagContainer>
-            {tags.map((tag, index) => (
-              <Tag key={index}>#{tag}</Tag>
-            ))}
-          </TagContainer>
         </PP>
         <Container>경력 사항</Container>
 
