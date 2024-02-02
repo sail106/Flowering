@@ -2,6 +2,7 @@ package com.sail.back.consultant.model.entity;
 
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
+import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
@@ -20,7 +21,6 @@ public class Consultant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long consultant_id;
-
 
     private String self_introduce;
 
@@ -76,5 +76,24 @@ public class Consultant {
 
     }
 
+    public ConsultantResponse toResponse(){
+        FindRequest findRequest= FindRequest.builder().
+                id(true)
+                .role(true)
+                .gender(true)
+                .nickname(true)
+                .email(true)
+                .birthdate_month(true)
+                .birthdate_year(true)
+                .status(true)
+                .profile_img_url(true)
+                .build();
+
+        return ConsultantResponse.builder()
+                .consultantId(this.consultant_id)
+                .userResponse(UserResponse.of( findRequest,this.user) )
+                .selfIntroduce(this.self_introduce)
+                .build();
+    }
 
 }

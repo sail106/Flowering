@@ -3,10 +3,10 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
-import { setConsultantSessionName, setconsultid } from "../../redux/slices/consultSlice";
+import { setConsultantSessionName, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
-import { setRole, setname } from "../../redux/slices/authSlice";
-import { setConsultantSessionName2 } from "../../redux/slices/consultsessionnameSlice";
+import { setRole, setname } from "../../store/authSlice";
+import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -89,7 +89,7 @@ const ExpertConsulting = () => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
+  // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
 
   const buttonclick = (consultingid) => {
     console.log('click' + consultingid)

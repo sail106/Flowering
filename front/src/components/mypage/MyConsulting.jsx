@@ -3,7 +3,7 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-import { setRole, setname } from "../../redux/slices/authSlice";
+import { setRole, setname } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 
 

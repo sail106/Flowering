@@ -8,7 +8,7 @@ import ChatList from './ChatList'
 import { IoIosSend } from "react-icons/io";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { VscFoldUp } from "react-icons/vsc";
-import { appendMessageList, appendParticipantList } from '../../redux/slices/consultSlice';
+import { appendMessageList, appendParticipantList } from '../../store/consultSlice';
 
 
 const OneToOneChat = () => {

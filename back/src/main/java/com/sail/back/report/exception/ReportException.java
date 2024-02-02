@@ -11,4 +11,9 @@ public class ReportException extends RuntimeException{
         super(e.getMessage());
         this.errorCode = e;
     }
+
+    public ReportException(ReportErrorCode errorCode, Throwable cause) {
+        super(cause);
+        this.errorCode = errorCode;
+    }
 }

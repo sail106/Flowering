@@ -21,18 +21,17 @@ import { OpenVidu } from 'openvidu-browser';
 import {
   settingModalOn, setSession,
   resetSessionName, resetMsg, setConsultantSessionName,
-} from '../redux/slices/consultSlice'
+} from '../store/consultSlice'
 
 import axios from 'axios';
 import UserVideoComponent from './community/UserVideoComponent';
 import SmallChat from './chat/SmallChat';
 import OneToOneChat from './chat/OneToOneChat';
-import { setCustomer } from '../redux/slices/consultSlice';
+import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
-import { setRole } from '../redux/slices/authSlice';
-import { appendParticipantList } from '../redux/slices/consultsessionnameSlice';
+import { appendParticipantList } from '../store/consultsessionnameSlice';
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 

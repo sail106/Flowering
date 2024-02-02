@@ -39,7 +39,7 @@ const TextSection = styled.div`
 
 const PersonalBeauty = styled(TextSection)`
   margin-left: 23%;
-  top: 50%;
+  top: 45%;
 `;
 
 const PersonalBeautyCard = styled(Card)`
