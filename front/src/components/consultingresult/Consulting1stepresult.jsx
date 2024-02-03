@@ -11,7 +11,8 @@ const Consulting1stepresultpage = styled.div`
 `;
 
 const Consulting1stepresult = () => {
-  return <Consulting1stepresultpage></Consulting1stepresultpage>;
+  return <Consulting1stepresultpage>
+  <p></p></Consulting1stepresultpage>;
 };
 
 export default Consulting1stepresult;
