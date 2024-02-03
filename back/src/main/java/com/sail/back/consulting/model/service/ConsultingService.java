@@ -2,9 +2,12 @@ package com.sail.back.consulting.model.service;
 
 import com.sail.back.consultant.model.entity.*;
 import com.sail.back.consultant.model.repository.ConsultantRepository;
+import com.sail.back.consulting.exception.ConsultingErrorCode;
+import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.request.ConsultingUpdateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
+import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.consulting.model.entity.Consulting;
 //import com.sail.back.consulting.model.repository.ConsultingRepository;
 import com.sail.back.consulting.model.repository.ConsultingRepository;
@@ -81,6 +84,12 @@ public class ConsultingService {
         consultingRepository.delete(reservation);
 
         return MessageUtils.success(reservation, "200", "success");
+    }
+
+    public ConsultingResponse getReservation(Long consultingId) {
+        Consulting consulting = consultingRepository.findById(consultingId).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
+        ConsultingResponse consultingResponse = consulting.toResponse();
+        return consultingResponse;
     }
 
 //    public List<User> getReservationcustomers(Long consultantid) {

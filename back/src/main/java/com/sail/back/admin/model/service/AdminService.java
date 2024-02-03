@@ -16,6 +16,7 @@ import com.sail.back.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,14 +30,14 @@ public class AdminService {
     private final UserRepository userRepository;
     private final ConsultantRepository consultantRepository;
 
-    public ResponseEntity<MessageUtils> toConsultant( UserToConsultantRequest userToConsultantRequest) {
+    public ResponseEntity<MessageUtils> toConsultant(  User me, UserToConsultantRequest userToConsultantRequest) {
         System.out.println("consultatnttt"+ userToConsultantRequest.getId());
         User user = userRepository.findById(userToConsultantRequest.getId()).
                 orElseThrow(() -> new UserException(UserErrorCode.NOT_EXISTS_USER));
 
         user.setRole(UserRole.CONSULTANT);
 
-        if(!user.getRole().equals(UserRole.ADMIN)){
+        if(!me.getRole().equals(UserRole.ADMIN)){
             throw new AdminException(AdminErrorCode.NOT_ADMIN);
         }
 

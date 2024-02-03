@@ -43,8 +43,8 @@ public class UserController {
     }
 
     @GetMapping("/myconsultinglist")
-    public ResponseEntity<List<MyConsultinglistResponse>> myconsultinglist(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
-        return ResponseEntity.ok().body( userService.myconsultinglist(user.getId(), localDateTime));
+    public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myconsultinglist(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
+        return ResponseEntity.ok().body( MessageUtils.success( userService.myconsultinglist(user.getId(), localDateTime)));
     }
 
     @DeleteMapping("/withdraw")

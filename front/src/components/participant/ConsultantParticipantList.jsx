@@ -5,7 +5,19 @@ import { Stack } from '@mui/material';
 import ParticipantItem from './ParticipantItem';
 
 const ConsultantParticipantList = () => {
+
+
+  // useEffect(() => {
+    
+  //   // 외부 데이터 업데이트 액션 디스패치
+  //   dispatch(fetchParticipantList());
+
+
+  // }, [participantList ]); // participantList가 변경될 때마다 useEffect 실행
+
+
   const participantList = useSelector(state => state.consult.participantList);
+
 
   return (
     <ListBox>

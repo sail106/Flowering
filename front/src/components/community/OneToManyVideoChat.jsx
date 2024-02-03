@@ -15,13 +15,13 @@ import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import Participant from '../participant/Participant';
-import SmallChat from '../chat/SmallChat';
+import SmallChat from '../chat/OneToManyChat';
 import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
   resetSessionName, resetMsg, appendParticipantList
-} from '../../redux/slices/communitySlice'
+} from '../../store/communitySlice'
 import UserVideoComponent from './UserVideoComponent';
 import axios from 'axios';
 import { CiVideoOn } from "react-icons/ci";
@@ -405,7 +405,7 @@ const OneToManyVideoChat = () => {
               </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
-              {/* <Chat /> */}
+               
 
               {/* 우측 컬러팔레트, 채팅*/}
               {

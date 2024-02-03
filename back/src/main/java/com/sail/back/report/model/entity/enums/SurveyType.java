@@ -1,5 +1,8 @@
 package com.sail.back.report.model.entity.enums;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.sail.back.report.model.dto.response.SurveyResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -27,4 +30,15 @@ public enum SurveyType {
     private String strength;
     private String weakness;
     private String solution;
+
+    public SurveyResponse toResponse(){
+        return SurveyResponse.builder()
+                .surveyType(this.name())
+                .content(this.content)
+                .skinType(this.skinType)
+                .solution(this.solution)
+                .strength(this.strength)
+                .weakness(this.weakness)
+                .build();
+    }
 }

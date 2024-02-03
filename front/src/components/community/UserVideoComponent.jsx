@@ -20,20 +20,20 @@ const UserVideoComponent = ({ streamManager }) => {
                 <>
                     {subRole === "CONSULTANT" &&
                         <ConsultantStream>
-                            <CustomTypography>{ } 방장</CustomTypography>
+                            <CustomTypography>{ getNicknameTag()} 방장</CustomTypography>
                             <OpenViduVideoComponent streamManager={streamManager} />
 
                         </ConsultantStream>
                     }
 
-                    {/* {subRole === "CUSTOMER" && */}
+                    {subRole === "CUSTOMER" &&
                         <CustomerStream>
                             <div style={{ position: 'relative', }}>
                                 <OpenViduVideoComponent streamManager={streamManager} />
                             </div>
-                            <CustomTypography>{getNicknameTag() } 님</CustomTypography>
+                            <CustomTypography>{getNicknameTag()} 님</CustomTypography>
                         </CustomerStream>
-                    {/* } */}
+                    }
                 </>
             ) : null}
         </div>
@@ -57,7 +57,7 @@ const CustomerStream = styled(Box)({
     overflow: "hidden",
     border: '2px solid #5A4D4D80',
     borderRadius: '15px',
-    
+
     video: {
         width: '100%',
     }

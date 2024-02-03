@@ -29,36 +29,7 @@ const ConsultantParticipant = ({ streamManager, audioPermission }) => {
   // const { role, imageUrl } = useSelector(state => state.auth.logonUser)
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
-
-  const handleMessage = () => {
-    if (session && msg.length > 0) {
-      const mine = {
-        id: messageId,
-        role: role,
-        imageUrl: '',
-        // side: 'left',
-        name: msg
-      }
-
-      // dispatch(appendMessageList(mine))
-
-      const data = {
-        id: nameId,
-        role: role,
-        imageUrl: imageUrl,
-        // side: 'left',
-        name: msg
-      }
-
-      session.signal({
-        data: JSON.stringify(data),
-        to: [],
-        type: 'chat'
-      })
-
-      setMsg('')
-    }
-  }
+ 
 
   // useEffect(() => {
   //   if (session) {

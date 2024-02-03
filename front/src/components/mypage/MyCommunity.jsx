@@ -3,7 +3,7 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setCommunityid,   setSession } from "../../redux/slices/communitySlice";
+import { setCommunityid,   setSession } from "../../store/communitySlice";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -87,6 +87,7 @@ const MyCommunity = () => {
   const { session, community_id } = useSelector(state => state.community)
   const [publisher, setPublisher] = useState(undefined)
   const [creator, setCreator] = useState(undefined)
+  
   const { nickname, email, role } = useSelector(state => state.auth.logonUser)
 
 
