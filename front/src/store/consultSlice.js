@@ -32,6 +32,7 @@ const initialState = {
 
     }
   ]
+
 }
 
 export const postConsultingResult = createAsyncThunk(
@@ -43,10 +44,76 @@ export const postConsultingResult = createAsyncThunk(
       // formData.append('file', payload.files[0])
       // console.log(formData)
       const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
-      
+
       alert('진단 결과가 저장되었습니다. 컨설팅을 종료합니다.')
       return response.data
-    } 
+    }
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+
+)
+
+ 
+
+
+export const makeResult = createAsyncThunk(
+
+  'consult/makeResult',
+  async (payload, { rejectWithValue }) => {
+    try {
+      // let formData = new FormData()
+      // formData.append('consultingFinishRequest' )
+      // formData.append('file', payload.files[0])
+      // console.log(formData)
+      const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
+
+      return response.data
+    }
+
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+)
+
+
+
+export const getCustomer = createAsyncThunk(
+
+  'consult/getCustomer',
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log(payload)
+
+      const response = await Axios.get(`consultings/` + payload)
+
+      return response.data
+    }
+
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+)
+
+
+export const getConsultant = createAsyncThunk(
+
+  'consult/getConsultant',
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log(payload)
+
+      const response = await Axios.get(`consultings/` + payload)
+
+      return response.data
+    }
+
     catch (err) {
       return rejectWithValue(err)
     }

@@ -46,7 +46,7 @@ public class AnalysisService {
     @Transactional
     public void saveAnalysis(User user, SaveAnalysisRequest request, Long consultingId){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTING));
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));
@@ -108,7 +108,7 @@ public class AnalysisService {
     @Transactional
     public AnalysisResponse findAnalysis(User user, Long consultingId){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTING));
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));

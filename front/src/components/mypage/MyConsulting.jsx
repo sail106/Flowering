@@ -4,7 +4,7 @@ import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
 
 
@@ -88,15 +88,24 @@ const MyConsulting = () => {
   ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const consultantSessionName2   = useSelector(state => state.consultsessionname.consultantSessionName2)
 
   const btnclick = (consulting_id) => {
 
     console.log('consulting_id ' + consulting_id)
-    dispatch(setRole('CUSTOMER'))
-    dispatch(setname('CUSTOMER'))
-    dispatch(setConsultantSessionName2(consulting_id))
+    console.log('consultantSessionName2222 ' + consultantSessionName2)
 
-    navigate('/OneToOneVideoChat')
+    if (consultantSessionName2) {
+
+      dispatch(setRole('CUSTOMER'))
+      dispatch(setname('CUSTOMER'))
+      dispatch(setConsultantSessionName2(consulting_id))
+
+      navigate('/OneToOneVideoChat')
+    }
+    else{
+      alert('컨설턴트가 아직 방을 입장하지 않았습니다')
+    }
 
   }
 

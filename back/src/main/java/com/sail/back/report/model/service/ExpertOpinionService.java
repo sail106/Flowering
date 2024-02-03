@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
-import static com.sail.back.consulting.exception.ConsultingErrorCode.NOT_EXISTS_CONSULTANT;
+import static com.sail.back.consulting.exception.ConsultingErrorCode.NOT_EXISTS_CONSULTING;
 
 @Service
 @Slf4j
@@ -32,7 +32,7 @@ public class ExpertOpinionService {
     @Transactional
     public void saveExpertOpinion(User user, Long consultingId, SaveExpertOpinionRequest request){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTING));
         if (consulting.getConsultant().getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));
