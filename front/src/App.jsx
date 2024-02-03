@@ -31,7 +31,7 @@ import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
 import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
-
+import PhotoTest from "./components/PhotoTest";
 function App() {
   return (
     <>
@@ -74,6 +74,8 @@ function App() {
             element={<ExpertsProfileRegistration />}
           />
           <Route path="/manager" element={<Manager />} />
+          <Route path="/phototest" element={<PhotoTest />} />
+
         </Routes>
         <Footer />
       </Page>
