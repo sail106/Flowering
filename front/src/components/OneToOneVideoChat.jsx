@@ -20,7 +20,7 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList,
+  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList, makeResult,
 } from '../store/consultSlice'
 
 import axios from 'axios';
@@ -267,11 +267,11 @@ const OneToOneVideoChat = () => {
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
-      console.log('datarole role '+data.role,' ', role,data.name)
+      console.log('datarole role ' + data.role, ' ', role, data.name)
       dispatch(appendParticipantList(data))
     }
   }
-  
+
   const textChat = (event) => {
     const data = JSON.parse(event.data)
 
@@ -393,10 +393,10 @@ const OneToOneVideoChat = () => {
     // role==CONSULTANT &&
     if (role == CONSULTANT && session) {
       session.disconnect();
-      dispatch(postConsultingResult({ consultingFinishRequest }))
+      dispatch(makeResult({ consultingFinishRequest }))
         .then(() => {
           // dispatch(changeComment(''))
-          navigate('/')
+          navigate('/expertconsulting')
         })
     }
 
@@ -411,6 +411,37 @@ const OneToOneVideoChat = () => {
     dispatch(resetMsg())
     // setMyUserName(nickname)
     setConsultant(undefined)
+
+    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName2}`, {
+
+    axios
+      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName2, {
+        headers: {
+          Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+          'Content-Type': 'application/json',
+
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'GET,POST',
+        },
+
+      })
+
+      .then((response) => {
+
+        console.log('deletesession then' + response.data.id)
+        console.log('deletesession then' + response.id)
+        resolve(response.data.id); // consultatnt email == session id.
+      })
+
+      .catch((response) => {
+        // console.log('createsession catchhh')
+
+        var error = Object.assign({}, response);
+
+      });
+
+    //redux 에 저장된 consultantsessionanme 도 제거
+      
 
   }
 

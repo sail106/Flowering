@@ -88,7 +88,7 @@ const MyConsulting = () => {
   ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const consultantSessionName2   = useSelector(state => state.consultsessionname.consultantSessionName2)
+  const consultantSessionName2 = useSelector(state => state.consultsessionname.consultantSessionName2)
 
   const btnclick = (consulting_id) => {
 
@@ -103,7 +103,7 @@ const MyConsulting = () => {
 
       navigate('/OneToOneVideoChat')
     }
-    else{
+    else {
       alert('컨설턴트가 아직 방을 입장하지 않았습니다')
     }
 

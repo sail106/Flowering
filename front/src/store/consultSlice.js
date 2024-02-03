@@ -43,7 +43,7 @@ export const postConsultingResult = createAsyncThunk(
       // formData.append('consultingFinishRequest' )
       // formData.append('file', payload.files[0])
       // console.log(formData)
-      const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
+      // const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
 
       alert('진단 결과가 저장되었습니다. 컨설팅을 종료합니다.')
       return response.data
