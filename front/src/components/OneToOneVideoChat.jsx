@@ -131,6 +131,7 @@ const OneToOneVideoChat = () => {
             name: name,
             isMic: isMic,
             isCam: isCam,
+            role: role,
           };
           session.signal({
             data: JSON.stringify(persondata),
@@ -158,7 +159,7 @@ const OneToOneVideoChat = () => {
             };
             console.log('User 넣기')
 
-            dispatch(appendParticipantList(User))
+            // dispatch(appendParticipantList(User))
 
 
 
@@ -266,6 +267,7 @@ const OneToOneVideoChat = () => {
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
+      console.log('datarole role '+data.role,' ', role,data.name)
       dispatch(appendParticipantList(data))
     }
   }

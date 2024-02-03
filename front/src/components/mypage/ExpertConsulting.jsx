@@ -129,7 +129,7 @@ const ExpertConsulting = () => {
       isCam: 'true',
     };
 
-    dispatch(appendParticipantList(customer))
+    // dispatch(appendParticipantList(customer))
 
     navigate('/OneToOneVideoChat')
 

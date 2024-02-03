@@ -88,11 +88,12 @@ const MyConsulting = () => {
   ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { consultantSessionName2 } = useSelector(state => state.consultsessionname.consultantSessionName2)
+  const consultantSessionName2   = useSelector(state => state.consultsessionname.consultantSessionName2)
 
   const btnclick = (consulting_id) => {
 
     console.log('consulting_id ' + consulting_id)
+    console.log('consultantSessionName2222 ' + consultantSessionName2)
 
     if (consultantSessionName2) {
 
