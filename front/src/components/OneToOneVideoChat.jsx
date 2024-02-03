@@ -127,6 +127,7 @@ const OneToOneVideoChat = () => {
 
         if (role === CONSULTANT) {
           setConsultant(publisher)
+ 
         }
 
 
@@ -272,6 +273,36 @@ const OneToOneVideoChat = () => {
     else if (role === CUSTOMER) {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber)
+
+      
+      if (subRole == CONSULTANT) {
+        //payload 에 consultingid 가 온다.
+        // dispatch(getConsultant(consultantSessionName2)).then((response) => {
+
+        //   console.log('getConsultant 액션 성공:', response)
+
+
+        //   const Consultant = {
+        //     // imageUrl: response.data_body.imageUrl,
+        //     imageUrl: '',
+        //     name: 'Consultant',
+        //     isMic: 'true',
+        //     isCam: 'true',
+        //   };
+        //   console.log('Consultant 넣기')
+
+        //   dispatch(appendParticipantList(Consultant))
+
+
+
+        // }).catch((error) => {
+        //   console.error('getCustomer 액션 실패:', error);
+        // })
+        // // 위는 customer 가져오는 로직 
+
+
+
+      }
     }
 
     // dispatch(appendParticipantList())
