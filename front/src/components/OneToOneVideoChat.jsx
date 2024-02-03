@@ -31,7 +31,7 @@ import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
- const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -121,12 +121,28 @@ const OneToOneVideoChat = () => {
         setPublisher(publisher);  // stream 생성....
 
         //밑에 부분은 임시로 조건문 주석 처리 한것이다..........
+        console.log('streamcreate')
+        if (role === CUSTOMER) {
 
-        if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
+          dispatch(setCustomer(publisher))
+
+          const persondata = {
+            imageUrl: imageUrl,
+            name: name,
+            isMic: isMic,
+            isCam: isCam,
+          };
+          session.signal({
+            data: JSON.stringify(persondata),
+            to: [],
+            type: 'participant'
+          })
+
+        }
 
         if (role === CONSULTANT) {
           setConsultant(publisher)
- 
+
           //payload 에 consultingid 가 온다.
           dispatch(getCustomer(consultantSessionName2)).then((response) => {
 
@@ -136,7 +152,7 @@ const OneToOneVideoChat = () => {
             const User = {
               // imageUrl: response.data_body.imageUrl,
               imageUrl: '',
-              name: 'User',
+              name: 'Customer',
               isMic: 'true',
               isCam: 'true',
             };
@@ -297,7 +313,7 @@ const OneToOneVideoChat = () => {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber)
 
-      
+
       if (subRole == CONSULTANT) {
         // payload 에 consultingid 가 온다.
         dispatch(getConsultant(consultantSessionName2)).then((response) => {
