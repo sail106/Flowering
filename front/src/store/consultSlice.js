@@ -53,7 +53,7 @@ export const postConsultingResult = createAsyncThunk(
     }
 
   }
-  
+
 )
 
 
@@ -62,11 +62,8 @@ export const getCustomer = createAsyncThunk(
   'consult/getCustomer',
   async (payload, { rejectWithValue }) => {
     try {
-      // let formData = new FormData()
-      // formData.append('consultingFinishRequest' )
-      // formData.append('file', payload.files[0])
-      // console.log(formData)
-      const response = await Axios.get(`report/create/` + payload.consultingFinishRequest.consultingid)
+      
+      const response = await Axios.get(`consultings/` + payload)
 
       return response.data
     }

@@ -3,7 +3,7 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
-import { getCustomer,   setConsultantSessionName, setconsultid } from "../../store/consultSlice";
+import { getCustomer, setConsultantSessionName, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
 import { appendParticipantList, setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
@@ -113,16 +113,18 @@ const ExpertConsulting = () => {
 
 
     //payload 에 consultingid 가 온다.
-    dispatch(getCustomer(payload)).then(
-      
+    dispatch(getCustomer(consultingid)).then((response) => {
 
-    )
+      console.log('getCustomer 액션 성공:', response)
+    }).catch((error) => {
+      console.error('getCustomer 액션 실패:', error);
+    })
     // 위는 consultant 가져오는 로직 
 
 
     const customer = {
       imageUrl: imageUrl,
-      name: name,
+      name: 'customer2',
       isMic: 'true',
       isCam: 'true',
     };
@@ -130,7 +132,6 @@ const ExpertConsulting = () => {
     dispatch(appendParticipantList(customer))
 
     navigate('/OneToOneVideoChat')
-
 
   }
   const data = [
