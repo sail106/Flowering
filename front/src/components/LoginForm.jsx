@@ -35,8 +35,18 @@ const LoginForm = () => {
         password: formData.password,
       });
 
+      console.log(response);
+
       if(response.status === 200) {
-        await dispatch(loginUser({ email: formData.email, password: formData.password }));
+        const { access_token, refresh_token } = response.data;
+
+        // Redux store에 사용자 정보 저장
+        await dispatch(loginUser({ email: formData.email, access_token, refresh_token }));
+
+        // 토큰을 로컬 스토리지에 저장합니다.
+        localStorage.setItem('accessToken', access_token);
+        localStorage.setItem('refreshToken', refresh_token);
+
         console.log("로그인 성공!");
         navigate('/');
       }
@@ -44,6 +54,15 @@ const LoginForm = () => {
       console.error('로그인 실패:', error);
     }
   };
+
+  useEffect(() => {
+    // 이미 로그인 상태인 경우 홈 화면으로 이동합니다.
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      navigate('/');
+      console.log("이미 로그인 되어있습니다!");
+    }
+  }, [navigate]);
 
   return (
     <Card>

@@ -13,14 +13,51 @@ import LabelContainer from "./signup/LabelContainer"
 import LabelSignup from "./signup/LabelSignup"
 import RadioLabelText from "./signup/RadioLabelText"
 
+import { useState } from "react"
+import axios from "axios"
+
 const SignupForm = () => {
+  const [formData, setFormData] = useState({
+    signupEmail: '',
+    authNumber: '',
+    // ... (다른 상태값들)
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  
+  const handleAuthRequest = async () => {
+    try {
+      // 서버에 인증 요청을 보냅니다.
+      const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/confirm', {
+        email: formData.signupEmail,
+        // ... (다른 필요한 데이터)
+      });
+  
+      console.log(response);
+  
+      // TODO: 응답에 따른 처리 로직 작성
+      // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
+      // 사용자에게 메시지를 보여줄 수 있습니다.
+      console.log("인증 요청 성공");
+  
+    } catch (error) {
+      console.error('인증 요청 실패:', error);
+    }
+  };
+
   return (
     <Card>
       {/* 회원가입 이메일 */}
       <SignupEmailHeader />
       <EmailContainer>
-        <Input htmlFor="signupEmail" width="250px" id="signupEmail" placeholder="이메일 입력" />
-        <Button width="25%">인증 요청</Button>
+        <Input
+          htmlFor="signupEmail" width="250px" id="signupEmail" placeholder="이메일 입력"
+          value={formData.signupEmail}
+          onChange={handleInputChange}
+        />
+        <Button width="25%" onClick={handleAuthRequest}>인증 요청</Button>
       </EmailContainer>
       <Input htmlFor="authNumber" id="authNumber" placeholder="인증번호"/>
       <p>✓ 인증 번호가 같아요</p>
