@@ -5,61 +5,98 @@ import SnsManage from "./login/SnsManage";
 import Input from "./common/Input";
 import Card from "./common/Card";
 import CenterContainer from "./common/CenterContainer";
-import axios from "axios";
+import { loginUser } from "../store/authSlice";
 
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 //post, email,pw의 파라미터
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: '', password: '' });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      // await dispatch(loginUser(formData));
+
+      // axios를 사용하여 로그인 요청 보내기
+      const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      console.log(response);
+
+      if(response.status === 200) {
+        const { access_token, refresh_token } = response.data;
+
+        // Redux store에 사용자 정보 저장
+        await dispatch(loginUser({ email: formData.email, access_token, refresh_token }));
+
+        // 토큰을 로컬 스토리지에 저장합니다.
+        localStorage.setItem('accessToken', access_token);
+        localStorage.setItem('refreshToken', refresh_token);
+
+        console.log("로그인 성공!");
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
+  };
 
   useEffect(() => {
-    // http://192.168.100.148:8080를 우리 주소로 바꾸기
-    // 로그인 후 find 해서 유저 정보 확인
-    // "has_additional_info": false 그냥 홈으로 이동
-    // true면 추가 정보 입력 페이지로 이동
-    axios.post('http://192.168.100.148:8080/v1/auth/login', {
-      email : "vsdvsd@asdfasd",
-      password : "1234",
-    })
-    .then((res) =>{
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, [])
+    // 이미 로그인 상태인 경우 홈 화면으로 이동합니다.
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      navigate('/');
+      console.log("이미 로그인 되어있습니다!");
+    }
+  }, [navigate]);
 
   return (
     <Card>
       <CenterContainer>
-      <LoginHeader />
-      <form action="#" > {/* onSubmit={loginHandler} */}
-        <Input
-          htmlFor="loginEmail" type="email" id="loginEmail"
-          placeholder="이메일 입력" width="300px"
-          // value={email}
-          // onChange={inputHandler}
-        />
-        <Input
-          htmlFor="loginPw" type="password" id="loginPw"
-          placeholder="비밀번호 입력" width="300px"
-          // value={password}
-          // onChange={inputHandler}
-        />
-        <Button
-          width="70%"
-          marginTop="20px"
-        >
-          로그인
-        </Button>
-      </form>
-      <AccountManage />
-      <SnsManage />
+        <LoginHeader />
+        <form action="#"> {/* onSubmit={loginHandler} */}
+          <Input
+            htmlFor="loginEmail" type="email" id="loginEmail"
+            placeholder="이메일 입력" width="300px"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          <Input
+            htmlFor="loginPw" type="password" id="loginPw"
+            placeholder="비밀번호 입력" width="300px"
+            value={formData.password}
+            onChange={handleInputChange}
+          />            
+          <Button
+            type="submit"
+            width="70%"
+            marginTop="20px"
+            onClick={handleLogin}
+          >
+            로그인
+          </Button>
+        </form>
+        <AccountManage />
+        <SnsManage />
       </CenterContainer>
     </Card>
 
 
-  )
+  );
 }
 
 export default LoginForm

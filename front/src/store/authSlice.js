@@ -126,7 +126,7 @@ export const loginUser = createAsyncThunk(
             const response = await Axios.post('members/login', userInfo);
             const token = response.headers["authorization"]; // 헤더로 받을 때
             saveToken(token);
-            return response;
+            return response.data;
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
             return rejectWithValue(err);
@@ -296,7 +296,7 @@ const authSlice = createSlice({
                     nickname: action.payload.data.nickname,
                     role: action.payload.data.role,
                     imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png')
-                };
+                };                
                 state.isAuthenticated = true;
             })
             .addCase(loginUser.rejected, (state) => {
