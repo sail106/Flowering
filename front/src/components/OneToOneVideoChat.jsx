@@ -261,7 +261,14 @@ const OneToOneVideoChat = () => {
 
   //   }
   // }, [consultantSessionName])
+  const addparticiapnt = (event) => {
+    const data = JSON.parse(event.data)
+    // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
+    if (data.role !== role) {
+      dispatch(appendParticipantList(data))
+    }
+  }
   useEffect(() => {
     console.log('ssssssssssssss' + session)
 
@@ -277,15 +284,8 @@ const OneToOneVideoChat = () => {
       session.on('exception', exception)
 
 
-      // const persondata = {
-      //   imageUrl: imageUrl,
-      //   name: name,
-      //   isMic: isMic,
-      //   isCam: isCam,
-      // };
+      session.on('signal:participant', addparticiapnt)
 
-      // console.log('dddddddddddd')
-      // dispatch(appendParticipantList(persondata))
 
 
       getToken().then(sessionConnect);
