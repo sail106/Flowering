@@ -20,12 +20,12 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList,
+  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList,
 } from '../store/consultSlice'
 
 import axios from 'axios';
 import UserVideoComponent from './community/UserVideoComponent';
-import SmallChat from './chat/SmallChat';
+import SmallChat from './chat/OneToManyChat';
 import OneToOneChat from './chat/OneToOneChat';
 import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
@@ -271,6 +271,19 @@ const OneToOneVideoChat = () => {
       dispatch(appendParticipantList(data))
     }
   }
+  
+  const textChat = (event) => {
+    const data = JSON.parse(event.data)
+
+
+    if (data.role !== role) {
+      console.log('  dataid  role  message role' + ' ' + data.id + ' ' + role + data.message + data.role)
+
+      dispatch(appendMessageList(data));
+    }
+
+  }
+
   useEffect(() => {
     console.log('ssssssssssssss' + session)
 
@@ -285,6 +298,7 @@ const OneToOneVideoChat = () => {
 
       session.on('exception', exception)
 
+      session.on('signal:chat', textChat)
 
       session.on('signal:participant', addparticiapnt)
 

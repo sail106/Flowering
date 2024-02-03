@@ -47,8 +47,8 @@ const OneToOneChat = () => {
       }
 
       console.log('my text add ' + messageId)
-
-      dispatch(appendMessageList(mine))
+      if (role == mine.role)
+        dispatch(appendMessageList(mine))
 
 
       const data = {
@@ -66,6 +66,7 @@ const OneToOneChat = () => {
         name: name,
         isMic: isMic,
         isCam: isCam,
+        role: role
       };
 
       session.signal({
@@ -75,7 +76,7 @@ const OneToOneChat = () => {
       })
 
       session.signal({
-        data: JSON.stringify(persondata),
+        persondata: JSON.stringify(persondata),
         to: [],
         type: 'participant'
       })
@@ -88,8 +89,9 @@ const OneToOneChat = () => {
   useEffect(() => {
     if (session) {
       // dispatch(appendParticipantList(persondata));
+      console.log('event chat')
+      // session.on('signal:chat', textChat)
 
-      session.on('signal:chat', textChat)
       session.on('signal:participant', addparticiapnt)
 
     }
@@ -99,12 +101,13 @@ const OneToOneChat = () => {
   const textChat = (event) => {
     const data = JSON.parse(event.data)
 
-    console.log('  data   message role' + ' ' + data.id + ' ' + data.message + data.role)
 
     if (data.role !== role) {
+      console.log('  dataid  role  message role' + ' ' + data.id + ' ' + role + data.message + data.role)
 
       dispatch(appendMessageList(data));
     }
+
   }
 
 

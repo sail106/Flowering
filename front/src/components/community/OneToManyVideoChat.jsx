@@ -15,7 +15,7 @@ import { CONSULTANT, CUSTOMER } from '../../api/CustomConst';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import Participant from '../participant/Participant';
-import SmallChat from '../chat/SmallChat';
+import SmallChat from '../chat/OneToManyChat';
 import { OpenVidu } from 'openvidu-browser';
 
 import {
