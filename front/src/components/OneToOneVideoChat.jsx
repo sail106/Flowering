@@ -31,6 +31,7 @@ import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
+import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
@@ -262,6 +263,18 @@ const OneToOneVideoChat = () => {
 
   //   }
   // }, [consultantSessionName])
+
+  const deleteSubscriber = (streamManager) => {
+    console.log('deleteSubscriber')
+    if(role==CUSTOMER)
+    {
+      navigate('/mypage')
+    }
+    else if(role==CONSULTANT)
+    {
+      navigate('/expertconsulting')
+    }
+  }
   const addparticiapnt = (event) => {
     const data = JSON.parse(event.data)
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
@@ -402,6 +415,8 @@ const OneToOneVideoChat = () => {
 
     if (role === CUSTOMER && session) {
       session.disconnect();
+      navigate('/mypage')
+
     }
 
     setOV(null);
@@ -441,7 +456,7 @@ const OneToOneVideoChat = () => {
       });
 
     //redux 에 저장된 consultantsessionanme 도 제거
-      
+    dispatch(removeConsultantSessionName2())
 
   }
 
