@@ -20,7 +20,7 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, postConsultingResult,
+  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer,
 } from '../store/consultSlice'
 
 import axios from 'axios';
@@ -128,6 +128,30 @@ const OneToOneVideoChat = () => {
         if (role === CONSULTANT) {
           setConsultant(publisher)
  
+          //payload 에 consultingid 가 온다.
+          dispatch(getCustomer(consultantSessionName2)).then((response) => {
+
+            console.log('getCustomer 액션 성공:', response)
+
+
+            const User = {
+              // imageUrl: response.data_body.imageUrl,
+              imageUrl: '',
+              name: 'User',
+              isMic: 'true',
+              isCam: 'true',
+            };
+            console.log('User 넣기')
+
+            dispatch(appendParticipantList(User))
+
+
+
+          }).catch((error) => {
+            console.error('getCustomer 액션 실패:', error);
+          })
+          // 위는 customer 가져오는 로직 
+
         }
 
 
@@ -276,29 +300,29 @@ const OneToOneVideoChat = () => {
 
       
       if (subRole == CONSULTANT) {
-        //payload 에 consultingid 가 온다.
-        // dispatch(getConsultant(consultantSessionName2)).then((response) => {
+        // payload 에 consultingid 가 온다.
+        dispatch(getConsultant(consultantSessionName2)).then((response) => {
 
-        //   console.log('getConsultant 액션 성공:', response)
-
-
-        //   const Consultant = {
-        //     // imageUrl: response.data_body.imageUrl,
-        //     imageUrl: '',
-        //     name: 'Consultant',
-        //     isMic: 'true',
-        //     isCam: 'true',
-        //   };
-        //   console.log('Consultant 넣기')
-
-        //   dispatch(appendParticipantList(Consultant))
+          console.log('getConsultant 액션 성공:', response)
 
 
+          const Consultant = {
+            // imageUrl: response.data_body.imageUrl,
+            imageUrl: '',
+            name: 'Consultant',
+            isMic: 'true',
+            isCam: 'true',
+          };
+          console.log('Consultant 넣기')
 
-        // }).catch((error) => {
-        //   console.error('getCustomer 액션 실패:', error);
-        // })
-        // // 위는 customer 가져오는 로직 
+          dispatch(appendParticipantList(Consultant))
+
+
+
+        }).catch((error) => {
+          console.error('getCustomer 액션 실패:', error);
+        })
+        // 위는 customer 가져오는 로직 
 
 
 

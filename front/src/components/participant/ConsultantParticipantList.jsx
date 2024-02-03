@@ -16,7 +16,7 @@ const ConsultantParticipantList = () => {
   // }, [participantList ]); // participantList가 변경될 때마다 useEffect 실행
 
 
-  const participantList = useSelector(state => state.consultsessionname.participantList);
+  const participantList = useSelector(state => state.consult.participantList);
 
 
   return (

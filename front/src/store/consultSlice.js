@@ -56,24 +56,7 @@ export const postConsultingResult = createAsyncThunk(
 
 )
 
-
-export const getCustomer = createAsyncThunk(
-
-  'consult/getCustomer',
-  async (payload, { rejectWithValue }) => {
-    try {
-      
-      const response = await Axios.get(`consultings/` + payload)
-
-      return response.data
-    }
-
-    catch (err) {
-      return rejectWithValue(err)
-    }
-
-  }
-)
+ 
 
 
 export const makeResult = createAsyncThunk(
@@ -98,6 +81,45 @@ export const makeResult = createAsyncThunk(
 )
 
 
+
+export const getCustomer = createAsyncThunk(
+
+  'consult/getCustomer',
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log(payload)
+
+      const response = await Axios.get(`consultings/` + payload)
+
+      return response.data
+    }
+
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+)
+
+
+export const getConsultant = createAsyncThunk(
+
+  'consult/getConsultant',
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log(payload)
+
+      const response = await Axios.get(`consultings/` + payload)
+
+      return response.data
+    }
+
+    catch (err) {
+      return rejectWithValue(err)
+    }
+
+  }
+)
 
 export const getConsultantSessionName = createAsyncThunk(
   'consult/getCreatorSessionName',
