@@ -4,6 +4,7 @@ import com.sail.back.consulting.exception.ConsultingErrorCode;
 import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
+import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.consulting.model.service.ConsultingService;
 import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.user.model.entity.User;
@@ -28,6 +29,7 @@ public class ConsultingController {
 
 
     private final ConsultingService consultingService;
+
     //상담예약등록
     @PostMapping("/{consultantId}")
     public ResponseEntity<MessageUtils<ConsultingCreateResponse>> createReservation(
@@ -59,6 +61,17 @@ public class ConsultingController {
         log.info("예약 삭제 성공");
         return ResponseEntity.ok()
                 .body(message);
+
+    }
+
+    @GetMapping("/{consultingId}")
+    public ResponseEntity<MessageUtils<ConsultingResponse>> getReservation(
+            @PathVariable Long consultingId) {
+
+        ConsultingResponse consultingResponse = consultingService.getReservation(consultingId);
+        log.info("컨설팅 번호의 정보 가져오기");
+        return ResponseEntity.ok()
+                .body(MessageUtils.success(  consultingResponse ));
 
     }
 

@@ -3,10 +3,11 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
-import { setConsultantSessionName, setconsultid } from "../../store/consultSlice";
+import { getCustomer,   setConsultantSessionName, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
-import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
+import { appendParticipantList, setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
+import Axios from "../../api/Axios";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -86,10 +87,11 @@ const FinalButton = styled(Button)`
 
 
 const ExpertConsulting = () => {
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
+  const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const buttonclick = (consultingid) => {
     console.log('click' + consultingid)
@@ -98,7 +100,38 @@ const ExpertConsulting = () => {
     dispatch(setConsultantSessionName2(consultingid))
     console.log('consultingid', consultingid)
 
+    const consultant = {
+      imageUrl: imageUrl,
+      name: name,
+      isMic: 'true',
+      isCam: 'true',
+    };
+
+    console.log('dddddddddddd')
+    dispatch(appendParticipantList(consultant))
+    // consultant 가져오는 로직 
+
+
+    //payload 에 consultingid 가 온다.
+    dispatch(getCustomer(payload)).then(
+      
+
+    )
+    // 위는 consultant 가져오는 로직 
+
+
+    const customer = {
+      imageUrl: imageUrl,
+      name: name,
+      isMic: 'true',
+      isCam: 'true',
+    };
+
+    dispatch(appendParticipantList(customer))
+
     navigate('/OneToOneVideoChat')
+
+
   }
   const data = [
     { title: "'김아인'님뷰티 컨설팅", time: "10:00", date: "2024-01-19", consultingid: "1" },
@@ -132,7 +165,6 @@ const ExpertConsulting = () => {
 
               <ButtonTd>
                 <Button onClick={() => buttonclick(row.consultingid)}>바로가기</Button>
-
               </ButtonTd>
             </Tr>
           ))}

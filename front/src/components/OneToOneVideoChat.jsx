@@ -20,7 +20,7 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg,
+  resetSessionName, resetMsg, postConsultingResult,
 } from '../store/consultSlice'
 
 import axios from 'axios';
@@ -237,15 +237,17 @@ const OneToOneVideoChat = () => {
       session.on('exception', exception)
 
 
-      const persondata = {
-        imageUrl: imageUrl,
-        name: name,
-        isMic: isMic,
-        isCam: isCam,
-      };
+      // const persondata = {
+      //   imageUrl: imageUrl,
+      //   name: name,
+      //   isMic: isMic,
+      //   isCam: isCam,
+      // };
 
-      console.log('dddddddddddd')
-      dispatch(appendParticipantList(persondata))
+      // console.log('dddddddddddd')
+      // dispatch(appendParticipantList(persondata))
+
+
       getToken().then(sessionConnect);
 
     }

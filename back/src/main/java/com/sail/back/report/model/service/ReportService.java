@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.sail.back.consulting.exception.ConsultingErrorCode.NOT_EXISTS_CONSULTANT;
+ import static com.sail.back.consulting.exception.ConsultingErrorCode.NOT_EXISTS_CONSULTING;
 import static com.sail.back.report.exception.ReportErrorCode.*;
 
 @Service
@@ -36,7 +36,7 @@ public class ReportService {
 
     public void createReport(Long consultingId, User user){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(()->new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(()->new ConsultingException(NOT_EXISTS_CONSULTING));
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         reportRepository.save(Report.builder()
                         .consulting(consulting)
@@ -44,7 +44,7 @@ public class ReportService {
     }
     public ReportResponse findReport(Long consultingId, User user){
         Consulting consulting = consultingRepository
-                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTANT));
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTING));
         if (!(consulting.getUser().getId()==user.getId()||consulting.getConsultant().getUser().getId()==user.getId())) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(NOT_EXISTS));
