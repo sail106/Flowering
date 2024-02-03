@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
+import axios from "axios";
+import { useEffect } from "react";
 
 const MyPage = styled(Page)`
   display: flex;
@@ -22,9 +24,34 @@ const Margin = styled.div`
 `;
 
 const FaQ = () => {
+
+  useEffect(() => {
+    const postData = async () => {
+      const body = {
+        email: "test@naver.com",
+        password: "test1000*",
+      };
+
+
+      try {
+        const response = await axios({
+          method: 'post',
+          url: '/v1/auth/login',
+          // headers: { 'Content-Type': 'application/json' },
+          data: body
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error("Failed to post data", error);
+      }
+    };
+
+    postData();
+  }, []);
+
   return (
     <>
-      <MyPage>
+      <MyPage >
         <Header>FAQ</Header>
         <FaQBox
           question="컨설팅은 어떻게 진행되나요?"
