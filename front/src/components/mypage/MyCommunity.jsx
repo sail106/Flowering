@@ -99,166 +99,169 @@ const MyCommunity = () => {
 
   const [myUserName, setMyUserName] = useState(nickname)
 
-  const streamDestroyed = (event) => {
-    deleteSubscriber(event.stream.streamManager);
-  }
+  // const streamDestroyed = (event) => {
+  //   deleteSubscriber(event.stream.streamManager);
+  // }
 
-  const exception = (exception) => {
-    console.warn(exception);
-  }
+  // const exception = (exception) => {
+  //   console.warn(exception);
+  // }
 
-  useEffect(() => {
-    if (session) {
+  // useEffect(() => {
+  //   console.log('cccccccccc'+community_id)
+  //   if (session) {
 
-      // session.on('streamCreated', streamCreated)
-      // console.log('streamDestroyed '  )
-      // session.on('streamDestroyed', streamDestroyed)
-      // console.log('exception '  )
-      // session.on('exception', exception)
-      // console.log('seesion is  ' + session)
-      // console.log('community_id is  ' + community_id)
-      getToken().then(sessionConnect)
-    }
+  //     // session.on('streamCreated', streamCreated)
+  //     // console.log('streamDestroyed '  )
+  //     // session.on('streamDestroyed', streamDestroyed)
+  //     // console.log('exception '  )
+  //     // session.on('exception', exception)
+  //     // console.log('seesion is  ' + session)
+  //     // console.log('community_id is  ' + community_id)
+  //     getToken().then(sessionConnect)
+  //   }
 
-  }, [session])
-
-
-  const sessionConnect = (token) => {
-    console.log('in connection  ')
-
-    session
-      .connect(
-        token, { clientData: myUserName, clientRole: role },
-      )
-
-      .then(() => {
-        console.log('tokk  ' + token)
-
-        let publisher = OV.initPublisher(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          resolution: '1280x960',
-          frameRate: 30,
-          insertMode: 'APPEND',
-          mirror: false,
-        });
-
-        publisher.subscribeToRemote()
-        console.log(' OneToManyVideoChat')
-
-        session.publish(publisher);
-
-        setPublisher(publisher);
-
-        // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-        // if (role === CUSTOMER) 
-
-        setCreator(publisher)
+  // }, [session])
 
 
-        navigate('/OneToManyVideoChat')
+  // const sessionConnect = (token) => {
+  //   console.log('in connection  ')
 
-      })
-      .catch((error) => { });
-  }
+  //   session
+  //     .connect(
+  //       token, { clientData: myUserName, clientRole: role },
+  //     )
 
-  const joinSession = (communityId) => {
-    const getOV = new OpenVidu();
-    dispatch(setSession(getOV.initSession()))
-    setOV(getOV)
-    console.log('session setCommunityid'+session)
+  //     .then(() => {
+  //       console.log('tokk  ' + token)
 
-    dispatch(setCommunityid(communityId))
+  //       let publisher = OV.initPublisher(undefined, {
+  //         audioSource: undefined,
+  //         videoSource: undefined,
+  //         publishAudio: true,
+  //         publishVideo: true,
+  //         resolution: '1280x960',
+  //         frameRate: 30,
+  //         insertMode: 'APPEND',
+  //         mirror: false,
+  //       });
 
+  //       publisher.subscribeToRemote()
+  //       console.log(' OneToManyVideoChat')
 
-    console.log(communityId);
-  }
+  //       session.publish(publisher);
 
+  //       setPublisher(publisher);
 
-  const getToken = () => {
-    console.log('commid' + community_id)
-    return createSession(community_id).then((sessionId) => createToken(sessionId));
-  }
+  //       // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
+  //       // if (role === CUSTOMER) 
 
-  const createToken = (sessionId) => {
-
-    console.log(sessionId)
-    console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
-    return new Promise((resolve, reject) => {
-      const data = {
-        "type": "WEBRTC",
-        "role": "PUBLISHER",
-        "kurentoOptions": {
-          "videoMaxRecvBandwidth": 1000,
-          "videoMinRecvBandwidth": 300,
-          "videoMaxSendBandwidth": 1000,
-          "videoMinSendBandwidth": 300,
-          "allowedFilters": [
-            "GStreamerFilter",
-            "FaceOverlayFilter",
-            "ChromaFilter"
-          ]
-        }
-      };
-
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
-          headers: {
-            Authorization: 'Basic ' + btoa(
-              'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
-            ),
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,POST',
-          },
-        })
-        .then((response) => {
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  }
-
-  const createSession = (sessionId) => {
-    return new Promise((resolve, reject) => {
-
-      const data = JSON.stringify({ customSessionId: String(sessionId) });
+  //       setCreator(publisher)
 
 
-      console.log('Basic ' + btoa(
-        'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
+  //       navigate('/OneToManyVideoChat')
 
-      console.log('session added' + session)
-      console.log(sessionId)
+  //     })
+  //     .catch((error) => { });
+  // }
 
-      console.log(data)
-      console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
+  // const joinSession = (communityId) => {
+  //   const getOV = new OpenVidu();
+  //   dispatch(setSession(getOV.initSession()))
+  //   setOV(getOV)
+  //   console.log('session setCommunityid'+session)
 
-      axios
-        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-          headers: {
-            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
+  //   dispatch(setCommunityid(communityId))
 
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET,POST',
-          },
 
-        })
+  //   console.log(communityId);
+  // }
 
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error?.response?.status === 409) {
-            resolve(sessionId);
-          }
-        });
-    });
-  }
+
+  // const getToken = () => {
+  //   console.log('commid' + community_id)
+  //   return createSession(community_id).then((sessionId) => createToken(sessionId));
+  // }
+
+  // const createToken = (sessionId) => {
+
+  //   console.log(sessionId)
+  //   console.log(sessionId.customSessionId)
+  //   console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
+  //   return new Promise((resolve, reject) => {
+  //     const data = {
+  //       "type": "WEBRTC",
+  //       "role": "PUBLISHER",
+  //       "kurentoOptions": {
+  //         "videoMaxRecvBandwidth": 1000,
+  //         "videoMinRecvBandwidth": 300,
+  //         "videoMaxSendBandwidth": 1000,
+  //         "videoMinSendBandwidth": 300,
+  //         "allowedFilters": [
+  //           "GStreamerFilter",
+  //           "FaceOverlayFilter",
+  //           "ChromaFilter"
+  //         ]
+  //       }
+  //     };
+  //     console.log( "beforeconnect")
+
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
+  //         headers: {
+  //           Authorization: 'Basic ' + btoa(
+  //             'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
+  //           ),
+  //           'Content-Type': 'application/json',
+  //           'Access-Control-Allow-Origin': '*',
+  //           'Access-Control-Allow-Methods': 'GET,POST',
+  //         },
+  //       })
+  //       .then((response) => {
+  //         resolve(response.data.token);
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // }
+
+  // const createSession = (sessionId) => {
+  //   return new Promise((resolve, reject) => {
+
+  //     const data = JSON.stringify({ customSessionId: String(sessionId) });
+
+
+  //     console.log('Basic ' + btoa(
+  //       'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
+
+  //     console.log('session added' + session)
+  //     console.log(sessionId)
+
+  //     console.log(data)
+  //     console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
+
+  //     axios
+  //       .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+  //         headers: {
+  //           Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+  //           'Content-Type': 'application/json',
+
+  //           // 'Access-Control-Allow-Origin': '*',
+  //           // 'Access-Control-Allow-Methods': 'GET,POST',
+  //         },
+
+  //       })
+
+  //       .then((response) => {
+  //         resolve(response.data);
+  //       })
+  //       .catch((response) => {
+  //         var error = Object.assign({}, response);
+  //         if (error?.response?.status === 409) {
+  //           resolve(sessionId);
+  //         }
+  //       });
+  //   });
+  // }
 
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },

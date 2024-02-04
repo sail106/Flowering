@@ -251,18 +251,7 @@ const OneToOneVideoChat = () => {
         onbeforeunload);
     }
   }, [])
-
-  // useEffect(() => {
-  //   if (role === CUSTOMER) {
-  //     console.log(consultantSessionName)
-
-  //     if (!consultantSessionName) {
-
-  //       alert('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-  //     }
-
-  //   }
-  // }, [consultantSessionName])
+ 
 
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
@@ -684,41 +673,7 @@ const OneToOneVideoChat = () => {
 
               {/* </UserVideoSGrid> */}
 
-
-              {/* 우측 컬러팔레트, 채팅*/}
-              {
-                // role === CONSULTANT &&
-                // sgrid
-                // <Grid item xs={12} sm={4}
-                //   sx={{
-                //     display: "flex",
-                //     flexDirection: "column",
-                //     alignItems: "center",
-                //     height: '100%',
-                //   }}>
-
-
-                // </Grid>
-
-              }
-
-              {
-                // role === CUSTOMER &&
-                // <Grid item xs={12} sm={4}
-                //   sx={{
-                //     display: "flex",
-                //     justifyContent: "end",
-                //     height: "80%",
-                //     flexDirection: "column",
-                //     width: '100%',
-                //     border: '2px solid #18c24b99'
-
-                //   }}>
-
-
-                // </Grid>
-
-              }
+ 
 
             </SGridContainer>
 
@@ -863,6 +818,7 @@ export default OneToOneVideoChat
 // 비디오 컨테이너
 const VideoContainer = styled(Box)({
   width: "100%",
+  height: "100%"
   // borderRadius: "1rem",
   // padding: "1rem",
   // position:
@@ -1068,16 +1024,4 @@ const MicCamExitGroup = styled(Grid)`
   align-items: center;
   left: 0;
   `;
-
-
-const VideoGroup = styled(Grid)`
-    display: flex;
-    flex-direction: row;
-    gap: 3;
-    width:  70%;  
-      background-color: #d1cbcb;
-      position: absolute;
-      height: 85%;
-  top: 10%;
-  left: 5;
-  `;
+ 

@@ -21,7 +21,7 @@ const initialState = {
 }
 
 export const getConsultantSessionName2 = createAsyncThunk(
-  'consult/getCreatorSessionName',
+  'consult/getConsultantSessionName2',
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
