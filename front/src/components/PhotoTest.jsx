@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { IoIosInformationCircle } from "react-icons/io";
 import { Page } from "./common/Page";
 import InfoBox from "./consultingresult/InfoBox";
+import {ButtonBox} from "./common/Button";
+
 const BackPage = styled(Page)`
   height: auto;
   display: flex;
@@ -13,7 +15,7 @@ const Header = styled.span`
   display: flex;
   font-family: "Noto Sans KR";
   font-size: 16px;
-  margin-top: 3%;
+  margin-top: 5%;
   justify-content: center;
   color: #f28482;
 `;
@@ -44,7 +46,23 @@ const Header4 = styled(Header3)`
   font-size: 16px;
   text-align:center;
   margin-top:10%;
+  margin-bottom:2%;
 `;
+
+const ImageDiv = styled.div`
+  width:30%;
+  height:50%;
+`
+
+const Image = styled.img`
+  width: 100%;
+  height:100%;
+`
+
+const Mybutton = styled(ButtonBox)`
+  width:15%;
+  margin-bottom:2%;
+`
 
 const PhotoTest = () => {
   return (
@@ -101,13 +119,22 @@ const PhotoTest = () => {
       <InfoBox
         title="정적 표정 유지하기 "
         num={"08"}
-        content={`사진을 찍을 때는 정적인 표정을 유지하세요. 
-          웃거나 다양한 표정을 내면 AI가 정확한 피부 타입을 분석하기 어려울 수 있습니다.`}
+        content={
+          <>
+        사진을 찍을 때는 정적인 표정을 유지하세요. <br/>
+        웃거나 다양한 표정을 내면 AI가 정확한 피부 타입을 분석하기 어려울 수 있습니다.
+          </>
+      }
       />
       <Header4>
         원 안에 얼굴을 잘 맞춰주세요 <br></br>
         검은 선이 붉은 선으로 바뀌면 촬영이 가능합니다
       </Header4>
+      <ImageDiv>
+        <Image src="src/assets/phototest.png" alt="test" />
+      </ImageDiv>
+      <Mybutton>촬영하기</Mybutton>
+      <Mybutton>결과 보기</Mybutton>
     </BackPage>
   );
 };
