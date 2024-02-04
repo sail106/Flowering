@@ -31,7 +31,11 @@ import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
 import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
+import Consulting1stepresult from "./components/consultingresult/consulting1stepresult";
+import FinalresultInput from "./components/consultingresult/FinalresultInput";
+
 import PhotoTest from "./components/PhotoTest";
+
 function App() {
   return (
     <>
@@ -68,13 +72,20 @@ function App() {
           <Route path="/communityHome" element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
-          <Route path="/consulting1stepresult" element={<consulting1stepresult />} />
+          <Route
+            path="/consulting1stepresult"
+            element={<Consulting1stepresult />}
+          />
           <Route
             path="/expertsprofileregistration"
             element={<ExpertsProfileRegistration />}
           />
           <Route path="/manager" element={<Manager />} />
+
+          <Route path="/finalresultInput" element={<FinalresultInput />} />
+
           <Route path="/phototest" element={<PhotoTest />} />
+
 
         </Routes>
         <Footer />
