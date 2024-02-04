@@ -7,7 +7,7 @@ const InfoContainer = styled.div`
   border: solid 3px lightgrey;
   display:flex;
   height:10%;
-  margin-bottom:3%;
+  margin-bottom:1%;
 `;
 
 const Title = styled.div`
