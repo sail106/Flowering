@@ -13,6 +13,7 @@ import ConsultReservation from "./components/ConsultReservation";
 import FaQ from "./components/FaQ";
 import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
+import OrderPage from "./components/orderPage";
 
 import OneToManyVideoChat from "./components/community/OneToManyVideoChat";
 import OneToOneVideoChat from "./components/OneToOneVideoChat";
@@ -59,6 +60,7 @@ function App() {
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
+          <Route path="/order" element={<OrderPage />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
