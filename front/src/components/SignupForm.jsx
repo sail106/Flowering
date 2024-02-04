@@ -13,10 +13,13 @@ import LabelContainer from "./signup/LabelContainer"
 import LabelSignup from "./signup/LabelSignup"
 import RadioLabelText from "./signup/RadioLabelText"
 
-import { useState } from "react"
+import { useState,  } from "react"
 import axios from "axios"
+import { useSelector } from "react-redux"
 
 const SignupForm = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
   const [formData, setFormData] = useState({
     signupEmail: '',
     authNumber: '',
