@@ -20,45 +20,9 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      // await dispatch(loginUser(formData));
-
-      // axios를 사용하여 로그인 요청 보내기
-      const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', {
-        email: formData.email,
-        password: formData.password,
-      });
-
-      const { access_token, refresh_token } = response.data.data_body;
-      if(access_token !== undefined && refresh_token !== undefined) {
-
-        // Redux store에 사용자 정보 저장
-        dispatch(loginUser({ email: formData.email, access_token, refresh_token }));
-
-        // 토큰을 로컬 스토리지에 저장합니다.
-        localStorage.setItem('accessToken', access_token);
-        localStorage.setItem('refreshToken', refresh_token);
-
-        console.log("로그인 성공!");
-        navigate('/');
-        
-      }
-      else {
-        console.log("이메일 또는 비밀번호가 잘못되었습니다!");
-      }
-      console.log("isAuthenticated2 : ", isAuthenticated);
-    } catch (error) {
-      console.error('로그인 요청 실패:', error);
-    }
-    console.log("isAuthenticated : ", isAuthenticated);
   };
 
   useEffect(() => {
@@ -70,6 +34,53 @@ const LoginForm = () => {
       console.log("isAuthenticated : ", isAuthenticated);
     }
   }, [isAuthenticated, navigate]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // await dispatch(loginUser(formData));
+
+    // axios를 사용하여 로그인 요청 보내기
+    // const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', {
+    //   const response = await axios.post('http://localhost:8080/v1/auth/login', {
+    //   email: formData.email,
+    //   password: formData.password,
+    // });
+
+    // if(access_token !== undefined && refresh_token !== undefined) {
+
+    // Redux store에 사용자 정보 저장
+    console.log('formData.email'+formData.email)
+    console.log('formData.password'+formData.password)
+
+    dispatch(loginUser({ Email: formData.email, Password: formData.password })).then((response) => {
+
+      console.log('  then' + response)
+      console.log('response' + response.accessToken)
+
+      
+      // // 토큰을 로컬 스토리지에 저장합니다.
+      // localStorage.setItem('accessToken', access_token);
+      // localStorage.setItem('refreshToken', refresh_token);
+
+      console.log("로그인 성공!");
+      navigate('/');
+
+    }).catch((error) => {
+      // }
+      // else {
+      console.log("이메일 또는 비밀번호가 잘못되었습니다!");
+      // }
+      console.log("isAuthenticated2 : ", isAuthenticated);
+      console.error('로그인 요청 실패:', error);
+    })
+
+    // console.log("isAuthenticated : ", isAuthenticated);
+
+
+
+
+  }
 
   return (
     <Card>
@@ -87,7 +98,7 @@ const LoginForm = () => {
             placeholder="비밀번호 입력" width="300px"
             value={formData.password}
             onChange={handleInputChange}
-          />            
+          />
           <Button
             type="submit"
             width="70%"
@@ -101,7 +112,6 @@ const LoginForm = () => {
         <SnsManage />
       </CenterContainer>
     </Card>
-
 
   );
 }

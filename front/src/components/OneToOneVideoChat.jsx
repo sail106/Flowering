@@ -20,7 +20,7 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList,
+  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList, makeResult,
 } from '../store/consultSlice'
 
 import axios from 'axios';
@@ -31,6 +31,7 @@ import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
+import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
 const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
@@ -250,28 +251,29 @@ const OneToOneVideoChat = () => {
         onbeforeunload);
     }
   }, [])
+ 
 
-  // useEffect(() => {
-  //   if (role === CUSTOMER) {
-  //     console.log(consultantSessionName)
-
-  //     if (!consultantSessionName) {
-
-  //       alert('요청된 세션이 없거나 공란입니다. 종료 후 정상접근 바랍니다.')
-  //     }
-
-  //   }
-  // }, [consultantSessionName])
+  const deleteSubscriber = (streamManager) => {
+    console.log('deleteSubscriber')
+    if(role==CUSTOMER)
+    {
+      navigate('/mypage')
+    }
+    else if(role==CONSULTANT)
+    {
+      navigate('/expertconsulting')
+    }
+  }
   const addparticiapnt = (event) => {
     const data = JSON.parse(event.data)
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
-      console.log('datarole role '+data.role,' ', role,data.name)
+      console.log('datarole role ' + data.role, ' ', role, data.name)
       dispatch(appendParticipantList(data))
     }
   }
-  
+
   const textChat = (event) => {
     const data = JSON.parse(event.data)
 
@@ -393,15 +395,17 @@ const OneToOneVideoChat = () => {
     // role==CONSULTANT &&
     if (role == CONSULTANT && session) {
       session.disconnect();
-      dispatch(postConsultingResult({ consultingFinishRequest }))
+      dispatch(makeResult({ consultingFinishRequest }))
         .then(() => {
           // dispatch(changeComment(''))
-          navigate('/')
+          navigate('/expertconsulting')
         })
     }
 
     if (role === CUSTOMER && session) {
       session.disconnect();
+      navigate('/mypage')
+
     }
 
     setOV(null);
@@ -411,6 +415,37 @@ const OneToOneVideoChat = () => {
     dispatch(resetMsg())
     // setMyUserName(nickname)
     setConsultant(undefined)
+
+    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName2}`, {
+
+    axios
+      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName2, {
+        headers: {
+          Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+          'Content-Type': 'application/json',
+
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'GET,POST',
+        },
+
+      })
+
+      .then((response) => {
+
+        console.log('deletesession then' + response.data.id)
+        console.log('deletesession then' + response.id)
+        resolve(response.data.id); // consultatnt email == session id.
+      })
+
+      .catch((response) => {
+        // console.log('createsession catchhh')
+
+        var error = Object.assign({}, response);
+
+      });
+
+    //redux 에 저장된 consultantsessionanme 도 제거
+    dispatch(removeConsultantSessionName2())
 
   }
 
@@ -638,41 +673,7 @@ const OneToOneVideoChat = () => {
 
               {/* </UserVideoSGrid> */}
 
-
-              {/* 우측 컬러팔레트, 채팅*/}
-              {
-                // role === CONSULTANT &&
-                // sgrid
-                // <Grid item xs={12} sm={4}
-                //   sx={{
-                //     display: "flex",
-                //     flexDirection: "column",
-                //     alignItems: "center",
-                //     height: '100%',
-                //   }}>
-
-
-                // </Grid>
-
-              }
-
-              {
-                // role === CUSTOMER &&
-                // <Grid item xs={12} sm={4}
-                //   sx={{
-                //     display: "flex",
-                //     justifyContent: "end",
-                //     height: "80%",
-                //     flexDirection: "column",
-                //     width: '100%',
-                //     border: '2px solid #18c24b99'
-
-                //   }}>
-
-
-                // </Grid>
-
-              }
+ 
 
             </SGridContainer>
 
@@ -817,6 +818,7 @@ export default OneToOneVideoChat
 // 비디오 컨테이너
 const VideoContainer = styled(Box)({
   width: "100%",
+  height: "100%"
   // borderRadius: "1rem",
   // padding: "1rem",
   // position:
@@ -1022,16 +1024,4 @@ const MicCamExitGroup = styled(Grid)`
   align-items: center;
   left: 0;
   `;
-
-
-const VideoGroup = styled(Grid)`
-    display: flex;
-    flex-direction: row;
-    gap: 3;
-    width:  70%;  
-      background-color: #d1cbcb;
-      position: absolute;
-      height: 85%;
-  top: 10%;
-  left: 5;
-  `;
+ 
