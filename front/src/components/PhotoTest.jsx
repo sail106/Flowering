@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { IoIosInformationCircle } from "react-icons/io";
 import { Page } from "./common/Page";
 import InfoBox from "./consultingresult/InfoBox";
-import {ButtonBox} from "./common/Button";
+import { ButtonBox } from "./common/Button";
 import Webcam from "react-webcam";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { initializeApp, getApps, getApp  } from "firebase/app";
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
 
 const BackPage = styled(Page)`
   height: auto;
@@ -44,29 +47,96 @@ const Header3 = styled(Header2)`
 `;
 
 const Header4 = styled(Header3)`
-  font-size: 16px;
-  text-align:center;
-  margin-top:10%;
-  margin-bottom:2%;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 2%;
 `;
 
-const ImageDiv = styled.div`
-  width:30%;
-  height:50%;
-`
-
-const Image = styled.img`
-  width: 100%;
-  height:100%;
-`
-
 const Mybutton = styled(ButtonBox)`
-  width:15%;
-  margin-bottom:2%;
-`
+  width: 15%;
+  margin-bottom: 2%;
+`;
 
+const Overlay = styled.svg`
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 15%;
+  height: 70%;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+`;
 
+const WebcamStyled = styled(Webcam)`
+  position: relative;
+  width: 30%;
+  z-index: 1;
+  transform: scaleX(-1);
+`;
+
+const WebcamContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 0;
+  text-align: center;
+  padding-bottom: 27%;
+`;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDLGYvoazo0kyL3B-J7zbf6kSXjONyuH_I",
+  authDomain: "sail106.firebaseapp.com",
+  projectId: "sail106",
+  storageBucket: "sail106.appspot.com",
+  messagingSenderId: "308915297851",
+  appId: "1:308915297851:web:dce79811ce24f4460cc61e",
+  measurementId: "G-568QBBT4L0"
+};
+
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+} else {
+  getApp();
+}
+
+const storage = getStorage();
 const PhotoTest = () => {
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      try {
+        const url = await getDownloadURL(ref(storage, 'images/imageName'));
+        setImageUrl(url);
+        console.log(url)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadImage();
+  }, []);
+  const webcamRef = useRef(null);
+  // const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    const base64Image = imageSrc.split(';base64,').pop();
+
+    // 이미지를 Firebase Storage에 업로드
+    let imageRef = ref(storage, 'images/imageName');
+    uploadString(imageRef, base64Image, 'base64', {contentType:'image/jpg'}).then((snapshot) => {
+      // 진행 상태를 보여주는 코드를 여기에 작성할 수 있습니다.
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        // console.log('File available at', downloadURL);
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  }, [webcamRef, storage]);
   return (
     <BackPage>
       <Header>2차 사진 촬영 테스트</Header>
@@ -123,20 +193,27 @@ const PhotoTest = () => {
         num={"08"}
         content={
           <>
-        사진을 찍을 때는 정적인 표정을 유지하세요. <br/>
-        웃거나 다양한 표정을 내면 AI가 정확한 피부 타입을 분석하기 어려울 수 있습니다.
+            사진을 찍을 때는 정적인 표정을 유지하세요. <br />
+            웃거나 다양한 표정을 내면 AI가 정확한 피부 타입을 분석하기 어려울 수
+            있습니다.
           </>
-      }
+        }
       />
-      <Header4>
-        원 안에 얼굴을 잘 맞춰주세요 <br></br>
-        검은 선이 붉은 선으로 바뀌면 촬영이 가능합니다
-      </Header4>
-      <ImageDiv>
-        <Image src="src/assets/phototest.png" alt="test" />
-      </ImageDiv>
-      <Mybutton>촬영하기</Mybutton>
+      <Header4>원 안에 얼굴을 잘 맞춰주세요</Header4>
+
+      <WebcamContainer>
+        <WebcamStyled ref={webcamRef}
+        screenshotFormat="image/jpeg"
+         />
+
+         <Overlay />
+      </WebcamContainer>
+      <Mybutton onClick={capture}>촬영하기</Mybutton>
+
       <Mybutton>결과 보기</Mybutton>
+      <div>
+      {imageUrl && <img src={imageUrl} alt="From Firebase Storage" />}
+    </div>
     </BackPage>
   );
 };
