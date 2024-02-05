@@ -27,7 +27,7 @@ const LoginForm = () => {
     // 이미 로그인 상태인 경우 홈 화면으로 이동합니다.
     console.log("isAuthenticated : ",isAuthenticated);
     if (isAuthenticated) {
-      navigate('/');
+      // navigate('/');
       console.log("이미 로그인 되어있습니다!");
       console.log("isAuthenticated2 : ", isAuthenticated);
     }
