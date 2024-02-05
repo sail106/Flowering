@@ -1,14 +1,7 @@
 import styled from "styled-components";
-import { ButtonBox } from "../common/Button";
 import SkinProductCard from "./SkinProductCard";
 import MakeupProductCard from "./MakeupProductCard";
 
-const MyButton = styled(ButtonBox)`
-  border-radius: 300px;
-  margin: 80px;
-  width: 230.145px;
-  height: 59.143px;
-`;
 const P = styled.div`
   font-family: "Noto Sans KR";
   white-space: pre-wrap;
@@ -21,19 +14,6 @@ const P2 = styled.p`
   margin-top: 20px;
   white-space: pre-wrap;
   display: flex;
-`;
-
-const MyButton1 = styled(ButtonBox)`
-  background-color: gray;
-  border-color: gray;
-  border-radius: 300px;
-  margin: 80px;
-  width: 230.145px;
-  height: 59.143px;
-`;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const Consulting1stepresultpage = styled.div`
@@ -77,8 +57,11 @@ const InputSet = styled.div`
 const H = styled.span`
   font-family: "Noto Sans KR";
   font-weight: bold;
-  white-space: pre-wrap;
 `;
+
+const Margin4 = styled(Margin)`
+  margin-bottom:20%;
+`
 
 const Finalresult3step = () => {
   return (
@@ -134,8 +117,8 @@ const Finalresult3step = () => {
       </P2>
       <Margin3 />
       <InputSet>
-        <H>피부 메이크업 :</H>
         <P>
+        <H>피부 메이크업 : </H>
           피부 톤에 맞는 파운데이션과 컨실러를 사용하여 피부 결점을 커버하고
           매끈한 피부를 연출합니다. 옐로우 베이스의 파운데이션을 사용하여 따뜻한
           피부 톤을 연출합니다.
@@ -143,8 +126,8 @@ const Finalresult3step = () => {
       </InputSet>
       <Margin2 />
       <InputSet>
-        <H>아이 메이크업 :</H>
         <P>
+        <H>아이 메이크업 : </H>
           아이라인과 섀도우를 사용하여 눈을 강조하고, 눈썹을 정돈하여 얼굴의
           균형을 맞추어줍니다. 황금빛이 도는 브라운, 코랄, 오렌지 컬러의
           아이섀도우를 사용하여 따뜻한 봄웜 톤을 강조합니다. 눈썹은 자연스러운
@@ -153,8 +136,8 @@ const Finalresult3step = () => {
       </InputSet>
       <Margin2 />
       <InputSet>
-        <H>립 메이크업 :</H>
         <P>
+        <H>립 메이크업 : </H>
           입술을 부각시키기 위해 매트한 립스틱이나 글로시한 립글로스를 사용하여
           입술을 돋보이게 합니다. 코랄, 따뜻한 핑크 컬러의 립스틱이나 립 틴트를
           사용하여 입술을 강조합니다.
@@ -162,24 +145,24 @@ const Finalresult3step = () => {
       </InputSet>
       <Margin2 />
       <InputSet>
-        <H>블러셔 : </H>
         <P>
+        <H>블러셔 : </H>
           살짝 주황빛이 도는 코랄이나 복숭아 컬러의 블러셔를 사용하여 건강하고
           생기 넘치는 피부를 연출합니다.
         </P>
       </InputSet>
       <Margin2 />
       <InputSet>
-        <H>쉐이딩 : </H>
         <P>
+        <H>쉐이딩 : </H>
           얼굴의 윤곽을 부각시키기 위해 양 볼 아래, 이마 옆, 턱 주변 등에
           입체적인 느낌을 연출합니다.
         </P>
       </InputSet>
       <Margin2 />
       <InputSet>
-        <H>하이라이팅 : </H>
         <P>
+        <H>하이라이팅 : </H>
           이마 중앙, 코, 볼 뼈 윗부분 등에 하이라이팅 제품을 사용하여 얼굴을
           화사하게 보이도록 합니다. 황금빛의 하이라이터를 사용하여 얼굴에 생기와
           화사함을 더해줍니다.
@@ -210,12 +193,7 @@ const Finalresult3step = () => {
         헤어스타일을 선택할 때 얼굴형과 개인적인 취향을 고려하여 적절한 스타일을
         찾아보시는 것이 좋습니다.
       </P>
-      <Margin2 />
-      <ButtonContainer>
-        <MyButton1>임시저장</MyButton1>
-        <MyButton>제출하기</MyButton>
-      </ButtonContainer>
-      <Margin2 />
+      <Margin4 />
     </Consulting1stepresultpage>
   );
 };
