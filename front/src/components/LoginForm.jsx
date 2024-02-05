@@ -7,11 +7,9 @@ import Card from "./common/Card";
 import CenterContainer from "./common/CenterContainer";
 import { loginUser } from "../store/authSlice";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { findIndex } from "lodash";
 
 //post, email,pw의 파라미터
 
@@ -27,58 +25,27 @@ const LoginForm = () => {
 
   useEffect(() => {
     // 이미 로그인 상태인 경우 홈 화면으로 이동합니다.
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      navigate('/');
+    console.log("isAuthenticated : ",isAuthenticated);
+    if (isAuthenticated) {
+      // navigate('/');
       console.log("이미 로그인 되어있습니다!");
-      console.log("isAuthenticated : ", isAuthenticated);
+      console.log("isAuthenticated2 : ", isAuthenticated);
     }
   }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // await dispatch(loginUser(formData));
-
-    // axios를 사용하여 로그인 요청 보내기
-    // const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', {
-    //   const response = await axios.post('http://localhost:8080/v1/auth/login', {
-    //   email: formData.email,
-    //   password: formData.password,
-    // });
-
-    // if(access_token !== undefined && refresh_token !== undefined) {
-
     // Redux store에 사용자 정보 저장
-    console.log('formData.email'+formData.email)
-    console.log('formData.password'+formData.password)
-
-    dispatch(loginUser({ Email: formData.email, Password: formData.password })).then((response) => {
-
-      console.log('  then' + response)
-      console.log('response' + response.accessToken)
-
-      
-      // // 토큰을 로컬 스토리지에 저장합니다.
-      // localStorage.setItem('accessToken', access_token);
-      // localStorage.setItem('refreshToken', refresh_token);
-
+    dispatch(loginUser({ Email: formData.email, Password: formData.password })).then(() => {
       console.log("로그인 성공!");
       navigate('/');
 
     }).catch((error) => {
-      // }
-      // else {
+
       console.log("이메일 또는 비밀번호가 잘못되었습니다!");
-      // }
-      console.log("isAuthenticated2 : ", isAuthenticated);
       console.error('로그인 요청 실패:', error);
     })
-
-    // console.log("isAuthenticated : ", isAuthenticated);
-
-
-
 
   }
 
