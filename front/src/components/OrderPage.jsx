@@ -13,7 +13,7 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 
 
-const Title = styled.span`
+export const Title = styled.span`
     width: 177px;
     height: 63px;
     flex-grow: 0;
@@ -27,7 +27,7 @@ const Title = styled.span`
     color: #000;    
     margin-bottom : 50px;
 `
-const Filed = styled.div`
+export const Filed = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -35,7 +35,7 @@ const Filed = styled.div`
     padding: 100px;
 `
 
-const Content = styled.div`
+export const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -57,7 +57,7 @@ const BtnList = styled.div`
     margin-top: 30px; // BtnList 상단에 마진 추가
 `
 
-const OrderTable = styled.div`
+export const OrderTable = styled.div`
     height: 151px;
     align-self: stretch;
     flex-grow: 0;
@@ -68,7 +68,7 @@ const OrderTable = styled.div`
     gap: 20px;
     padding: 0;     
 `
-const OrderSubTitleAndBar = styled.div`
+export const OrderSubTitleAndBar = styled.div`
     height: 39px;
     align-self: stretch;
     flex-grow: 0;
@@ -80,7 +80,7 @@ const OrderSubTitleAndBar = styled.div`
     padding: 0;
     border-bottom: 1px solid #bcbcbc;
 `
-const OrderSubTitleBar = styled.div`
+export const OrderSubTitleBar = styled.div`
     height: 29px;
     align-self: stretch;
     flex-grow: 0;
@@ -91,7 +91,7 @@ const OrderSubTitleBar = styled.div`
     gap: 10px;
     padding: 8px;
 `
-const OrderObject = styled.span`
+export const OrderObject = styled.span`
     height: 28px;
     align-self: stretch;
     flex-grow: 0;
@@ -104,7 +104,7 @@ const OrderObject = styled.span`
     text-align: left;
     color: #000;
 `
-const OrderUser = styled.div`
+export const OrderUser = styled.div`
     height: 60px;
     align-self: stretch;
     flex-grow: 0;
@@ -115,7 +115,7 @@ const OrderUser = styled.div`
     gap: 4px;
     padding: 8px;
 `
-const OrderUserInfo = styled.span`
+export const OrderUserInfo = styled.span`
     height: 28px;
     align-self: stretch;
     flex-grow: 0;
@@ -128,7 +128,7 @@ const OrderUserInfo = styled.span`
     text-align: left;
     color: #000;
 `
-const StyledTable = styled.table`
+export const StyledTable = styled.table`
   width: 100%; // 필요에 따라 조정
   border-collapse: collapse; // 테이블 셀 간의 간격 없애기
 
@@ -253,7 +253,7 @@ const Order = () =>{
 export default Order;
 
 
-function DataTable({ headers, items = [] }) {
+export function DataTable({ headers, items = [] }) {
     if (!headers || !headers.length) {
         throw new Error('<DataTable /> headers is required.')
     }
@@ -292,7 +292,7 @@ function DataTable({ headers, items = [] }) {
     )
 }
 
-function OrderUserTable({userInfo}){
+export function OrderUserTable({userInfo}){
     return <OrderTable>
         <OrderSubTitleAndBar>
             <OrderSubTitleBar>
@@ -342,7 +342,7 @@ const inicis = {
     img : "https://www.inicis.com/wp-content/themes/inicis2020/assets/images/sub07-010301.png"
 }
 
-export function IconsRadio({ selectedValue, onChange }) {
+function IconsRadio({ selectedValue, onChange }) {
 
     
     // onChange 핸들러 수정

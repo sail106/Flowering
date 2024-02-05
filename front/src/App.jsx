@@ -13,7 +13,9 @@ import ConsultReservation from "./components/ConsultReservation";
 import FaQ from "./components/FaQ";
 import Footer from "./components/Footer";
 import EditMyInfo from "./components/EidtMyInfo";
-import OrderPage from "./components/orderPage";
+import OrderPage from "./components/OrderPage";
+import OrderResult from "./components/OrderResult";
+
 
 import OneToManyVideoChat from "./components/community/OneToManyVideoChat";
 import OneToOneVideoChat from "./components/OneToOneVideoChat";
@@ -61,6 +63,7 @@ function App() {
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
           <Route path="/order" element={<OrderPage />} />
+          <Route path="/abcd" element={<OrderResult />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
