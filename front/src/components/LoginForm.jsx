@@ -37,17 +37,7 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    // await dispatch(loginUser(formData));
-
-    // axios를 사용하여 로그인 요청 보내기
-    // const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', {
-    //   const response = await axios.post('http://localhost:8080/v1/auth/login', {
-    //   email: formData.email,
-    //   password: formData.password,
-    // });
-
-    // if(access_token !== undefined && refresh_token !== undefined) {
+ 
 
     // Redux store에 사용자 정보 저장
     console.log('formData.email'+formData.email)
@@ -58,7 +48,7 @@ const LoginForm = () => {
       console.log('  then' + response)
       console.log('response' + response.accessToken)
 
-      
+
       // // 토큰을 로컬 스토리지에 저장합니다.
       // localStorage.setItem('accessToken', access_token);
       // localStorage.setItem('refreshToken', refresh_token);

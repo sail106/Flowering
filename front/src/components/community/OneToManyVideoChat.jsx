@@ -26,7 +26,7 @@ import UserVideoComponent from './UserVideoComponent';
 import axios from 'axios';
 import { CiVideoOn } from "react-icons/ci";
 
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io:3478';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 

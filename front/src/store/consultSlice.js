@@ -87,7 +87,7 @@ export const getCustomer = createAsyncThunk(
   'consult/getCustomer',
   async (payload, { rejectWithValue }) => {
     try {
-      console.log(payload)
+      console.log('payload'+payload)
 
       const response = await Axios.get(`consultings/` + payload)
 

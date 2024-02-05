@@ -32,7 +32,7 @@ import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
 import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io:3478';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -507,7 +507,7 @@ const OneToOneVideoChat = () => {
   }
 
   const createToken = (sessionId) => {
-    console.log('tokennnnnn')
+    console.log('tokennnnnn'+sessionId)
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",
@@ -537,6 +537,7 @@ const OneToOneVideoChat = () => {
           },
         })
         .then((response) => {
+          console.log('creattokensuccess')
           resolve(response.data.token);
         })
         .catch((error) => reject(error));

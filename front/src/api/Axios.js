@@ -1,9 +1,9 @@
 import baseAxios from 'axios';
-import { getToken } from './JWToken';
+// import { getToken } from './JWToken';
 
 
-// export const baseURL = 'http://localhost:8080/v1/';
-export const baseURL = 'http://i10c106.p.ssafy.io:8080/v1/';
+export const baseURL = 'http://localhost:8080/v1/';
+// export const baseURL = 'http://i10c106.p.ssafy.io:8080/v1/';
 
 const Axios = baseAxios.create({
   baseURL: baseURL,
