@@ -3,6 +3,8 @@ import { Page } from "./common/Page";
 import Input from "./common/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
+import Search from "./modals/Search"
+
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -65,6 +67,8 @@ const EditMyInfo = () => {
         </InfoContainer>
         <Edit />
         <Withdrawal />
+        <Search />
+        
       </MyPage>
       <Margin />
     </>

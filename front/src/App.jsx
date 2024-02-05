@@ -33,7 +33,13 @@ import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
 import Consulting1stepresult from "./components/consultingresult/consulting1stepresult";
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
+
 import Finish1step from "./components/consultingresult/Finish1step";
+
+
+import PhotoTest from "./components/PhotoTest";
+
+
 function App() {
   return (
     <>
@@ -80,7 +86,12 @@ function App() {
             element={<ExpertsProfileRegistration />}
           />
           <Route path="/manager" element={<Manager />} />
+
           <Route path="/finalresultInput" element={<FinalresultInput />} />
+
+          <Route path="/phototest" element={<PhotoTest />} />
+
+
         </Routes>
         <Footer />
       </Page>
