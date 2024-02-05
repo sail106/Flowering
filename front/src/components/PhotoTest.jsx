@@ -3,6 +3,7 @@ import { IoIosInformationCircle } from "react-icons/io";
 import { Page } from "./common/Page";
 import InfoBox from "./consultingresult/InfoBox";
 import {ButtonBox} from "./common/Button";
+import Webcam from "react-webcam";
 
 const BackPage = styled(Page)`
   height: auto;
@@ -63,6 +64,7 @@ const Mybutton = styled(ButtonBox)`
   width:15%;
   margin-bottom:2%;
 `
+
 
 const PhotoTest = () => {
   return (
