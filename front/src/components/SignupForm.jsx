@@ -13,13 +13,17 @@ import LabelContainer from "./signup/LabelContainer"
 import LabelSignup from "./signup/LabelSignup"
 import RadioLabelText from "./signup/RadioLabelText"
 
-import { useState,  } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
-import { useSelector } from "react-redux"
+import styled from "styled-components"
+
+const StyledP = styled.p`
+  color: #F28482;
+`;
 
 const SignupForm = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+  const [isAuthCode, setIsAuthCode] = useState(false);
+  const [authCorrect, setAuthCorrect] = useState(false);
   const [formData, setFormData] = useState({
     signupEmail: '',
     authNumber: '',
@@ -33,22 +37,40 @@ const SignupForm = () => {
   const handleAuthRequest = async () => {
     try {
       // 서버에 인증 요청을 보냅니다.
-      const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/confirm', {
+      await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/join-code', {
         email: formData.signupEmail,
         // ... (다른 필요한 데이터)
       });
   
-      console.log(response);
+      setIsAuthCode(true);
+      // console.log(response);
   
       // TODO: 응답에 따른 처리 로직 작성
       // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
       // 사용자에게 메시지를 보여줄 수 있습니다.
       console.log("인증 요청 성공");
-  
+      alert('인증번호가 요청되었습니다');
     } catch (error) {
       console.error('인증 요청 실패:', error);
+      alert('올바르지 않은 이메일 형식입니다');
     }
   };
+
+  const handleAuthChange = async (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    console.log("formData.authNumber : ", formData.authNumber);
+    try {
+      await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/confirm', {
+        email: formData.signupEmail,
+        code: e.target.value,
+      })
+      setAuthCorrect(true);
+      console.log("성공성공성공성ㄱ오!!")
+    } catch(error) {
+      console.log("에러에러에러 : ", error);
+      setAuthCorrect(false);
+    }
+  }
 
   return (
     <Card>
@@ -62,11 +84,38 @@ const SignupForm = () => {
         />
         <Button width="25%" onClick={handleAuthRequest}>인증 요청</Button>
       </EmailContainer>
-      <Input htmlFor="authNumber" id="authNumber" placeholder="인증번호"/>
-      <p>✓ 인증 번호가 같아요</p>
-      <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
+      {/* 위에 있는 인증 요청 버튼을 누른 순간 생성됨 */}
+      {isAuthCode && (
+        <>
+          <Input
+            htmlFor="authNumber" id="authNumber" placeholder="인증번호"
+            value={formData.authNumber}
+            onChange={handleAuthChange}
+          />
+          {!authCorrect && (
+            <>
+              <p>✓ 인증 번호가 같아요</p>
+            </>
+          )}
+          {authCorrect && (
+            <>
+              <StyledP>✓ 인증 번호가 같아요</StyledP>
+            </>
+          )}
+          <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
+        </>
+      )}
       <CenterContainer>
-        <Button width="40%">다음</Button>
+        {/* 만약 인증번호가 같으면 버튼색깔이 분홍색으로 */}
+        {/* 그렇지 않으면 지금 상태 그대로 */}
+        <Button
+          width="40%"
+          marginTop="50px"
+          background-color={!authCorrect ? "#B1B1B1" : null}
+          borderColor={!authCorrect ? "#B1B1B1" : null}
+        >
+          다음
+        </Button>
       </CenterContainer>
 
       {/* 회원가입 패스워드 */}
