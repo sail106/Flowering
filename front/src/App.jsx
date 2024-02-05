@@ -35,10 +35,11 @@ import Consulting1stepresult from "./components/consultingresult/consulting1step
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
 
 import Finish1step from "./components/consultingresult/Finish1step";
-
+import Finish2step from "./components/consultingresult/Finish2step";
 
 import PhotoTest from "./components/PhotoTest";
-
+import Finalresult3step from "./components/consultingresult/Finalresult3step";
+import SkinProductCard from "./components/consultingresult/SkinProductCard";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
           <Route path="/finish1step" element={<Finish1step />} />
+          <Route path="/finish2step" element={<Finish2step />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
@@ -81,6 +83,7 @@ function App() {
             path="/consulting1stepresult"
             element={<Consulting1stepresult />}
           />
+
           <Route
             path="/expertsprofileregistration"
             element={<ExpertsProfileRegistration />}
@@ -90,8 +93,8 @@ function App() {
           <Route path="/finalresultInput" element={<FinalresultInput />} />
 
           <Route path="/phototest" element={<PhotoTest />} />
-
-
+          <Route path="/finalresult3step" element={<Finalresult3step />} />
+          <Route path="/skinProductCard" element={<SkinProductCard />} />
         </Routes>
         <Footer />
       </Page>
