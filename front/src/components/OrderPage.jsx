@@ -1,13 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { ButtonBox } from "./common/Button";
+import { Link } from "react-router-dom";
 import axios from 'axios';
+import Avatar from '@mui/joy/Avatar';
+import FormLabel from '@mui/joy/FormLabel';
+import Radio, { radioClasses } from '@mui/joy/Radio';
+import RadioGroup from '@mui/joy/RadioGroup';
+import Sheet from '@mui/joy/Sheet';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+
+
+
 
 const Title = styled.span`
     width: 177px;
     height: 63px;
     flex-grow: 0;
-    font-family: LexendDeca;
     font-size: 50px;
     font-weight: normal;
     font-stretch: normal;
@@ -16,6 +25,7 @@ const Title = styled.span`
     letter-spacing: normal;
     text-align: center;
     color: #000;    
+    margin-bottom : 50px;
 `
 const Filed = styled.div`
     display: flex;
@@ -44,6 +54,7 @@ const BtnList = styled.div`
     align-items: flex-start;
     gap: 30px;
     padding: 0;
+    margin-top: 30px; // BtnList 상단에 마진 추가
 `
 
 const OrderTable = styled.div`
@@ -84,9 +95,8 @@ const OrderObject = styled.span`
     height: 28px;
     align-self: stretch;
     flex-grow: 0;
-    font-family: NotoSansKR;
-    font-size: 20px;
-    font-weight: normal;
+    font-size: 18px;
+    font-weight: bold;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.4;
@@ -109,7 +119,6 @@ const OrderUserInfo = styled.span`
     height: 28px;
     align-self: stretch;
     flex-grow: 0;
-    font-family: NotoSansKR;
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
@@ -126,6 +135,9 @@ const StyledTable = styled.table`
     th, td {
         padding: 8px; // 셀 내부 여백
         text-align: left; // 텍스트 정렬
+    }
+    th {
+        font-size: 18px;
     }
 
     // tbody의 첫 번째 행 위에 구분선 추가
@@ -154,7 +166,7 @@ const items = [
     {
         consultant_img: 'https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/resize/416/quality/80/optimize',
         item_name: 'LEINA 뷰티 솔루션 컨설팅',
-        item_price: '99,000'
+        item_price: '89,000'
     }
 ];
 
@@ -166,8 +178,14 @@ const userInfo = {
 }
 
 
-const Order = () =>{
 
+const Order = () =>{
+    const [selectedPaymentId, setSelectedPaymentId] = useState(null);
+    const handlePaymentSelectionChange = (selectedId) => {
+        setSelectedPaymentId(selectedId);
+    };
+
+    
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -186,14 +204,14 @@ const Order = () =>{
         IMP.init('imp03878765');
     
         IMP.request_pay({
-            // pg: 'html5_inicis.INIBillTst',
-            pg: 'kakaopay.TC0ONETIME',
+            // pg: ,
+            pg: selectedPaymentId,
             pay_method: 'card',
             merchant_uid: new Date().getTime(),
             name: '테스트 상품',
             amount: 1,
             buyer_email: 'test@naver.com',
-            buyer_name: '코드쿡',
+            buyer_name: '김형민',
             buyer_tel: '010-1234-5678',
             buyer_addr: '서울특별시',
             buyer_postcode: '123-456',
@@ -202,6 +220,7 @@ const Order = () =>{
             const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
             if (rsp.paid_amount === data.response.amount) {
                 alert('결제 성공');
+
             } else {
                 alert('결제 실패');
             }
@@ -215,34 +234,25 @@ const Order = () =>{
 
 
 
-    return(
+    return (
         <Filed>
             <Content>
-
-            <Title>ORDER</Title>
-
-            <DataTable 
-                headers={headers} 
-                items={items}
-            />
-
-            <OrderUserTable
-                userInfo={userInfo}
-            />
-
-            <BtnList>
-                <ButtonBox border='#f28482' background-color='#ffffff' color='#f28482'>취소하기</ButtonBox>
-                <ButtonBox onClick={requestPay}>결제하기</ButtonBox>
-            </BtnList>
+                <Title>ORDER</Title>
+                <DataTable headers={headers} items={items} />
+                <OrderUserTable userInfo={userInfo} />
+                <OrderOptionTable onPaymentSelectionChange={handlePaymentSelectionChange} />
+                <BtnList>
+                    <ButtonBox border={"#F28482"} background-color={"#ffffff"} color={"#F28482"} onClick={() => console.log('취소하기')}>취소하기</ButtonBox>
+                    <ButtonBox onClick={requestPay}>결제하기</ButtonBox>
+                </BtnList>
             </Content>
         </Filed>
-        
-
-
-    )
+    );
 };
 
 export default Order;
+
+
 function DataTable({ headers, items = [] }) {
     if (!headers || !headers.length) {
         throw new Error('<DataTable /> headers is required.')
@@ -286,7 +296,7 @@ function OrderUserTable({userInfo}){
     return <OrderTable>
         <OrderSubTitleAndBar>
             <OrderSubTitleBar>
-                <OrderObject>주문자 정보</OrderObject>
+                <OrderObject>BUYER</OrderObject>
             </OrderSubTitleBar>
             <OrderUser>
                 <OrderUserInfo>{userInfo.username}</OrderUserInfo>
@@ -296,3 +306,102 @@ function OrderUserTable({userInfo}){
     </OrderTable>
 }
 
+function OrderOptionTable({ onPaymentSelectionChange }) {
+    const [selectedValue, setSelectedValue] = useState(null);
+
+    const handleChange = (value) => {
+        setSelectedValue(value);
+        // 선택된 value를 기반으로 id 찾기 및 상위 컴포넌트로 ID 전달
+        const selectedOption = [kakaopay, inicis].find(option => option.value === value);
+        const selectedId = selectedOption ? selectedOption.id : '';
+        onPaymentSelectionChange(selectedId);
+    };
+
+    return <OrderTable>
+        <OrderSubTitleAndBar>
+            <OrderSubTitleBar>
+                <OrderObject>PAYMENT</OrderObject>
+            </OrderSubTitleBar>
+
+            <IconsRadio selectedValue={selectedValue} onChange={handleChange} />
+
+        </OrderSubTitleAndBar>
+    </OrderTable>
+}
+const kakaopay = {
+    type : "radio",
+    id : "kakaopay.TC0ONETIME",
+    value : "카카오페이",
+    img : "https://developers.kakao.com/tool/resource/static/img/button/kakaotalksharing/kakaotalk_sharing_btn_small.png"
+
+}
+const inicis = {
+    type : "radio",
+    id : "html5_inicis.INIBillTst",
+    value : "KG이니시스",
+    img : "https://www.inicis.com/wp-content/themes/inicis2020/assets/images/sub07-010301.png"
+}
+
+export function IconsRadio({ selectedValue, onChange }) {
+
+    
+    // onChange 핸들러 수정
+    const handleChange = (event) => {
+        onChange(event.target.value); // 상위 컴포넌트의 handleChange 호출
+    };
+
+
+    return (
+      <RadioGroup
+        aria-label="platform"
+        value={selectedValue}
+        onChange={handleChange}
+        overlay
+        name="platform"
+        sx={{
+          flexDirection: 'row',
+          gap: 2,
+          [`& .${radioClasses.checked}`]: {
+            [`& .${radioClasses.action}`]: {
+              inset: -1,
+              border: '3px solid',
+              borderColor: 'primary.500',
+            },
+          },
+          [`& .${radioClasses.radio}`]: {
+            display: 'contents',
+            '& > svg': {
+              zIndex: 2,
+              position: 'absolute',
+              top: '-8px',
+              right: '-8px',
+              bgcolor: 'background.surface',
+              borderRadius: '50%',
+            },
+          },
+        }}
+      >
+        {[kakaopay, inicis].map((option) => (
+        
+          <Sheet
+            key={option.id} // key 값을 option의 id로 변경
+            variant="outlined"
+            sx={{
+              borderRadius: 'md',
+              boxShadow: 'sm',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 1.5,
+              p: 2,
+              minWidth: 120,
+            }}
+          >
+            <Radio id={option.id} value={option.value} checkedIcon={<CheckCircleRoundedIcon />} />
+            <Avatar variant="soft" size="sm" src={option.img} /> {/* src 속성을 option 객체에서 가져옴 */}
+            <FormLabel htmlFor={option.id}>{option.value}</FormLabel> {/* htmlFor와 내부 텍스트를 option 객체의 속성으로 변경 */}
+          </Sheet>
+        ))}
+      </RadioGroup>
+    );
+  }
