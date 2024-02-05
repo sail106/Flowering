@@ -29,11 +29,12 @@ const initialState = {
         email: '',
         imageUrl: '',
         introduction: '',
-        cost: '',
         consultingFile: '',
         role: '',
-        isMic:'false',
-        isCam:'false',
+        isMic: 'false',
+        isCam: 'false',
+        access_token: '',
+        refresh_token: '',
     },
 
     isLoading: false,
@@ -119,17 +120,36 @@ export const nicknameCheck = createAsyncThunk(
 
 // login actions
 export const loginUser = createAsyncThunk(
-    async (userInfo, { rejectWithValue }) => {
-        console.log("heg")
+    'auth/loginUser',
+    async ({ Email, Password }, { rejectWithValue }) => {
+        console.log("email:", Email);
+        console.log("password:", Password);
+
+        const loginrequest = {
+            email: Email,
+            password: Password,
+        }
+
         try {
+            console.log("loginrequest", loginrequest);
+
             // start
-            const response = await Axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', userInfo);
-            console.log("res" , response);
-            const token = response.headers["authorization"]; // 헤더로 받을 때
+            // const response = await Axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', userInfo);
+            const response = await Axios.post('auth/login', loginrequest);
+            console.log("res", response.data);
+
+            console.log("res", response.data.data_body);
+
+            const token = response.data.data_body
+            console.log("accesstoken  " + token.access_token)
+
             saveToken(token);
-            return response.data;
+
+            return token;
+
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            console.log('errrr')
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
@@ -256,6 +276,7 @@ const authSlice = createSlice({
                 role: '',
                 imageUrl: '/images/default/avatar01.png',
             }
+            console.log('isauthentictedddd')
             state.isAuthenticated = false;
             deleteToken();
         },
@@ -293,14 +314,21 @@ const authSlice = createSlice({
             })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log('fulfillllll' + action.payload.access_token)
+                console.log('fulfillllll' + action.payload.access_token)
                 state.logonUser = {
-                    nickname: action.payload.data.nickname,
-                    role: action.payload.data.role,
-                    imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png')
-                };                
+                    // nickname: action.payload.data.nickname,
+                    // role: action.payload.data.role,
+                    // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
+                    access_token: action.payload.access_token,
+                    refresh_token : action.payload.refresh_token
+
+                };
                 state.isAuthenticated = true;
             })
+
             .addCase(loginUser.rejected, (state) => {
+                console.log("hi");
                 state.isAuthenticated = false;
             })
             // modify extra reducers
@@ -321,7 +349,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole,setname } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

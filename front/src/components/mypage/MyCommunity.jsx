@@ -263,6 +263,40 @@ const MyCommunity = () => {
   //   });
   // }
 
+  const btnclick = (community_id) => {
+    console.log('click' + community_id)
+    dispatch(setRole('creator'))
+    dispatch(setname('creator'))
+
+    dispatch(setConsultantSessionName2(community_id))
+    console.log('community_id', community_id)
+
+
+    const consultant = {
+      imageUrl: imageUrl,
+      name: name,
+      isMic: 'true',
+      isCam: 'true',
+    };
+
+    console.log('dddddddddddd')
+    dispatch(appendParticipantList(consultant))
+    // consultant 가져오는 로직 
+
+
+    //payload 에 consultingid 가 온다.
+    dispatch(getCustomer(consultingid)).then((response) => {
+
+      console.log('getCustomer 액션 성공:', response)
+    }).catch((error) => {
+      console.error('getCustomer 액션 실패:', error);
+    })
+    // 위는 consultant 가져오는 로직 
+
+    navigate('/OneToOneVideoChat')
+
+  }
+
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },
     { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 2 },
@@ -294,7 +328,7 @@ const MyCommunity = () => {
               </ButtonTd>
               <ButtonTd>
                 {/* Passing the community_id as an argument */}
-                <Button onClick={() => joinSession(row.community_id)}>바로가기</Button>
+                <Button onClick={() => btnclick(row.community_id)}>바로가기</Button>
               </ButtonTd>
             </Tr>
           ))}

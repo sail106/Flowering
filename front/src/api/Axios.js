@@ -20,16 +20,17 @@ export const imgAxios = baseAxios.create({
 
 export default Axios;
 
-Axios.interceptors.request.use((config) => {
-  if (getToken()) {
-    config.headers.Authorization = `Bearer ${getToken()}`;
-  }
-  return config;
-});
 
-imgAxios.interceptors.request.use((config) => {
-  if (getToken()) {
-    config.headers.Authorization = `Bearer ${getToken()}`;
-  }
-  return config;
-});
+// Axios.interceptors.request.use((config) => {
+//   if (getToken()) {
+//     config.headers.Authorization = `Bearer ${getToken()}`;
+//   }
+//   return config;
+// });
+
+// imgAxios.interceptors.request.use((config) => {
+//   if (getToken()) {
+//     config.headers.Authorization = `Bearer ${getToken()}`;
+//   }
+//   return config;
+// });
