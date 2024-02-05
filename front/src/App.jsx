@@ -25,7 +25,7 @@ import BeautyConsulting from "./components/BeuatyConsulting";
 import ExpertConsulting from "./components/mypage/ExpertConsulting";
 import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
 import ExpertsReservation from "./components/experts/ExpertsReservation";
-import Review from "./components/experts/review";
+import Review from "./components/experts/Review";
 import ExpertsProfileLeina from "./components/experts/ExpertsProfileLeina";
 import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
@@ -34,7 +34,11 @@ import LoginForm from "./components/LoginForm";
 import Consulting1stepresult from "./components/consultingresult/consulting1stepresult";
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
 
+import Finish1step from "./components/consultingresult/Finish1step";
+
+
 import PhotoTest from "./components/PhotoTest";
+
 
 function App() {
   return (
@@ -59,6 +63,7 @@ function App() {
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
+          <Route path="/finish1step" element={<Finish1step />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
