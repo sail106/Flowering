@@ -1,37 +1,44 @@
-import React, { useRef, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const ImageCutter = ({ imageUrl, x1, y1, x2, y2 }) => {
-	const canvasRef = useRef(null);
+function ImageCutter({ imageUrl, topLeft, bottomLeft }) {
+  const [output, setOutput] = useState(null);
 
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		const ctx = canvas.getContext('2d');
+  useEffect(() => {
+    cropImageNow();
+  }, []);
 
-		const image = new Image();
-		image.src = imageUrl;
-		image.crossOrigin = 'Anonymous'; // CORS 정책 준수
+  const cropImageNow = () => {
+    if (!imageUrl || !topLeft || !bottomLeft) return;
 
-		image.onload = () => {
-			ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const image = new Image();
+    image.crossOrigin = "Anonymous"; // Cross-origin 설정 추가
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.abs(bottomLeft.x - topLeft.x) * 2;
+      canvas.height = Math.abs(bottomLeft.y - topLeft.y) * 2;
+      const ctx = canvas.getContext("2d");
 
-			// 주어진 좌표로부터 직사각형 자르기
-			const width = Math.abs(x2 - x1); // 음수 방지를 위해 절대값 사용
-			const height = Math.abs(y2 - y1);
-			const startX = Math.min(x1, x2);
-			const startY = Math.min(y1, y2);
+      ctx.drawImage(
+        image,
+        Math.min(topLeft.x, bottomLeft.x),
+        Math.min(topLeft.y, bottomLeft.y),
+        Math.abs(bottomLeft.x - topLeft.x),
+        Math.abs(bottomLeft.y - topLeft.y),
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
-			// 이미지 데이터 가져오기
-			const imageData = ctx.getImageData(startX, startY, width, height);
+      // Converting to base64
+      const base64Image = canvas.toDataURL("image/jpeg");
+      setOutput(base64Image);
+    };
 
-			// 자른 이미지를 다시 Canvas에 그리기
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			canvas.width = width;
-			canvas.height = height;
-			ctx.putImageData(imageData, 0, 0);
-		};
-	}, [imageUrl, x1, y1, x2, y2]);
+    image.src = imageUrl;
+  };
 
-	return <canvas ref={canvasRef} />;
-};
+  return <>{output && <img src={output} alt="Cropped" />}</>;
+}
 
 export default ImageCutter;
