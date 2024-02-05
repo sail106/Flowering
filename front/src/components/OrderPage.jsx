@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { ButtonBox } from "./common/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@mui/joy/Avatar';
 import FormLabel from '@mui/joy/FormLabel';
@@ -44,7 +44,7 @@ export const Content = styled.div`
 `
 
 
-const BtnList = styled.div`
+export const BtnList = styled.div`
     width: 564px;
     height: 60px;
     flex-grow: 0;
@@ -184,7 +184,7 @@ const Order = () =>{
     const handlePaymentSelectionChange = (selectedId) => {
         setSelectedPaymentId(selectedId);
     };
-
+    const navigate = useNavigate();
     
     useEffect(() => {
         const jquery = document.createElement("script");
@@ -200,6 +200,7 @@ const Order = () =>{
     }, []);
     
     const requestPay = () => {
+        
         const { IMP } = window;
         IMP.init('imp03878765');
     
@@ -219,7 +220,7 @@ const Order = () =>{
         try {
             const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
             if (rsp.paid_amount === data.response.amount) {
-                alert('결제 성공');
+                navigate('/order-result');
 
             } else {
                 alert('결제 실패');
@@ -332,7 +333,7 @@ const kakaopay = {
     type : "radio",
     id : "kakaopay.TC0ONETIME",
     value : "카카오페이",
-    img : "https://developers.kakao.com/tool/resource/static/img/button/kakaotalksharing/kakaotalk_sharing_btn_small.png"
+    img : "src/assets/kakaoFavicon.png"
 
 }
 const inicis = {

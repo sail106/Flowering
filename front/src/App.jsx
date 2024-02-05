@@ -63,7 +63,7 @@ function App() {
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
           <Route path="/order" element={<OrderPage />} />
-          <Route path="/abcd" element={<OrderResult />} />
+          <Route path="/order-result" element={<OrderResult />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
