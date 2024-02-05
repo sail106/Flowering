@@ -122,8 +122,6 @@ export const nicknameCheck = createAsyncThunk(
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
     async ({ Email, Password }, { rejectWithValue }) => {
-        console.log("email:", Email);
-        console.log("password:", Password);
 
         const loginrequest = {
             email: Email,
@@ -131,25 +129,14 @@ export const loginUser = createAsyncThunk(
         }
 
         try {
-            console.log("loginrequest", loginrequest);
-
             // start
-            // const response = await Axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', userInfo);
             const response = await Axios.post('auth/login', loginrequest);
-            console.log("res", response.data);
-
-            console.log("res", response.data.data_body);
-
             const token = response.data.data_body
-            console.log("accesstoken  " + token.access_token)
-
             saveToken(token);
-
             return token;
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
-            console.log('errrr')
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
@@ -314,8 +301,6 @@ const authSlice = createSlice({
             })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log('fulfillllll' + action.payload.access_token)
-                console.log('fulfillllll' + action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data.role,
@@ -328,7 +313,6 @@ const authSlice = createSlice({
             })
 
             .addCase(loginUser.rejected, (state) => {
-                console.log("hi");
                 state.isAuthenticated = false;
             })
             // modify extra reducers
