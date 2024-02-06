@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Data
-@Configuration
-@ConfigurationProperties(prefix = "spring.analysis")
-public class AnalysisConfig {
-    private String key;
-    private String secret;
+@Component@Configuration
+@ConfigurationProperties(prefix = "spring.security.oauth2.client.registration.naver")
+public class NaverConfig {
+    private String clientId;
+    private String clientSecret;
 }
