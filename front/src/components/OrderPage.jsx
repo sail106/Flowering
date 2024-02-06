@@ -181,6 +181,8 @@ const userInfo = {
 
 
 const Order = () => {
+
+
     const [selectedPaymentId, setSelectedPaymentId] = useState(null);
     const handlePaymentSelectionChange = (selectedId) => {
         setSelectedPaymentId(selectedId);
@@ -188,9 +190,13 @@ const Order = () => {
     const navigate = useNavigate();
 
     const { selectedTime, selectedDate } = useSelector(state => state.selected);
+    const { name, role, id, nickname, imageUrl,access_token } = useSelector(state => state.auth.logonUser)
 
     // alert('dddd' + selectedDate + " " + selectedTime)
 
+
+
+    
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -223,15 +229,35 @@ const Order = () => {
             buyer_postcode: '123-456',
         }, async (rsp) => {
             try {
-               
+
 
                 const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
                 if (rsp.paid_amount === data.response.amount) {
 
-                    await axios.post('http://i10c106.p.ssafy.io:8080/v1/consultings/1', {
-                        time: selectedDate + "T" + selectedTime,
-                        // ... (다른 필요한 데이터)
-                    });
+                    try {
+                        const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
+                        const config = {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                                // 다른 필요한 헤더도 추가할 수 있습니다.
+                            }
+                        };
+
+                        const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/consultings/1', {
+                            time: selectedDate + "T" + selectedTime,
+                            // 다른 필요한 데이터
+                        }, config);
+
+                        // 요청 성공 시 수행할 작업
+                        console.log('Response:', response.data);
+                    }
+
+                    catch (error) {
+                        console.error('Error :', error);
+                        // alert('결제 실패');
+                    }
+
                     navigate('/order-result');
 
                 } else {

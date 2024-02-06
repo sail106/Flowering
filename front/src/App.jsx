@@ -41,6 +41,7 @@ import PhotoTest from "./components/PhotoTest";
 import Finalresult3step from "./components/consultingresult/Finalresult3step";
 import SkinProductCard from "./components/consultingresult/SkinProductCard";
 import Orderpage from "./components/OrderPage";
+import OrderResult from "./components/OrderResult";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/orderpage" element={<Orderpage />} />
+          <Route path="/orderResult" element={<OrderResult />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage2" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
