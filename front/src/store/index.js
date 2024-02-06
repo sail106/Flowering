@@ -7,6 +7,7 @@ import AvatarReducer from "../components/avatar/avatarSlice";
 import communityReducer from './communitySlice';
 import consultReducer from './consultSlice';
 import consultsessionnameReducer from './consultsessionnameSlice';
+import selectedReducer from './selectedSlice';
 import authReducer from './authSlice';
 
 // 리듀서들을 합칩니다
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   avatar: AvatarReducer,
   community: communityReducer,
   consult: consultReducer,
+  selected: selectedReducer,
   consultsessionname: consultsessionnameReducer,
   auth: authReducer,
 });

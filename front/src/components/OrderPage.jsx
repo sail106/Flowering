@@ -220,6 +220,7 @@ const Order = () =>{
         try {
             const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
             if (rsp.paid_amount === data.response.amount) {
+                
                 navigate('/order-result');
 
             } else {
