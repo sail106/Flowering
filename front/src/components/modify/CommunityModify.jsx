@@ -59,6 +59,7 @@ const CommunityModify = () => {
       <Title text={"Reservation"} />
       <Margin />
       <MyCalendar />
+     
       <M1>
         <RadioButton
           type="radio"
@@ -72,6 +73,7 @@ const CommunityModify = () => {
         <RadioButton value="12:00"></RadioButton>
         <RadioButton value="13:00"></RadioButton>
       </M1>
+
       <M1>
         <RadioButton value="15:00"></RadioButton>
         <RadioButton value="16:00"></RadioButton>

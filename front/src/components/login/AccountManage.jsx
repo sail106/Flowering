@@ -1,4 +1,6 @@
+
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Account = styled.div`
   padding-top: 15px;
@@ -6,7 +8,7 @@ const Account = styled.div`
   text-align: center;
 `;
 
-const ATag = styled.a`
+const AccountLink = styled(Link)`
   text-decoration: none;
   color: black;
   margin-left: 15px;
@@ -19,8 +21,8 @@ const AccountManage = props => {
   return (
     <Account>
       {props.children}
-      <ATag href="#">비밀번호 찾기</ATag>
-      <ATag href="#">회원가입</ATag>
+      <AccountLink to="/pw">비밀번호 찾기</AccountLink>
+      <AccountLink to="/signup">회원가입</AccountLink>
     </Account>
   );
 };

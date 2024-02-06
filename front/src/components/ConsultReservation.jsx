@@ -7,6 +7,7 @@ import CenterContainer from "./common/CenterContainer";
 import { useSelector } from "react-redux";
 
 const ConsultReservation = () => {
+  
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   console.log(isAuthenticated);
 
@@ -25,9 +26,11 @@ const ConsultReservation = () => {
       <CenterContainer>
         <Button
           width="40%"
+
         >
           예약하기
         </Button>
+
       </CenterContainer>
     </Card>
   )

@@ -20,7 +20,7 @@ const NavBox = styled.div.withConfig({
   top: 0;
 `;
 
-const Logo = styled.a`
+const MyLink = styled(Link)`
   color:inherit;
   padding: 40px;
   font-family: "Lexend Deca", sans-serif;
@@ -107,7 +107,7 @@ const Navbar = () => {
   }, [location]);
   return (
     <NavBox backgroundColor={backgroundColor} textColor={textColor}>
-      <Logo>Flowering</Logo>
+      <MyLink to="/">Flowering</MyLink>
       <NavMenu>
  
         <Link to={"/"} reloadDocument>Home</Link>

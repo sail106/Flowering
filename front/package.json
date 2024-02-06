@@ -23,6 +23,7 @@
     "axios": "^1.6.7",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.10",
+    "firebase": "^10.8.0",
     "framer-motion": "^10.18.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

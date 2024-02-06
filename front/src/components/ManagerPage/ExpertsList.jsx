@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import { ButtonBox } from "../common/Button";
+import { BsSend } from "react-icons/bs";
 import Input from "../common/Input";
 
-const Put = styled.div`
-  margin-left: 180px;
-`;
 const H2 = styled.h3`
   font-family: "Noto Sans KR";
   font-size: 30px;
@@ -22,11 +19,9 @@ const EmailInput = styled.div`
   margin-left: 50px;
 `;
 
-const MyButton = styled(ButtonBox)`
-  border-radius: 300px;
-  margin: 120px;
-  width: 90.145px;
-  height: 30.143px;
+const Square = styled(BsSend)`
+  font-size: 25px;
+  cursor: pointer;
 `;
 
 const Table = styled.table`
@@ -36,7 +31,7 @@ const Table = styled.table`
 `;
 
 const Margin = styled.table`
-  margin: -40px;
+  margin: 40px;
 `;
 
 const Thead = styled.thead``;
@@ -53,7 +48,6 @@ const Th = styled.th`
   font-size: 20px;
   font-weight: 500;
 `;
-
 
 const Td = styled.td`
   padding: 8px;
@@ -107,7 +101,6 @@ const ExpertsList = () => {
       <h1>MANAGER PAGE</h1>
       <hr />
       <Experts>
-        {/* Section for displaying the list of experts */}
         <H2>전문가 목록</H2>
         <hr />
         <Table>
@@ -122,7 +115,6 @@ const ExpertsList = () => {
             </Tr>
           </Thead>
           <Tbody>
-          
             {data.map((row, index) => (
               <Tr key={index}>
                 <Td>{row.name}</Td>
@@ -135,18 +127,15 @@ const ExpertsList = () => {
             ))}
           </Tbody>
         </Table>
-        
         <H2>전문가 등록</H2>
         <hr />
         <Margin />
-       
         <EmailInput>
           <p>이메일</p>
           <Input width={"587px"} placeholder="이메일을 입력해주세요" />
-          <MyButton>저장하기</MyButton>
+          <Square />
         </EmailInput>
         <Margin />
-  
         <H2>FAQ</H2>
         <hr />
       </Experts>
