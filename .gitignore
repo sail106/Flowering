@@ -9,3 +9,8 @@
 /dataSources/
 /dataSources.local.xml
 /back/.idea/
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
