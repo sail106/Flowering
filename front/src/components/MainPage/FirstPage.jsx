@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Page } from "../common/Page";
 import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
+import page1girl from "../../assets/page1girl.png";
+
 const MyPage = styled(Page)`
   background-color: #ffc8b9;
 `;
@@ -68,7 +70,7 @@ const FirstPage = () => {
         <MyButton>컨설팅 신청하기</MyButton>
       </Link>
       <ImageWrapper>
-        <Image src="src/assets/page1girl.png" alt="girl1" />
+        <Image src={page1girl} alt="girl1" />
       </ImageWrapper>
     </MyPage>
   );

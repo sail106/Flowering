@@ -42,7 +42,7 @@ const FifthPage = () => {
   return (
     <MyPage>
       <ImageWrapper3>
-        <Image src="src/assets/BeautySolution.png" alt="BIBI" />
+        <Image src="src/assets/beautysolution.png" alt="BIBI" />
       </ImageWrapper3>
 
       <SolutionDiv>

@@ -31,7 +31,7 @@ import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
 import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
-import Consulting1stepresult from "./components/consultingresult/consulting1stepresult";
+import Consulting1stepresult from "./components/consultingresult/Consulting1stepresult";
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
 
 import Finish1step from "./components/consultingresult/Finish1step";
