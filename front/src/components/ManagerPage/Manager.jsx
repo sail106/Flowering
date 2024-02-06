@@ -3,6 +3,7 @@ import ExpertsList from "./ExpertsList";
 import ManagerFaq from "./ManageFaq";
 import Input from "../common/Input";
 import { BsSend } from "react-icons/bs";
+import ContentsBox from "./ContentsBox";
 
 // ManagerPage 스타일드 컴포넌트
 const ManagerPage = styled.div`
@@ -17,8 +18,8 @@ const ManagerPage = styled.div`
 const Square = styled(BsSend)`
   font-size: 25px;
   position: absolute;
-  bottom: 50px;
-  right: 250px;
+  bottom: 170px;
+  right: 230px;
   cursor: pointer;
 `;
 
@@ -37,6 +38,9 @@ const H3 = styled.h3`
 const Margin = styled.div`
   margin: 30px;
 `;
+const Margin2 = styled.div`
+  margin: 60px;
+`;
 
 const AddImageButton = styled.button`
   border: 1px solid #f5f5f5;
@@ -51,7 +55,7 @@ const AddImageButton = styled.button`
 `;
 
 const ReviewInput = styled.textarea`
-  width: 700px;
+  width: 600px;
   height: 300px;
   padding: 15px;
   font-family: "Noto Sans KR";
@@ -77,6 +81,9 @@ const Manager = () => {
       <Margin />
       <ExpertsList />
       <ManagerFaq />
+      <Margin />
+      <ContentsBox />
+      <Margin />
       <Center>
         <div>
           <H3>공지사항 / 매거진</H3>
@@ -92,6 +99,8 @@ const Manager = () => {
           <Square />
         </div>
       </Center>
+
+      <Margin2 />
     </ManagerPage>
   );
 };
