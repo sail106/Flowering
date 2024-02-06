@@ -205,7 +205,7 @@ const Order = () => {
     }, []);
 
     const requestPay = () => {
-
+        console.log('ssss' + selectedDate + "T" + selectedTime)
         const { IMP } = window;
         IMP.init('imp03878765');
 
@@ -223,7 +223,7 @@ const Order = () => {
             buyer_postcode: '123-456',
         }, async (rsp) => {
             try {
-                console.log('ssss' + selectedDate + "T" + selectedTime)
+               
 
                 const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
                 if (rsp.paid_amount === data.response.amount) {
@@ -232,7 +232,6 @@ const Order = () => {
                         time: selectedDate + "T" + selectedTime,
                         // ... (다른 필요한 데이터)
                     });
-
                     navigate('/order-result');
 
                 } else {
