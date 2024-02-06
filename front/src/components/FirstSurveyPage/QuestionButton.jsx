@@ -39,7 +39,12 @@ const QuestionButton = (props) => {
 
   return (
     <QuestionBtn $clicked={isSelected} onClick={handleClick}>
-      {text}
+      {text.split("\n").map((line, index) => (
+        <React.Fragment key={index}>
+          {line}
+          <br />
+        </React.Fragment>
+      ))}
     </QuestionBtn>
   );
 };

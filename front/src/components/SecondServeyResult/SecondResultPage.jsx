@@ -240,15 +240,15 @@ const SecondResultPage = () => {
   };
 
   const getWrinkle = (glabella, forehead) => {
-    if (glabella === 0 && forehead == 0) return "주름이 발견되지 않았습니다.";
-    else if (glabella == 1 && forehead == 0) return "미간에서 주름이 발견 되었습니다.";
-    else if (glabella == 0 && forehead == 1) return "이마에서 주름이 발견 되었습니다.";
-    else return "이마와 미간에서 주름이 발견되엇습니다.";
+    if (glabella === 0 && forehead == 0) return "주름이 없는 편입니다.";
+    else if (glabella == 1 && forehead == 0) return "미간의 주름이 많은 편입니다.";
+    else if (glabella == 0 && forehead == 1) return "이마의 주름이 많은 편입니다.";
+    else return "이마와 미간에서 주름이 많은 편입니다.";
   };
 
   const getAcne = (acne) => {
     if (acne === 0) return "여드름이 있는 편입니다.";
-    else return "여드름이 발견되지 않았습니다.";
+    else return "여드름이 없는 편입니다.";
   };
 
   const getDarkCircle = (darkCircle) => {
@@ -403,7 +403,7 @@ const SecondResultPage = () => {
               <FaceContentTitle>
                 {getMouthSize(data.mouth_data.mouth_size)} | {getLipRatio(data.mouth_data.lip_ratio)}
               </FaceContentTitle>
-              <FaceContentDetail></FaceContentDetail>
+              <FaceContentDetail>{GptRequest}</FaceContentDetail>
             </FaceContent>
           </FaceContentPart>
           <FaceContentPart>
