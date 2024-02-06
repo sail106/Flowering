@@ -5,6 +5,7 @@ import { ButtonBox } from "../common/Button";
 import styled from "styled-components";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
+
 const Text = styled.p`
   font-family: "Noto Sans KR";
   font-size: 20px;
@@ -20,10 +21,9 @@ const WithdrawalButton = styled(ButtonBox)`
 `;
 
 const ButtonDiv = styled.div`
-justify-content:center;
-display:flex;
-  
-`
+  justify-content: center;
+  display: flex;
+`;
 const LeaveButtom = styled(WithdrawalButton)`
   margin-top: 5%;
   width: 50%;
@@ -60,14 +60,27 @@ const Input = styled.input`
   &::placeholder {
     color: #b1b1b1;
   }
-  border:0;
+  border: 0;
   outline: none;
 `;
 const Icon = styled(CiSearch)`
   font-size: 30px;
   margin: 10px;
 `;
-export default function Search() {
+
+const InputButton = styled.input`
+  border: 1px solid gray;
+  width: 1245px;
+  padding: 15px;
+  &::placeholder {
+    color: #b1b1b1;
+  }
+  border-width: 0 0 1px;
+  &:focus {
+    outline: none;
+  }
+`;
+export default function Search({placeholder}) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -76,9 +89,7 @@ export default function Search() {
 
   return (
     <>
-      <WithdrawalButton color="neutral" onClick={() => setOpen(true)}>
-        검색하기
-      </WithdrawalButton>
+      <InputButton onClick={() => setOpen(true)} placeholder={placeholder}></InputButton>
       <Modal
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
@@ -104,7 +115,7 @@ export default function Search() {
             <TextArea placeholder="추천 제품의 특징을 입력하세요." />
           </Warning>
           <ButtonDiv>
-          <LeaveButtom onClick={handleClose}>추가하기</LeaveButtom>
+            <LeaveButtom onClick={handleClose}>추가하기</LeaveButtom>
           </ButtonDiv>
         </MySheet>
       </Modal>

@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import Input from "../common/Input";
 import { IoMdSearch } from "react-icons/io";
-
+import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
+import Search from "../modals/Search";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -22,13 +22,14 @@ const MyButton1 = styled(ButtonBox)`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-right: 100px;
 `;
 
 const Consulting1stepresultpage = styled.div`
-  width: 77%;
+  width: 90%;
   height: auto;
   margin-top: 15%;
-  margin-left: 10%;
+  margin-left: 7%;
 `;
 
 const Margin = styled.div`
@@ -123,10 +124,7 @@ const FinalresultInput = () => {
           <IoMdSearch />
         </H3>
         <Put>
-          <Input
-            width={"1245px"}
-            placeholder="스킨케어 추천 제품 이름을 입력하세요."
-          />
+          <Search placeholder="스킨케어 추천 제품 이름을 입력하세요." />
         </Put>
       </InputSet>
       <Margin2 />
@@ -191,10 +189,7 @@ const FinalresultInput = () => {
           <IoMdSearch />
         </H3>
         <Put>
-          <Input
-            width={"1245px"}
-            placeholder="메이크업 추천 제품 이름을 입력하세요."
-          />
+        <Search placeholder="메이크업 추천 제품 이름을 입력하세요."></Search>
         </Put>
       </InputSet>
       <Margin2 />
