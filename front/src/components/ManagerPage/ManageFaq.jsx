@@ -26,7 +26,7 @@ const Answer = styled.th`
 const FaqRow = styled.tr`
   display: flex;
   justify-content: start;
-  margin-right: 530px;
+  margin-right: 330px;
 `;
 
 const CloseOutline = styled(IoCloseOutline)`
@@ -39,10 +39,12 @@ const GoPlus1 = styled(GoPlus)`
   font-weight: bold;
   font-size: 25px;
   cursor: pointer;
+  position: absolute;
+  right: 405px;
 `;
 
 const ReviewInput = styled.textarea`
-  width: 590px;
+  width: 815px;
   height: 120px;
   padding: 10px;
   font-family: "Noto Sans KR";
@@ -65,6 +67,7 @@ const Box = styled.div`
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
+  width: 80%;
 `;
 
 const Put = styled.div`
@@ -146,10 +149,10 @@ const ManagerFaq = () => {
           <FaqRow>
             <Span>Q. </Span>
             <Put>
-              <Input width={"587px"} placeholder="질문을 입력해주세요" />
+              <Input width={"807px"} placeholder="질문을 입력해주세요" />
             </Put>
+            <GoPlus1 />
           </FaqRow>
-          <GoPlus1 />
         </Box>
         <FaqRow>
           <Span>A. </Span>
