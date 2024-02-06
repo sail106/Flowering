@@ -77,7 +77,7 @@ const SignupPw = () => {
   }
 
   const buttonNavigate = () => {
-    navigate('/')
+    navigate('/signupRequired')
   }
 
   const alertMessage = () => {
@@ -98,7 +98,6 @@ const SignupPw = () => {
       <StyledCheck isValid={checkNum}>✓ 숫자</StyledCheck>
       <StyledCheck isValid={checkSp}>✓ 특수문자</StyledCheck>
       <StyledCheck isValid={checkLen}>✓ 8~20자</StyledCheck>
-      {/* <p>✓ 영문 ✓ 숫자 ✓ 특수문자 ✓ 8~20자</p> */}
       <Input
         htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력"
         type="password"

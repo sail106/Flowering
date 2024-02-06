@@ -41,6 +41,7 @@ import Finish2step from "./components/consultingresult/Finish2step";
 import PhotoTest from "./components/PhotoTest";
 import Finalresult3step from "./components/consultingresult/Finalresult3step";
 import SkinProductCard from "./components/consultingresult/SkinProductCard";
+import SignupRequired from "./components/SignupRequired";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/test" element={<SpinnerTest />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/signupPw" element={<SignupPw />} />
+          <Route path="/signupRequired" element={<SignupRequired />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage2" element={<ExpertPage />} />
