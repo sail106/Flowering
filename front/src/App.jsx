@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import PasswordFindForm from "./components/PasswordFindForm";
 import SpinnerTest from "./components/SpinnerTest";
 import SignupForm from "./components/SignupForm";
+import SignupPw from "./components/SignupPw";
 import { Page } from "./components/common/Page";
 import MyPage from "./components/MyPage";
 import Navbar from "./components/Navbar";
@@ -55,6 +56,7 @@ function App() {
           <Route path="/pw" element={<PasswordFindForm />} />
           <Route path="/test" element={<SpinnerTest />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/signupPw" element={<SignupPw />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage2" element={<ExpertPage />} />

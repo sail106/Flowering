@@ -3,7 +3,6 @@ import Input from "./common/Input"
 import Button from "./common/Button"
 import EmailContainer from "./signup/EmailContainer"
 import Card from "./common/Card"
-import SignupPwHeader from "./signup/SignupPwHeader"
 import ButtonWrapper from "./signup/ButtonWrapper"
 import CenterContainer from "./common/CenterContainer"
 import SignupRequiredHeader from "./signup/SignupRequiredHeader"
@@ -13,9 +12,10 @@ import LabelContainer from "./signup/LabelContainer"
 import LabelSignup from "./signup/LabelSignup"
 import RadioLabelText from "./signup/RadioLabelText"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 const StyledP = styled.p`
   color: #F28482;
@@ -24,11 +24,20 @@ const StyledP = styled.p`
 const SignupForm = () => {
   const [isAuthCode, setIsAuthCode] = useState(false);
   const [authCorrect, setAuthCorrect] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     signupEmail: '',
     authNumber: '',
     // ... (다른 상태값들)
   });
+
+  const buttonNavigate = () => {
+    navigate('/signupPw');
+  }
+
+  const alertMessage = () => {
+    alert("인증번호가 올바르지 않습니다!");
+  }
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -105,27 +114,28 @@ const SignupForm = () => {
           <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
         </>
       )}
-      <CenterContainer>
-        {/* 만약 인증번호가 같으면 버튼색깔이 분홍색으로 */}
-        {/* 그렇지 않으면 지금 상태 그대로 */}
-        <Button
-          width="40%"
-          marginTop="50px"
-          background-color={!authCorrect ? "#B1B1B1" : null}
-          borderColor={!authCorrect ? "#B1B1B1" : null}
-        >
-          다음
-        </Button>
-      </CenterContainer>
 
-      {/* 회원가입 패스워드 */}
-      <SignupPwHeader />
-      <Input htmlFor="pw1" id="pw1" placeholder="영문, 숫자, 특수문자 포함 8~20자"/>
-      <p>✓ 영문 ✓ 숫자 ✓ 특수문자 ✓ 8~20자</p>
-      <Input htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력"/>
-      <p>✓ 비밀번호가 같아요</p>
       <CenterContainer>
-        <Button width="40%">다음</Button>
+        {authCorrect && (
+          <Button
+            width="40%"
+            marginTop="50px"
+            onClick={buttonNavigate}
+          >
+            다음
+          </Button>
+        )}
+        {!authCorrect && (
+          <Button
+            width="40%"
+            marginTop="50px"
+            background-color="#B1B1B1"
+            borderColor="#B1B1B1"
+            onClick={alertMessage}
+          >
+            다음
+          </Button>
+        )}
       </CenterContainer>
 
       <SignupRequiredHeader />
