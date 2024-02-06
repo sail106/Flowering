@@ -8,6 +8,12 @@ const H2 = styled.h3`
   padding-left: 8px;
 `;
 
+const E = styled.h3`
+  font-family: "Noto Sans KR";
+  font-size: 20px;
+  margin-right: 30px;
+  font-weight: 400;
+`;
 const Experts = styled.div`
   width: 80%;
   height: auto;
@@ -16,12 +22,13 @@ const Experts = styled.div`
 const EmailInput = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 10px;
 `;
 
 const Square = styled(BsSend)`
   font-size: 25px;
   cursor: pointer;
+  margin-left: 20px;
 `;
 
 const Table = styled.table`
@@ -131,8 +138,8 @@ const ExpertsList = () => {
         <hr />
         <Margin />
         <EmailInput>
-          <p>이메일</p>
-          <Input width={"587px"} placeholder="이메일을 입력해주세요" />
+          <E>이 메 일 </E>
+          <Input width={"800px"} placeholder="이메일을 입력해주세요" />
           <Square />
         </EmailInput>
         <Margin />
