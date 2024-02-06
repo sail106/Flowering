@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/v1/community")
+@CrossOrigin("*")
 public class CommunityController {
 
     private final CommunityService communityService;
@@ -108,4 +109,14 @@ public class CommunityController {
         return ResponseEntity.ok()
                 .body(MessageUtils.success(communityService.getMyCheckInCommunities(user)));
     }
+
+    @GetMapping("/getinfo/{communityId}")
+    public ResponseEntity<MessageUtils> getCommunityInfo(
+            @PathVariable Long communityId
+    ){
+        return ResponseEntity.ok()
+                .body(MessageUtils.success(communityService.getCommunityInfo(communityId)));
+    }
+
+
 }

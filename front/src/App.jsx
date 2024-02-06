@@ -50,6 +50,7 @@ function App() {
         <Routes>
           <Route path="/OneToManyVideoChat" element={<OneToManyVideoChat />} />
           <Route path="/OneToOneVideoChat" element={<OneToOneVideoChat />} />
+          {/* <Route path="/admin" element={<Admin />} /> */}
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/pw" element={<PasswordFindForm />} />

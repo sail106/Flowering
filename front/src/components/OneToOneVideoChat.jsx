@@ -32,7 +32,7 @@ import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
 import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -480,8 +480,8 @@ const OneToOneVideoChat = () => {
             Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
             'Content-Type': 'application/json',
 
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET,POST',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST',
           },
 
         })
@@ -500,14 +500,16 @@ const OneToOneVideoChat = () => {
 
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
+            console.log('409')
             resolve(sessionId);
           }
         });
+
     });
   }
 
   const createToken = (sessionId) => {
-    console.log('tokennnnnn')
+    console.log('tokennnnnn'+sessionId)
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",
@@ -537,6 +539,7 @@ const OneToOneVideoChat = () => {
           },
         })
         .then((response) => {
+          console.log('creattokensuccess')
           resolve(response.data.token);
         })
         .catch((error) => reject(error));
