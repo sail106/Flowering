@@ -3,6 +3,7 @@ import Axios from '../api/Axios';
 
 const initialState = {
   selectedTime: '',
+  selectedDate: '',
   // consultantSessionName: '',
   // messageId: 2,
 
@@ -33,8 +34,14 @@ const selectedSlice = createSlice({
 
     setSelectedTime: (state, { payload }) => {
       state.selectedTime = payload
+      state.selectedTime =state.selectedTime +':00'
     },
 
+    setSelectedDate: (state, { payload }) => {
+      console.log('date' + state.selectedDate)
+
+      state.selectedDate = payload
+    },
   },
 
   extraReducers: (builder) => {
@@ -46,7 +53,7 @@ const selectedSlice = createSlice({
 
 })
 
-export const { setSelectedTime, 
+export const { setSelectedTime, setSelectedDate
 } = selectedSlice.actions;
 
 export default selectedSlice.reducer;

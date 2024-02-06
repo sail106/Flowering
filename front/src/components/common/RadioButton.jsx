@@ -34,7 +34,7 @@ const RadioButton = (props) => {
   // 라디오 버튼 클릭 시 상태 토글하는 함수
   const handleButtonClick = () => {
     setIsChecked(!isChecked);
-    console.log('ssssssssssss' + props.value); // 클릭된 버튼의 값 로그로 출력
+    console.log('ssssssssssss' + props.value ); // 클릭된 버튼의 값 로그로 출력
     dispatch(setSelectedTime(props.value))
   };
 

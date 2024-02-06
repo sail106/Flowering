@@ -5,7 +5,7 @@ import RadioButton from "../common/RadioButton";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // useSelector import 추가
-import { setSelectedTime } from "../../store/selectedSlice";
+import { setSelectedDate, setSelectedTime } from "../../store/selectedSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const MyButton = styled(ButtonBox)`
@@ -48,12 +48,12 @@ const StyledRadioButton = styled(RadioButton)`
 const ExpertsReservation = () => {
   const navigate = useNavigate();
 
-  const { selectedTime } = useSelector(state => state.selected);
+  const { selectedTime, selectedDate } = useSelector(state => state.selected);
   //   const { role, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const handleClick = () => {
 
-    console.log("Button clicked!" + selectedTime);
+    console.log("Button clicked!" + selectedDate + " " + selectedTime);
     // 클릭 이벤트에 대한 추가적인 동작 구현
     navigate('/orderpage')
   };
