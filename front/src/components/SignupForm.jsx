@@ -102,14 +102,10 @@ const SignupForm = () => {
             onChange={handleAuthChange}
           />
           {!authCorrect && (
-            <>
-              <p>✓ 인증 번호가 같아요</p>
-            </>
+            <p>✓ 인증 번호가 같아요</p>
           )}
           {authCorrect && (
-            <>
-              <StyledP>✓ 인증 번호가 같아요</StyledP>
-            </>
+            <StyledP>✓ 인증 번호가 같아요</StyledP>
           )}
           <NotAuthNumber>인증번호가 오지 않아요.</NotAuthNumber>
         </>

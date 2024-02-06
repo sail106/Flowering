@@ -4,8 +4,9 @@ import Input from "./common/Input";
 import Button from "./common/Button";
 import Card from "./common/Card";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const StyledCheck = styled.p`
   display: inline-block;
@@ -18,13 +19,20 @@ const SignupPw = () => {
   const [checkNum, setCheckNum] = useState(false)
   const [checkSp, setCheckSp] = useState(false)
   const [checkLen, setCheckLen] = useState(false)
+  const [pwOne , setPwOne] = useState('');
+  const [pwTwo , setPwTwo] = useState('');
+  const [checkPwOne , setCheckPwOne] = useState(false);
+  const [checkPwTwo , setCheckPwTwo] = useState(false);
+
+  const navigate = useNavigate();
 
   const passwordHandler = (e) => {
+    setPwOne(e.target.value);
+
     // 영문
     let regPassEn = /^(?=.*[a-zA-Z]).{1,}$/;
     if (!regPassEn.test(e.target.value)){
       setCheckEn(false);
-      console.log("영문이 없습니다")
     } else {
       setCheckEn(true);
     }
@@ -53,7 +61,29 @@ const SignupPw = () => {
       setCheckLen(true);
     }
 
+    setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
+    console.log("checkPwOne : ", checkPwOne);
   }
+
+  const passwordChecker = (e) => {
+    if(pwOne === e.target.value){
+      setCheckPwTwo(true);
+    } else {
+      setCheckPwTwo(false);
+    }
+
+    console.log("checkPwOne : ", checkPwOne);
+    console.log("checkPwTwo : ", checkPwTwo);
+  }
+
+  const buttonNavigate = () => {
+    navigate('/')
+  }
+
+  const alertMessage = () => {
+    alert("비밀번호 형식을 다시 확인해주세요!")
+  }
+
 
   return (
     <Card>
@@ -71,16 +101,39 @@ const SignupPw = () => {
       {/* <p>✓ 영문 ✓ 숫자 ✓ 특수문자 ✓ 8~20자</p> */}
       <Input
         htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력"
-        tpye="password"
+        type="password"
+        onChange={passwordChecker}
       />
-      <p>✓ 비밀번호가 같아요</p>
+      <StyledCheck isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
       <CenterContainer>
-        <Button
+
+        {(checkPwOne && checkPwTwo) && (
+          <Button
+            width="40%"
+            marginTop="50px"
+            onClick={buttonNavigate}
+          >
+            다음
+          </Button>
+        )}
+        {(!checkPwOne || !checkPwTwo) && (
+          <Button
+            width="40%"
+            marginTop="50px"
+            background-color="#B1B1B1"
+            borderColor="#B1B1B1"
+            onClick={alertMessage}
+          >
+            다음
+          </Button>
+        )}
+
+        {/* <Button
           width="40%"
           marginTop="50px"
         >
           다음
-        </Button>
+        </Button> */}
       </CenterContainer>
     </Card>
   );
