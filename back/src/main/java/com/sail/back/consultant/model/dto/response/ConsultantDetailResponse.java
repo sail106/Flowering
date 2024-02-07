@@ -25,6 +25,7 @@ public class ConsultantDetailResponse {
     private String simple_introduce;
 
     private UserResponse userResponse;
+    private double star;
 
     //
 //    public Consultant from(ConsultantDetailResponse consultantListResponse) {
@@ -37,10 +38,10 @@ public class ConsultantDetailResponse {
     public ConsultantDetailResponse(Consultant consultant) {
         this.consultant_id = consultant.getConsultant_id();
         this.self_introduce = consultant.getSelf_introduce();
-        this.simple_introduce=consultant.getSimple_introduce();
+        this.simple_introduce = consultant.getSimple_introduce();
         this.userResponse = consultant.getUser().toResponse();
+        this.star=consultant.getStar();
     }
-
 
 
 }
