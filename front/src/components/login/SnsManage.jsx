@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import naverFavicon from "../../assets/naverFavicon.jpg";
+import kakaoFavicon from "../../assets/kakaoFavicon.png";
+import googleFavicon from "../../assets/googleFavicon.jpg";
 
 const SnsWordContainer = styled.p`
   color: #98A2B3;
@@ -32,9 +35,9 @@ const SnsManage = () => {
     <>
       <SnsWordContainer><DashSpan>——————</DashSpan> SNS 계정으로 로그인 <DashSpan>——————</DashSpan></SnsWordContainer>
       <ImgContainer>
-        <a href="#"><LogoImg src="src/assets/naverFavicon.jpg" alt="네이버 로고" /></a>
-        <a href="#"><LogoImg src="src/assets/kakaoFavicon.png" alt="카카오 로고" /></a>
-        <a href="#"><LogoImg src="src/assets/googleFavicon.jpg" alt="구글 로고" /></a>
+        <a href="#"><LogoImg src={naverFavicon} alt="네이버 로고" /></a>
+        <a href="#"><LogoImg src={kakaoFavicon} alt="카카오 로고" /></a>
+        <a href="#"><LogoImg src={googleFavicon} alt="구글 로고" /></a>
       </ImgContainer>
     </>
     

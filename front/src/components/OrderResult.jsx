@@ -2,7 +2,8 @@ import styled from "styled-components";
 import {OrderUserTable, DataTable, Content, Filed, BtnList} from "./OrderPage";
 import { ButtonBox } from "./common/Button";
 import { useNavigate } from "react-router-dom";
-
+import success_animation from "../assets/success_animation.gif"
+import processbar from "../assets/processbar.svg"
 const headers = [
     {
         text: 'CONSULTANT',
@@ -53,7 +54,7 @@ const OrderResult = () =>{
     return (
         <Filed>
             <Content>
-            <CheckImg src="src/assets/success_animation.gif" alt="1차 설문 완료" />
+            <CheckImg src={success_animation} alt="1차 설문 완료" />
             <H3>결제가 정상적으로 완료되었습니다.</H3>
 
             <P>
@@ -61,7 +62,7 @@ const OrderResult = () =>{
             2차 사진 테스트 진단을 완료하여 주세요. <br /><Collaps>* 테스트는 약 20분 소요됩니다.</Collaps> 
             </P>
             <StepImg
-                src="src/assets/processbar.svg"
+                src={processbar}
                 alt="1차 설문 완료, 2차 사진 테스트 진행 예정"
             />
             <Margin2 />

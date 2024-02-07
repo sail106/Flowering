@@ -5,7 +5,9 @@ import ThirdPage from "./mainPage/ThirdPage";
 import FourthPage from "./mainPage/FourthPage";
 import FifthPage from "./mainPage/FifthPage";
 import SixthPage from "./mainPage/SixthPage";
-
+import pinkcream from "../assets/pinkcream.svg"
+import yellowcream from "../assets/yellowcream.svg"
+import whitecream from "../assets/whitecream.svg"
 
 const PinkCreamWrapper = styled.div`
   position: absolute;
@@ -40,13 +42,13 @@ const MainPage = () => {
       <FirstPage />
 
       <PinkCreamWrapper>
-        <Image src="src/assets/pinkcream.svg" alt="pinkcream" />
+        <Image src={pinkcream} alt="pinkcream" />
       </PinkCreamWrapper>
 
       <SecondPage />
 
       <YellowCreamWrapper>
-        <Image src="src/assets/yellowcream.svg" alt="yellowcream" />
+        <Image src={yellowcream} alt="yellowcream" />
       </YellowCreamWrapper>
 
       <ThirdPage />
@@ -55,7 +57,7 @@ const MainPage = () => {
       <SixthPage />
 
       <WhiteCreamWrapper>
-        <Image src="src/assets/whitecream.svg" alt="whitecream" />
+        <Image src={whitecream} alt="whitecream" />
       </WhiteCreamWrapper>
     </>
   );

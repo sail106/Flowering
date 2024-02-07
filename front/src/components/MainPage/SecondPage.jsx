@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
+import page2girl from "../../assets/page2girl.svg.png"
 
 const MyPage = styled(Page)`
   background-color: #f8e4a9;
@@ -59,7 +60,7 @@ const SecondPage = () => {
       </TextDiv2_2>
 
       <ImageWrapper2>
-        <Image src="src/assets/page2girl.svg" alt="girl2" />
+        <Image src={page2girl} alt="girl2" />
       </ImageWrapper2>
     </MyPage>
   );
