@@ -79,12 +79,12 @@ const ExpertsIntroduction = () => {
             key={expert.consultant_id} // 각 전문가의 ID를 키로 사용
             id={expert.consultant_id} // 고유한 키 추가
             nickname={expert.user_response.nickname}
-            text={expert.self_introduce}
+            text={expert.simple_introduce}
             rate={expert.rate}
             ratenum={expert.ratenum}
             tag1={expert.tag1}
             tag2={expert.tag2}
-            imgsrc={expert.imgsrc}
+            imgsrc={BIBI}
             width={"280px"}
             height={"405px"}
             path={"/expertsProfilecommon/" + expert.consultant_id}

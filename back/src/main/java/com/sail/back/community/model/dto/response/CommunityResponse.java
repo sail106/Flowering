@@ -34,25 +34,10 @@ public class CommunityResponse {
 
     public static CommunityResponse fromEntity(Community community
     ) {
-
-        FindRequest findRequest = FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .name(true)
-                .build();
-
         return CommunityResponse.builder()
-                .userResponse(UserResponse.of(findRequest, community.getUser())) //방장
+                .userResponse(community.getUser().toResponse()) //방장
                 .status(community.getStatus())
                 .communityId(community.getId())
-
                 .build();
     }
 }

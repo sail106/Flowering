@@ -31,19 +31,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void registUser(UserRegistRequest userRegistRequest, UserRole role, AuthProvider provider) {
-        User user = User.builder()
-                .email(userRegistRequest.getEmail())
-                .password(passwordEncoder.encode(userRegistRequest.getPassword()))
-                .role(role)
-                .provider(provider)
-                .build();
-        userRepository.save(user);
+    public void registUser(UserRegistRequest request, UserRole role, AuthProvider provider) {
+        userRepository.findByEmail(request.getEmail()).ifPresent(value ->{ throw new UserException(UserErrorCode.ALREADY_IN_EMAIL);});
+        userRepository.save(request.createUser(passwordEncoder,role,provider));
     }
 
     @Override
     public UserResponse infoUser(FindRequest findRequest, User user) {
-        return UserResponse.of(findRequest, user);
+        return findRequest.toResponse(user);
     }
 
     @Override

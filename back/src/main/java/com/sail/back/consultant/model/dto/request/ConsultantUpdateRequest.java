@@ -18,12 +18,14 @@ public class ConsultantUpdateRequest {
 
 
     private String self_introduce;
+    private String simple_introduce;
 
 
     public Consultant toEntity() {
         return Consultant
                 .builder()
                 .self_introduce(this.self_introduce)
+                .simple_introduce(this.simple_introduce)
                 .build();
 
     }

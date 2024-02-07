@@ -24,54 +24,34 @@ public class Consultant {
 
     private String self_introduce;
 
+    private String simple_introduce;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void update(User user,String self_introduce)
+    public void update(User user,String self_introduce,String simple_introduce)
     {
         this.user=user;
         this.self_introduce=self_introduce;
+        this.simple_introduce=self_introduce;
     }
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant   )
     {
-        FindRequest findRequest= FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .build();
-
         return  ConsultantDetailResponse.builder()
-                .consultant_id(  consultant.getConsultant_id() )
+                .consultant_id(consultant.getConsultant_id() )
                 .self_introduce(consultant.getSelf_introduce())
-                .userResponse(UserResponse.of( findRequest, consultant.getUser()))
+                .simple_introduce(consultant.getSimple_introduce())
+                .userResponse(consultant.getUser().toResponse())
                 .build();
-
     }
     public ConsultantListResponse from(Consultant consultant)
     {
-        FindRequest findRequest= FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .build();
-
         return  ConsultantListResponse.builder()
                 .consultant_id(consultant.consultant_id)
                 .self_introduce(consultant.self_introduce)
-                .userResponse( UserResponse.of( findRequest ,consultant.user ) )
+                .self_introduce(consultant.simple_introduce)
+                .userResponse(consultant.user.toResponse())
                 .build();
 
     }
@@ -91,8 +71,9 @@ public class Consultant {
 
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)
-                .userResponse(UserResponse.of( findRequest,this.user) )
+                .userResponse(this.user.toResponse())
                 .selfIntroduce(this.self_introduce)
+                .simpleIntroduce(this.simple_introduce)
                 .build();
     }
 

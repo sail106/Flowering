@@ -105,6 +105,21 @@ public class User implements UserDetails {
         return true;
     }
 
+    public UserResponse toResponse(){
+        return UserResponse.builder()
+                .id(this.id)
+                .name(this.name)
+                .nickname(this.nickname)
+                .email(this.email)
+                .status(this.status)
+                .role(this.role)
+                .birthdateMonth(this.birthdateMonth)
+                .birthdateYear(this.birthdateYear)
+                .profileImgUrl(this.profileImgUrl)
+                .build();
+    }
+
+
     public static User of(OAuth2User oAuth2User) {
         Map<String, Object> map = oAuth2User.getAttributes();
         User user = new User();
@@ -136,7 +151,6 @@ public class User implements UserDetails {
         }
         return UserGender.FEMALE;
     }
-
 
     public static User from(UserResponse userResponse) {
         return User.builder()

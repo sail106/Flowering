@@ -20,6 +20,7 @@ public class ConsultantResponse {
     private Long consultantId;
 
     private String selfIntroduce;
+    private String simpleIntroduce;
 
     private UserResponse userResponse;
 }
