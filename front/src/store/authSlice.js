@@ -74,61 +74,24 @@ const initialState = {
 //     }
 // )
 
-export const emailCheck = createAsyncThunk(
-    'auth/emailcheck',
-    async (email, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/1?email=${email}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
-        }
-    }
-);
-
-
-// 이메일 발송 후 토큰 체크 
-export const emailAuthCheck = createAsyncThunk(
-    'members/email/2',
-    async (payload, { rejectWithValue }) => {
-        try {
-            const response = await Axios.post('members/email/2', payload)
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false
-        }
-    }
-)
-
-
-export const nicknameCheck = createAsyncThunk(
-    'auth/nicknamecheck',
-    async (nickname, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/2?nickname=${nickname}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
-        }
-    }
-);
 
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
     async ({ role }, { rejectWithValue }) => {
 
-
         try {
             console.log('innn')
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                    // 다른 필요한 헤더도 추가할 수 있습니다.
+                }
+            };
 
-            const response = await Axios.get(`users/info?role=${role}`);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+
             const res = response.data.data_body.role
             // saveToken(token);
             console.log(res)
@@ -142,6 +105,7 @@ export const UserInfo = createAsyncThunk(
         }
     }
 );
+
 // login actions
 export const loginUser = createAsyncThunk(
     'auth/loginUser',
@@ -320,16 +284,16 @@ const authSlice = createSlice({
         // signup extra reducers 통신 상태에 따른 실행 함수
         builder
             // signup extra reducers 통신 상태에 따른 실행 함수
-            .addCase(signUpMember.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(signUpMember.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.data = action.payload;
-            })
-            .addCase(signUpMember.rejected, (state) => {
-                state.status = 'failed';
-            })
+            // .addCase(signUpMember.pending, (state) => {
+            //     state.status = 'loading';
+            // })
+            // .addCase(signUpMember.fulfilled, (state, action) => {
+            //     state.status = 'succeeded';
+            //     state.data = action.payload;
+            // })
+            // .addCase(signUpMember.rejected, (state) => {
+            //     state.status = 'failed';
+            // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
                 console.log('fullll')
