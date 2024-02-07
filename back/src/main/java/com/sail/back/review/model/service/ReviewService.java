@@ -30,15 +30,26 @@ public class ReviewService {
 //        reviewcreateRequest.setUser(user);
 //        System.out.println("setttuserrr"+reviewcreateRequest.getUser().getId());
 
+
         Consultant consultant = consultantRepository.findById(reviewcreateRequest.getConsultantid()).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+
+
+        if (consultant.getReviews().stream().anyMatch(review -> review.getUser().getId().equals(user.getId()))) {
+            throw new ReviewException(ReviewErrorCode.ALREADY_IN);
+        }
+
         Review review = reviewcreateRequest.toEntity();
         review.setUser(user);
         review.setConsultant(consultant);
+
+
         reviewRepository.save(review);
+
+
     }
 
-    public ReviewModifyResponse modify(User user, ReviewModifyRequest modifyRequest,Long reviewid) {
+    public ReviewModifyResponse modify(User user, ReviewModifyRequest modifyRequest, Long reviewid) {
 
         Review review = reviewRepository.findById(reviewid).orElseThrow(() -> new ReviewException(ReviewErrorCode.NO_REVIEW));
 
