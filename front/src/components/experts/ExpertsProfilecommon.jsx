@@ -91,9 +91,6 @@ const ExpertsProfile = () => {
         console.log('error');
       });
 
-
-
-
     }
 
   }, []);
