@@ -24,6 +24,7 @@ public class ConsultantListResponse {
     private Long consultant_id;
 
     private String self_introduce;
+    private String simple_introduce;
 
     private UserResponse userResponse;
 
@@ -43,6 +44,7 @@ public class ConsultantListResponse {
 
         return Consultant.builder().
                 self_introduce(consultantListResponse.self_introduce)
+                .simple_introduce(consultantListResponse.getSimple_introduce())
                 .consultant_id(consultantListResponse.consultant_id)
                 .user( User.from(   consultantListResponse.userResponse) )
                 .build();

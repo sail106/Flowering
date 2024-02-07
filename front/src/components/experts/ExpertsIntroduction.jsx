@@ -36,6 +36,7 @@ const ExpertsIntroduction = () => {
 
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+        console.log('tooo   '+token)
 
         const config = {
           headers: {
@@ -44,9 +45,7 @@ const ExpertsIntroduction = () => {
           }
         };
 
-        const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', {
-          // 다른 필요한 데이터
-        }, config);
+        const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', config);
 
         // 요청 성공 시 수행할 작업
         console.log('Response:', response.data);
@@ -60,6 +59,7 @@ const ExpertsIntroduction = () => {
         console.error('Error :', error);
         // alert('결제 실패');
       }
+
     };
 
     fetchData(); // fetchData 함수 호출

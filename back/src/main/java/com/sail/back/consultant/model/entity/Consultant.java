@@ -50,7 +50,7 @@ public class Consultant {
         return  ConsultantListResponse.builder()
                 .consultant_id(consultant.consultant_id)
                 .self_introduce(consultant.self_introduce)
-                .self_introduce(consultant.simple_introduce)
+                .simple_introduce(consultant.simple_introduce)
                 .userResponse(consultant.user.toResponse())
                 .build();
 
