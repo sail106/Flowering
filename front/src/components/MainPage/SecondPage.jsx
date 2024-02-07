@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
-import page2girl from "../../assets/page2girl.svg.png"
+import page2girl from "../../assets/page2girl.svg"
 
 const MyPage = styled(Page)`
   background-color: #f8e4a9;
