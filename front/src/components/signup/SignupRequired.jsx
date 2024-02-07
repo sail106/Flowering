@@ -9,6 +9,7 @@ import CenterContainer from "../common/CenterContainer";
 import Button from "../common/Button";
 
 const SignupRequired = () => {
+  // 여기서 필수정보를 axios로 쏜다.
   return (
     <Card>
       <SignupRequiredHeader />
