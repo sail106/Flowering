@@ -1,6 +1,8 @@
 package com.sail.back.security.config;
 
 import com.sail.back.security.filter.JwtFilter;
+import com.sail.back.security.handler.AuthFailureHandler;
+import com.sail.back.security.handler.ExceptionHandlerFilter;
 import com.sail.back.security.handler.OAuthSuccessHandler;
 import com.sail.back.security.model.service.CustomOAuth2Service;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +25,12 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfig{
 
-    private static final String[] ALLOWED_URIS = {"/**"};
+    private static final String[] ALLOWED_URIS = {"/v1/users/regist","/v1/auth/**","/v1/email/**","/v1/contents/**"};
     private final JwtFilter jwtFilter;
     private final CustomOAuth2Service customOAuth2Service;
     private final OAuthSuccessHandler oAuth2SuccessHandler;
-
+    private final AuthFailureHandler authFailureHandler;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -43,11 +46,20 @@ public class SecurityConfig{
                         .requestMatchers(ALLOWED_URIS).permitAll() // 특정 경로 인증 미요구
                         .anyRequest().authenticated() // 나머지 경로는 인증 요구
                 )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // JwtFilter 추가
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .authenticationEntryPoint(authFailureHandler)
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// JwtFilter 추가
+                .addFilterBefore(exceptionHandlerFilter, JwtFilter.class) // ExceptionHandlerFilter 추가
                 .oauth2Login(customizer ->
-                        customizer.successHandler(oAuth2SuccessHandler)
-                                .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(customOAuth2Service))
+                        customizer
+                                .failureHandler(authFailureHandler)
+                                .successHandler(oAuth2SuccessHandler)
+                                .userInfoEndpoint(userInfoEndpoint ->
+                                        userInfoEndpoint.userService(customOAuth2Service))
                 );
+
         return http.build();
     }
 

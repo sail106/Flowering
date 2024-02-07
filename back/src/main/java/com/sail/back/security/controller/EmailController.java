@@ -4,6 +4,7 @@ import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.security.model.dto.request.EmailConfirmRequest;
 import com.sail.back.security.model.dto.request.EmailRequest;
 import com.sail.back.security.model.service.EmailService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class EmailController {
 
     @PostMapping("/join-code")
     public ResponseEntity<MessageUtils> sendCodeEmail(
-            @RequestBody EmailRequest emailRequest
+            @Valid @RequestBody EmailRequest emailRequest
     ){
         emailService.sendJoinCodeMail(emailRequest.getEmail());
         return ResponseEntity.ok(MessageUtils.success());
@@ -30,7 +31,7 @@ public class EmailController {
 
     @PostMapping("/code")
     public ResponseEntity<MessageUtils> codeEmail(
-            @RequestBody EmailRequest emailRequest
+            @Valid @RequestBody EmailRequest emailRequest
     ){
         emailService.sendCodeMail(emailRequest.getEmail());
         return ResponseEntity.ok(MessageUtils.success());
@@ -38,7 +39,7 @@ public class EmailController {
 
     @PostMapping("/temp-password")
     public ResponseEntity<MessageUtils> tempPasswordEmail(
-            @RequestBody EmailRequest emailRequest
+            @Valid @RequestBody EmailRequest emailRequest
     ){
         emailService.sendTempPasswordMail(emailRequest.getEmail());
         return ResponseEntity.ok(MessageUtils.success());
@@ -46,7 +47,7 @@ public class EmailController {
 
     @PostMapping("/confirm")
     public ResponseEntity<MessageUtils> confirmNumber(
-            @RequestBody EmailConfirmRequest confirmRequest
+            @Valid @RequestBody EmailConfirmRequest confirmRequest
     ){
         emailService.confirmCode(confirmRequest.getEmail(), confirmRequest.getCode());
         return ResponseEntity.ok(MessageUtils.success());

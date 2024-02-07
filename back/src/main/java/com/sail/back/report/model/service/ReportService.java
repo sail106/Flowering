@@ -38,6 +38,7 @@ public class ReportService {
         Consulting consulting = consultingRepository
                 .findById(consultingId).orElseThrow(()->new ConsultingException(NOT_EXISTS_CONSULTING));
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
+        //todo : 이미존재하는 경우 예외처리해야함.
         reportRepository.save(Report.builder()
                         .consulting(consulting)
                         .build());

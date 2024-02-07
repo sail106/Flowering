@@ -38,22 +38,7 @@ public class ConsultantDetailResponse {
         this.consultant_id = consultant.getConsultant_id();
         this.self_introduce = consultant.getSelf_introduce();
         this.simple_introduce=consultant.getSimple_introduce();
-
-        FindRequest findRequest = FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .name(true)
-                .build();
-
-        this.userResponse = UserResponse.of(findRequest, consultant.getUser());
-
+        this.userResponse = consultant.getUser().toResponse();
     }
 
 
