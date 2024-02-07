@@ -32,17 +32,18 @@ public class Review {
     private String content;
 
     private int star;
+
     public void updateReview(int newStar, String newContent) {
-        this.star=newStar;
-        this.content=newContent;
+        this.star = newStar;
+        this.content = newContent;
 
     }
 
     public static ReviewListResponse toreviewListResponse(Review review) {
         return ReviewListResponse.builder()
-                .review_id(review.getReview_id() )
+                .review_id(review.getReview_id())
                 .star(review.getStar())
-                .consultantDetailResponse( Consultant.toConsultantDetailResponse(review.getConsultant()))
+                .consultantDetailResponse(Consultant.toConsultantDetailResponse(review.getConsultant()))
                 .content(review.getContent())
                 .build();
     }
@@ -55,8 +56,20 @@ public class Review {
                 .content(content)
                 .build();
     }
-    public void setConsultant(Consultant consultant){
-        this.consultant=consultant;
+
+    public void setConsultant(Consultant consultant) {
+        this.consultant = consultant;
+
+        // 양방향 연관 관계를 설정하기 위해 상담사 엔티티에도 해당 리뷰를 추가
+        if (!consultant.getReviews().contains(this)) {
+            consultant.getReviews().add(this);
+        }
     }
+
+    public void setUser(User user) {
+        this.user = user;
+
+    }
+
 
 }
