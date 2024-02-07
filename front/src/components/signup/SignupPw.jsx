@@ -1,8 +1,8 @@
-import SignupPwHeader from "./signup/SignupPwHeader";
-import CenterContainer from "./common/CenterContainer";
-import Input from "./common/Input";
-import Button from "./common/Button";
-import Card from "./common/Card";
+import SignupPwHeader from "./SignupPwHeader";
+import CenterContainer from "../common/CenterContainer";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import Card from "../common/Card";
 
 import { useEffect, useState } from "react";
 import styled from "styled-components";

@@ -1,12 +1,12 @@
-import SignupEmailHeader from "./signup/SignupEmailHeader"
-import Input from "./common/Input"
-import Button from "./common/Button"
-import EmailContainer from "./signup/EmailContainer"
-import Card from "./common/Card"
-import CenterContainer from "./common/CenterContainer"
-import NotAuthNumber from "./signup/NotAuthNumber"
+import SignupEmailHeader from "./SignupEmailHeader"
+import Input from "../common/Input"
+import Button from "../common/Button"
+import EmailContainer from "./EmailContainer"
+import Card from "../common/Card"
+import CenterContainer from "../common/CenterContainer"
+import NotAuthNumber from "./NotAuthNumber"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom"
 const StyledP = styled.p`
   color: #F28482;
 `;
-
 const SignupForm = () => {
   const [isAuthCode, setIsAuthCode] = useState(false);
   const [authCorrect, setAuthCorrect] = useState(false);
@@ -25,11 +24,16 @@ const SignupForm = () => {
     authNumber: '',
     // ... (다른 상태값들)
   });
-// 한번 인증번호가 맞으면 input창을 disabled처리
+  
+
+
   const buttonNavigate = () => {
     setUserEmail(formData.email);
-    console.log("userEmail : ", userEmail);
-    navigate('/signupPw');
+    navigate('/signupPw', {
+      state: {
+        userEmail: userEmail
+      }
+    });
   }
 
   const alertMessage = () => {
@@ -49,7 +53,6 @@ const SignupForm = () => {
       });
   
       setIsAuthCode(true);
-      // console.log(response);
   
       // TODO: 응답에 따른 처리 로직 작성
       // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
@@ -68,10 +71,15 @@ const SignupForm = () => {
         code: e.target.value,
       })
       setAuthCorrect(true);
+      setUserEmail(formData.signupEmail);
     } catch(error) {
       setAuthCorrect(false);
     }
   }
+
+  useEffect(() => {
+    setUserEmail(formData.signupEmail);
+  }, [authCorrect]);
 
   return (
     <Card>
@@ -82,6 +90,7 @@ const SignupForm = () => {
           htmlFor="signupEmail" width="250px" id="signupEmail" placeholder="이메일 입력"
           value={formData.signupEmail}
           onChange={handleInputChange}
+          disabled={authCorrect}
         />
         <Button width="25%" onClick={handleAuthRequest}>인증 요청</Button>
       </EmailContainer>

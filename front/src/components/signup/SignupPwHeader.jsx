@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 const StyledFont = styled.p`
   /* font-family: "Lexend Deca"; */
@@ -8,10 +9,14 @@ const StyledFont = styled.p`
 `;
 
 const SignupPwHeader = () => {
+  const location = useLocation();
+  const { state } = location;
+  const userEmail = state ? state.userEmail : '';
+
   return (
     <>
       <h2>비밀번호를 입력해 주세요</h2>
-      <StyledFont>~~~계정의 비밀번호를 설정합니다.</StyledFont>
+      <StyledFont>{userEmail}계정의 비밀번호를 설정합니다.</StyledFont>
     </>
   )
 }

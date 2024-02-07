@@ -1,12 +1,12 @@
-import Card from "./common/Card";
-import SignupRequiredHeader from "./signup/SignupRequiredHeader";
-import LabelStyle from "./signup/LabelStyle";
-import Input from "./common/Input";
-import LabelContainer from "./signup/LabelContainer";
-import LabelSignup from "./signup/LabelSignup";
-import RadioLabelText from "./signup/RadioLabelText";
-import CenterContainer from "./common/CenterContainer";
-import Button from "./common/Button";
+import Card from "../common/Card";
+import SignupRequiredHeader from "./SignupRequiredHeader";
+import LabelStyle from "./LabelStyle";
+import Input from "../common/Input";
+import LabelContainer from "./LabelContainer";
+import LabelSignup from "./LabelSignup";
+import RadioLabelText from "./RadioLabelText";
+import CenterContainer from "../common/CenterContainer";
+import Button from "../common/Button";
 
 const SignupRequired = () => {
   return (
