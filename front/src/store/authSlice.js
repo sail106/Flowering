@@ -35,6 +35,7 @@ const initialState = {
         isMic: 'false',
         isCam: 'false',
         access_token: '',
+        id:'', //pk
         // refresh_token: '',
     },
 
@@ -85,7 +86,7 @@ export const UserInfo = createAsyncThunk(
             console.log('innn' + role)
             const state = getState(); // 전체 Redux 상태를 얻습니다.
 
-            console.log('configgg' + state.auth.logonUser.access_token)
+            console.log('configgg ' + state.auth.logonUser.access_token)
 
             const config = {
                 headers: {

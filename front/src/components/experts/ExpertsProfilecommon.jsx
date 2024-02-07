@@ -8,6 +8,7 @@ import Review from "./ExpertsCard";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExpertById } from "../../store/ExpertsListSlice";
+import { useEffect, useState } from "react";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -64,17 +65,49 @@ const ExpertsProfile = () => {
 
   // const location = useLocation();
   // const id = location.state.id;
-  const { id } = useParams();
 
-  console.log('key' + id)
+  const { selectedid } = useSelector(state => state.ExpertsList)
   const dispatch = useDispatch();
 
+  const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
+  const [review, setreview] = useState(null);
 
-  dispatch(fetchExpertById(id)).then((response) => {
-    console.log('fetchExpertById' + response)
-  }).catch((error) => {
+  console.log('key ' + selectedid)
 
-  })
+
+  useEffect(() => {
+    console.log('keyyyy' + selectedid)
+
+    if (selectedid) {
+
+      // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
+      dispatch(fetchExpertById(selectedid)).then((response) => {
+        console.log('ExpertsProfile', response);
+        console.log(JSON.stringify(response, null, 2));
+        console.log(JSON.stringify(response.payload.user_response, null, 2));
+        setExpertData(response);
+        console.log('expppp' + expertData?.payload.user_response.nickname)
+      }).catch((error) => {
+        console.log('error');
+      });
+
+
+
+
+    }
+
+  }, []);
+
+
+  // dispatch(fetchExpertById({ id: id })).then((response) => {
+  //   console.log('ExpertsProfile' + response)
+  //   console.log(JSON.stringify(response, null, 2));
+  //   setExpertData(response)
+
+  // }).catch((error) => {
+  //   console.log('error')
+
+  // })
 
   return (
     <>
@@ -82,10 +115,10 @@ const ExpertsProfile = () => {
 
       <ExpertCard>
         <Experts
-          nickname={"BIBI"}
+          nickname={expertData?.payload.user_response.nickname ?? ''}
           text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
           rate={4.9}
-          ratenum={172}
+          ratenum={review?.reviewnum ?? ''}
           tag1={"스킨케어"}
           tag2={"자연주의"}
           imgsrc={"src/assets/BIBI.png"}
@@ -95,14 +128,12 @@ const ExpertsProfile = () => {
         />
       </ExpertCard>
 
+
       <Text>
         <h2>소개</h2>
         <p>
-          고객의 피부 타입, 피부 상태, 고객의 습관 및 요구에 맞는 스킨케어 제품
-          및 루틴을 추천하여 피부 건강에 도움을 드립니다. 또한, 적절한 메이크업
-          및 스킨케어 기술을 가르치고, 피부 문제에 대한 조언과 해결책을
-          제시하기도 합니다. 고객들이 건강하고 아름다운 피부를 유지할 수 있도록
-          지원합니다.
+          {expertData?.payload.self_introduce ?? ''}
+
         </p>
         <Margin />
         <h2>경력사항</h2>

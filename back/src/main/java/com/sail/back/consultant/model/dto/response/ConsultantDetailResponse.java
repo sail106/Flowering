@@ -22,6 +22,7 @@ public class ConsultantDetailResponse {
     private Long consultant_id;
 
     private String self_introduce;
+    private String simple_introduce;
 
     private UserResponse userResponse;
 
@@ -36,6 +37,8 @@ public class ConsultantDetailResponse {
     public ConsultantDetailResponse(Consultant consultant) {
         this.consultant_id = consultant.getConsultant_id();
         this.self_introduce = consultant.getSelf_introduce();
+        this.simple_introduce=consultant.getSimple_introduce();
+
         FindRequest findRequest = FindRequest.builder().
                 id(true)
                 .role(true)
