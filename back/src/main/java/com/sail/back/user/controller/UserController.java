@@ -9,10 +9,12 @@ import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.AuthProvider;
 import com.sail.back.user.model.entity.enums.UserRole;
 import com.sail.back.user.model.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,10 +32,9 @@ public class UserController {
 
 
     @PostMapping("/regist")
-    public ResponseEntity<MessageUtils> register(@RequestBody UserRegistRequest userRegistRequest) {
-        log.debug("UserRegistRequest={}", userRegistRequest);
+    public ResponseEntity<MessageUtils> register(@Valid @RequestBody UserRegistRequest userRegistRequest) {
+        log.debug("UserRegistRequest={}", userRegistRequest.toString());
         userService.registUser(userRegistRequest, UserRole.USER, AuthProvider.GENERAL);
-
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 

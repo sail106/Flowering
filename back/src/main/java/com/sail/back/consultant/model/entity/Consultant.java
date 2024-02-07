@@ -35,43 +35,18 @@ public class Consultant {
     }
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant   )
     {
-        FindRequest findRequest= FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .build();
-
         return  ConsultantDetailResponse.builder()
-                .consultant_id(  consultant.getConsultant_id() )
+                .consultant_id(consultant.getConsultant_id() )
                 .self_introduce(consultant.getSelf_introduce())
-                .userResponse(UserResponse.of( findRequest, consultant.getUser()))
+                .userResponse(consultant.getUser().toResponse())
                 .build();
-
     }
     public ConsultantListResponse from(Consultant consultant)
     {
-        FindRequest findRequest= FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .build();
-
         return  ConsultantListResponse.builder()
                 .consultant_id(consultant.consultant_id)
                 .self_introduce(consultant.self_introduce)
-                .userResponse( UserResponse.of( findRequest ,consultant.user ) )
+                .userResponse(consultant.user.toResponse())
                 .build();
 
     }
@@ -91,7 +66,7 @@ public class Consultant {
 
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)
-                .userResponse(UserResponse.of( findRequest,this.user) )
+                .userResponse(this.user.toResponse())
                 .selfIntroduce(this.self_introduce)
                 .build();
     }

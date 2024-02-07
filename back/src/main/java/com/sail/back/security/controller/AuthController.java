@@ -7,6 +7,7 @@ import com.sail.back.security.model.dto.response.GeneratedToken;
 import com.sail.back.security.model.service.AuthService;
 import com.sail.back.security.model.service.TokenService;
 import com.sail.back.user.model.entity.User;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<MessageUtils> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<MessageUtils> login(@Valid @RequestBody LoginRequest loginRequest){
         return ResponseEntity.ok().body(MessageUtils.success(authService.login(loginRequest.getEmail(), loginRequest.getPassword())));
     }
 
