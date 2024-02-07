@@ -5,13 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secure-settings" beforeDir="false" afterPath="$PROJECT_DIR$/secure-settings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/AnalysisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/AnalysisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/product/model/dto/response/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/product/model/dto/response/ProductResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/modals/Search.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/modals/Search.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/request/ConsultantUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/request/ConsultantUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantDetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantDetailResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/service/ConsultantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/service/ConsultantService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfilecommon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfilecommon.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/ExpertsListSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/ExpertsListSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/authSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/authSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/service/ConsultingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/service/ConsultingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/user/model/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/user/model/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/api/CustomConst.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/api/CustomConst.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/components/OneToOneVideoChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/components/OneToOneVideoChat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/components/chat/OneToOneChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/components/chat/OneToOneChat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/components/mypage/ExpertConsulting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/components/mypage/ExpertConsulting.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/components/mypage/MyConsulting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/components/mypage/MyConsulting.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/components/participant/ConsultantParticipantList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/components/participant/ConsultantParticipantList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front/src/store/consultSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front/src/store/consultSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +39,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="back" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -53,6 +69,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -67,30 +86,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build back.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.BackApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/#6-frontcommunity-communitypage&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Downloads/0122/back&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile build.executor": "Run",
+    "Gradle.Build back.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.BackApplication.executor": "Run",
+    "git-widget-placeholder": "feat/#6-frontcommunity-communitypage2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/Downloads/0203test/back/secure-settings",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Downloads\0203test\back\secure-settings" />
+      <recent name="C:\Users\SSAFY\Downloads\0203test\back\src\main" />
       <recent name="C:\Users\SSAFY\S10P12C106\back\back\src\main\java\com\sail\back\community" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -98,7 +125,7 @@
       <recent name="C:\Users\SSAFY\Downloads\0122\back\src\main" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.BackApplication">
     <configuration name="BackApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="back.main" />
@@ -107,6 +134,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Dockerfile build" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="gradle8.5.0-jdk17-alpine_build" />
+          <option name="buildCliOptions" value="--target build" />
+          <option name="buildKitEnabled" value="true" />
+          <option name="buildOnly" value="true" />
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Dockerfile build" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -132,6 +180,7 @@
       <workItem from="1706486439627" duration="10683000" />
       <workItem from="1706582579393" duration="12707000" />
       <workItem from="1706834989045" duration="10442000" />
+      <workItem from="1706944677915" duration="34559000" />
     </task>
     <task id="LOCAL-00001" summary="feat: #6 Community 생성 api 작성&#10;- repository 생성&#10;- service 생성&#10;- controller 수정&#10;- request dto 생성&#10;- response dto 생성">
       <option name="closed" value="true" />

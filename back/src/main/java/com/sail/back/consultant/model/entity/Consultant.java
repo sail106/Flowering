@@ -24,14 +24,17 @@ public class Consultant {
 
     private String self_introduce;
 
+    private String simple_introduce;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void update(User user,String self_introduce)
+    public void update(User user,String self_introduce,String simple_introduce)
     {
         this.user=user;
         this.self_introduce=self_introduce;
+        this.simple_introduce=self_introduce;
     }
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant   )
     {
@@ -50,6 +53,7 @@ public class Consultant {
         return  ConsultantDetailResponse.builder()
                 .consultant_id(  consultant.getConsultant_id() )
                 .self_introduce(consultant.getSelf_introduce())
+                .simple_introduce(consultant.getSimple_introduce())
                 .userResponse(UserResponse.of( findRequest, consultant.getUser()))
                 .build();
 
@@ -71,6 +75,7 @@ public class Consultant {
         return  ConsultantListResponse.builder()
                 .consultant_id(consultant.consultant_id)
                 .self_introduce(consultant.self_introduce)
+                .self_introduce(consultant.simple_introduce)
                 .userResponse( UserResponse.of( findRequest ,consultant.user ) )
                 .build();
 
@@ -93,6 +98,7 @@ public class Consultant {
                 .consultantId(this.consultant_id)
                 .userResponse(UserResponse.of( findRequest,this.user) )
                 .selfIntroduce(this.self_introduce)
+                .simpleIntroduce(this.simple_introduce)
                 .build();
     }
 

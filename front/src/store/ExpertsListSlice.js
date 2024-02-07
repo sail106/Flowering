@@ -8,9 +8,9 @@ const initialState = {
   selectedid: ''
 }
 
+
 export const fetchExpertById = createAsyncThunk(
   'ExpertsList/fetchExpertById',
-  // async (id) => {
   async (selectedid, { rejectWithValue, getState }) => {
 
     console.log('fff ' + selectedid)

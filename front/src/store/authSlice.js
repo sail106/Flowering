@@ -35,6 +35,7 @@ const initialState = {
         isMic: 'false',
         isCam: 'false',
         access_token: '',
+        id:'', //pk
         // refresh_token: '',
     },
 
