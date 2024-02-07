@@ -27,13 +27,13 @@ public class ReviewService {
     private final ConsultantRepository consultantRepository;
 
     public void create(User user, ReviewcreateRequest reviewcreateRequest) {
-        reviewcreateRequest.setUser(user);
-        System.out.println("setttuserrr"+reviewcreateRequest.getUser().getId());
+//        reviewcreateRequest.setUser(user);
+//        System.out.println("setttuserrr"+reviewcreateRequest.getUser().getId());
 
         Consultant consultant = consultantRepository.findById(reviewcreateRequest.getConsultantid()).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
         Review review = reviewcreateRequest.toEntity();
-
+        review.setUser(user);
         review.setConsultant(consultant);
         reviewRepository.save(review);
     }
