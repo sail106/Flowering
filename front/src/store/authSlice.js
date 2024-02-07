@@ -78,10 +78,15 @@ const initialState = {
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
-    async ({ role }, { rejectWithValue }) => {
+    async ({ role }, { rejectWithValue,getState }) => { 
 
         try {
-            console.log('innn'+role)
+
+            console.log('innn' + role)
+            const state = getState(); // 전체 Redux 상태를 얻습니다.
+
+            console.log('configgg' + state.auth.logonUser.access_token)
+
             const config = {
                 headers: {
                     'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
@@ -90,13 +95,18 @@ export const UserInfo = createAsyncThunk(
                 }
             };
 
+            console.log('innn' + role)
+
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`,config);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
 
             const res = response.data.data_body.role
+            console.log('innn' + role)
 
             // saveToken(token);
             console.log(res)
+
+
             return res;
 
         } catch (err) {
@@ -245,7 +255,7 @@ export const signOut = createAsyncThunk(
     }
 );
 
-export const selectAccessToken = (state) => state.auth.logonUser.access_token;
+export const selectAccessToken = (state) => state.logonUser.access_token;
 
 // createSlice
 const authSlice = createSlice({
@@ -302,7 +312,7 @@ const authSlice = createSlice({
 
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
-                    // role: action.payload.data.role,
+                    // role: action.payload.data
                     // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
                     access_token: action.payload.access_token,
                     // refresh_token : action.payload.refresh_token
@@ -323,8 +333,21 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.logonUser = action.payload.data;
             })
+
             .addCase(loadMember.rejected, (state) => {
                 state.status = 'failed';
+            })
+
+            .addCase(UserInfo.fulfilled, (state, action) => {
+
+                console.log('info fulfilll'+action.payload)
+                state.logonUser.role = action.payload;
+                // role: action.payload.data
+            })
+
+            .addCase(UserInfo.rejected, (state) => {
+                state.status = 'failed';
+
             });
     }
 
