@@ -4,6 +4,8 @@ import Input from "./common/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
 import Search from "./modals/Search"
+import BIBI from "../assets/BIBI.png"
+import camera from "../assets/camera.png"
 
 const MyPage = styled(Page)`
   display: flex;
@@ -50,8 +52,8 @@ const EditMyInfo = () => {
   return (
     <>
       <MyPage>
-        <MyImg src="src/assets/BIBI.png" alt="프로필 사진" />
-        <CameraImg src="src/assets/camera.png" alt="프로필 사진" />
+        <MyImg src={BIBI} alt="프로필 사진" />
+        <CameraImg src={camera} alt="프로필 사진" />
         <InfoContainer>
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
           <Input placeholder="키티공주" id="nickname" width="90%"></Input>

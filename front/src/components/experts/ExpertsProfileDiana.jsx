@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { StyledSmallDiv } from "../common/Experts";
 import Review from "./ExpertsCard";
-
+import DIANA from "../../assets/DIANA.png"
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#F28482",
@@ -69,7 +69,7 @@ const ExpertsProfile = () => {
           ratenum={172}
           tag1={"트렌드"}
           tag2={"웨딩뷰티"}
-          imgsrc={"src/assets/DIANA.png"}
+          imgsrc={DIANA}
           width={"296px"}
           height={"415px"}
           path={"/expertsReservation"}

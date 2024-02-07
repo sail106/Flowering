@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Page } from "../common/Page";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // 캐러셀의 기본 스타일을 가져옵니다.
+import BIBI from "../../assets/BIBI.png"
+import LEINA from "../../assets/LEINA.png"
+import DIANA from "../../assets/DIANA.png"
+import RUNA from "../../assets/RUNA.png"
 
 const MyPage = styled(Page)``;
 
@@ -105,19 +109,19 @@ const FourthPage = () => {
         stopOnHover={false}
       >
         <ConsultantCard>
-          <BIBIIMage src="src/assets/BIBI.png" alt="BIBI" />
+          <BIBIIMage src={BIBI} alt="BIBI" />
         </ConsultantCard>
 
         <ConsultantCard>
-          <LEINAIMage src="src/assets/LEINA.png" alt="LEINA" />
+          <LEINAIMage src={LEINA} alt="LEINA" />
         </ConsultantCard>
 
         <ConsultantCard>
-          <DIANAIMage src="src/assets/DIANA.png" alt="DIANA" />
+          <DIANAIMage src={DIANA} alt="DIANA" />
         </ConsultantCard>
 
         <ConsultantCard>
-          <RUNAImage src="src/assets/RUNA.png" alt="DIANA" />
+          <RUNAImage src={RUNA} alt="RUNA" />
         </ConsultantCard>
       </ConsultantCarousel>
       <ConsultantNameCarousel

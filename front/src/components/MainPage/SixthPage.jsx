@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
 import ContentsCard from "../common/ContentsCard";
+import Arrow from "../../assets/Arrow.png"
+import content_skincare from "../../assets/content_skincare.png"
+import content_acnecare from "../../assets/content_acnecare.png"
+import content_personal_color from "../../assets/content_personal_color.png"
 
 const MyPage = styled(Page)`
   height: 150vh;
@@ -53,7 +57,7 @@ const SixthPage = () => {
       <ContentsText>CONTENTS</ContentsText>
 
       <ContentsArrow>
-        <Image src="src/assets/Arrow.png" alt="Arrow" />
+        <Image src={Arrow} alt="Arrow" />
       </ContentsArrow>
 
       <ContentsDiv>
@@ -61,7 +65,7 @@ const SixthPage = () => {
           category="매거진"
           title="건강한 피부를 위한 스킨케어 루틴"
           date="2024.01.16"
-          imageSrc='src/assets/content_skincare.png'
+          imageSrc={content_skincare}
           imageAlt="content_skincare"
         />
 
@@ -69,14 +73,14 @@ const SixthPage = () => {
           category="매거진"
           title="여드름 색소침착 완화를 위한 팁"
           date="2024.01.16"
-          imageSrc='src/assets/content_acnecare.png'
+          imageSrc={content_acnecare}
           imageAlt="content_acnecare"
         />
         <ContentsCard
           category="매거진"
           title="퍼스널 컬러별 메이크업"
           date="2024.01.16"
-          imageSrc='src/assets/content_personal_color.png'
+          imageSrc={content_personal_color}
           imageAlt="content_personal_color"
         />
       </ContentsDiv>

@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import PasswordFindForm from "./components/PasswordFindForm";
 import SpinnerTest from "./components/SpinnerTest";
 import SignupForm from "./components/SignupForm";
+import SignupPw from "./components/SignupPw";
 import { Page } from "./components/common/Page";
 import MyPage from "./components/MyPage";
 import Navbar from "./components/Navbar";
@@ -31,7 +32,7 @@ import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
 import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
-import Consulting1stepresult from "./components/consultingresult/consulting1stepresult";
+import Consulting1stepresult from "./components/consultingresult/Consulting1stepresult";
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
 
 import Finish1step from "./components/consultingresult/Finish1step";
@@ -43,7 +44,10 @@ import SkinProductCard from "./components/consultingresult/SkinProductCard";
 import Orderpage from "./components/OrderPage";
 import OrderResult from "./components/OrderResult";
 import ExpertsProfileCommon from "./components/experts/ExpertsProfilecommon";
+import SignupRequired from "./components/SignupRequired";
 
+import SecondSurveyResult from "./components/SecondSurveyResult";
+import FirstSurveyPage from "./components/FirstSurveyPage";
 function App() {
   return (
     <>
@@ -59,6 +63,8 @@ function App() {
           <Route path="/pw" element={<PasswordFindForm />} />
           <Route path="/test" element={<SpinnerTest />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/signupPw" element={<SignupPw />} />
+          <Route path="/signupRequired" element={<SignupRequired />} />
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/orderpage" element={<Orderpage />} />
           <Route path="/orderResult" element={<OrderResult />} />
@@ -72,8 +78,6 @@ function App() {
           <Route path="/expertsProfilecommon/:id" element={<ExpertsProfileCommon />} />
 
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
-          <Route path="/finish1step" element={<Finish1step />} />
-          <Route path="/finish2step" element={<Finish2step />} />
           <Route
             path="/expertsprofileLeina"
             element={<ExpertsProfileLeina />}
@@ -87,11 +91,7 @@ function App() {
           <Route path="/communityHome" element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
-          <Route
-            path="/consulting1stepresult"
-            element={<Consulting1stepresult />}
-          />
-
+          <Route path="/consulting1stepresult" element={<consulting1stepresult />} />
           <Route
             path="/expertsprofileregistration"
             element={<ExpertsProfileRegistration />}
@@ -101,8 +101,7 @@ function App() {
           <Route path="/finalresultInput" element={<FinalresultInput />} />
 
           <Route path="/phototest" element={<PhotoTest />} />
-          <Route path="/finalresult3step" element={<Finalresult3step />} />
-          <Route path="/skinProductCard" element={<SkinProductCard />} />
+
         </Routes>
         <Footer />
       </Page>

@@ -81,18 +81,20 @@ export const UserInfo = createAsyncThunk(
     async ({ role }, { rejectWithValue }) => {
 
         try {
-            console.log('innn')
+            console.log('innn'+role)
             const config = {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
                     'Content-Type': 'application/json'
                     // 다른 필요한 헤더도 추가할 수 있습니다.
                 }
             };
 
-            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+            // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`,config);
 
             const res = response.data.data_body.role
+
             // saveToken(token);
             console.log(res)
             return res;

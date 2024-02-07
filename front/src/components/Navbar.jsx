@@ -53,9 +53,6 @@ const NavInfoLogo = styled.div`
     padding-left: 10px;
     padding-right: 10px;
   }
-  /* img:hover {
-    content: url("src/assets/pinkCartIcon.svg");
-  } */
 `;
 
 const StyledPerson = styled(GoPerson)`

@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/mypage/ExpertConsulting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/mypage/ExpertConsulting.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/store/consultSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/consultSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/secure-settings" beforeDir="false" afterPath="$PROJECT_DIR$/secure-settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/AnalysisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/global/config/AnalysisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/product/model/dto/response/ProductResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/product/model/dto/response/ProductResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/modals/Search.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/modals/Search.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +28,7 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="back" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -41,15 +39,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/../.." value="feat/#5-coordinate-api" />
+        <entry key="$USER_HOME$" value="feat/#5-coordinate-api" />
+        <entry key="$PROJECT_DIR$/.." value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -61,35 +60,35 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2bKsoN0YFA0n8G71PBqJPDtxmav" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build back.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.BackApplication.executor": "Run",
-    "git-widget-placeholder": "feat/#6-frontcommunity-communitypage",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/SSAFY/Downloads/0122/back",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build back.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BackApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/#6-frontcommunity-communitypage&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Downloads/0122/back&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\SSAFY\S10P12C106\back\back\src\main\java\com\sail\back\community" />

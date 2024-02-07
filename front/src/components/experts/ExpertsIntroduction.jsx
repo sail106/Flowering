@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { setExpertList } from "../../store/ExpertsListSlice";
+import BIBI from "../../assets/BIBI.png"
+import LEINA from "../../assets/LEINA.png"
+import DIANA from "../../assets/DIANA.png"
+import RUNA from "../../assets/RUNA.png"
 
 const ExpertCard = styled.div`
   justify-content: center;
@@ -95,7 +99,7 @@ const ExpertsIntroduction = () => {
           ratenum={172}
           tag1={"기초케어"}
           tag2={"자연주의"}
-          imgsrc={"src/assets/BIBI.png"}
+          imgsrc={BIBI}
           width={"280px"}
           height={"405px"}
           path={"/expertsProfileBibi"}
@@ -108,7 +112,7 @@ const ExpertsIntroduction = () => {
           ratenum={289}
           tag1={"스킨케어"}
           tag2={"헤어스타일링"}
-          imgsrc={"src/assets/LEINA.png"}
+          imgsrc={LEINA}
           width={"305px"}
           height={"370px"}
           path={"/expertsProfileLeina"}
@@ -120,7 +124,7 @@ const ExpertsIntroduction = () => {
           ratenum={117}
           tag1={"트렌드"}
           tag2={"웨딩뷰티"}
-          imgsrc={"src/assets/DIANA.png"}
+          imgsrc={DIANA}
           width={"296px"}
           height={"415px"}
           path={"/expertsProfileDiana"}
@@ -132,7 +136,7 @@ const ExpertsIntroduction = () => {
           ratenum={390}
           tag1={"에코뷰티"}
           tag2={"컬러리스트"}
-          imgsrc={"src/assets/RUNA.png"}
+          imgsrc={RUNA}
           width={"294px"}
           height={"363px"}
           path={"/expertsProfileRuna"}

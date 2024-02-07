@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
+import beautysolution from "../../assets/beautysolution.png";
 
 const MyPage = styled(Page)``;
 
@@ -42,7 +43,7 @@ const FifthPage = () => {
   return (
     <MyPage>
       <ImageWrapper3>
-        <Image src="src/assets/BeautySolution.png" alt="BIBI" />
+        <Image src={beautysolution} alt="beautysolution" />
       </ImageWrapper3>
 
       <SolutionDiv>
