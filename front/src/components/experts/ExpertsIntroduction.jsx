@@ -1,6 +1,10 @@
 import Title from "../modify/Title";
 import styled from "styled-components";
 import Experts from "../common/Experts";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { setExpertList } from "../../store/ExpertsListSlice";
 import BIBI from "../../assets/BIBI.png"
 import LEINA from "../../assets/LEINA.png"
 import DIANA from "../../assets/DIANA.png"
@@ -18,10 +22,76 @@ const Margin = styled.div`
 `;
 // 컴포넌트 정의
 const ExpertsIntroduction = () => {
+
+  const { access_token } = useSelector(state => state.auth.logonUser);
+  const [expertsData, setExpertsData] = useState([]);
+  const [extraData, setextraData] = useState([]);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+
+    console.log("ssss")
+    const fetchData = async () => {
+
+      try {
+        const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        };
+
+        const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', {
+          // 다른 필요한 데이터
+        }, config);
+
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+        console.log('Response:', response.data.data_body);
+
+        setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
+        dispatch(setExpertList(response.data.data_body))
+
+        console.log('succcc')
+      } catch (error) {
+        console.error('Error :', error);
+        // alert('결제 실패');
+      }
+    };
+
+    fetchData(); // fetchData 함수 호출
+
+  }, [access_token]);
+
+
   return (
     <>
       <Title text={"Beauty consulting experts"} />
+
       <ExpertCard>
+
+        {expertsData.map((expert) => (
+
+          <Experts
+            key={expert.consultant_id} // 각 전문가의 ID를 키로 사용
+            id={expert.consultant_id} // 고유한 키 추가
+            nickname={expert.user_response.nickname}
+            text={expert.self_introduce}
+            rate={expert.rate}
+            ratenum={expert.ratenum}
+            tag1={expert.tag1}
+            tag2={expert.tag2}
+            imgsrc={expert.imgsrc}
+            width={"280px"}
+            height={"405px"}
+            path={"/expertsProfilecommon/" + expert.consultant_id}
+          />
+
+        ))}
+
         <Experts
           nickname={"BIBI"}
           text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
@@ -34,6 +104,7 @@ const ExpertsIntroduction = () => {
           height={"405px"}
           path={"/expertsProfileBibi"}
         />
+
         <Experts
           nickname={"LEINA"}
           text={"나를 마음껏 표현할 수 있을 때, 진정 아름다워집니다."}

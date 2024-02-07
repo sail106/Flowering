@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { saveToken, deleteToken } from '../api/JWToken'
 import { OK, CUSTOMER, CONSULTANT } from '../api/CustomConst'
-import Axios from '../api/Axios';
+import axios from 'axios';
+// import Axios from '../api/Axios';
 
 // state
 const initialState = {
@@ -34,7 +35,7 @@ const initialState = {
         isMic: 'false',
         isCam: 'false',
         access_token: '',
-        refresh_token: '',
+        // refresh_token: '',
     },
 
     isLoading: false,
@@ -49,71 +50,70 @@ const initialState = {
 
 // actions
 // signup actions
-export const signUpMember = createAsyncThunk(
-    'auth/signup',
-    async (userInfo, { rejectWithValue }) => {
+// export const signUpMember = createAsyncThunk(
+//     'auth/signup',
+//     async (userInfo, { rejectWithValue }) => {
+//         try {
+//             let response
+
+//             if (userInfo.role === CUSTOMER) {
+//                 response = await Axios.post('customers', userInfo);
+//             } else if (userInfo.role === CONSULTANT) {
+//                 response = await Axios.post('consultants', userInfo);
+//             }
+//             return response.status;
+//         } catch (err) {
+//             let errRes = 400;
+//             if (err.status < 500) {
+//                 errRes = 400;
+//             } else if (err.status < 600) {
+//                 errRes = 500;
+//             }
+//             return errRes;
+//         }
+//     }
+// )
+
+
+// login actions
+export const UserInfo = createAsyncThunk(
+    'auth/UserInfo',
+    async ({ role }, { rejectWithValue,getState }) => { 
+
         try {
-            let response
 
-            if (userInfo.role === CUSTOMER) {
-                response = await Axios.post('customers', userInfo);
-            } else if (userInfo.role === CONSULTANT) {
-                response = await Axios.post('consultants', userInfo);
-            }
-            return response.status;
+            console.log('innn' + role)
+            const state = getState(); // 전체 Redux 상태를 얻습니다.
+
+            console.log('configgg' + state.auth.logonUser.access_token)
+
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
+                    'Content-Type': 'application/json'
+                    // 다른 필요한 헤더도 추가할 수 있습니다.
+                }
+            };
+
+            console.log('innn' + role)
+
+            // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
+
+            const res = response.data.data_body.role
+            console.log('innn' + role)
+
+            // saveToken(token);
+            console.log(res)
+
+
+            return res;
+
         } catch (err) {
-            let errRes = 400;
-            if (err.status < 500) {
-                errRes = 400;
-            } else if (err.status < 600) {
-                errRes = 500;
-            }
-            return errRes;
-        }
-    }
-)
-
-export const emailCheck = createAsyncThunk(
-    'auth/emailcheck',
-    async (email, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/1?email=${email}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
-        }
-    }
-);
-
-
-// 이메일 발송 후 토큰 체크 
-export const emailAuthCheck = createAsyncThunk(
-    'members/email/2',
-    async (payload, { rejectWithValue }) => {
-        try {
-            const response = await Axios.post('members/email/2', payload)
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false
-        }
-    }
-)
-
-
-export const nicknameCheck = createAsyncThunk(
-    'auth/nicknamecheck',
-    async (nickname, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/2?nickname=${nickname}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
+            // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            console.log('errrr')
+            return rejectWithValue(err);
+            // return rejectWithValue(err.response);
         }
     }
 );
@@ -130,13 +130,17 @@ export const loginUser = createAsyncThunk(
 
         try {
             // start
-            const response = await Axios.post('auth/login', loginrequest);
+            console.log('lll' + loginrequest.email)
+            console.log('lll' + loginrequest.password)
+            const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', loginrequest);
             const token = response.data.data_body
-            saveToken(token);
+            // saveToken(token);
+            console.log(response)
             return token;
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            console.log('errrr')
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
@@ -251,6 +255,8 @@ export const signOut = createAsyncThunk(
     }
 );
 
+export const selectAccessToken = (state) => state.logonUser.access_token;
+
 // createSlice
 const authSlice = createSlice({
     name: 'auth',
@@ -282,6 +288,7 @@ const authSlice = createSlice({
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
+
     },
 
 
@@ -289,30 +296,33 @@ const authSlice = createSlice({
         // signup extra reducers 통신 상태에 따른 실행 함수
         builder
             // signup extra reducers 통신 상태에 따른 실행 함수
-            .addCase(signUpMember.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(signUpMember.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.data = action.payload;
-            })
-            .addCase(signUpMember.rejected, (state) => {
-                state.status = 'failed';
-            })
+            // .addCase(signUpMember.pending, (state) => {
+            //     state.status = 'loading';
+            // })
+            // .addCase(signUpMember.fulfilled, (state, action) => {
+            //     state.status = 'succeeded';
+            //     state.data = action.payload;
+            // })
+            // .addCase(signUpMember.rejected, (state) => {
+            //     state.status = 'failed';
+            // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log('fullll')
+
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
-                    // role: action.payload.data.role,
+                    // role: action.payload.data
                     // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
                     access_token: action.payload.access_token,
-                    refresh_token : action.payload.refresh_token
+                    // refresh_token : action.payload.refresh_token
 
                 };
                 state.isAuthenticated = true;
             })
 
             .addCase(loginUser.rejected, (state) => {
+                console.log('rejeee')
                 state.isAuthenticated = false;
             })
             // modify extra reducers
@@ -323,8 +333,21 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.logonUser = action.payload.data;
             })
+
             .addCase(loadMember.rejected, (state) => {
                 state.status = 'failed';
+            })
+
+            .addCase(UserInfo.fulfilled, (state, action) => {
+
+                console.log('info fulfilll'+action.payload)
+                state.logonUser.role = action.payload;
+                // role: action.payload.data
+            })
+
+            .addCase(UserInfo.rejected, (state) => {
+                state.status = 'failed';
+
             });
     }
 

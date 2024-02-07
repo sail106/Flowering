@@ -32,10 +32,15 @@ const Margin = styled.div`
 `;
 
 const FourthPage = () => {
+
+
+ 
   return (
+
     <MyPage>
       <Head>BEAUTY CONSULTING EXPERTS</Head>
       <Head2>마음에 드는 전문가에게 받는 퍼스널 뷰티 컨설팅</Head2>
+
       <Margin>
         <RightExpert
           text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
@@ -60,6 +65,7 @@ const FourthPage = () => {
           imgsrc={RUNA}
           name={"RUNA"}
         />
+
       </Margin>
     </MyPage>
   );

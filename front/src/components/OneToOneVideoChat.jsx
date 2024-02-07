@@ -121,8 +121,7 @@ const OneToOneVideoChat = () => {
         session.publish(publisher);
         setPublisher(publisher);  // stream 생성....
 
-        //밑에 부분은 임시로 조건문 주석 처리 한것이다..........
-        console.log('streamcreate')
+         console.log('streamcreate')
         if (role === CUSTOMER) {
 
           dispatch(setCustomer(publisher))
@@ -315,11 +314,8 @@ const OneToOneVideoChat = () => {
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole
-    //밑에는 임시로 주석처리 한 코드......
-    // console.log('streamcreated ' + customer.stream)
-
-
-
+     // console.log('streamcreated ' + customer.stream)
+ 
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))

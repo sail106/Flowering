@@ -41,6 +41,9 @@ import Finish2step from "./components/consultingresult/Finish2step";
 import PhotoTest from "./components/PhotoTest";
 import Finalresult3step from "./components/consultingresult/Finalresult3step";
 import SkinProductCard from "./components/consultingresult/SkinProductCard";
+import Orderpage from "./components/OrderPage";
+import OrderResult from "./components/OrderResult";
+import ExpertsProfileCommon from "./components/experts/ExpertsProfilecommon";
 import SignupRequired from "./components/SignupRequired";
 
 import SecondSurveyResult from "./components/SecondSurveyResult";
@@ -63,6 +66,8 @@ function App() {
           <Route path="/signupPw" element={<SignupPw />} />
           <Route path="/signupRequired" element={<SignupRequired />} />
           <Route path="/consulting" element={<ConsultReservation />} />
+          <Route path="/orderpage" element={<Orderpage />} />
+          <Route path="/orderResult" element={<OrderResult />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage2" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
@@ -70,6 +75,8 @@ function App() {
           <Route path="/beautyconsulting" element={<BeautyConsulting />} />
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
+          <Route path="/expertsProfilecommon/:id" element={<ExpertsProfileCommon />} />
+
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
           <Route
             path="/expertsprofileLeina"

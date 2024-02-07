@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setSelectedTime } from "../../store/selectedSlice";
 
 const StyledLabel = styled.label`
   display: inline-block;
@@ -9,7 +12,6 @@ const StyledLabel = styled.label`
   text-align: center;
   line-height: 40px;
   &:hover {
-    /* box-shadow: 0 0 0 max(4px, 0.2em) lightgray; */
     cursor: pointer;
   }
   font-size: 20px;
@@ -26,18 +28,29 @@ const StyledButton = styled.input`
 `;
 
 const RadioButton = (props) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
+
+  // 라디오 버튼 클릭 시 상태 토글하는 함수
+  const handleButtonClick = () => {
+    setIsChecked(!isChecked);
+    console.log('ssssssssssss' + props.value ); // 클릭된 버튼의 값 로그로 출력
+    dispatch(setSelectedTime(props.value))
+  };
+
   return (
     <>
       <StyledButton
-        type={props.type}
+        type="radio"
         id={props.id}
         value={props.value}
-        width={props.width}
-        height={props.height}
+        onChange={handleButtonClick} // 변경
+        checked={isChecked}
+        name={props.name}
       />
       <StyledLabel htmlFor={props.htmlFor}>{props.value}</StyledLabel>
     </>
-  )
-}
+  );
+};
 
 export default RadioButton;

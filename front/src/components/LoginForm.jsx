@@ -5,7 +5,7 @@ import SnsManage from "./login/SnsManage";
 import Input from "./common/Input";
 import Card from "./common/Card";
 import CenterContainer from "./common/CenterContainer";
-import { loginUser } from "../store/authSlice";
+import { UserInfo, loginUser } from "../store/authSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,28 +22,45 @@ const LoginForm = () => {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+  const role = 'true'
 
   useEffect(() => {
     // 이미 로그인 상태인 경우 홈 화면으로 이동합니다.
-    console.log("isAuthenticated : ",isAuthenticated);
-    if (isAuthenticated) {
-      // navigate('/');
-      console.log("이미 로그인 되어있습니다!");
-      console.log("isAuthenticated2 : ", isAuthenticated);
+    // console.log("isAuthenticated : ", isAuthenticated);
+    // if (isAuthenticated) {
+    //   // navigate('/');
+    //   console.log("이미 로그인 되어있습니다!");
+    //   console.log("isAuthenticated2 : ", isAuthenticated);
+    // }
+
+    if (isAuthenticated == false)
+      console.log("이메일 또는 비밀번호가 잘못되었습니다!");
+
+    else {
+      console.log("로그인 성공!");
+
+      dispatch(UserInfo(role)).then((response) => {
+        console.log('상세정보조회' + response)
+
+      }).catch((error) => {
+        console.log('error' + error)
+
+      })
+
+      navigate('/');
     }
   }, [isAuthenticated, navigate]);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Redux store에 사용자 정보 저장
     dispatch(loginUser({ Email: formData.email, Password: formData.password })).then(() => {
-      console.log("로그인 성공!");
-      navigate('/');
+
 
     }).catch((error) => {
 
-      console.log("이메일 또는 비밀번호가 잘못되었습니다!");
       console.error('로그인 요청 실패:', error);
     })
 

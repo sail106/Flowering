@@ -51,7 +51,7 @@ public class UserResponse {
         if (request.isGender()&&user.getGender()!=null) response.setGender(user.getGender());
         if (request.isBirthdate_year()&&user.getBirthdateYear()!=null) response.setBirthdateYear(user.getBirthdateYear());
         if (request.isBirthdate_month()&&user.getBirthdateMonth()!=null) response.setBirthdateMonth(user.getBirthdateMonth());
-        if(user.getName() == null || user.getBirthdateYear() == null || user.getBirthdateMonth()== null || user.getName() == null || user.getGender() == null) response.setHasAdditionalInfo(true);
+        if(user.getName() == null || user.getBirthdateYear() == null || user.getBirthdateMonth()== null || user.getNickname() == null || user.getGender() == null) response.setHasAdditionalInfo(true);
         return response;
     }
 
