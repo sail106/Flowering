@@ -34,7 +34,8 @@ public class Consultant {
     @OneToMany(mappedBy = "consultant")
     private List<Review> reviews;
 
-    private double star;
+//    private double star;
+
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -54,10 +55,20 @@ public class Consultant {
     }
 
 
+    public int getReviewnum() {
+
+        if (reviews == null || reviews.isEmpty()) {
+            return 0;
+        }
+
+        return reviews.size();
+    }
+
     public void update(User user, String self_introduce, String simple_introduce) {
         this.user = user;
         this.self_introduce = self_introduce;
         this.simple_introduce = simple_introduce;
+
     }
 
 
@@ -68,6 +79,7 @@ public class Consultant {
                 .simple_introduce(consultant.getSimple_introduce())
                 .userResponse(consultant.getUser().toResponse())
                 .star(consultant.getStarAverage())
+                .num(consultant.getReviewnum())
                 .build();
     }
 
@@ -78,6 +90,7 @@ public class Consultant {
                 .simple_introduce(consultant.simple_introduce)
                 .userResponse(consultant.user.toResponse())
                 .star(consultant.getStarAverage())
+                .reviewnum(consultant.getReviewnum())
                 .build();
 
     }
@@ -102,6 +115,7 @@ public class Consultant {
                 .selfIntroduce(this.self_introduce)
                 .simpleIntroduce(this.simple_introduce)
                 .star(this.getStarAverage())
+                .reviewnum(this.getReviewnum())
                 .build();
     }
 

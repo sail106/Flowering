@@ -26,6 +26,7 @@ public class ConsultantDetailResponse {
 
     private UserResponse userResponse;
     private double star;
+    private int num;
 
     //
 //    public Consultant from(ConsultantDetailResponse consultantListResponse) {
@@ -40,7 +41,7 @@ public class ConsultantDetailResponse {
         this.self_introduce = consultant.getSelf_introduce();
         this.simple_introduce = consultant.getSimple_introduce();
         this.userResponse = consultant.getUser().toResponse();
-        this.star=consultant.getStar();
+        this.star=consultant.getStarAverage();
     }
 
 
