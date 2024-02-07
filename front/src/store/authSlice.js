@@ -79,10 +79,10 @@ const initialState = {
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
-    async ({ role }, { rejectWithValue,getState }) => { 
+    async ({  info }, { rejectWithValue,getState }) => { 
         try {
             
-            console.log('innn' + role)
+            console.log('innn' + info)
             const state = getState(); // 전체 Redux 상태를 얻습니다.
 
             console.log('configgg ' + state.auth.logonUser.access_token)
@@ -95,13 +95,13 @@ export const UserInfo = createAsyncThunk(
                 }
             };
 
-            console.log('innn' + role)
+            console.log('innn' + info)
 
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info`, config);
 
-            const res = response.data.data_body.role
-            console.log('innn' + role)
+            const res = response.data.data_body
+            console.log('innn' + info)
 
             // saveToken(token);
             console.log(res)
@@ -338,8 +338,9 @@ const authSlice = createSlice({
             .addCase(UserInfo.fulfilled, (state, action) => {
 
                 console.log('info fulfilll'+action.payload)
-                state.logonUser.role = action.payload;
+                state.logonUser = action.payload;
                 // role: action.payload.data
+                console.log('logonuser',state.logonUser)
             })
 
             .addCase(UserInfo.rejected, (state) => {
