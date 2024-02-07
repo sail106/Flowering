@@ -19,13 +19,16 @@ const SignupForm = () => {
   const [isAuthCode, setIsAuthCode] = useState(false);
   const [authCorrect, setAuthCorrect] = useState(false);
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState({
     signupEmail: '',
     authNumber: '',
     // ... (다른 상태값들)
   });
-
+// 한번 인증번호가 맞으면 input창을 disabled처리
   const buttonNavigate = () => {
+    setUserEmail(formData.email);
+    console.log("userEmail : ", userEmail);
     navigate('/signupPw');
   }
 
@@ -59,7 +62,6 @@ const SignupForm = () => {
 
   const handleAuthChange = async (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    console.log("formData.authNumber : ", formData.authNumber);
     try {
       await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/confirm', {
         email: formData.signupEmail,
@@ -90,6 +92,7 @@ const SignupForm = () => {
             htmlFor="authNumber" id="authNumber" placeholder="인증번호"
             value={formData.authNumber}
             onChange={handleAuthChange}
+            disabled={authCorrect}
           />
           {!authCorrect && (
             <p>✓ 인증 번호가 같아요</p>
