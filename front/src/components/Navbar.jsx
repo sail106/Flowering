@@ -69,7 +69,7 @@ const LoginText = styled.div`
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const { name, role, id, nickname, imageUrl } = useSelector(
+  const User = useSelector(
     (state) => state.auth.logonUser
   );
   const [backgroundColor, setBackgroundColor] = useState("white");
@@ -168,12 +168,12 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        {isAuthenticated && role === 'USER' ? (
-        <Link to={`/mypage/${id}`} reloadDocument>
+        {isAuthenticated && User.role === 'USER' ? (
+        <Link to={`/mypage/${User.id}`} reloadDocument>
           <StyledPerson />
         </Link>
-      ) : isAuthenticated && role === 'CONSULTANT' ? (
-        <Link to={`/expertmypage/${id}`} reloadDocument>
+      ) : isAuthenticated && User.role === 'CONSULTANT' ? (
+        <Link to={`/expertmypage/${User.id}`} reloadDocument>
           <StyledPerson />
         </Link>
       ) : (
