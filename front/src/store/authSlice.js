@@ -147,6 +147,19 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+export const signOut = createAsyncThunk(
+    'auth/signout',
+    async (isAuthenticated, { rejectWithValue }) => {
+        try {
+            isAuthenticated = false
+            return isAuthenticated;
+        } catch (err) {
+            console.log(err)
+            return rejectWithValue(err);
+        }
+    }
+);
+
 // 비밀번호 찾기
 export const searchPasswordFetch = createAsyncThunk(
     'members/email/3?email=member@ssafy.com',
@@ -238,22 +251,6 @@ export const modifyPass = createAsyncThunk(
     }
 );
 
-export const signOut = createAsyncThunk(
-    'auth/signout',
-    async (role, { rejectWithValue }) => {
-        try {
-            let response;
-            if (role === CUSTOMER) {
-                response = await Axios.delete('customers');
-            } else if (role === CONSULTANT) {
-                response = await Axios.delete('consultants');
-            }
-            return response;
-        } catch (err) {
-            return rejectWithValue(err);
-        }
-    }
-);
 
 export const selectAccessToken = (state) => state.logonUser.access_token;
 
