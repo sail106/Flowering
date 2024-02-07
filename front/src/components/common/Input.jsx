@@ -23,6 +23,8 @@ const Input = (props) => {
         width={props.width}
         name={props.name}
         onChange={props.onChange}
+        required={props.required}
+        disabled={props.disabled}
         // value={props.value}
       />
     </div>

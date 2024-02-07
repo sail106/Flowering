@@ -1,8 +1,8 @@
-import SignupPwHeader from "./signup/SignupPwHeader";
-import CenterContainer from "./common/CenterContainer";
-import Input from "./common/Input";
-import Button from "./common/Button";
-import Card from "./common/Card";
+import SignupPwHeader from "./SignupPwHeader";
+import CenterContainer from "../common/CenterContainer";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import Card from "../common/Card";
 
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -61,9 +61,12 @@ const SignupPw = () => {
       setCheckLen(true);
     }
 
-    setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
-    console.log("checkPwOne : ", checkPwOne);
   }
+  
+  useEffect(() => {
+    setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
+  }, [checkEn, checkNum, checkSp, checkLen, checkPwOne])
+
 
   const passwordChecker = (e) => {
     if(pwOne === e.target.value){
@@ -71,9 +74,6 @@ const SignupPw = () => {
     } else {
       setCheckPwTwo(false);
     }
-
-    console.log("checkPwOne : ", checkPwOne);
-    console.log("checkPwTwo : ", checkPwTwo);
   }
 
   const buttonNavigate = () => {
