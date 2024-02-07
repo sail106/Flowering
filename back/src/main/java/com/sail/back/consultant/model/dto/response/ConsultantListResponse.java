@@ -28,8 +28,10 @@ public class ConsultantListResponse {
 
     private UserResponse userResponse;
 
+    private double star;
+
     public Consultant from(ConsultantListResponse consultantListResponse) {
-        FindRequest findRequest= FindRequest.builder().
+        FindRequest findRequest = FindRequest.builder().
                 id(true)
                 .role(true)
                 .gender(true)
@@ -46,8 +48,10 @@ public class ConsultantListResponse {
                 self_introduce(consultantListResponse.self_introduce)
                 .simple_introduce(consultantListResponse.getSimple_introduce())
                 .consultant_id(consultantListResponse.consultant_id)
-                .user( User.from(   consultantListResponse.userResponse) )
+                .user(User.from(consultantListResponse.userResponse))
                 .build();
+
+
     }
 
 }

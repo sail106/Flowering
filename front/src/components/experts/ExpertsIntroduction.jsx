@@ -54,6 +54,8 @@ const ExpertsIntroduction = () => {
         setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
         dispatch(setExpertList(response.data.data_body))
 
+
+        
         console.log('succcc')
       } catch (error) {
         console.error('Error :', error);

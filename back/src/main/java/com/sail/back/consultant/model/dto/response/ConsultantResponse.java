@@ -23,4 +23,5 @@ public class ConsultantResponse {
     private String simpleIntroduce;
 
     private UserResponse userResponse;
+    private  double star;
 }
