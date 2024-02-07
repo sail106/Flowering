@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MBTIresultCard from "./MBTIresultCard";
+import MBTIresultCard from "../consultingresult/MBTIresultCard";
 import { ButtonBox } from "../common/Button";
 
 const Consulting1stepresultpage = styled.div`
@@ -75,9 +75,7 @@ const Consulting1stepresult = () => {
         title1={"D"}
         subtitle1={"건성"}
         ensubtitle1={"Dry"}
-        content1={
-          "피지 분비량과 수분 보유량 모두 적어  거칠고 각질과 주름이 잘 생기는 타입"
-        }
+        content1={"피지 분비량과 수분 보유량 모두 적어  거칠고 각질과 주름이 잘 생기는 타입"}
         content2={"피지 분비량이 많아 번들거리고 여드름이 자주 생기는 타입"}
         title2={<ColoredText>O</ColoredText>}
         subtitle2={<ColoredText>지성</ColoredText>}
@@ -89,9 +87,7 @@ const Consulting1stepresult = () => {
         subtitle1={<ColoredText>민감성</ColoredText>}
         ensubtitle1={"Sensitive"}
         content1={"피부가 얇고 섬세해 외부 자극에 쉽게 반응하는 타입 "}
-        content2={
-          "피부 장벽이 견고해 외부적인 스트레스에 대해 견디는 힘이 강한 타입"
-        }
+        content2={"피부 장벽이 견고해 외부적인 스트레스에 대해 견디는 힘이 강한 타입"}
         title2={"R"}
         subtitle2={"저항성"}
         ensubtitle2={"Resistant"}
@@ -101,9 +97,7 @@ const Consulting1stepresult = () => {
         title1={<ColoredText>P</ColoredText>}
         subtitle1={<ColoredText>민감성</ColoredText>}
         ensubtitle1={"Pigment"}
-        content1={
-          "멜라닌 활성도가 높아 기미, 주근깨 혹은 잡티 등 눈에 보이는 색소가 많은 타입"
-        }
+        content1={"멜라닌 활성도가 높아 기미, 주근깨 혹은 잡티 등 눈에 보이는 색소가 많은 타입"}
         content2={"멜라닌 활성도가 낮아 눈에 보이는 색소가 적은 타입"}
         title2={"N"}
         subtitle2={"비색소성"}

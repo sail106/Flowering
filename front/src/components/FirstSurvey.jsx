@@ -3,6 +3,8 @@ import Progress from "./FirstSurveyPage/ProgressBar";
 import QuestionPage from "./FirstSurveyPage/QuestionPage";
 import Button from "./common/Button";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const PageSetting = styled.div`
   display: flex;
@@ -624,12 +626,13 @@ const FirstServeyPage = () => {
   ];
 
   const [index, setIndex] = useState(0);
-  const [trueFalseArray, setTrueFalseDataArray] = useState(Array.from({ length: question.length }, () => 0));
-  const MBTIScore = [0, 0, 0, 0];
+  const [trueFalseArray, setTrueFalseDataArray] = useState(Array.from({ length: question.length }, () => false));
+  const [MBTIScore, setMBTIScore] = useState([0, 0, 0, 0]);
+  let point = 0;
 
   const updateTrueFalseArray = (cardIndex, dataArray) => {
-    let point = 0;
     trueFalseArray[cardIndex] = true;
+    point = 0;
     for (let i = 0; i < dataArray.length; i++) {
       if (dataArray[i] === 0) {
         trueFalseArray[cardIndex] = false;
@@ -637,11 +640,19 @@ const FirstServeyPage = () => {
       point = point + dataArray[i];
     }
     if (trueFalseArray[cardIndex] == true) {
-      MBTIScore[index] = point;
+      // MBTIScore를 상태로 업데이트합니다.
+      setMBTIScore((prevScores) => {
+        const newScores = [...prevScores];
+        newScores[index] += point;
+        return newScores;
+      });
+      console.log(MBTIScore);
     }
   };
 
-  const checkINdex = () => {
+  const Token = useSelector((state) => state.auth.logonUser);
+
+  const checkINdex = (Token) => {
     if (trueFalseArray[index] == true) {
       if (index < 3) {
         setIndex(index + 1);
@@ -671,13 +682,29 @@ const FirstServeyPage = () => {
         } else {
           result = result + "T";
         }
-        console.log(result);
+
+        // axios를 사용하여 POST 요청을 보냅니다.
+        axios({
+          method: "POST",
+          url: "http://i10c106.p.ssafy.io:8080/v1/survey/save/1",
+          headers: {
+            Authorization: `Bearer ${Token.access_token}`,
+          },
+
+          survey_type: result,
+        })
+          .then((res) => {
+            setData(res.data.data_body);
+          })
+          .catch((error) => {
+            console.log(error);
+            throw new Error(error);
+          });
       }
     } else {
       alert("설문을 완료해주세요");
     }
   };
-
   return (
     <PageSetting>
       <Page>
@@ -703,7 +730,7 @@ const FirstServeyPage = () => {
           resetIndex={index}
         />
       </Page>
-      <Button onClick={() => checkINdex()}>다음</Button>
+      <Button onClick={() => checkINdex(Token)}>다음</Button>
     </PageSetting>
   );
 };

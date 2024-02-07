@@ -32,10 +32,10 @@ import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
 import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
 import Manager from "./components/ManagerPage/Manager";
 import LoginForm from "./components/LoginForm";
-import Consulting1stepresult from "./components/consultingresult/Consulting1stepresult";
+import FirstSurveyResult from "./components/FirstSurveyResult/FirstSurveyResultPage";
 import FinalresultInput from "./components/consultingresult/FinalresultInput";
 
-import Finish1step from "./components/consultingresult/Finish1step";
+import FirstSurveyEnd from "./components/FirstSurveyEnd/FirstSurveyEnd";
 import Finish2step from "./components/consultingresult/Finish2step";
 
 import PhotoTest from "./components/PhotoTest";
@@ -44,7 +44,7 @@ import SkinProductCard from "./components/consultingresult/SkinProductCard";
 import SignupRequired from "./components/SignupRequired";
 
 import SecondSurveyResult from "./components/SecondSurveyResult";
-import FirstSurveyPage from "./components/FirstSurveyPage";
+import FirstSurveyPage from "./components/FirstSurvey";
 function App() {
   return (
     <>
@@ -71,30 +71,25 @@ function App() {
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
-          <Route
-            path="/expertsprofileLeina"
-            element={<ExpertsProfileLeina />}
-          />
-          <Route
-            path="/expertsprofileDiana"
-            element={<ExpertsProfileDiana />}
-          />
+          <Route path="/expertsprofileLeina" element={<ExpertsProfileLeina />} />
+          <Route path="/expertsprofileDiana" element={<ExpertsProfileDiana />} />
           <Route path="/expertsprofileRuna" element={<ExpertsProfileRuna />} />
           <Route path="/expertconsulting" element={<ExpertConsulting />} />
           <Route path="/communityHome" element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
           <Route path="/consulting1stepresult" element={<consulting1stepresult />} />
-          <Route
-            path="/expertsprofileregistration"
-            element={<ExpertsProfileRegistration />}
-          />
+          <Route path="/expertsprofileregistration" element={<ExpertsProfileRegistration />} />
           <Route path="/manager" element={<Manager />} />
 
           <Route path="/finalresultInput" element={<FinalresultInput />} />
 
           <Route path="/phototest" element={<PhotoTest />} />
 
+          <Route path="/secondsurveyresult" element={<SecondSurveyResult />}></Route>
+          <Route path="/firstsurvey" element={<FirstSurveyPage />} />
+          <Route path="/firstsurveyresult" element={<FirstSurveyResult />} />
+          <Route path="/firstsurveyend" element={<FirstSurveyEnd />} />
         </Routes>
         <Footer />
       </Page>
