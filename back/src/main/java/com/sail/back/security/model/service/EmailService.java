@@ -75,6 +75,7 @@ public class EmailService {
                 .email(email)
                 .number(number)
                 .build();
+
         //레디스에 저장
         repository.save(certificationNumber);
         //메일 생성 및 전송

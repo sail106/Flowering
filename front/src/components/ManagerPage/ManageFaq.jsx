@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import { IoCloseOutline } from "react-icons/io5";
 import Input from "../common/Input";
+import { GoPlus } from "react-icons/go";
 
 const Span = styled.th`
   font-family: Noto Sans KR;
   font-size: 20px;
   font-style: normal;
+`;
+
+const Margin = styled.div`
+  margin: 100px;
 `;
 
 const Answer = styled.th`
@@ -21,48 +26,74 @@ const Answer = styled.th`
 const FaqRow = styled.tr`
   display: flex;
   justify-content: start;
+  margin-right: 330px;
 `;
 
 const CloseOutline = styled(IoCloseOutline)`
   font-weight: bold;
   font-size: 23px;
+  cursor: pointer;
+`;
+
+const GoPlus1 = styled(GoPlus)`
+  font-weight: bold;
+  font-size: 25px;
+  cursor: pointer;
+  position: absolute;
+  right: 405px;
 `;
 
 const ReviewInput = styled.textarea`
-  width: 600px;
+  width: 815px;
   height: 120px;
   padding: 10px;
-  margin: 10px;
-  margin-left: 180px;
   font-family: "Noto Sans KR";
   font-size: 16px;
   border: 1px solid #8e8c8c;
   border-radius: 5px;
   resize: none;
-  margin-bottom: 10px;
   font-size: 14px;
+  margin-left: 15px;
+
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #b7b5b5;
+  }
 `;
 
-const FaqPut = styled.div`
-  margin-top: 20px;
+const Box = styled.div`
   display: flex;
-  flex-direction: column;
+  margin-top: 20px;
+  justify-content: space-between;
+  width: 80%;
 `;
 
 const Put = styled.div`
-  margin-left: 180px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  margin-left: 10px;
 `;
 
+const H2 = styled.h3`
+  font-family: "Noto Sans KR";
+  font-size: 30px;
+  padding-left: 8px;
+`;
 // ExpertsList component
 const ManagerFaq = () => {
   return (
     <table>
       <tbody>
-        <FaqRow>
-          <Span>Q. </Span>
-          <Answer>컨설팅은 어떻게 진행되나요?</Answer>
+        <Box>
+          <FaqRow>
+            <Span>Q. </Span>
+            <Answer>컨설팅은 어떻게 진행되나요?</Answer>
+          </FaqRow>
           <CloseOutline />
-        </FaqRow>
+        </Box>
+
         <FaqRow>
           <Span>A. </Span>
           <Answer>
@@ -78,13 +109,14 @@ const ManagerFaq = () => {
           </Answer>
         </FaqRow>
         <br />
-        <br />
-        <FaqRow>
-          <Span>Q. </Span>
-          <Answer>결과 보고서는 어떻게 받아볼 수 있나요?</Answer>{" "}
-          <CloseOutline />
-        </FaqRow>
 
+        <Box>
+          <FaqRow>
+            <Span>Q. </Span>
+            <Answer>결과 보고서는 어떻게 받아볼 수 있나요?</Answer>
+          </FaqRow>
+          <CloseOutline />
+        </Box>
         <FaqRow>
           <Span>A. </Span>
           <Answer>
@@ -95,14 +127,15 @@ const ManagerFaq = () => {
           </Answer>
         </FaqRow>
         <br />
-        <br />
-        <FaqRow>
-          <Span>Q. </Span>
 
-          <Answer>전문가는 어떻게 배정되나요?</Answer>
+        <Box>
+          <FaqRow>
+            <Span>Q. </Span>
+
+            <Answer>전문가는 어떻게 배정되나요?</Answer>
+          </FaqRow>
           <CloseOutline />
-        </FaqRow>
-
+        </Box>
         <FaqRow>
           <Span>A. </Span>
           <Answer>
@@ -111,16 +144,23 @@ const ManagerFaq = () => {
             계시기에 고객님의 니즈에 따라 잘 선택해주시기 바랍니다.
           </Answer>
         </FaqRow>
-
-        {/* 다른 FaqPut 부분도 위와 같은 형식으로 추가 */}
-        <FaqPut>
-          <Span>Q. </Span>
-          <Put>
-            <Input width={"587px"} placeholder="질문을 입력해주세요" />
-          </Put>
+        <br />
+        <Box>
+          <FaqRow>
+            <Span>Q. </Span>
+            <Put>
+              <Input width={"807px"} placeholder="질문을 입력해주세요" />
+            </Put>
+            <GoPlus1 />
+          </FaqRow>
+        </Box>
+        <FaqRow>
           <Span>A. </Span>
-          <ReviewInput placeholder="답변을 입력해주세요" />
-        </FaqPut>
+          <ReviewInput placeholder=" 답변을 입력해주세요" />
+        </FaqRow>
+        <Margin />
+        <H2>Contents</H2>
+        <hr />
       </tbody>
     </table>
   );

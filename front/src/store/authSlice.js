@@ -29,11 +29,12 @@ const initialState = {
         email: '',
         imageUrl: '',
         introduction: '',
-        cost: '',
         consultingFile: '',
         role: '',
-        isMic:'false',
-        isCam:'false',
+        isMic: 'false',
+        isCam: 'false',
+        access_token: '',
+        refresh_token: '',
     },
 
     isLoading: false,
@@ -119,14 +120,21 @@ export const nicknameCheck = createAsyncThunk(
 
 // login actions
 export const loginUser = createAsyncThunk(
-    'auth/login',
-    async (userInfo, { rejectWithValue }) => {
+    'auth/loginUser',
+    async ({ Email, Password }, { rejectWithValue }) => {
+
+        const loginrequest = {
+            email: Email,
+            password: Password,
+        }
+
         try {
             // start
-            const response = await Axios.post('members/login', userInfo);
-            const token = response.headers["authorization"]; // 헤더로 받을 때
+            const response = await Axios.post('auth/login', loginrequest);
+            const token = response.data.data_body
             saveToken(token);
-            return response.data;
+            return token;
+
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
             return rejectWithValue(err);
@@ -255,6 +263,7 @@ const authSlice = createSlice({
                 role: '',
                 imageUrl: '/images/default/avatar01.png',
             }
+            console.log('isauthentictedddd')
             state.isAuthenticated = false;
             deleteToken();
         },
@@ -293,12 +302,16 @@ const authSlice = createSlice({
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.logonUser = {
-                    nickname: action.payload.data.nickname,
-                    role: action.payload.data.role,
-                    imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png')
-                };                
+                    // nickname: action.payload.data.nickname,
+                    // role: action.payload.data.role,
+                    // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
+                    access_token: action.payload.access_token,
+                    refresh_token : action.payload.refresh_token
+
+                };
                 state.isAuthenticated = true;
             })
+
             .addCase(loginUser.rejected, (state) => {
                 state.isAuthenticated = false;
             })
@@ -320,7 +333,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole,setname } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

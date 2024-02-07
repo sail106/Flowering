@@ -50,11 +50,11 @@ const initialState = {
   ]
 }
 
-export const getCreatorSessionName = createAsyncThunk(
+export const getCreatorid = createAsyncThunk(
   'community/getCreatorSessionName',
-  async (reservationId, { rejectWithValue }) => {
+  async ( payload,{ rejectWithValue }) => {
     try {
-      const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
+      const response = await Axios.get(`community/getinfo/`+payload )
       return response.data
     } catch (err) {
       console.log(err)
@@ -62,7 +62,8 @@ export const getCreatorSessionName = createAsyncThunk(
     }
   }
 )
-
+ 
+ 
 const communitySlice = createSlice({
   name: 'community',
   initialState,
@@ -143,9 +144,9 @@ const communitySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getCreatorSessionName.fulfilled, (state, { payload }) => {
-        state.creatorSessionName = payload.sessionId
-      })
+      // .addCase(getCreatorSessionName.fulfilled, (state, { payload }) => {
+      //   state.creatorSessionName = payload.sessionId
+      // })
   }
 
 })

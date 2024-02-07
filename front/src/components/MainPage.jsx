@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import FirstPage from "./mainpage/FirstPage";
-import SecondPage from "./mainpage/SecondPage";
-import ThirdPage from "./mainpage/ThirdPage";
-import FourthPage from "./mainpage/FourthPage";
-import FifthPage from "./mainpage/FifthPage";
-import SixthPage from "./mainpage/SixthPage";
+import FirstPage from "./mainPage/FirstPage";
+import SecondPage from "./mainPage/SecondPage";
+import ThirdPage from "./mainPage/ThirdPage";
+import FourthPage from "./mainPage/FourthPage";
+import FifthPage from "./mainPage/FifthPage";
+import SixthPage from "./mainPage/SixthPage";
 
 
 const PinkCreamWrapper = styled.div`

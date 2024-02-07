@@ -21,7 +21,7 @@ const initialState = {
 }
 
 export const getConsultantSessionName2 = createAsyncThunk(
-  'consult/getCreatorSessionName',
+  'consult/getConsultantSessionName2',
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
@@ -56,7 +56,9 @@ const consultsessionnameSlice = createSlice({
     setConsultantSessionName2: (state, { payload }) => {
       state.consultantSessionName2 = payload
     },
-
+    removeConsultantSessionName2: (state) => {
+      state.consultantSessionName2 = '';
+    },
     setConsultid: (state, { payload }) => {
       state.consult_id = payload
     }, setCreatorid: (state, { payload }) => {
@@ -90,7 +92,7 @@ const consultsessionnameSlice = createSlice({
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName,
   setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName2
-  , appendParticipantList
+  , appendParticipantList,removeConsultantSessionName2
 } = consultsessionnameSlice.actions;
 
 export default consultsessionnameSlice.reducer;

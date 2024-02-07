@@ -2,11 +2,14 @@ import Card from "./common/Card";
 import RadioButton from "./common/RadioButton";
 import MyCalendar from "./common/MyCalendar";
 import Button from "./common/Button"
-import ButtonWrapper from "./signup/ButtonWrapper";
 import CenterContainer from "./common/CenterContainer";
+
+import { useSelector } from "react-redux";
 
 const ConsultReservation = () => {
   
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
 
   return (
     <Card>
@@ -23,9 +26,11 @@ const ConsultReservation = () => {
       <CenterContainer>
         <Button
           width="40%"
+
         >
           예약하기
         </Button>
+
       </CenterContainer>
     </Card>
   )

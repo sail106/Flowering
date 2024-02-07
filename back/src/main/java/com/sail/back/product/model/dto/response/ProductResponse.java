@@ -19,6 +19,7 @@ public class ProductResponse {
 
     private Long productId;
     private String productName;
+    private String price;
     private ProductType recommendedProductType;
     private String productImageUri;
     private String productDescription;

@@ -20,13 +20,13 @@ import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, appendParticipantList
+  resetSessionName, resetMsg, appendParticipantList  , getCreatorid
 } from '../../store/communitySlice'
 import UserVideoComponent from './UserVideoComponent';
 import axios from 'axios';
 import { CiVideoOn } from "react-icons/ci";
 
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -53,6 +53,12 @@ const OneToManyVideoChat = () => {
   const [isCam, setIsCam] = useState(false);
 
   //   const [OV, setOV] = useState(null)
+
+  useEffect(() => {
+    console.log('community_id', community_id);
+  }, [community_id]);
+  
+alert("onetoma")
 
 
   const sessionConnect = (token) => {
@@ -81,10 +87,23 @@ const OneToManyVideoChat = () => {
 
         session.publish(publisher);
         setPublisher(publisher);
+        // dispatch(getCustomer(consultingid)).then((response) => {
 
-        if (id === community_id) { setCreator(publisher) }
+        //   console.log('getCustomer 액션 성공:', response)
+        // }).catch((error) => {
+        //   console.error('getCustomer 액션 실패:', error);
+        // })
+        dispatch(getCreatorid(community_id)).then((response)=>{
+                    console.log('getCreatorid 액션 성공:', response)
 
-        else { dispatch(appendParticipantList(publisher)) }
+        }).catch((error)=>{
+
+        })
+         
+
+        // if (id == ) { setCreator(publisher) } //여기서 community 에서 userid 가져오기
+
+        // else { dispatch(appendParticipantList(publisher)) }
 
         dispatch(setSession(session))
 
@@ -118,10 +137,6 @@ const OneToManyVideoChat = () => {
   useEffect(() => {
     console.log('session', session);
   }, [session]);
-
-  useEffect(() => {
-    console.log('community_id', community_id);
-  }, [community_id]);
 
 
   useEffect(() => {
@@ -180,6 +195,7 @@ const OneToManyVideoChat = () => {
     } else if (role === CUSTOMER && customerId === community_id) {
       // 고객이 컨설턴트를 구독하고 있는 경우
       setCreator(subscriber); // 컨설턴트를 설정합니다.
+
     } else if (role === CUSTOMER && subRole === CUSTOMER) {
       // 여러 명의 고객이 서로를 구독하는 경우
       const customerId = event.stream.connection.connectionId; // 고객 ID를 가져옵니다.
@@ -405,7 +421,7 @@ const OneToManyVideoChat = () => {
               </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
-               
+
 
               {/* 우측 컬러팔레트, 채팅*/}
               {

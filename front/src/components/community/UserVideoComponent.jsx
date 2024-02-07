@@ -7,7 +7,7 @@ import { Box, styled, Typography } from '@mui/material'
 
 const UserVideoComponent = ({ streamManager }) => {
 
-
+    console.log('streamManager'+streamManager)
     const subRole = JSON.parse(streamManager.stream.connection.data).clientRole;
 
     const getNicknameTag = () => {

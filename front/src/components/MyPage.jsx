@@ -3,7 +3,6 @@ import MyInfo from "./mypage/MyInfo";
 import MyConsulting from "./mypage/MyConsulting";
 import MyCommunity from "./mypage/MyCommunity";
 import { Page } from "./common/Page";
-import MyCalendar from "./common/MyCalendar";
 import "react-calendar/dist/Calendar.css";
 
 const BackPage = styled(Page)`

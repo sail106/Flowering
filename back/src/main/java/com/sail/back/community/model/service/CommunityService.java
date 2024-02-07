@@ -1,6 +1,7 @@
 package com.sail.back.community.model.service;
 
 
+import com.sail.back.community.exception.CommunityErrorCode;
 import com.sail.back.community.exception.CommunityException;
 import com.sail.back.community.model.dto.request.CommunityAddRequest;
 import com.sail.back.community.model.dto.request.CommunityEditRequest;
@@ -135,5 +136,10 @@ public class CommunityService {
                 .activeCommunities(activeCommunities)
                 .postActiveCommunities(postActiveCommunities)
                 .build();
+    }
+
+    public CommunityResponse getCommunityInfo(Long communityId) {
+        Community community= communityRepository.findById(communityId).orElseThrow(()->new CommunityException(CommunityErrorCode.COMMUNITY_NOT_FOUND));
+        return CommunityResponse.fromEntity(community);
     }
 }

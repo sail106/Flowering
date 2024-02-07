@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/v1/consultings")
-
+//@CrossOrigin("*")
 public class ConsultingController {
 
     //컨설턴트 선택 -> 예약페이지(오늘 날짜부터 현재달의 마지막날까지의 해당 컨설터

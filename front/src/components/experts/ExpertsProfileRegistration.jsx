@@ -58,7 +58,7 @@ const PP = styled.p`
 `;
 
 const Nic = styled.div`
-  left: 595px;
+  left: 525px;
   top: 534px;
   position: absolute;
 `;
@@ -67,21 +67,21 @@ const H3 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 538px;
 `;
 const H32 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 585px;
 `;
 const H33 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 753px;
 `;
 
@@ -89,7 +89,7 @@ const H4 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 1125px;
 `;
 
@@ -97,14 +97,14 @@ const H42 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 1170px;
 `;
 const H5 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 1006px;
 `;
 
@@ -112,18 +112,18 @@ const H52 = styled.h3`
   padding-top: 30px;
   text-align: start;
   position: absolute;
-  left: 402px;
+  left: 362px;
   top: 1052px;
 `;
 const Put = styled.div`
-  margin-left: 180px;
+  margin-left: 150px;
 `;
 const Put2 = styled.div`
   margin-left: 65px;
 `;
 const Career = styled.p`
   margin-top: 13px;
-  margin-left: -465px;
+  margin-left: -435px;
   margin-bottom: 17px;
   font-family: "Noto Sans KR";
   font-size: 15px;
@@ -135,7 +135,7 @@ const Career = styled.p`
 const Career2 = styled.p`
   align-items: start;
   margin-top: 7px;
-  margin-left: -420px;
+  margin-left: -390px;
   font-family: "Noto Sans KR";
   font-size: 15px;
   font-style: normal;
@@ -157,7 +157,7 @@ const ButtonContainer = styled.div`
 const Plus = styled(GoPlus)`
   font-size: 30px;
   position: absolute;
-  left: 1245px;
+  left: 1140px;
   top: 1190px;
   color: gray;
   cursor: pointer;
@@ -165,7 +165,7 @@ const Plus = styled(GoPlus)`
 const Remove = styled(IoMdRemove)`
   font-size: 27px;
   position: absolute;
-  left: 1245px;
+  left: 1140px;
   top: 1081px;
   color: gray;
   cursor: pointer;
@@ -176,7 +176,7 @@ const ReviewInput = styled.textarea`
   height: 120px;
   padding: 10px;
   margin: 10px;
-  margin-left: 180px;
+  margin-left: 150px;
   font-family: "Noto Sans KR";
   font-size: 16px;
   border: 1px solid #8e8c8c;
