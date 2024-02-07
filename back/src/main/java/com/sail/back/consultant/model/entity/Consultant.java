@@ -73,7 +73,7 @@ public class Consultant {
 
 
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant) {
-        return ConsultantDetailResponse.builder()
+        ConsultantDetailResponse consultantDetailResponse= ConsultantDetailResponse.builder()
                 .consultant_id(consultant.getConsultant_id())
                 .self_introduce(consultant.getSelf_introduce())
                 .simple_introduce(consultant.getSimple_introduce())
@@ -81,6 +81,9 @@ public class Consultant {
                 .star(consultant.getStarAverage())
                 .num(consultant.getReviewnum())
                 .build();
+
+//        consultantDetailResponse.setProfileImgUrl(consultant.getUser().getProfileImgUrl());
+        return consultantDetailResponse;
     }
 
     public ConsultantListResponse from(Consultant consultant) {
