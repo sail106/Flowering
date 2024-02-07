@@ -29,6 +29,7 @@ public class ConsultantListResponse {
     private UserResponse userResponse;
 
     private double star;
+    private int reviewnum;
 
     public Consultant from(ConsultantListResponse consultantListResponse) {
         FindRequest findRequest = FindRequest.builder().

@@ -54,10 +54,9 @@ const ExpertsIntroduction = () => {
         setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
         dispatch(setExpertList(response.data.data_body))
 
-
-        
         console.log('succcc')
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error :', error);
         // alert('결제 실패');
       }
@@ -82,7 +81,7 @@ const ExpertsIntroduction = () => {
             id={expert.consultant_id} // 고유한 키 추가
             nickname={expert.user_response.nickname}
             text={expert.simple_introduce}
-            rate={expert.rate}
+            rate={expert.star}
             ratenum={expert.ratenum}
             tag1={expert.tag1}
             tag2={expert.tag2}
