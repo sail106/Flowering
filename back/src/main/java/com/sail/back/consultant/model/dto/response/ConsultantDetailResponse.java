@@ -23,6 +23,7 @@ public class ConsultantDetailResponse {
 
     private String self_introduce;
     private String simple_introduce;
+//    private String imgsrc;
 
     private UserResponse userResponse;
     private double star;
@@ -42,7 +43,11 @@ public class ConsultantDetailResponse {
         this.simple_introduce = consultant.getSimple_introduce();
         this.userResponse = consultant.getUser().toResponse();
         this.star=consultant.getStarAverage();
+
     }
 
+    public void setProfileImgUrl(String profileImgUrl) {
+        this.userResponse.setProfileImgUrl(profileImgUrl);
+    }
 
 }

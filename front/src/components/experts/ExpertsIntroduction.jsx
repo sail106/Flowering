@@ -82,10 +82,10 @@ const ExpertsIntroduction = () => {
             nickname={expert.user_response.nickname}
             text={expert.simple_introduce}
             rate={expert.star}
-            ratenum={expert.ratenum}
+            ratenum={expert.reviewnum}
             tag1={expert.tag1}
             tag2={expert.tag2}
-            imgsrc={BIBI}
+            imgsrc={expert.user_response.profile_img_url}
             width={"280px"}
             height={"405px"}
             path={"/expertsProfilecommon/" + expert.consultant_id}

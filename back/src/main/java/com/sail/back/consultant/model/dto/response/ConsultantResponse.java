@@ -21,6 +21,7 @@ public class ConsultantResponse {
 
     private String selfIntroduce;
     private String simpleIntroduce;
+//    private String imgsrc;
 
     private UserResponse userResponse;
     private double star;

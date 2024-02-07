@@ -50,6 +50,7 @@ public class ConsultantListResponse {
                 .simple_introduce(consultantListResponse.getSimple_introduce())
                 .consultant_id(consultantListResponse.consultant_id)
                 .user(User.from(consultantListResponse.userResponse))
+
                 .build();
 
 
