@@ -80,9 +80,8 @@ const initialState = {
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
     async ({ role }, { rejectWithValue,getState }) => { 
-
         try {
-
+            
             console.log('innn' + role)
             const state = getState(); // 전체 Redux 상태를 얻습니다.
 
