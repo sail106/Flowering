@@ -196,7 +196,7 @@ const Order = () => {
 
 
 
-    
+
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -258,7 +258,7 @@ const Order = () => {
                         // alert('결제 실패');
                     }
 
-                    navigate('/order-result');
+                    navigate('/orderResult');
 
                 } else {
                     alert('결제 실패');

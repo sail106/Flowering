@@ -9,6 +9,7 @@ import consultReducer from './consultSlice';
 import consultsessionnameReducer from './consultsessionnameSlice';
 import selectedReducer from './selectedSlice';
 import authReducer from './authSlice';
+import ExpertsListReducer from './ExpertsListSlice';
 
 // 리듀서들을 합칩니다
 const reducers = combineReducers({
@@ -17,6 +18,8 @@ const reducers = combineReducers({
   consult: consultReducer,
   selected: selectedReducer,
   consultsessionname: consultsessionnameReducer,
+  ExpertsList: ExpertsListReducer,
+
   auth: authReducer,
 });
 

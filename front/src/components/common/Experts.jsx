@@ -94,6 +94,7 @@ const MyButton = styled(ButtonBox)`
 
 // 컴포넌트 정의
 const Experts = ({
+  id,
   nickname,
   text,
   rate,
@@ -124,9 +125,17 @@ const Experts = ({
       </OneText>
       <StyledSmallDiv>{tag1}</StyledSmallDiv>
       <StyledSmallDiv2>{tag2}</StyledSmallDiv2>
-      <Link to={path} reloadDocument>
+
+      {/* <Link to={path} reloadDocument>
+        <MyButton >예약하기</MyButton>
+      </Link> */}
+
+      <Link to={{
+        pathname: path,
+      }}>
         <MyButton>예약하기</MyButton>
       </Link>
+
     </Container>
   );
 };

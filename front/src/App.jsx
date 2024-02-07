@@ -42,6 +42,7 @@ import Finalresult3step from "./components/consultingresult/Finalresult3step";
 import SkinProductCard from "./components/consultingresult/SkinProductCard";
 import Orderpage from "./components/OrderPage";
 import OrderResult from "./components/OrderResult";
+import ExpertsProfileCommon from "./components/experts/ExpertsProfilecommon";
 
 function App() {
   return (
@@ -68,6 +69,8 @@ function App() {
           <Route path="/beautyconsulting" element={<BeautyConsulting />} />
           <Route path="/communitymod" element={<CommunityModify />} />
           <Route path="/experts" element={<ExpertsIntroduction />} />
+          <Route path="/expertsProfilecommon/:id" element={<ExpertsProfileCommon />} />
+
           <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
           <Route path="/finish1step" element={<Finish1step />} />
           <Route path="/finish2step" element={<Finish2step />} />
