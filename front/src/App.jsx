@@ -68,8 +68,8 @@ function App() {
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/orderpage" element={<Orderpage />} />
           <Route path="/orderResult" element={<OrderResult />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage2" element={<ExpertPage />} />
+          <Route path="/mypage/:id" element={<MyPage />} />
+          <Route path="/expertmypage/:id" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
           <Route path="/faq" element={<FaQ />} />
           <Route path="/beautyconsulting" element={<BeautyConsulting />} />

@@ -7,6 +7,7 @@ import Webcam from "react-webcam";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { initializeApp, getApps, getApp  } from "firebase/app";
 import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+// import FirebaseConfig from "./common/FirebaseConfig";
 
 const BackPage = styled(Page)`
   height: auto;
@@ -86,30 +87,30 @@ const WebcamContainer = styled.div`
   padding-bottom: 27%;
 `;
 
-const firebaseConfig = {
+const FirebaseConfig = {
   apiKey: import.meta.env.VITE_APP_API_KEY,
   authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_APP_PROJECT_ID,
   storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_APP_APP_ID,
-  measurementId: import.meta.env.VITE_APP_MEASUREMENT_ID
 };
 
 if (!getApps().length) {
-  initializeApp(firebaseConfig);
+  initializeApp(FirebaseConfig);
 } else {
   getApp();
 }
-
 const storage = getStorage();
+
+// const storage = getStorage();
 const PhotoTest = () => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const loadImage = async () => {
       try {
-        const url = await getDownloadURL(ref(storage, 'images/imageName'));
+        const url = await getDownloadURL(ref(storage, 'image'));
         setImageUrl(url);
         console.log(url)
       } catch (error) {
@@ -126,7 +127,7 @@ const PhotoTest = () => {
     const base64Image = imageSrc.split(';base64,').pop();
 
     // 이미지를 Firebase Storage에 업로드
-    let imageRef = ref(storage, 'images/imageName');
+    let imageRef = ref(storage, 'images/imageNam');
     uploadString(imageRef, base64Image, 'base64', {contentType:'image/jpg'}).then((snapshot) => {
       // 진행 상태를 보여주는 코드를 여기에 작성할 수 있습니다.
       getDownloadURL(snapshot.ref).then((downloadURL) => {
