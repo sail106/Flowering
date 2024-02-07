@@ -10,7 +10,7 @@ const StyledLabel = styled.label`
 
 const LabelStyle = (props) => {
   return (
-    <StyledLabel required={props.required}>{props.children}</StyledLabel>
+    <StyledLabel>{props.children}</StyledLabel>
   );
 };
 

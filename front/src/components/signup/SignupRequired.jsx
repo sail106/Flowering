@@ -22,17 +22,21 @@ const SignupRequired = () => {
         <LabelStyle htmlFor="birth">* 생년월일</LabelStyle>
         <Input id="birth" placeholder="8자리 Ex) 19990118" required />
         
-        <LabelStyle htmlFor="gender" required>* 성별</LabelStyle>   
+        <LabelStyle htmlFor="gender">* 성별</LabelStyle>   
         <LabelContainer>
           <LabelSignup htmlFor="male" >
             <Input
               id="male" name="gender"
               type="radio" width="1"
+              required
             />
             <RadioLabelText>여성</RadioLabelText>
           </LabelSignup>
           <LabelSignup htmlFor="female">
-            <Input width="1" id="female" name="gender" type="radio" />
+            <Input
+              width="1" id="female" name="gender"
+              type="radio"
+            />
             <RadioLabelText>남성</RadioLabelText>
           </LabelSignup>
         </LabelContainer>
