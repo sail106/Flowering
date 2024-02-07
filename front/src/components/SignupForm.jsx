@@ -51,10 +51,8 @@ const SignupForm = () => {
       // TODO: 응답에 따른 처리 로직 작성
       // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
       // 사용자에게 메시지를 보여줄 수 있습니다.
-      console.log("인증 요청 성공");
       alert('인증번호가 요청되었습니다');
     } catch (error) {
-      console.error('인증 요청 실패:', error);
       alert('올바르지 않은 이메일 형식입니다');
     }
   };
@@ -68,9 +66,7 @@ const SignupForm = () => {
         code: e.target.value,
       })
       setAuthCorrect(true);
-      console.log("성공성공성공성ㄱ오!!")
     } catch(error) {
-      console.log("에러에러에러 : ", error);
       setAuthCorrect(false);
     }
   }
