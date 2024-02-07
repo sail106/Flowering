@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
-
+import checkcircle from "../../assets/checkcircle.png"
+import step_test1 from "../../assets/1step_test.png"
 const Consulting1stepresultpage = styled.div`
   margin-top: -130px;
   display: flex;
@@ -57,14 +58,14 @@ const Finish1step = () => {
     <Consulting1stepresultpage>
       <Margin />
 
-      <CheckImg src="src/assets/checkcircle.png" alt="1차 설문 완료" />
+      <CheckImg src={checkcircle} alt="1차 설문 완료" />
       <H3>1차 설문 테스트 완료</H3>
       <P>
         2차 사진 테스트 진단을 완료하여 주세요. <br /> 정확한 진단을 위해
         유의사항을 잘 참고해주세요.
       </P>
       <StepImg
-        src="src/assets/1step_test.png"
+        src={step_test1}
         alt="1차 설문 완료, 2차 사진 테스트 진행 예정"
       />
       <Margin2 />

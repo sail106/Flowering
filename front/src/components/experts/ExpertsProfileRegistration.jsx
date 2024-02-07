@@ -3,6 +3,8 @@ import Input from "../common/Input";
 import { ButtonBox } from "../common/Button";
 import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
+import BIBI from "../../assets/BIBI.png"
+import camera from "../../assets/camera.png"
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -197,8 +199,8 @@ const ExpertsProfileRegistration = () => {
   return (
     <>
       <MyPage>
-        <MyImg src="src/assets/BIBI.png" alt="프로필 사진" />
-        <CameraImg src="src/assets/camera.png" alt="프로필 사진" />
+        <MyImg src={BIBI} alt="프로필 사진" />
+        <CameraImg src={camera} alt="프로필 사진" />
         <Container>전문가 소개</Container>
         <PP>
           <Regist>

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
-
+import gray from "../../assets/gray.png"
+import green from "../../assets/green.png"
+import sky from "../../assets/sky.png"
 const MyPage = styled(Page)`
   width: 75%;
 `;
@@ -39,9 +41,9 @@ const SecondPage = () => {
       <Head>FIND MY COLOR</Head>
       <Head2>스타일 변화</Head2>
       <ImageContainer>
-        <Image src="src/assets/gray.png" alt="gray" />
-        <Image src="src/assets/green.png" alt="green" />
-        <Image src="src/assets/sky.png" alt="sky" />
+        <Image src={gray} alt="gray" />
+        <Image src={green} alt="green" />
+        <Image src={sky} alt="sky" />
       </ImageContainer>
     </MyPage>
   );

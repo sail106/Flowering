@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Call from "../assets/Call.svg"
+import Message from "../assets/Message.svg"
+import Location from "../assets/Location.svg"
 
 const FooterBox = styled.div`
   width: 100%;
@@ -63,15 +66,15 @@ const Footer = () => {
         <Link to={'/faq'} reloadDocument>FAQ</Link>
       </Path>
       <Info>
-        <Image src="src\assets\Call.svg" alt="Call" />
+        <Image src={Call} alt="Call" />
         <p>010-1232-1106</p>
       </Info>
       <Info>
-        <Image src="src\assets\Message.svg" alt="Message" />
+        <Image src={Message} alt="Message" />
         <p>sail106@flowering.com</p>
       </Info>
       <Info>
-        <Image src="src\assets\Location.svg" alt="Location" />
+        <Image src={Location} alt="Location" />
         <p>광주광역시 광산구 오선동 549-1</p>
       </Info>
       <Bottom>Flowering</Bottom>

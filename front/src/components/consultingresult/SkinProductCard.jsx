@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import skin1 from "../../assets/skin1.png"
+import skin2 from "../../assets/skin2.png"
+import skin3 from "../../assets/skin3.png"
+import skin4 from "../../assets/skin4.png"
+import skin5 from "../../assets/skin5.png"
+import skin6 from "../../assets/skin6.png"
 
 const P = styled.p`
   white-space: pre-line;
@@ -16,7 +22,7 @@ const IMG = styled.img`
   width: 148px;
   height: 148px;
   /* background-color: rgba(169, 169, 169, 0.1); */
-  background-image: src= "src/assets/backskin.png";
+  background-image: src= "../../assets/backskin.png";
 `;
 
 const Card = styled.div`
@@ -34,7 +40,7 @@ const SkinProductCard = () => {
     <>
       <Margin />
       <Card>
-        <IMG src="src/assets/skin1.png" alt="" />
+        <IMG src={skin1} alt="skin1" />
         <Content>
           <H2>파파레시피 효소 파우터 클렌저</H2>
           <P>
@@ -51,7 +57,7 @@ const SkinProductCard = () => {
 
       <Margin />
       <Card>
-        <IMG src="src/assets/skin2.png" alt="" />
+        <IMG src={skin2} alt="skin2" />
         <Content>
           <H2>웰라쥬 리얼 히알루로닉 블루 100앰플</H2>
           <P>
@@ -67,7 +73,7 @@ const SkinProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/skin3.png" alt="" />
+        <IMG src={skin3} alt="skin3" />
         <Content>
           <H2>에스트라 아토베리어 365 하이드로 에센스</H2>
           <P>
@@ -82,7 +88,7 @@ const SkinProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/skin4.png" alt="" />
+        <IMG src={skin4} alt="skin4" />
         <Content>
           <H2>라포슈포제 시카플라스트 B5+</H2>
           <P>
@@ -97,7 +103,7 @@ const SkinProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/skin5.png" alt="" />
+        <IMG src={skin5} alt="skin5" />
         <Content>
           <H2>비플레인 녹두 약산성 클렌징폼</H2>
           <P>
@@ -112,7 +118,7 @@ const SkinProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/skin6.png" alt="" />
+        <IMG src={skin6} alt="skin6" />
         <Content>
           <H2>앰플엔 세라마이드샷 보습장벽 앰플</H2>
           <P>

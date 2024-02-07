@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
-
+import BIBI from "../../assets/BIBI.png"
 const InfoDiv = styled.span`
   margin: 0% 12%;
   height: 695px;
@@ -62,7 +62,7 @@ const MyButton = () => {
 const MyInfo = () => {
   return (
     <InfoDiv>
-      <MyImg src="src/assets/BIBI.png" alt="프로필 사진" />
+      <MyImg src={BIBI} alt="프로필 사진" />
       <ProfileDiv>
         <LeftDiv>
           <StyledP>이{"     "}름</StyledP>

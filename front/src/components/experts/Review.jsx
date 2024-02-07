@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import { ButtonBox } from "../common/Button";
-
+import LEINA from "../../assets/LEINA.png"
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#F28482",
@@ -88,7 +88,7 @@ const Review = () => {
       <Margin2 />
       <Title text={"Review"} />
       <CashCard>
-        <Img src="src/assets/LEINA.png" alt="" />
+        <Img src={LEINA} alt="" />
         <Cashtext>
           <p>LEINA 뷰티 솔루션 컨설팅</p>
           <p>￦89,000</p>

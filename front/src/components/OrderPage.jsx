@@ -333,7 +333,7 @@ const kakaopay = {
     type : "radio",
     id : "kakaopay.TC0ONETIME",
     value : "카카오페이",
-    img : "src/assets/kakaoFavicon.png"
+    img : "../assets/kakaoFavicon.png"
 
 }
 const inicis = {
