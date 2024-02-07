@@ -3,6 +3,8 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { ButtonBox } from "./Button";
 import { Link } from "react-router-dom";
+import { setSeletedId } from "../../store/ExpertsListSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div`
   position: relative;
@@ -35,6 +37,7 @@ const StyledDiv = styled.div`
 
 const BIBIText = styled.div`
   text-align: center;
+  justify-content:start;
   color: black;
   font-size: 30px;
   font-family: "Lexend Deca";
@@ -43,7 +46,9 @@ const BIBIText = styled.div`
   word-wrap: break-word;
   position: absolute;
   top: 150px;
+  display:flex;
   left: 450px;
+  width:500px;
 `;
 
 const OneText = styled.div`
@@ -106,6 +111,16 @@ const Experts = ({
   height,
   path,
 }) => {
+  const dispatch = useDispatch();
+
+  const btnclick = (id) => {
+    // 예약하기 버튼 클릭 시 동작할 함수 정의
+    console.log('bttt' + id)
+
+    dispatch(setSeletedId(id))
+  };
+
+
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />
@@ -133,7 +148,7 @@ const Experts = ({
       <Link to={{
         pathname: path,
       }}>
-        <MyButton>예약하기</MyButton>
+        <MyButton onClick={() => btnclick(id)}>예약하기</MyButton>
       </Link>
 
     </Container>

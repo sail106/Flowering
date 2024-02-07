@@ -4,25 +4,38 @@ import axios from 'axios';
 import getStoredState from 'redux-persist/es/getStoredState';
 
 const initialState = {
-  ExpertList: [] // 빈 배열로 초기화합니다.
+  ExpertList: [], // 빈 배열로 초기화합니다.
+  selectedid: ''
 }
 
 export const fetchExpertById = createAsyncThunk(
   'ExpertsList/fetchExpertById',
-  async (id) => {
-    console.log('fetchExpertByIdfetchExpertByIdfetchExpertById' )
-    // const { access_token } = getState().auth.logonUser; // Redux store에서 액세스 토큰 가져오기
-    // const config = {
-    //   headers: {
-    //     'Authorization': `Bearer ${access_token}`,
-    //     'Content-Type': 'application/json'
-    //     // 다른 필요한 헤더도 추가할 수 있습니다.
-    //   }
-    // };
+  // async (id) => {
+  async (selectedid, { rejectWithValue, getState }) => {
 
-    const response = await Axios.get(`http://i10c106.p.ssafy.io:8080/v1/consultant/detail/${id}`);
+    console.log('fff ' + selectedid)
 
-    console.log('sss' + response.data_body)
+
+    const state = getState(); // 전체 Redux 상태를 얻습니다.
+
+
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
+        'Content-Type': 'application/json'
+        // 다른 필요한 헤더도 추가할 수 있습니다.
+      }
+    };
+
+
+    // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
+
+    const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/consultant/detail/${selectedid}`, config);
+
+    // console.log('sss' + response.data_body)
+    console.dir('sss' + response.data.data_body)
+    console.log(JSON.stringify(response.data.data_body, null, 2));
+
     return response.data.data_body;
   }
 );
@@ -37,7 +50,10 @@ const ExpertsListSlice = createSlice({
       state.ExpertList.push(payload); // ExpertList를 새로운 데이터로 설정합니다.
     },
 
-
+    setSeletedId: (state, { payload }) => {
+      console.log('xxx')
+      state.selectedid = payload;
+    },
 
   },
 
@@ -64,7 +80,8 @@ export const {
   setCustomer,
   setConsultantSessionName,
   appendParticipantList,
-  setExpertList // 이 부분을 추가합니다.
+  setExpertList,// 이 부분을 추가합니다.
+  setSeletedId,
 } = ExpertsListSlice.actions;
 
 export default ExpertsListSlice.reducer;

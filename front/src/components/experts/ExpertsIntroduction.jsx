@@ -84,7 +84,7 @@ const ExpertsIntroduction = () => {
             ratenum={expert.ratenum}
             tag1={expert.tag1}
             tag2={expert.tag2}
-            imgsrc={expert.imgsrc}
+            imgsrc={BIBI}
             width={"280px"}
             height={"405px"}
             path={"/expertsProfilecommon/" + expert.consultant_id}
