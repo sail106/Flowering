@@ -83,11 +83,12 @@ public class ConsultantService {
 
     public ConsultantDetailResponse update(User user, ConsultantUpdateRequest consultantUpdateRequest) {
         Consultant consultant = consultantRepository.findById(user.getId()).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+
         if (!UserRole.CONSULTANT.equals(user.getRole())) {
             throw new ConsultantException(ConsultantErrorCode.NOT_CONSULTANT);
         }
 
-        consultant.update(user, consultantUpdateRequest.getSelf_introduce(), consultantUpdateRequest.getSimple_introduce());
+        consultant.update(user, consultantUpdateRequest.getSelf_introduce(), consultantUpdateRequest.getSimple_introduce(),consultantUpdateRequest.getHashTags());
 
         consultantRepository.save(consultant);
 
