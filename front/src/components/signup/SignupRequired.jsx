@@ -8,9 +8,19 @@ import RadioLabelText from "./RadioLabelText";
 import CenterContainer from "../common/CenterContainer";
 import Button from "../common/Button";
 
+import axios from "axios";
+
 const SignupRequired = () => {
   // 여기서 필수정보를 axios로 쏜다.
   // 이렇게 하면 null값인 필수정보들이 DB에 저장된다.
+  const response = axios.post('http://i10c106.p.ssafy.io:8080/v1/users/update', {
+    name: '',
+    nick_name: '',
+    gender: '',
+    birthdate_year: '',
+    birthdate_month: '',
+  });
+
   return (
     <Card>
       <SignupRequiredHeader />

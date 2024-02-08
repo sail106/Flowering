@@ -33,20 +33,12 @@ const LoginForm = () => {
     //   console.log("isAuthenticated2 : ", isAuthenticated);
     // }
 
-    if (isAuthenticated === false)
-      console.log("이메일 또는 비밀번호가 잘못되었습니다!");
-
-    else {
-      console.log("로그인 성공!");
-
+    if (isAuthenticated === true) {
       dispatch(UserInfo(info)).then((response) => {
         console.log('상세정보조회' + response)
-
       }).catch((error) => {
         console.log('error' + error)
-
       })
-
       navigate('/');
     }
   }, [isAuthenticated, navigate]);

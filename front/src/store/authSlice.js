@@ -124,6 +124,7 @@ export const loginUser = createAsyncThunk(
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            alert("이메일 또는 비밀번호가 잘못되었습니다!");
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
