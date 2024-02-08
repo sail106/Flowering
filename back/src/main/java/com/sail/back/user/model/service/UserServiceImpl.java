@@ -32,8 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registUser(UserRegistRequest request, UserRole role, AuthProvider provider) {
-        userRepository.findByEmail(request.getEmail()).ifPresent(value ->{ throw new UserException(UserErrorCode.ALREADY_IN_EMAIL);});
-        userRepository.save(request.createUser(passwordEncoder,role,provider));
+        userRepository.findByEmail(request.getEmail()).ifPresent(value -> {
+            throw new UserException(UserErrorCode.ALREADY_IN_EMAIL);
+        });
+        userRepository.save(request.createUser(passwordEncoder, role, provider));
     }
 
     @Override
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
         if (request.getNickName() != null) user.setNickname(request.getNickName());
         if (request.getStatus() != null) user.setStatus(request.getStatus());
         if (request.getProfileImgUrl() != null) user.setProfileImgUrl(request.getProfileImgUrl());
+        if (request.getPassword() != null) user.setPassword(request.getPassword());
         userRepository.save(user);
     }
 

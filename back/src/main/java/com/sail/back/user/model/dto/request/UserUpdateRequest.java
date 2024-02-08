@@ -25,4 +25,5 @@ public class UserUpdateRequest {
     private UserGender gender;
     private String birthdateYear;
     private String birthdateMonth;
+    private String password;
 }
