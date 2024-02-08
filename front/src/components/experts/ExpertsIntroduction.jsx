@@ -45,6 +45,8 @@ const ExpertsIntroduction = () => {
           }
         };
 
+        const url=import.meta.env.VITE_APP_API_KEY;
+
         const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', config);
 
         // 요청 성공 시 수행할 작업
