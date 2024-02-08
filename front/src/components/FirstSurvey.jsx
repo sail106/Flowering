@@ -5,6 +5,7 @@ import Button from "./common/Button";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PageSetting = styled.div`
   display: flex;
@@ -628,6 +629,8 @@ const FirstServeyPage = () => {
   const [index, setIndex] = useState(0);
   const [trueFalseArray, setTrueFalseDataArray] = useState(Array.from({ length: question.length }, () => false));
   const [MBTIScore, setMBTIScore] = useState([0, 0, 0, 0]);
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
   let point = 0;
 
   const updateTrueFalseArray = (cardIndex, dataArray) => {
@@ -682,7 +685,7 @@ const FirstServeyPage = () => {
         } else {
           result = result + "T";
         }
-
+        console.log(result);
         // axios를 사용하여 POST 요청을 보냅니다.
         axios({
           method: "POST",
@@ -690,13 +693,16 @@ const FirstServeyPage = () => {
           headers: {
             Authorization: `Bearer ${Token.access_token}`,
           },
-
-          survey_type: result,
+          data: {
+            survey_type: result,
+          },
         })
           .then((res) => {
             setData(res.data.data_body);
+            navigate("/firstsurveyresult");
           })
           .catch((error) => {
+            console.log(result);
             console.log(error);
             throw new Error(error);
           });
