@@ -25,8 +25,6 @@ const SignupForm = () => {
     // ... (다른 상태값들)
   });
   
-
-
   const buttonNavigate = () => {
     setUserEmail(formData.email);
     navigate('/signupPw', {
@@ -51,12 +49,9 @@ const SignupForm = () => {
         email: formData.signupEmail,
         // ... (다른 필요한 데이터)
       });
-  
       setIsAuthCode(true);
   
       // TODO: 응답에 따른 처리 로직 작성
-      // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
-      // 사용자에게 메시지를 보여줄 수 있습니다.
       alert('인증번호가 요청되었습니다');
     } catch (error) {
       alert('올바르지 않은 이메일 형식입니다');

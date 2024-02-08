@@ -7,6 +7,8 @@ import Card from "../common/Card";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const StyledCheck = styled.p`
   display: inline-block;
@@ -25,6 +27,10 @@ const SignupPw = () => {
   const [checkPwTwo , setCheckPwTwo] = useState(false);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const { state } = location;
+  const userEmail = state ? state.userEmail : '';
 
   const passwordHandler = (e) => {
     setPwOne(e.target.value);
@@ -76,7 +82,15 @@ const SignupPw = () => {
     }
   }
 
-  const buttonNavigate = () => {
+  const buttonNavigate = async () => {
+    // 여기서 axios로 쏘기, 이렇게 하면 회원가입이 DB에 저장된다.
+    // 이메일 : userEmail
+    // 패스워드: pwOne
+    const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/users/regist', {
+      email: userEmail,
+      password: pwOne,
+    })
+    console.log(response);
     navigate('/signupRequired')
   }
 
