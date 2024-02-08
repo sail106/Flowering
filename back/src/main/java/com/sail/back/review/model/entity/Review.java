@@ -3,6 +3,7 @@ package com.sail.back.review.model.entity;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.review.model.dto.response.ReviewListResponse;
 import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,8 +40,9 @@ public class Review {
 
     }
 
-    public static ReviewListResponse toreviewListResponse(Review review) {
-        return ReviewListResponse.builder()
+
+    public static ReviewResponse from(Review review) {
+        return ReviewResponse.builder()
                 .review_id(review.getReview_id())
                 .star(review.getStar())
                 .consultantDetailResponse(Consultant.toConsultantDetailResponse(review.getConsultant()))

@@ -33,11 +33,8 @@ public class Consultant {
     private int reviewnum;
 
 
-//
-//    @OneToMany(mappedBy = "consultant")
-//    private List<Review> reviews;
-
-
+    @OneToMany(mappedBy = "consultant")
+    private List<Review> reviews;
 
 
     @OneToOne
@@ -69,12 +66,12 @@ public class Consultant {
 //        return reviews.size();
 //    }
 
-    public void setStarAverage(double starAverage ){
-        this.starAverage=starAverage;
+    public void setStarAverage(double starAverage) {
+        this.starAverage = starAverage;
     }
 
-    public void setReviewnum(int reviewnum ){
-        this.reviewnum=reviewnum;
+    public void setReviewnum(int reviewnum) {
+        this.reviewnum = reviewnum;
     }
 
     public void update(User user, String self_introduce, String simple_introduce) {
@@ -86,7 +83,7 @@ public class Consultant {
 
 
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant) {
-        ConsultantDetailResponse consultantDetailResponse= ConsultantDetailResponse.builder()
+        ConsultantDetailResponse consultantDetailResponse = ConsultantDetailResponse.builder()
                 .consultant_id(consultant.getConsultant_id())
                 .self_introduce(consultant.getSelf_introduce())
                 .simple_introduce(consultant.getSimple_introduce())
