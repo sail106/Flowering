@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         if (request.getNickName() != null) user.setNickname(request.getNickName());
         if (request.getStatus() != null) user.setStatus(request.getStatus());
         if (request.getProfileImgUrl() != null) user.setProfileImgUrl(request.getProfileImgUrl());
-        if (request.getPassword() != null) user.setPassword(request.getPassword());
+        if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
     }
 
