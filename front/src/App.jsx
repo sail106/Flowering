@@ -3,8 +3,9 @@ import { Route, Routes } from "react-router-dom";
 // import LoginForm from "./components/LoginForm";
 import PasswordFindForm from "./components/PasswordFindForm";
 import SpinnerTest from "./components/SpinnerTest";
-import SignupForm from "./components/SignupForm";
-import SignupPw from "./components/SignupPw";
+import SignupForm from "./components/signup/SignupForm";
+import SignupPw from "./components/signup/SignupPw";
+import SignupRequired from "./components/signup/SignupRequired";
 import { Page } from "./components/common/Page";
 import MyPage from "./components/MyPage";
 import Navbar from "./components/Navbar";
@@ -44,7 +45,6 @@ import SkinProductCard from "./components/consultingresult/SkinProductCard";
 import Orderpage from "./components/OrderPage";
 import OrderResult from "./components/OrderResult";
 import ExpertsProfileCommon from "./components/experts/ExpertsProfilecommon";
-import SignupRequired from "./components/SignupRequired";
 
 import SecondSurveyResult from "./components/SecondSurveyResult";
 import FirstSurveyPage from "./components/FirstSurveyPage";
@@ -68,8 +68,8 @@ function App() {
           <Route path="/consulting" element={<ConsultReservation />} />
           <Route path="/orderpage" element={<Orderpage />} />
           <Route path="/orderResult" element={<OrderResult />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage2" element={<ExpertPage />} />
+          <Route path="/mypage/:routeid" element={<MyPage />} />
+          <Route path="/expertmypage/:id" element={<ExpertPage />} />
           <Route path="/editmyinfo" element={<EditMyInfo />} />
           <Route path="/faq" element={<FaQ />} />
           <Route path="/beautyconsulting" element={<BeautyConsulting />} />
