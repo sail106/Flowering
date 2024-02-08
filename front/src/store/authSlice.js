@@ -79,14 +79,9 @@ const initialState = {
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
-    async ({  info }, { rejectWithValue,getState }) => { 
+    async ({ info }, { rejectWithValue,getState }) => { 
         try {
-            
-            console.log('innn' + info)
             const state = getState(); // 전체 Redux 상태를 얻습니다.
-
-            console.log('configgg ' + state.auth.logonUser.access_token)
-
             const config = {
                 headers: {
                     'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
@@ -94,24 +89,16 @@ export const UserInfo = createAsyncThunk(
                     // 다른 필요한 헤더도 추가할 수 있습니다.
                 }
             };
-
-            console.log('innn' + info)
-
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
             const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info`, config);
-
             const res = response.data.data_body
-            console.log('innn' + info)
 
             // saveToken(token);
-            console.log(res)
-
 
             return res;
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
-            console.log('errrr')
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
@@ -130,17 +117,13 @@ export const loginUser = createAsyncThunk(
 
         try {
             // start
-            console.log('lll' + loginrequest.email)
-            console.log('lll' + loginrequest.password)
             const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', loginrequest);
             const token = response.data.data_body
             // saveToken(token);
-            console.log(response)
             return token;
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
-            console.log('errrr')
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
@@ -154,7 +137,6 @@ export const signOut = createAsyncThunk(
             isAuthenticated = false
             return isAuthenticated;
         } catch (err) {
-            console.log(err)
             return rejectWithValue(err);
         }
     }
@@ -305,8 +287,6 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log('fullll')
-
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -319,7 +299,6 @@ const authSlice = createSlice({
             })
 
             .addCase(loginUser.rejected, (state) => {
-                console.log('rejeee')
                 state.isAuthenticated = false;
             })
             // modify extra reducers
@@ -336,20 +315,14 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-
-                console.log('info fulfilll'+action.payload)
                 state.logonUser = action.payload;
                 // role: action.payload.data
-                console.log('logonuser',state.logonUser)
             })
 
             .addCase(UserInfo.rejected, (state) => {
                 state.status = 'failed';
-
             });
     }
-
-
 
 })
 

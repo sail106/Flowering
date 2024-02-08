@@ -10,6 +10,7 @@ import Button from "../common/Button";
 
 const SignupRequired = () => {
   // 여기서 필수정보를 axios로 쏜다.
+  // 이렇게 하면 null값인 필수정보들이 DB에 저장된다.
   return (
     <Card>
       <SignupRequiredHeader />
