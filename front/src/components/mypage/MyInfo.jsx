@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
 import BIBI from "../../assets/BIBI.png"
+import { useSelector } from 'react-redux';
 const InfoDiv = styled.span`
   margin: 0% 12%;
   height: 695px;
@@ -60,6 +61,9 @@ const MyButton = () => {
 };
 
 const MyInfo = () => {
+  const User = useSelector(
+    (state) => state.auth.logonUser
+  );
   return (
     <InfoDiv>
       <MyImg src={BIBI} alt="프로필 사진" />
@@ -70,9 +74,9 @@ const MyInfo = () => {
           <StyledP>이 메 일</StyledP>
         </LeftDiv>
         <RightDiv>
-          <p>김혜미</p>
-          <p>키티공주</p>
-          <p>Email@google.com</p>
+          <p>{User.name}</p>
+          <p>{User.nickname}</p>
+          <p>{User.email}</p>
         </RightDiv>
       </ProfileDiv>
       <MyButton />
