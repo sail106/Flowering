@@ -10,6 +10,7 @@ import com.sail.back.review.model.dto.request.ReviewModifyRequest;
 import com.sail.back.review.model.dto.request.ReviewcreateRequest;
 import com.sail.back.review.model.dto.response.ReviewListResponse;
 import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.review.model.repository.ReviewRepository;
 import com.sail.back.user.model.entity.User;
@@ -78,14 +79,19 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
-    public List<ReviewListResponse> get(Long consultantId) {
+    public List<ReviewResponse> get(Long consultantId) {
         Consultant consultant = consultantRepository.findById(consultantId).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
-        List<ReviewListResponse> reviewListResponses = reviewRepository.findAllByConsultant(consultant)
-                .stream().map(Review::toreviewListResponse).collect(Collectors.toList());
+        List<Review> reviews = reviewRepository.findAllByConsultant(consultant).orElseThrow(()->new ReviewException(ReviewErrorCode.NO_REVIEW));
 
-        return reviewListResponses;
+
+//        List<ReviewListResponse> reviewListResponses = reviewRepository.findAllByConsultant(consultant)
+//                .stream().map(Review::from).collect(Collectors.toList());
+
+
+        return reviews.stream().map(Review::from).collect(Collectors.toList());
+
     }
 
 }
