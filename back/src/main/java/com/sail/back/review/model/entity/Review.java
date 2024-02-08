@@ -1,8 +1,7 @@
 package com.sail.back.review.model.entity;
 
 import com.sail.back.consultant.model.entity.Consultant;
-import com.sail.back.review.model.dto.response.ReviewListResponse;
-import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+ import com.sail.back.review.model.dto.response.ReviewModifyResponse;
 import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;

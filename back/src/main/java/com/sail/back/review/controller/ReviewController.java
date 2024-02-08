@@ -7,8 +7,7 @@ import com.sail.back.review.exception.ReviewErrorCode;
 import com.sail.back.review.exception.ReviewException;
 import com.sail.back.review.model.dto.request.ReviewModifyRequest;
 import com.sail.back.review.model.dto.request.ReviewcreateRequest;
-import com.sail.back.review.model.dto.response.ReviewListResponse;
-import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+ import com.sail.back.review.model.dto.response.ReviewModifyResponse;
 import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.review.model.repository.ReviewRepository;
@@ -62,6 +61,5 @@ public class ReviewController {
         List<ReviewResponse> reviewListResponses = reviewService.get(consultantId);
         return ResponseEntity.ok().body(MessageUtils.success(reviewListResponses));
     }
-
 
 }
