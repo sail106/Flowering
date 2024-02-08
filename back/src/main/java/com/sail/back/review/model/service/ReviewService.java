@@ -34,10 +34,14 @@ public class ReviewService {
         Consultant consultant = consultantRepository.findById(reviewcreateRequest.getConsultantid()).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
+        //여기서 리뷰등록 하면 consultant 의 averagestar 값을 업데이트 해야 한다.
+//        consultant.setReviewnum(consultant.getReviewnum() + 1);
+//        consultant.setStarAverage(consultant.getStarAverage() + reviewcreateRequest.getStar() / consultant.getReviewnum());
 
-        if (consultant.getReviews().stream().anyMatch(review -> review.getUser().getId().equals(user.getId()))) {
-            throw new ReviewException(ReviewErrorCode.ALREADY_IN);
-        }
+
+//        if (consultant.getReviews().stream().anyMatch(review -> review.getUser().getId().equals(user.getId()))) {
+//            throw new ReviewException(ReviewErrorCode.ALREADY_IN);
+//        }
 
         Review review = reviewcreateRequest.toEntity();
         review.setUser(user);

@@ -66,8 +66,17 @@ public class UserServiceImpl implements UserService {
 
         List<Consulting> consultings = consultingRepository.findAllByUserIdAndTime(id, localDateTime).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
 
+
         return consultings.stream().map(Consulting::from).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<MyConsultinglistResponse> myallconsultinglist(Long id) {
+
+        List<Consulting> consultings = consultingRepository.findAllByUserId(id).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
+
+        return consultings.stream().map(Consulting::from).collect(Collectors.toList());
     }
 
 }
