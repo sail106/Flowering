@@ -5,10 +5,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.hashtag.model.entity.HashTag;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +32,7 @@ public class ConsultantDetailResponse {
     private UserResponse userResponse;
     private double star;
     private int num;
+    private List<HashTag> hashTags ;
 
     //
 //    public Consultant from(ConsultantDetailResponse consultantListResponse) {
@@ -43,7 +48,7 @@ public class ConsultantDetailResponse {
         this.simple_introduce = consultant.getSimple_introduce();
         this.userResponse = consultant.getUser().toResponse();
         this.star=consultant.getStarAverage();
-
+        this.hashTags=consultant.getHashTags();
     }
 
     public void setProfileImgUrl(String profileImgUrl) {
