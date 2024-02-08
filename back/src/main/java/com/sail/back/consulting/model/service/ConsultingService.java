@@ -50,6 +50,7 @@ public class ConsultingService {
             throw new WrongAccessException("customer 가 아닙니다");
         }
 
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(CUSTOMER_NOT_FOUND));
 
@@ -58,12 +59,14 @@ public class ConsultingService {
 
 
         Consulting consulting = consultingCreateRequest.toEntity();
-        consulting.create(user, consultant, consulting.getTime());
+
+        consulting.create(user, consultant );
 
         consultingRepository.save(consulting);
 
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
+                .title(consultingCreateRequest.getTitle())
                 .build();
     }
 

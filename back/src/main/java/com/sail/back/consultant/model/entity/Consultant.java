@@ -29,39 +29,52 @@ public class Consultant {
     private String self_introduce;
 
     private String simple_introduce;
+    private double starAverage;
+    private int reviewnum;
 
 
-    @OneToMany(mappedBy = "consultant")
-    private List<Review> reviews;
+//
+//    @OneToMany(mappedBy = "consultant")
+//    private List<Review> reviews;
 
-//    private double star;
+
 
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public double getStarAverage() {
 
-        if (reviews == null || reviews.isEmpty()) {
-            return 0;
-        }
+//
+//    public double getStarAverage() {
+//
+//        if (reviews == null || reviews.isEmpty()) {
+//            return 0;
+//        }
+//
+//        int sum = 0;
+//        for (Review review : reviews) {
+//            sum += review.getStar();
+//        }
+//        return (double) sum / reviews.size();
+//    }
+//
+//
+//    public int getReviewnum() {
+//
+//        if (reviews == null || reviews.isEmpty()) {
+//            return 0;
+//        }
+//
+//        return reviews.size();
+//    }
 
-        int sum = 0;
-        for (Review review : reviews) {
-            sum += review.getStar();
-        }
-        return (double) sum / reviews.size();
+    public void setStarAverage(double starAverage ){
+        this.starAverage=starAverage;
     }
 
-
-    public int getReviewnum() {
-
-        if (reviews == null || reviews.isEmpty()) {
-            return 0;
-        }
-
-        return reviews.size();
+    public void setReviewnum(int reviewnum ){
+        this.reviewnum=reviewnum;
     }
 
     public void update(User user, String self_introduce, String simple_introduce) {

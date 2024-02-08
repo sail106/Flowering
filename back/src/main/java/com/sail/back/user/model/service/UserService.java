@@ -21,4 +21,6 @@ public interface UserService {
 
 
     List<MyConsultinglistResponse> myconsultinglist(Long id, LocalDateTime localDateTime);
+
+    List<MyConsultinglistResponse> myallconsultinglist(Long id);
 }

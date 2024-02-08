@@ -48,11 +48,12 @@ public class Consulting {
 //    @NotNull
 //    private String sessionId;
 
-    public void create(User user, Consultant consultant,
-                       LocalDateTime time) {
+    public void create(User user, Consultant consultant
+                        ) {
         this.user = user;
         this.consultant = consultant;
-        this.time = time;
+//        this.time = time;
+//        this.title=title;
     }
 
 //    public void setSession(String sessionId) {

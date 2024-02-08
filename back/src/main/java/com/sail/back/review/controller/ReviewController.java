@@ -36,8 +36,8 @@ public class ReviewController {
             throw new ReviewException(ReviewErrorCode.IS_CONSULTANT);
         }
 
-
         reviewService.create(user, reviewcreateRequest);
+
 
         return ResponseEntity.ok().body(MessageUtils.success());
     }

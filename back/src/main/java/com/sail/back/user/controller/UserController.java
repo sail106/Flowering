@@ -45,7 +45,13 @@ public class UserController {
 
     @GetMapping("/myconsultinglist")
     public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myconsultinglist(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
-        return ResponseEntity.ok().body( MessageUtils.success( userService.myconsultinglist(user.getId(), localDateTime)));
+        return ResponseEntity.ok().body(MessageUtils.success(userService.myconsultinglist(user.getId(), localDateTime)));
+    }
+
+    @GetMapping("/myallconsultinglist")
+    public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myallconsultinglist(@AuthenticationPrincipal User user) {
+       log.info("alllll"+user.getId());
+        return ResponseEntity.ok().body(MessageUtils.success(userService.myallconsultinglist(user.getId())));
     }
 
     @DeleteMapping("/withdraw")

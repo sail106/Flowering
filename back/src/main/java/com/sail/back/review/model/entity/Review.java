@@ -60,10 +60,11 @@ public class Review {
     public void setConsultant(Consultant consultant) {
         this.consultant = consultant;
 
-        // 양방향 연관 관계를 설정하기 위해 상담사 엔티티에도 해당 리뷰를 추가
-        if (!consultant.getReviews().contains(this)) {
-            consultant.getReviews().add(this);
-        }
+        double newStarAverage = ((consultant.getStarAverage() * consultant.getReviewnum() + this.getStar()) / (consultant.getReviewnum() + 1));
+        ;
+        consultant.setReviewnum(consultant.getReviewnum() + 1);
+
+        consultant.setStarAverage(newStarAverage);
     }
 
     public void setUser(User user) {
