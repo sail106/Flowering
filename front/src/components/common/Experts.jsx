@@ -3,8 +3,10 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { ButtonBox } from "./Button";
 import { Link } from "react-router-dom";
-import { setSeletedId } from "../../store/ExpertsListSlice";
+// import { setSeletedId } from "../../store/ExpertsListSlice";
+
 import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedId } from "../../store/authSlice";
 
 const Container = styled.div`
   position: relative;
@@ -118,11 +120,14 @@ const Experts = ({
   const btnclick = (id) => {
     // 예약하기 버튼 클릭 시 동작할 함수 정의
     console.log('bttt' + id)
+    if (id == undefined) {
 
-    dispatch(setSeletedId(id))
+    }
+    else
+      dispatch(setSelectedId(id))
   };
 
-  console.log('star'+rate)
+  console.log('star' + rate)
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />

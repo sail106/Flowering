@@ -242,6 +242,7 @@ const Order = () => {
                 console.log('config'+JSON.stringify(config))
                 console.log('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid)
                 const { data } = await axios.post('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid,config);
+                // const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid,config);
                
                 if (rsp.paid_amount === data.response.amount) {
                     console.log('in if')

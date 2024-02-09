@@ -38,6 +38,7 @@ const initialState = {
         id:'', //pk
         // refresh_token: '',
     },
+    selectedid: '',
 
     isLoading: false,
     isAuthenticated: false, // todo 로그인 가드
@@ -46,7 +47,8 @@ const initialState = {
     isModal: false, // sample modal
 
     // server status
-    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
+    
 }
 
 // actions
@@ -265,7 +267,10 @@ const authSlice = createSlice({
             console.log('settrolll'+payload)
             state.logonUser.role = payload
         },
-
+        setSelectedId: (state, { payload }) => {
+            console.log('settt  ')
+            state.selectedid = payload;
+          },
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
@@ -336,7 +341,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole, setname } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname,setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer
