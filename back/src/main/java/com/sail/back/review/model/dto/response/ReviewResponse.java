@@ -22,12 +22,21 @@ public class ReviewResponse {
 
     private Long review_id;
 
-    private ConsultantDetailResponse consultantDetailResponse;
+//    private ConsultantDetailResponse consultantDetailResponse;
 
     private String content;
     private User user;
 
     private int star;
 
+    public static  ReviewResponse fromEntity(Review review)
+    {
+        return  ReviewResponse.builder()
+                .review_id(review.getReview_id())
+                .star(review.getStar())
+
+
+                .build();
+    }
 
 }
