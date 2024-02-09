@@ -1,50 +1,49 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
 // import LoginForm from "./components/LoginForm";
-import PasswordFindForm from "./components/PasswordFindForm";
-import SpinnerTest from "./components/SpinnerTest";
-import SignupForm from "./components/SignupForm";
-import SignupPw from "./components/SignupPw";
-import { Page } from "./components/common/Page";
-import MyPage from "./components/MyPage";
-import Navbar from "./components/Navbar";
-import GlobalStyles from "../GlobalStyles";
-import MainPage from "./components/MainPage";
-import ConsultReservation from "./components/ConsultReservation";
-import FaQ from "./components/FaQ";
-import Footer from "./components/Footer";
-import EditMyInfo from "./components/EidtMyInfo";
+import PasswordFindForm from './components/PasswordFindForm';
+import SpinnerTest from './components/SpinnerTest';
+import SignupForm from './components/SignupForm';
+import SignupPw from './components/SignupPw';
+import { Page } from './components/common/Page';
+import MyPage from './components/MyPage';
+import Navbar from './components/Navbar';
+import GlobalStyles from '../GlobalStyles';
+import MainPage from './components/MainPage';
+import ConsultReservation from './components/ConsultReservation';
+import FaQ from './components/FaQ';
+import Footer from './components/Footer';
+import EditMyInfo from './components/EidtMyInfo';
 
-import OneToManyVideoChat from "./components/community/OneToManyVideoChat";
-import OneToOneVideoChat from "./components/OneToOneVideoChat";
-import CommunityModify from "./components/modify/CommunityModify";
-import ExpertsIntroduction from "./components/experts/ExpertsIntroduction";
-import ExpertsProfileBibi from "./components/experts/ExpertsProfileBibi";
-import CommunityPage from "./components/CommunityPage";
-import ExpertPage from "./components/ExpertPage";
-import BeautyConsulting from "./components/BeuatyConsulting";
-import ExpertConsulting from "./components/mypage/ExpertConsulting";
-import ExpertsProfileRegistration from "./components/experts/ExpertsProfileRegistration";
-import ExpertsReservation from "./components/experts/ExpertsReservation";
-import Review from "./components/experts/Review";
-import ExpertsProfileLeina from "./components/experts/ExpertsProfileLeina";
-import ExpertsProfileDiana from "./components/experts/ExpertsProfileDiana";
-import ExpertsProfileRuna from "./components/experts/ExpertsProfileRuna";
-import Manager from "./components/ManagerPage/Manager";
-import LoginForm from "./components/LoginForm";
-import FirstSurveyResult from "./components/FirstSurveyResult/FirstSurveyResultPage";
-import FinalresultInput from "./components/consultingresult/FinalresultInput";
+import OneToManyVideoChat from './components/community/OneToManyVideoChat';
+import OneToOneVideoChat from './components/OneToOneVideoChat';
+import CommunityModify from './components/modify/CommunityModify';
+import ExpertsIntroduction from './components/experts/ExpertsIntroduction';
+import ExpertsProfileBibi from './components/experts/ExpertsProfileBibi';
+import CommunityPage from './components/CommunityPage';
+import ExpertPage from './components/ExpertPage';
+import BeautyConsulting from './components/BeuatyConsulting';
+import ExpertConsulting from './components/mypage/ExpertConsulting';
+import ExpertsProfileRegistration from './components/experts/ExpertsProfileRegistration';
+import ExpertsReservation from './components/experts/ExpertsReservation';
+import Review from './components/experts/Review';
+import ExpertsProfileLeina from './components/experts/ExpertsProfileLeina';
+import ExpertsProfileDiana from './components/experts/ExpertsProfileDiana';
+import ExpertsProfileRuna from './components/experts/ExpertsProfileRuna';
+import Manager from './components/ManagerPage/Manager';
+import LoginForm from './components/LoginForm';
+import FirstSurveyResult from './components/FirstSurveyResult/FirstSurveyResultPage';
+import FinalresultInput from './components/consultingresult/FinalresultInput';
 
-import FirstSurveyEnd from "./components/FirstSurveyEnd/FirstSurveyEnd";
-import Finish2step from "./components/consultingresult/Finish2step";
+import FirstSurveyEnd from './components/FirstSurveyEnd';
 
-import PhotoTest from "./components/PhotoTest";
-import Finalresult3step from "./components/consultingresult/Finalresult3step";
-import SkinProductCard from "./components/consultingresult/SkinProductCard";
-import SignupRequired from "./components/SignupRequired";
+import PhotoTest from './components/PhotoTest';
+import SignupRequired from './components/SignupRequired';
 
-import SecondSurveyResult from "./components/SecondSurveyResult";
-import FirstSurveyPage from "./components/FirstSurvey";
+import SecondSurveyResult from './components/SecondSurveyResult';
+import FirstSurveyPage from './components/FirstSurvey';
+import SecondSurveyEnd from './components/SecondSurveyEnd';
+import FinalSurveyResult from './components/FinalSurveyResult';
 function App() {
   return (
     <>
@@ -78,7 +77,7 @@ function App() {
           <Route path="/communityHome" element={<CommunityPage />} />
           <Route path="/expertsReservation" element={<ExpertsReservation />} />
           <Route path="/review" element={<Review />} />
-          <Route path="/consulting1stepresult" element={<consulting1stepresult />} />
+
           <Route path="/expertsprofileregistration" element={<ExpertsProfileRegistration />} />
           <Route path="/manager" element={<Manager />} />
 
@@ -90,7 +89,10 @@ function App() {
           <Route path="/firstsurvey" element={<FirstSurveyPage />} />
           <Route path="/firstsurveyresult" element={<FirstSurveyResult />} />
           <Route path="/firstsurveyend" element={<FirstSurveyEnd />} />
+          <Route path="/secondsurveyend" element={<SecondSurveyEnd />} />
+          <Route path="/finalresult" element={<FinalSurveyResult />} />
         </Routes>
+
         <Footer />
       </Page>
     </>

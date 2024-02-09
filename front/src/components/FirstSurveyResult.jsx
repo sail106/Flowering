@@ -1,4 +1,4 @@
-import FirstSurveyResultPage from "./FirstSurveyResult/FirstSurveyResultPage";
+import FirstSurveyResultPage from './FirstSurveyResult/FirstSurveyResultPage';
 
 const FirstSurveyResult = () => {
   return (
@@ -7,3 +7,5 @@ const FirstSurveyResult = () => {
     </>
   );
 };
+
+export default FirstSurveyResult;
