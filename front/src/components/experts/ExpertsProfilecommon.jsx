@@ -66,7 +66,9 @@ const ExpertsProfile = () => {
   // const location = useLocation();
   // const id = location.state.id;
 
-  const { selectedid } = useSelector(state => state.ExpertsList)
+  // const { selectedid } = useSelector(state => state.ExpertsList)
+  const { selectedid } = useSelector(state => state.auth)
+
   const dispatch = useDispatch();
 
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
