@@ -57,64 +57,73 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const Consulting1stepresult = (props) => {
-  const result = 'DRPT';
+const FirstSurveyResult = (props) => {
+  const data = {
+    survey_type: 'DRPT',
+    skin_type: '건성 | 색소 형 피부',
+    content: '여드름 & 모공 하나 보이지 않은 타고난 달걀 피부',
+    strength: '고운 피부 결, 염증 반응이 거의 나타나지 않음',
+    weakness: '건조함, 자외선에 취약한 편',
+    solution: 'SPF 30+ 이상의 자외선 차단제, 브라이트닝 성분이 함유된 모이스처라이저',
+  };
+
+  const mbtiLetters = data.survey_type.split(''); // survey_type을 한 글자씩 나누어 배열로 만듭니다.
 
   return (
     <Consulting1stepresultpage>
       <Margin />
       <H1>1차 피부 MBTI 진단 테스트 결과</H1>
       <hr />
-      <H2>{result}</H2>
-      <H3>지성 | 민감, 색소형 피부</H3>
-      <P>여드름과 색소침착이 있지만 주름은 쉽게 지지 않는 피부 유형</P>
+      <H2>{data.survey_type}</H2>
+      <H3>{data.skin_type}</H3>
+      <P>{data.content}</P>
       <P>
-        STRENGTH : 끝까지 탄력을 잃지 않는 편이기에 개선의 여지가 존재 <br />
-        WEAKNESS : 피지, 염증, 색소침착의 악순환 반복
+        STRENGTH : {data.strength} <br />
+        WEAKNESS : {data.weakness}
       </P>
       <Margin />
 
       <MBTIresultCard
-        title1={'D'}
-        subtitle1={'건성'}
+        title1={mbtiLetters[0] === 'D' ? <ColoredText>D</ColoredText> : mbtiLetters[0]}
+        subtitle1={mbtiLetters[0] === 'D' ? <ColoredText>건성</ColoredText> : '건성'}
         ensubtitle1={'Dry'}
         content1={'피지 분비량과 수분 보유량 모두 적어  거칠고 각질과 주름이 잘 생기는 타입'}
         content2={'피지 분비량이 많아 번들거리고 여드름이 자주 생기는 타입'}
-        title2={<ColoredText>O</ColoredText>}
-        subtitle2={<ColoredText>지성</ColoredText>}
+        title2={mbtiLetters[0] === 'O' ? <ColoredText>O</ColoredText> : mbtiLetters[0]}
+        subtitle2={mbtiLetters[0] === 'O' ? <ColoredText>지성</ColoredText> : '지성'}
         ensubtitle2={'Oily'}
       />
       <Margin2 />
       <MBTIresultCard
-        title1={<ColoredText>S</ColoredText>}
-        subtitle1={<ColoredText>민감성</ColoredText>}
+        title1={mbtiLetters[1] === 'S' ? <ColoredText>S</ColoredText> : mbtiLetters[1]}
+        subtitle1={mbtiLetters[1] === 'S' ? <ColoredText>민감성</ColoredText> : '민감성'}
         ensubtitle1={'Sensitive'}
         content1={'피부가 얇고 섬세해 외부 자극에 쉽게 반응하는 타입 '}
         content2={'피부 장벽이 견고해 외부적인 스트레스에 대해 견디는 힘이 강한 타입'}
-        title2={'R'}
-        subtitle2={'저항성'}
+        title2={mbtiLetters[1] === 'R' ? <ColoredText>R</ColoredText> : mbtiLetters[1]}
+        subtitle2={mbtiLetters[1] === 'R' ? <ColoredText>저항성</ColoredText> : '저항성'}
         ensubtitle2={'Resistant'}
       />
       <Margin2 />
       <MBTIresultCard
-        title1={<ColoredText>P</ColoredText>}
-        subtitle1={<ColoredText>민감성</ColoredText>}
+        title1={mbtiLetters[2] === 'P' ? <ColoredText>P</ColoredText> : mbtiLetters[2]}
+        subtitle1={mbtiLetters[2] === 'P' ? <ColoredText>민감성</ColoredText> : '민감성'}
         ensubtitle1={'Pigment'}
         content1={'멜라닌 활성도가 높아 기미, 주근깨 혹은 잡티 등 눈에 보이는 색소가 많은 타입'}
         content2={'멜라닌 활성도가 낮아 눈에 보이는 색소가 적은 타입'}
-        title2={'N'}
-        subtitle2={'비색소성'}
+        title2={mbtiLetters[2] === 'N' ? <ColoredText>N</ColoredText> : mbtiLetters[2]}
+        subtitle2={mbtiLetters[2] === 'N' ? <ColoredText>비색소성</ColoredText> : '비색소성'}
         ensubtitle2={'Non-Pigment'}
       />
       <Margin2 />
       <MBTIresultCard
-        title1={'W'}
-        subtitle1={'주름'}
+        title1={mbtiLetters[3] === 'W' ? <ColoredText>W</ColoredText> : mbtiLetters[3]}
+        subtitle1={mbtiLetters[3] === 'W' ? <ColoredText>주름</ColoredText> : '주름'}
         ensubtitle1={'Wrinkle'}
         content1={'피부 결이 고르지 않고 주름이 많은 타입'}
         content2={'피부 결이 고르고 주름이 적어 탄력이 있는 타입'}
-        title2={<ColoredText>T</ColoredText>}
-        subtitle2={<ColoredText>탱탱한</ColoredText>}
+        title2={mbtiLetters[3] === 'T' ? <ColoredText>T</ColoredText> : mbtiLetters[3]}
+        subtitle2={mbtiLetters[3] === 'T' ? <ColoredText>탱탱한</ColoredText> : '탱탱한'}
         ensubtitle2={'Tight'}
       />
       <Margin />
@@ -128,4 +137,4 @@ const Consulting1stepresult = (props) => {
   );
 };
 
-export default Consulting1stepresult;
+export default FirstSurveyResult;

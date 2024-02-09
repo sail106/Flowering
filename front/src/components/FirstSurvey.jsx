@@ -52,6 +52,7 @@ const ServeyStatus = styled.div`
   font-size: 2opx;
   font-weight: 400;
   color: #b1b1b1;
+  color: ${(props) => (props.active ? '#f28482' : '#b1b1b1')};
 `;
 
 const FirstServeyPage = () => {
@@ -586,7 +587,7 @@ const FirstServeyPage = () => {
           questionTitle: '거주하는 곳의 공기 오염도는 어떻습니까?',
           items: [
             { text: '맑고 깨끗합니다.', score: 1 },
-            { text: '맑고 깨긋한 때도 있고 그렇지 않을 때도 있습니다.', score: 2 },
+            { text: '맑고 깨끗한 때도 있고 그렇지 않을 때도 있습니다.', score: 2 },
             { text: '약간 오염되어 있습니다.', score: 3 },
             { text: '공기 오염이 심합니다.', score: 4 },
           ],
@@ -736,7 +737,7 @@ const FirstServeyPage = () => {
         <Progress value={25 * (index + 1)} />
         <ProgressSubject>
           {question.map((item, idx) => (
-            <ServeyStatus key={idx} active={index === idx}>
+            <ServeyStatus key={idx} active={index >= idx}>
               {`${item.titleMain}\n${item.titleSub}`}
             </ServeyStatus>
           ))}
@@ -752,7 +753,7 @@ const FirstServeyPage = () => {
           resetIndex={index}
         />
       </Page>
-      <Button onClick={() => checkINdex(Token)}>다음</Button>
+      <Button onClick={() => checkINdex(Token)}>{index === 3 ? '결과 보기' : '다음'}</Button>
     </PageSetting>
   );
 };
