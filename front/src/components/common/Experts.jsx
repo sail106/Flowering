@@ -133,7 +133,9 @@ const Experts = ({
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            defaultValue={rate}
+            // defaultValue={rate}
+            value={parseFloat(rate)}
+
             precision={0.5}
             readOnly
           />

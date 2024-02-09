@@ -126,8 +126,8 @@ const ExpertsProfile = () => {
 
           ratenum={expertData?.payload.reviews.length ?? ''}
 
-          tag1={expertData?.payload.hash_tags[0].workplace ?? ''}
-          tag2={expertData?.payload.hash_tags[1].workplace ?? ''}
+          tag1={expertData?.payload?.hash_tags[0]?.workplace ?? ''}
+          tag2={expertData?.payload?.hash_tags[1]?.workplace ?? ''}
           imgsrc={expertData?.payload.user_response.profile_img_url ?? ''}
           width={"280px"}
           height={"405px"}
@@ -148,8 +148,8 @@ const ExpertsProfile = () => {
         <Margin />
         <h2>전문분야</h2>
 
-        <StyledSmallDiv1>{expertData?.payload.hash_tags[0].workplace ?? ''}</StyledSmallDiv1>
-        <StyledSmallDiv2>{expertData?.payload.hash_tags[1].workplace ?? ''}</StyledSmallDiv2>
+        <StyledSmallDiv1>{expertData?.payload?.hash_tags[0]?.workplace ?? ''}</StyledSmallDiv1>
+        <StyledSmallDiv2>{expertData?.payload?.hash_tags[1]?.workplace ?? ''}</StyledSmallDiv2>
 
         <Margin />
 
@@ -157,7 +157,9 @@ const ExpertsProfile = () => {
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            defaultValue={4.9}
+            // defaultValue={expertData?.payload.star ?? ' '}
+            value={parseFloat(expertData?.payload.star ?? ' ')}
+
             precision={0.5}
             readOnly
           />
@@ -169,19 +171,29 @@ const ExpertsProfile = () => {
         <Margin2 />
 
 
-        {expertData?.payload.reviews?.map((review, index) => (
-          <Review
-            key={index}
-            name={review.user_name}
-            date={review.date}
-            rate={review.rating}
-            desc={review.content}
-          />
-        ))}
+        {expertData?.payload.reviews?.map((review, index) => {
+          // 날짜 형식 변환
+          const dateString = new Date(review.user.createAt);
+          const year = dateString.getFullYear();
+          const month = String(dateString.getMonth() + 1).padStart(2, "0");
+          const day = String(dateString.getDate()).padStart(2, "0");
+          const formattedDate = `${year}/${month}/${day}`;
+
+          return (
+            <Review
+              key={index}
+              name={review.user.name}
+              date={formattedDate}
+              rate={review.star}
+              desc={review.content}
+            />
+          );
+
+        })}
 
 
 
-
+        {/* 
         <Review
           name={"루루라"}
           date={"23/01/26"}
@@ -200,7 +212,7 @@ const ExpertsProfile = () => {
           date={"24/01/18"}
           rate={4.8}
           desc={`정말로 훌륭했습니다. 나에게 어울리는 헤어 스타일과 색조에 대한 조언을 받아서 완전히 새로운 모습으로 변할 수 있었어요.  너무 감사합니다!`}
-        />
+        /> */}
       </Text>
     </>
   );
