@@ -122,7 +122,7 @@ const Experts = ({
     dispatch(setSeletedId(id))
   };
 
-
+  console.log('star'+rate)
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />

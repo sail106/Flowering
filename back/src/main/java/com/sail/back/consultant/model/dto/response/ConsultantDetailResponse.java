@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.hashtag.model.dto.response.HashTagResponse;
 import com.sail.back.hashtag.model.entity.HashTag;
+import com.sail.back.hashtag.model.repository.HashTagRepository;
 import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.user.model.dto.request.FindRequest;
@@ -35,7 +37,7 @@ public class ConsultantDetailResponse {
     private UserResponse userResponse;
     private double star;
     private int num;
-    private List<HashTag> hashTags;
+    private List<HashTagResponse> hashTags;
     private List<ReviewResponse> reviews;
 
     //
@@ -52,7 +54,7 @@ public class ConsultantDetailResponse {
         this.simple_introduce = consultant.getSimple_introduce();
         this.userResponse = consultant.getUser().toResponse();
         this.star = consultant.getStarAverage();
-        this.hashTags = consultant.getHashTags();
+        this.hashTags = consultant.getHashTags().stream().map(HashTag::toHashTagResponse).collect(Collectors.toList());
         this.reviews =  consultant.getReviews().stream().map(Review::from).collect(Collectors.toList());
     }
 

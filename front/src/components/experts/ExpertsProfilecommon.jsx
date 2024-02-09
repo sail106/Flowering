@@ -86,12 +86,14 @@ const ExpertsProfile = () => {
         console.log(JSON.stringify(response, null, 2)); //잘받음
         console.log(JSON.stringify(response.payload.user_response, null, 2));
         setExpertData(response);
-        console.log('expppp' + expertData?.payload.user_response.nickname)
-        console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace)
-        console.log('expppp' + review?.reviewnum ?? '')
-        console.log('expppp' + review )
+        console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
+        // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
+        console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
+        console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
+        console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
+        console.log('expppp' + expertData?.payload.star ?? ' ')
 
-        
+
       }).catch((error) => {
         console.log('error');
       });
@@ -120,11 +122,13 @@ const ExpertsProfile = () => {
           nickname={expertData?.payload.user_response.nickname ?? ''}
           text={expertData?.payload.user_response.simple_introduce ?? ''}
           // text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
-          rate={4.9}
-          ratenum={review?.reviewnum ?? ''}
-          tag1={expertData?.payload.hash_tag_responses?.[0]?.workplace ?? ''}
-          tag2={expertData?.payload.hash_tag_responses?.[1]?.workplace ?? ''}
-          imgsrc={"src/assets/BIBI.png"}
+          rate={expertData?.payload.star ?? ' '}
+
+          ratenum={expertData?.payload.reviews.length ?? ''}
+
+          tag1={expertData?.payload.hash_tags[0].workplace ?? ''}
+          tag2={expertData?.payload.hash_tags[1].workplace ?? ''}
+          imgsrc={expertData?.payload.user_response.profile_img_url ?? ''}
           width={"280px"}
           height={"405px"}
           path={"/expertsReservation"}
@@ -144,8 +148,8 @@ const ExpertsProfile = () => {
         <Margin />
         <h2>전문분야</h2>
 
-        <StyledSmallDiv1>스킨케어</StyledSmallDiv1>
-        <StyledSmallDiv2>자연주의</StyledSmallDiv2>
+        <StyledSmallDiv1>{expertData?.payload.hash_tags[0].workplace ?? ''}</StyledSmallDiv1>
+        <StyledSmallDiv2>{expertData?.payload.hash_tags[1].workplace ?? ''}</StyledSmallDiv2>
 
         <Margin />
 
@@ -157,11 +161,27 @@ const ExpertsProfile = () => {
             precision={0.5}
             readOnly
           />
-          <span>179</span>
+          <span>{expertData?.payload.reviews.length ?? ''}</span>
         </Stack>
         <Intro>실제 컨설팅을 이용하신 고객님들의 리뷰입니다.</Intro>
         <hr></hr>
+
         <Margin2 />
+
+
+        {expertData?.payload.reviews?.map((review, index) => (
+          <Review
+            key={index}
+            name={review.user_name}
+            date={review.date}
+            rate={review.rating}
+            desc={review.content}
+          />
+        ))}
+
+
+
+
         <Review
           name={"루루라"}
           date={"23/01/26"}
