@@ -45,6 +45,7 @@ public class Review {
                 .review_id(review.getReview_id())
                 .star(review.getStar())
 //                .consultantDetailResponse(Consultant.toConsultantDetailResponse(review.getConsultant()))
+                .user(review.getUser())
                 .content(review.getContent())
                 .build();
     }
