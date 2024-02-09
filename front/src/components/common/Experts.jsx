@@ -111,7 +111,7 @@ const Experts = ({
   imgsrc,
   width,
   height,
-  path,
+  path, 
 }) => {
   const dispatch = useDispatch();
 
