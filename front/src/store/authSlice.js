@@ -262,6 +262,7 @@ const authSlice = createSlice({
         },
 
         setRole: (state, { payload }) => {
+            console.log('settrolll'+payload)
             state.logonUser.role = payload
         },
 
@@ -288,6 +289,7 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log('fullllll'+action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -316,7 +318,13 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-                state.logonUser = action.payload;
+                console.log('userinfofulll', JSON.stringify(action.payload));
+
+
+                 state.logonUser.role = action.payload.role;
+                 state.logonUser.id = action.payload.id;
+                 state.logonUser.email = action.payload.email;
+
                 // role: action.payload.data
             })
 
