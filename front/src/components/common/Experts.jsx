@@ -113,7 +113,8 @@ const Experts = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log('imggg'+imgsrc)
+  // console.log("tag1"+tag1+" "+nickname)
+  // console.log('imggg'+imgsrc)
   const btnclick = (id) => {
     // 예약하기 버튼 클릭 시 동작할 함수 정의
     console.log('bttt' + id)

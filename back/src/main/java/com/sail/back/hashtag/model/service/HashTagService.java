@@ -27,7 +27,10 @@ public class HashTagService {
         Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() ->
                 new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
-        
+        if (consultant.getHashTags().size() == 2) {
+            throw new HashTagException(HashTagErrorCode.FULL);
+        }
+
 
         HashTag hashTag = hashTagRequest.toEntity();
         consultant.addHashTag(hashTag);

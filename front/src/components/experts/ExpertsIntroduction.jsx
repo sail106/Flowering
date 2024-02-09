@@ -36,7 +36,7 @@ const ExpertsIntroduction = () => {
 
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-        console.log('tooo   '+token)
+        console.log('tooo   ' + token)
 
         const config = {
           headers: {
@@ -45,19 +45,21 @@ const ExpertsIntroduction = () => {
           }
         };
 
-        const url=import.meta.env.VITE_APP_API_KEY;
+        const url = import.meta.env.VITE_APP_API_KEY;
 
         const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', config);
 
         // 요청 성공 시 수행할 작업
         console.log('Response:', response.data);
-        console.log('Response:', response.data.data_body);
+        console.log('data_body  :', response.data.data_body);
+
+        console.log('hashhhh:', response.data.data_body.hash_tag_responses);
+        console.log('user_response:', response.data.data_body.user_response);
 
         setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
         dispatch(setExpertList(response.data.data_body))
 
-        // console.log('succcc'+response.data.data_body.data)
-      } 
+      }
       catch (error) {
         console.error('Error :', error);
         // alert('결제 실패');
@@ -68,6 +70,20 @@ const ExpertsIntroduction = () => {
     fetchData(); // fetchData 함수 호출
 
   }, [access_token]);
+
+  console.log('succcc' + JSON.stringify(expertsData))
+
+  if (expertsData.length > 0) {
+    console.log('succcc' + JSON.stringify(expertsData[1]))
+    console.log('succcc', JSON.stringify(expertsData[1].user_response));
+    console.log('succcc', JSON.stringify(expertsData[1].hash_tag_responses));
+
+    if (expertsData[1].hash_tag_responses.length > 0) {
+      console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
+    }
+
+
+  }
 
 
   return (
@@ -85,8 +101,9 @@ const ExpertsIntroduction = () => {
             text={expert.simple_introduce}
             rate={expert.star}
             ratenum={expert.reviewnum}
-            tag1={expert.tag1}
-            tag2={expert.tag2}
+            tag1={expert.hash_tag_responses.length > 0 ? expert.hash_tag_responses[0].workplace : ""}
+            tag2={expert.hash_tag_responses.length > 0 ? expert.hash_tag_responses[1].workplace : ""}
+           
             imgsrc={expert.user_response.profile_img_url}
             width={"280px"}
             height={"405px"}
