@@ -69,8 +69,8 @@ function App() {
           <Route path="/orderpage" element={<Orderpage />} />
           <Route path="/orderResult" element={<OrderResult />} />
           <Route path="/mypage/:routeid" element={<MyPage />} />
-          <Route path="/expertmypage/:id" element={<ExpertPage />} />
-          <Route path="/editmyinfo" element={<EditMyInfo />} />
+          <Route path="/expertmypage/:routeid" element={<ExpertPage />} />
+          <Route path="/editmyinfo/:routeid" element={<EditMyInfo />} />
           <Route path="/faq" element={<FaQ />} />
           <Route path="/beautyconsulting" element={<BeautyConsulting />} />
           <Route path="/communitymod" element={<CommunityModify />} />

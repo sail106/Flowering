@@ -3,6 +3,8 @@ import Sheet from "@mui/joy/Sheet";
 import { useState } from "react";
 import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const EditButton = styled(ButtonBox)`
   border-radius: 100px;
@@ -23,16 +25,43 @@ const OkayButtom = styled(EditButton)`
   width: 50%;
 `;
 
-export default function Edit() {
+export default function Edit({nickname,pwOne}) {
   const [open, setOpen] = useState(false);
-
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
   const handleClose = () => {
     setOpen(false);
   };
 
+  const updateUserInfo = async () => {
+    setOpen(true)
+    const data = {
+      "password":pwOne,
+      "nick_name":nickname
+    };
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    console.log('데이터 확인',data)
+    try {
+      const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
+      console.log(response.data);
+      console.log('성공');
+
+      // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
+      // navigate('/success');
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+      // 요청이 실패하면 사용자에게 오류 메시지를 보여줄 수 있습니다.
+      // alert('사용자 정보 업데이트에 실패했습니다.');
+    }
+  };
   return (
+    
     <>
-      <EditButton onClick={() => setOpen(true)}>수정하기</EditButton>
+      <EditButton onClick={updateUserInfo}>수정하기</EditButton>
       <Modal
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
