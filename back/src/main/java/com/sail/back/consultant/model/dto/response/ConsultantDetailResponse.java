@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.hashtag.model.entity.HashTag;
+import com.sail.back.review.model.entity.Review;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
@@ -33,6 +34,7 @@ public class ConsultantDetailResponse {
     private double star;
     private int num;
     private List<HashTag> hashTags ;
+    private List<Review>reviews ;
 
     //
 //    public Consultant from(ConsultantDetailResponse consultantListResponse) {
@@ -49,6 +51,7 @@ public class ConsultantDetailResponse {
         this.userResponse = consultant.getUser().toResponse();
         this.star=consultant.getStarAverage();
         this.hashTags=consultant.getHashTags();
+        this.reviews=consultant.getReviews();
     }
 
     public void setProfileImgUrl(String profileImgUrl) {

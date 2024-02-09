@@ -83,10 +83,15 @@ const ExpertsProfile = () => {
       // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
       dispatch(fetchExpertById(selectedid)).then((response) => {
         console.log('ExpertsProfile', response);
-        console.log(JSON.stringify(response, null, 2));
+        console.log(JSON.stringify(response, null, 2)); //잘받음
         console.log(JSON.stringify(response.payload.user_response, null, 2));
         setExpertData(response);
         console.log('expppp' + expertData?.payload.user_response.nickname)
+        console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace)
+        console.log('expppp' + review?.reviewnum ?? '')
+        console.log('expppp' + review )
+
+        
       }).catch((error) => {
         console.log('error');
       });
@@ -113,11 +118,12 @@ const ExpertsProfile = () => {
       <ExpertCard>
         <Experts
           nickname={expertData?.payload.user_response.nickname ?? ''}
-          text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
+          text={expertData?.payload.user_response.simple_introduce ?? ''}
+          // text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
           rate={4.9}
           ratenum={review?.reviewnum ?? ''}
-          tag1={"스킨케어"}
-          tag2={"자연주의"}
+          tag1={expertData?.payload.hash_tag_responses?.[0]?.workplace ?? ''}
+          tag2={expertData?.payload.hash_tag_responses?.[1]?.workplace ?? ''}
           imgsrc={"src/assets/BIBI.png"}
           width={"280px"}
           height={"405px"}
