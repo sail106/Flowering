@@ -66,7 +66,9 @@ const ExpertsProfile = () => {
   // const location = useLocation();
   // const id = location.state.id;
 
-  const { selectedid } = useSelector(state => state.ExpertsList)
+  // const { selectedid } = useSelector(state => state.ExpertsList)
+  const { selectedid } = useSelector(state => state.auth)
+
   const dispatch = useDispatch();
 
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
@@ -83,10 +85,17 @@ const ExpertsProfile = () => {
       // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
       dispatch(fetchExpertById(selectedid)).then((response) => {
         console.log('ExpertsProfile', response);
-        console.log(JSON.stringify(response, null, 2));
+        console.log(JSON.stringify(response, null, 2)); //잘받음
         console.log(JSON.stringify(response.payload.user_response, null, 2));
         setExpertData(response);
-        console.log('expppp' + expertData?.payload.user_response.nickname)
+        console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
+        // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
+        console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
+        console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
+        console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
+        console.log('expppp' + expertData?.payload.star ?? ' ')
+
+
       }).catch((error) => {
         console.log('error');
       });
@@ -113,12 +122,15 @@ const ExpertsProfile = () => {
       <ExpertCard>
         <Experts
           nickname={expertData?.payload.user_response.nickname ?? ''}
-          text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
-          rate={4.9}
-          ratenum={review?.reviewnum ?? ''}
-          tag1={"스킨케어"}
-          tag2={"자연주의"}
-          imgsrc={"src/assets/BIBI.png"}
+          text={expertData?.payload.user_response.simple_introduce ?? ''}
+          // text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
+          rate={expertData?.payload.star ?? ' '}
+
+          ratenum={expertData?.payload.reviews.length ?? ''}
+
+          tag1={expertData?.payload?.hash_tags[0]?.workplace ?? ''}
+          tag2={expertData?.payload?.hash_tags[1]?.workplace ?? ''}
+          imgsrc={expertData?.payload.user_response.profile_img_url ?? ''}
           width={"280px"}
           height={"405px"}
           path={"/expertsReservation"}
@@ -138,8 +150,8 @@ const ExpertsProfile = () => {
         <Margin />
         <h2>전문분야</h2>
 
-        <StyledSmallDiv1>스킨케어</StyledSmallDiv1>
-        <StyledSmallDiv2>자연주의</StyledSmallDiv2>
+        <StyledSmallDiv1>{expertData?.payload?.hash_tags[0]?.workplace ?? ''}</StyledSmallDiv1>
+        <StyledSmallDiv2>{expertData?.payload?.hash_tags[1]?.workplace ?? ''}</StyledSmallDiv2>
 
         <Margin />
 
@@ -147,15 +159,43 @@ const ExpertsProfile = () => {
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            defaultValue={4.9}
+            // defaultValue={expertData?.payload.star ?? ' '}
+            value={parseFloat(expertData?.payload.star ?? ' ')}
+
             precision={0.5}
             readOnly
           />
-          <span>179</span>
+          <span>{expertData?.payload.reviews.length ?? ''}</span>
         </Stack>
         <Intro>실제 컨설팅을 이용하신 고객님들의 리뷰입니다.</Intro>
         <hr></hr>
+
         <Margin2 />
+
+
+        {expertData?.payload.reviews?.map((review, index) => {
+          // 날짜 형식 변환
+          const dateString = new Date(review.user.createAt);
+          const year = dateString.getFullYear();
+          const month = String(dateString.getMonth() + 1).padStart(2, "0");
+          const day = String(dateString.getDate()).padStart(2, "0");
+          const formattedDate = `${year}/${month}/${day}`;
+
+          return (
+            <Review
+              key={index}
+              name={review.user.name}
+              date={formattedDate}
+              rate={review.star}
+              desc={review.content}
+            />
+          );
+
+        })}
+
+
+
+        {/* 
         <Review
           name={"루루라"}
           date={"23/01/26"}
@@ -174,7 +214,7 @@ const ExpertsProfile = () => {
           date={"24/01/18"}
           rate={4.8}
           desc={`정말로 훌륭했습니다. 나에게 어울리는 헤어 스타일과 색조에 대한 조언을 받아서 완전히 새로운 모습으로 변할 수 있었어요.  너무 감사합니다!`}
-        />
+        /> */}
       </Text>
     </>
   );

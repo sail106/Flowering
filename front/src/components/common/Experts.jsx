@@ -3,8 +3,10 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { ButtonBox } from "./Button";
 import { Link } from "react-router-dom";
-import { setSeletedId } from "../../store/ExpertsListSlice";
+// import { setSeletedId } from "../../store/ExpertsListSlice";
+
 import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedId } from "../../store/authSlice";
 
 const Container = styled.div`
   position: relative;
@@ -109,19 +111,23 @@ const Experts = ({
   imgsrc,
   width,
   height,
-  path,
+  path, 
 }) => {
   const dispatch = useDispatch();
 
-  console.log('imggg'+imgsrc)
+  // console.log("tag1"+tag1+" "+nickname)
+  // console.log('imggg'+imgsrc)
   const btnclick = (id) => {
     // 예약하기 버튼 클릭 시 동작할 함수 정의
     console.log('bttt' + id)
+    if (id == undefined) {
 
-    dispatch(setSeletedId(id))
+    }
+    else
+      dispatch(setSelectedId(id))
   };
 
-
+  console.log('star' + rate)
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />
@@ -132,7 +138,9 @@ const Experts = ({
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            defaultValue={rate}
+            // defaultValue={rate}
+            value={parseFloat(rate)}
+
             precision={0.5}
             readOnly
           />

@@ -190,7 +190,7 @@ const Order = () => {
     const navigate = useNavigate();
 
     const { selectedTime, selectedDate } = useSelector(state => state.selected);
-    const { name, role, id, nickname, imageUrl,access_token } = useSelector(state => state.auth.logonUser)
+    const { name, role, id, nickname, imageUrl,access_token,email } = useSelector(state => state.auth.logonUser)
 
     // alert('dddd' + selectedDate + " " + selectedTime)
 
@@ -230,22 +230,36 @@ const Order = () => {
         }, async (rsp) => {
             try {
 
-
+                console.log('first try'+rsp)
+                const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                        // 다른 필요한 헤더도 추가할 수 있습니다.
+                    }
+                };
+                console.log('config'+JSON.stringify(config))
+                console.log('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid)
+                // const { data } = await axios.post('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid );
                 const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
+               
                 if (rsp.paid_amount === data.response.amount) {
-
+                    console.log('in if')
                     try {
-                        const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
-                        const config = {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                                // 다른 필요한 헤더도 추가할 수 있습니다.
-                            }
-                        };
+                        // const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
+                        // const config = {
+                        //     headers: {
+                        //         'Authorization': `Bearer ${token}`,
+                        //         'Content-Type': 'application/json'
+                        //         // 다른 필요한 헤더도 추가할 수 있습니다.
+                        //     }
+                        // };
+                        console.log('emailll'+email)
 
                         const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/consultings/1', {
                             time: selectedDate + "T" + selectedTime,
+                            title:  email+"님의 상담"
                             // 다른 필요한 데이터
                         }, config);
 
@@ -261,10 +275,11 @@ const Order = () => {
                     navigate('/orderResult');
 
                 } else {
-                    alert('결제 실패');
+                    alert('결제 실패sss');
                 }
+
             } catch (error) {
-                console.error('Error while verifying payment:', error);
+                console.log('Error while verifying payment:', error);
                 alert('결제 실패');
             }
         });

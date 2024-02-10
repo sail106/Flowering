@@ -3,14 +3,19 @@ package com.sail.back.consultant.model.entity;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantResponse;
+import com.sail.back.hashtag.model.dto.response.HashTagResponse;
+import com.sail.back.hashtag.model.entity.HashTag;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -29,6 +34,11 @@ public class Consultant {
     private String self_introduce;
 
     private String simple_introduce;
+
+    @OneToMany(mappedBy = "consultant", cascade = CascadeType.ALL)
+    private List<HashTag> hashTags = new ArrayList<>();
+
+
     private double starAverage;
     private int reviewnum;
 
@@ -41,6 +51,11 @@ public class Consultant {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // HashTag을 Consultant에 추가하는 메서드
+    public void addHashTag(HashTag hashTag) {
+        hashTags.add(hashTag);
+        hashTag.setConsultant(this);
+    }
 
 //
 //    public double getStarAverage() {
@@ -74,13 +89,12 @@ public class Consultant {
         this.reviewnum = reviewnum;
     }
 
-    public void update(User user, String self_introduce, String simple_introduce) {
+    public void update(User user, String self_introduce, String simple_introduce, List<HashTag> hashtag) {
         this.user = user;
         this.self_introduce = self_introduce;
         this.simple_introduce = simple_introduce;
-
+        this.hashTags = hashtag;
     }
-
 
     public static ConsultantDetailResponse toConsultantDetailResponse(Consultant consultant) {
         ConsultantDetailResponse consultantDetailResponse = ConsultantDetailResponse.builder()
@@ -104,6 +118,7 @@ public class Consultant {
                 .userResponse(consultant.user.toResponse())
                 .star(consultant.getStarAverage())
                 .reviewnum(consultant.getReviewnum())
+                .hashTagResponses(consultant.getHashTags().stream().map(HashTag::toHashTagResponse).collect(Collectors.toList()))
                 .build();
 
     }

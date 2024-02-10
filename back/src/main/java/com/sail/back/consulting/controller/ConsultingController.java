@@ -40,10 +40,11 @@ public class ConsultingController {
         log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
 
         UserRole userRole = user.getRole();
+//
+//        if (userRole.equals(UserRole.CONSULTANT)) {
+//            throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
+//        }
 
-        if (userRole.equals(UserRole.CONSULTANT)) {
-            throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
-        }
 
         Long customerId = user.getId();
         ConsultingCreateResponse response = consultingService.createReservation(String.valueOf(userRole), customerId, consultantId, reservationCreateRequest);

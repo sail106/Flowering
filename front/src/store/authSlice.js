@@ -38,6 +38,7 @@ const initialState = {
         id:'', //pk
         // refresh_token: '',
     },
+    selectedid: '',
 
     isLoading: false,
     isAuthenticated: false, // todo 로그인 가드
@@ -46,7 +47,8 @@ const initialState = {
     isModal: false, // sample modal
 
     // server status
-    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
+    
 }
 
 // actions
@@ -262,9 +264,13 @@ const authSlice = createSlice({
         },
 
         setRole: (state, { payload }) => {
+            console.log('settrolll'+payload)
             state.logonUser.role = payload
         },
-
+        setSelectedId: (state, { payload }) => {
+            console.log('settt  ')
+            state.selectedid = payload;
+          },
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
@@ -288,6 +294,7 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log('fullllll'+action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -316,7 +323,15 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-                state.logonUser = action.payload;
+                console.log('userinfofulll', JSON.stringify(action.payload));
+
+
+                 state.logonUser.role = action.payload.role;
+                 state.logonUser.id = action.payload.id;
+                 state.logonUser.email = action.payload.email;
+                 state.logonUser.name = action.payload.name;
+                 state.logonUser.nickname = action.payload.nickname;
+
                 // role: action.payload.data
             })
 
@@ -328,7 +343,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole, setname } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname,setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

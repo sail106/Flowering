@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
-import BIBI from "../../assets/BIBI.png"
+import BIBI from "../../assets/BIBI.png";
+import { useSelector } from "react-redux";
+import { Co2Sharp } from "@mui/icons-material";
 const InfoDiv = styled.span`
   margin: 0% 12%;
   height: 695px;
@@ -52,14 +54,16 @@ const StyledButton = styled(ButtonBox)`
 `;
 
 const MyButton = () => {
+  const User = useSelector((state) => state.auth.logonUser);
   return (
-    <Link to="/editmyinfo">
+    <Link to={`/editmyinfo/${User.id}`} reloadDocument>
       <StyledButton>내 정보 수정하기</StyledButton>
     </Link>
   );
 };
 
 const MyInfo = () => {
+  const User = useSelector((state) => state.auth.logonUser);
   return (
     <InfoDiv>
       <MyImg src={BIBI} alt="프로필 사진" />
@@ -70,9 +74,9 @@ const MyInfo = () => {
           <StyledP>이 메 일</StyledP>
         </LeftDiv>
         <RightDiv>
-          <p>김혜미</p>
-          <p>키티공주</p>
-          <p>Email@google.com</p>
+          <p>{User.name || "\u00A0"}</p>
+          <p>{User.nickname || "\u00A0"}</p>
+          <p>{User.email || "\u00A0"}</p>
         </RightDiv>
       </ProfileDiv>
       <MyButton />

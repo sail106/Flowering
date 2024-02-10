@@ -21,7 +21,11 @@ const SignupRequired = () => {
 
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  console.log('access' + accessToken)
+  console.log('alllll' + name+" "+nickname+" "+gender+" "+birthdate.slice(0, 4))
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 서버로 전송할 데이터 객체 생성
@@ -43,7 +47,7 @@ const SignupRequired = () => {
     try {
       // 서버로 데이터 전송
       // post? 여기서 토큰도 함께 보내줘야할 것 같다.
-      const response = await axios.post(
+      const response = await axios.patch(
         "http://i10c106.p.ssafy.io:8080/v1/users/update",
         userData,
         config
@@ -92,7 +96,7 @@ const SignupRequired = () => {
               name="gender"
               type="radio"
               width="1"
-              onChange={() => setGender("여성")}
+              onChange={() => setGender("FEMALE")}
               required
             />
             <RadioLabelText>여성</RadioLabelText>
@@ -103,7 +107,7 @@ const SignupRequired = () => {
               id="female"
               name="gender"
               type="radio"
-              onChange={() => setGender("남성")}
+              onChange={() => setGender("MALE")}
             />
             <RadioLabelText>남성</RadioLabelText>
           </LabelSignup>
