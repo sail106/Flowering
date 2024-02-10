@@ -32,7 +32,6 @@ import ExpertsProfileDiana from './components/experts/ExpertsProfileDiana';
 import ExpertsProfileRuna from './components/experts/ExpertsProfileRuna';
 import Manager from './components/ManagerPage/Manager';
 import LoginForm from './components/LoginForm';
-import FirstSurveyResult from './components/FirstSurveyResult/FirstSurveyResultPage';
 import FinalresultInput from './components/consultingresult/FinalresultInput';
 
 import FirstSurveyEnd from './components/FirstSurveyEnd';
@@ -44,59 +43,60 @@ import SecondSurveyResult from './components/SecondSurveyResult';
 import FirstSurveyPage from './components/FirstSurvey';
 import SecondSurveyEnd from './components/SecondSurveyEnd';
 import FinalSurveyResult from './components/FinalSurveyResult';
+import FirstSurveyResult from './components/FirstSurveyResult';
 function App() {
-  return (
-    <>
-      <GlobalStyles />
-      <Page>
-        <Navbar />
-        <Routes>
-          <Route path="/OneToManyVideoChat" element={<OneToManyVideoChat />} />
-          <Route path="/OneToOneVideoChat" element={<OneToOneVideoChat />} />
-          {/* <Route path="/admin" element={<Admin />} /> */}
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/pw" element={<PasswordFindForm />} />
-          <Route path="/test" element={<SpinnerTest />} />
-          <Route path="/signup" element={<SignupForm />} />
-          <Route path="/signupPw" element={<SignupPw />} />
-          <Route path="/signupRequired" element={<SignupRequired />} />
-          <Route path="/consulting" element={<ConsultReservation />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage2" element={<ExpertPage />} />
-          <Route path="/editmyinfo" element={<EditMyInfo />} />
-          <Route path="/faq" element={<FaQ />} />
-          <Route path="/beautyconsulting" element={<BeautyConsulting />} />
-          <Route path="/communitymod" element={<CommunityModify />} />
-          <Route path="/experts" element={<ExpertsIntroduction />} />
-          <Route path="/expertsprofileBibi" element={<ExpertsProfileBibi />} />
-          <Route path="/expertsprofileLeina" element={<ExpertsProfileLeina />} />
-          <Route path="/expertsprofileDiana" element={<ExpertsProfileDiana />} />
-          <Route path="/expertsprofileRuna" element={<ExpertsProfileRuna />} />
-          <Route path="/expertconsulting" element={<ExpertConsulting />} />
-          <Route path="/communityHome" element={<CommunityPage />} />
-          <Route path="/expertsReservation" element={<ExpertsReservation />} />
-          <Route path="/review" element={<Review />} />
+	return (
+		<>
+			<GlobalStyles />
+			<Page>
+				<Navbar />
+				<Routes>
+					<Route path='/OneToManyVideoChat' element={<OneToManyVideoChat />} />
+					<Route path='/OneToOneVideoChat' element={<OneToOneVideoChat />} />
+					{/* <Route path="/admin" element={<Admin />} /> */}
+					<Route path='/' element={<MainPage />} />
+					<Route path='/login' element={<LoginForm />} />
+					<Route path='/pw' element={<PasswordFindForm />} />
+					<Route path='/test' element={<SpinnerTest />} />
+					<Route path='/signup' element={<SignupForm />} />
+					<Route path='/signupPw' element={<SignupPw />} />
+					<Route path='/signupRequired' element={<SignupRequired />} />
+					<Route path='/consulting' element={<ConsultReservation />} />
+					<Route path='/mypage' element={<MyPage />} />
+					<Route path='/mypage2' element={<ExpertPage />} />
+					<Route path='/editmyinfo' element={<EditMyInfo />} />
+					<Route path='/faq' element={<FaQ />} />
+					<Route path='/beautyconsulting' element={<BeautyConsulting />} />
+					<Route path='/communitymod' element={<CommunityModify />} />
+					<Route path='/experts' element={<ExpertsIntroduction />} />
+					<Route path='/expertsprofileBibi' element={<ExpertsProfileBibi />} />
+					<Route path='/expertsprofileLeina' element={<ExpertsProfileLeina />} />
+					<Route path='/expertsprofileDiana' element={<ExpertsProfileDiana />} />
+					<Route path='/expertsprofileRuna' element={<ExpertsProfileRuna />} />
+					<Route path='/expertconsulting' element={<ExpertConsulting />} />
+					<Route path='/communityHome' element={<CommunityPage />} />
+					<Route path='/expertsReservation' element={<ExpertsReservation />} />
+					<Route path='/review' element={<Review />} />
 
-          <Route path="/expertsprofileregistration" element={<ExpertsProfileRegistration />} />
-          <Route path="/manager" element={<Manager />} />
+					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
+					<Route path='/manager' element={<Manager />} />
 
-          <Route path="/finalresultInput" element={<FinalresultInput />} />
+					<Route path='/finalresultInput' element={<FinalresultInput />} />
 
-          <Route path="/phototest" element={<PhotoTest />} />
+					<Route path='/phototest' element={<PhotoTest />} />
 
-          <Route path="/secondsurveyresult" element={<SecondSurveyResult />}></Route>
-          <Route path="/firstsurvey" element={<FirstSurveyPage />} />
-          <Route path="/firstsurveyresult" element={<FirstSurveyResult />} />
-          <Route path="/firstsurveyend" element={<FirstSurveyEnd />} />
-          <Route path="/secondsurveyend" element={<SecondSurveyEnd />} />
-          <Route path="/finalresult" element={<FinalSurveyResult />} />
-        </Routes>
+					<Route path='/secondsurveyresult' element={<SecondSurveyResult />}></Route>
+					<Route path='/firstsurvey' element={<FirstSurveyPage />} />
+					<Route path='/firstsurveyresult' element={<FirstSurveyResult />} />
+					<Route path='/firstsurveyend' element={<FirstSurveyEnd />} />
+					<Route path='/secondsurveyend' element={<SecondSurveyEnd />} />
+					<Route path='/finalresult' element={<FinalSurveyResult />} />
+				</Routes>
 
-        <Footer />
-      </Page>
-    </>
-  );
+				<Footer />
+			</Page>
+		</>
+	);
 }
 
 export default App;
