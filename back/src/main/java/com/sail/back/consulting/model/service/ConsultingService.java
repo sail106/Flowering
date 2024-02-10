@@ -46,8 +46,10 @@ public class ConsultingService {
     private final ConsultingRepository consultingRepository;
 
     public ConsultingCreateResponse createReservation(String role, Long userId, Long consultantId, ConsultingCreateRequest consultingCreateRequest) {
+
         if (UserRole.CONSULTANT.equals(role)) {
-            throw new WrongAccessException("customer 가 아닙니다");
+            throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
+
         }
 
 
@@ -57,10 +59,16 @@ public class ConsultingService {
         Consultant consultant = consultantRepository.findById(consultantId)
                 .orElseThrow(() -> new NotFoundException(CONSULTANT_NOT_FOUND));
 
+        List<Consulting> consultingList = consultingRepository.
+                findAllByUserIdAndTime(userId, consultingCreateRequest.getTime()).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
+
+        if (consultingList.size()>0) {
+            throw new ConsultingException(ConsultingErrorCode.ALREADY_IN);
+        }
 
         Consulting consulting = consultingCreateRequest.toEntity();
 
-        consulting.create(user, consultant );
+        consulting.create(user, consultant);
 
         consultingRepository.save(consulting);
 
