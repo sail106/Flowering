@@ -7,6 +7,7 @@ import Webcam from 'react-webcam';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getStorage, ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { Link } from 'react-router-dom';
 // import FirebaseConfig from "./common/FirebaseConfig";
 
 const BackPage = styled(Page)`

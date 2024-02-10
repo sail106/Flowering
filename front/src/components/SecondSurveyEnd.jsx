@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ButtonBox } from '../common/Button';
+import { ButtonBox } from '../components/common/Button';
 
 const Consulting1stepresultpage = styled.div`
 	margin-top: -180px;
