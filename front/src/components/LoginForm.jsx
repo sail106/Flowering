@@ -46,7 +46,7 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    
     // Redux store에 사용자 정보 저장
     dispatch(loginUser({ Email: formData.email, Password: formData.password })).then(() => {
 

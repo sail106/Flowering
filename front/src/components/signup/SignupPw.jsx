@@ -86,18 +86,27 @@ const SignupPw = () => {
     // 여기서 axios로 쏘기, 이렇게 하면 회원가입이 DB에 저장된다.
     // 이메일 : userEmail
     // 패스워드: pwOne
+    console.log(userEmail + " " + pwOne)
+
+    const body = {
+      email: userEmail,
+      password: pwOne
+    }
+    console.log(`body ${JSON.stringify(body)}`);
+
     const response = await axios.post(
-      "http://i10c106.p.ssafy.io:8080/v1/users/regist",
-      {
-        email: userEmail,
-        password: pwOne,
-      }
+      'http://i10c106.p.ssafy.io:8080/v1/users/regist', body
     );
+    
     console.log(response);
     console.log("userEmail : ", userEmail);
     // 로그인 시켜야한다.
     // 하지만 로그인이 되지 않는다.
-    dispatch(loginUser({ email: userEmail, password: pwOne }));
+    dispatch(loginUser(
+      {
+        Email: userEmail,
+        Password: pwOne
+      }));
     navigate("/signupRequired");
   };
 
