@@ -62,7 +62,7 @@ public class UserController {
     @PatchMapping("/update")
     public ResponseEntity<MessageUtils> update(@RequestBody UserUpdateRequest request, @AuthenticationPrincipal User user) {
         userService.updateUser(request, user);
-
+        log.info("user"+user);
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 
