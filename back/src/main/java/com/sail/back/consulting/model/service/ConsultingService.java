@@ -1,5 +1,7 @@
 package com.sail.back.consulting.model.service;
 
+import com.sail.back.consultant.exception.ConsultantErrorCode;
+import com.sail.back.consultant.exception.ConsultantException;
 import com.sail.back.consultant.model.entity.*;
 import com.sail.back.consultant.model.repository.ConsultantRepository;
 import com.sail.back.consulting.exception.ConsultingErrorCode;
@@ -59,10 +61,19 @@ public class ConsultingService {
         Consultant consultant = consultantRepository.findById(consultantId)
                 .orElseThrow(() -> new NotFoundException(CONSULTANT_NOT_FOUND));
 
+        List<Consulting> consultings = consultingRepository.
+                findAllByConsultantAndTime(consultant, consultingCreateRequest.getTime()).orElseThrow(() ->
+                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
+
+
+        if (consultings.size() > 0) {
+            throw new ConsultingException(ConsultingErrorCode.ALREADY_IN_CONSULTANT);
+        }
+
         List<Consulting> consultingList = consultingRepository.
                 findAllByUserIdAndTime(userId, consultingCreateRequest.getTime()).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
 
-        if (consultingList.size()>0) {
+        if (consultingList.size() > 0) {
             throw new ConsultingException(ConsultingErrorCode.ALREADY_IN);
         }
 
