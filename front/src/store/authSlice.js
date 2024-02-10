@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { saveToken, deleteToken } from '../api/JWToken'
 import { OK, CUSTOMER, CONSULTANT } from '../api/CustomConst'
-import Axios from '../api/Axios';
+import axios from 'axios';
+// import Axios from '../api/Axios';
 
 // state
 const initialState = {
@@ -34,8 +35,10 @@ const initialState = {
         isMic: 'false',
         isCam: 'false',
         access_token: '',
-        refresh_token: '',
+        id:'', //pk
+        // refresh_token: '',
     },
+    selectedid: '',
 
     isLoading: false,
     isAuthenticated: false, // todo 로그인 가드
@@ -44,76 +47,62 @@ const initialState = {
     isModal: false, // sample modal
 
     // server status
-    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed'
+    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
+    
 }
 
 // actions
 // signup actions
-export const signUpMember = createAsyncThunk(
-    'auth/signup',
-    async (userInfo, { rejectWithValue }) => {
+// export const signUpMember = createAsyncThunk(
+//     'auth/signup',
+//     async (userInfo, { rejectWithValue }) => {
+//         try {
+//             let response
+
+//             if (userInfo.role === CUSTOMER) {
+//                 response = await Axios.post('customers', userInfo);
+//             } else if (userInfo.role === CONSULTANT) {
+//                 response = await Axios.post('consultants', userInfo);
+//             }
+//             return response.status;
+//         } catch (err) {
+//             let errRes = 400;
+//             if (err.status < 500) {
+//                 errRes = 400;
+//             } else if (err.status < 600) {
+//                 errRes = 500;
+//             }
+//             return errRes;
+//         }
+//     }
+// )
+
+
+// login actions
+export const UserInfo = createAsyncThunk(
+    'auth/UserInfo',
+    async ({ info }, { rejectWithValue,getState }) => { 
         try {
-            let response
+            const state = getState(); // 전체 Redux 상태를 얻습니다.
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
+                    'Content-Type': 'application/json'
+                    // 다른 필요한 헤더도 추가할 수 있습니다.
+                }
+            };
+            // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info`, config);
+            const res = response.data.data_body
 
-            if (userInfo.role === CUSTOMER) {
-                response = await Axios.post('customers', userInfo);
-            } else if (userInfo.role === CONSULTANT) {
-                response = await Axios.post('consultants', userInfo);
-            }
-            return response.status;
+            // saveToken(token);
+
+            return res;
+
         } catch (err) {
-            let errRes = 400;
-            if (err.status < 500) {
-                errRes = 400;
-            } else if (err.status < 600) {
-                errRes = 500;
-            }
-            return errRes;
-        }
-    }
-)
-
-export const emailCheck = createAsyncThunk(
-    'auth/emailcheck',
-    async (email, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/1?email=${email}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
-        }
-    }
-);
-
-
-// 이메일 발송 후 토큰 체크 
-export const emailAuthCheck = createAsyncThunk(
-    'members/email/2',
-    async (payload, { rejectWithValue }) => {
-        try {
-            const response = await Axios.post('members/email/2', payload)
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false
-        }
-    }
-)
-
-
-export const nicknameCheck = createAsyncThunk(
-    'auth/nicknamecheck',
-    async (nickname, { rejectWithValue }) => {
-        try {
-            const response = await Axios.get(`members/validation/2?nickname=${nickname}`);
-            if (response.status === OK) {
-                return true;
-            }
-        } catch (err) {
-            return false;
+            // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            return rejectWithValue(err);
+            // return rejectWithValue(err.response);
         }
     }
 );
@@ -130,15 +119,28 @@ export const loginUser = createAsyncThunk(
 
         try {
             // start
-            const response = await Axios.post('auth/login', loginrequest);
+            const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', loginrequest);
             const token = response.data.data_body
-            saveToken(token);
+            // saveToken(token);
             return token;
 
         } catch (err) {
             // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            alert("이메일 또는 비밀번호가 잘못되었습니다!");
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
+        }
+    }
+);
+
+export const signOut = createAsyncThunk(
+    'auth/signout',
+    async (isAuthenticated, { rejectWithValue }) => {
+        try {
+            isAuthenticated = false
+            return isAuthenticated;
+        } catch (err) {
+            return rejectWithValue(err);
         }
     }
 );
@@ -234,22 +236,8 @@ export const modifyPass = createAsyncThunk(
     }
 );
 
-export const signOut = createAsyncThunk(
-    'auth/signout',
-    async (role, { rejectWithValue }) => {
-        try {
-            let response;
-            if (role === CUSTOMER) {
-                response = await Axios.delete('customers');
-            } else if (role === CONSULTANT) {
-                response = await Axios.delete('consultants');
-            }
-            return response;
-        } catch (err) {
-            return rejectWithValue(err);
-        }
-    }
-);
+
+export const selectAccessToken = (state) => state.logonUser.access_token;
 
 // createSlice
 const authSlice = createSlice({
@@ -276,12 +264,17 @@ const authSlice = createSlice({
         },
 
         setRole: (state, { payload }) => {
+            console.log('settrolll'+payload)
             state.logonUser.role = payload
         },
-
+        setSelectedId: (state, { payload }) => {
+            console.log('settt  ')
+            state.selectedid = payload;
+          },
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
+
     },
 
 
@@ -289,24 +282,25 @@ const authSlice = createSlice({
         // signup extra reducers 통신 상태에 따른 실행 함수
         builder
             // signup extra reducers 통신 상태에 따른 실행 함수
-            .addCase(signUpMember.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(signUpMember.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.data = action.payload;
-            })
-            .addCase(signUpMember.rejected, (state) => {
-                state.status = 'failed';
-            })
+            // .addCase(signUpMember.pending, (state) => {
+            //     state.status = 'loading';
+            // })
+            // .addCase(signUpMember.fulfilled, (state, action) => {
+            //     state.status = 'succeeded';
+            //     state.data = action.payload;
+            // })
+            // .addCase(signUpMember.rejected, (state) => {
+            //     state.status = 'failed';
+            // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
+                console.log('fullllll'+action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
-                    // role: action.payload.data.role,
+                    // role: action.payload.data
                     // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
                     access_token: action.payload.access_token,
-                    refresh_token : action.payload.refresh_token
+                    // refresh_token : action.payload.refresh_token
 
                 };
                 state.isAuthenticated = true;
@@ -323,17 +317,33 @@ const authSlice = createSlice({
                 state.status = 'succeeded';
                 state.logonUser = action.payload.data;
             })
+
             .addCase(loadMember.rejected, (state) => {
+                state.status = 'failed';
+            })
+
+            .addCase(UserInfo.fulfilled, (state, action) => {
+                console.log('userinfofulll', JSON.stringify(action.payload));
+
+
+                 state.logonUser.role = action.payload.role;
+                 state.logonUser.id = action.payload.id;
+                 state.logonUser.email = action.payload.email;
+                 state.logonUser.name = action.payload.name;
+                 state.logonUser.nickname = action.payload.nickname;
+
+                // role: action.payload.data
+            })
+
+            .addCase(UserInfo.rejected, (state) => {
                 state.status = 'failed';
             });
     }
 
-
-
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole, setname } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname,setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

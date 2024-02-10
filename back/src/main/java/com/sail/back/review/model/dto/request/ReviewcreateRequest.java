@@ -20,7 +20,7 @@ import lombok.*;
 public class ReviewcreateRequest {
 
 
-    private User user;
+//    private User user;
 
     private String content;
 
@@ -30,9 +30,8 @@ public class ReviewcreateRequest {
 
     public Review toEntity() {
         return Review.builder()
-//                .consultant( )
                 .star(this.getStar())
-                .user(this.getUser())
+//                .user(this.getUser())
                 .content(this.getContent())
                 .build();
     }

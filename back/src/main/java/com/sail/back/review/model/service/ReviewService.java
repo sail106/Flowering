@@ -8,8 +8,8 @@ import com.sail.back.review.exception.ReviewErrorCode;
 import com.sail.back.review.exception.ReviewException;
 import com.sail.back.review.model.dto.request.ReviewModifyRequest;
 import com.sail.back.review.model.dto.request.ReviewcreateRequest;
-import com.sail.back.review.model.dto.response.ReviewListResponse;
-import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+ import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.review.model.repository.ReviewRepository;
 import com.sail.back.user.model.entity.User;
@@ -27,18 +27,33 @@ public class ReviewService {
     private final ConsultantRepository consultantRepository;
 
     public void create(User user, ReviewcreateRequest reviewcreateRequest) {
-        reviewcreateRequest.setUser(user);
-        System.out.println("setttuserrr"+reviewcreateRequest.getUser().getId());
+//        reviewcreateRequest.setUser(user);
+//        System.out.println("setttuserrr"+reviewcreateRequest.getUser().getId());
+
 
         Consultant consultant = consultantRepository.findById(reviewcreateRequest.getConsultantid()).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
-        Review review = reviewcreateRequest.toEntity();
 
+        //여기서 리뷰등록 하면 consultant 의 averagestar 값을 업데이트 해야 한다.
+//        consultant.setReviewnum(consultant.getReviewnum() + 1);
+//        consultant.setStarAverage(consultant.getStarAverage() + reviewcreateRequest.getStar() / consultant.getReviewnum());
+
+
+//        if (consultant.getReviews().stream().anyMatch(review -> review.getUser().getId().equals(user.getId()))) {
+//            throw new ReviewException(ReviewErrorCode.ALREADY_IN);
+//        }
+
+        Review review = reviewcreateRequest.toEntity();
+        review.setUser(user);
         review.setConsultant(consultant);
+
+
         reviewRepository.save(review);
+
+
     }
 
-    public ReviewModifyResponse modify(User user, ReviewModifyRequest modifyRequest,Long reviewid) {
+    public ReviewModifyResponse modify(User user, ReviewModifyRequest modifyRequest, Long reviewid) {
 
         Review review = reviewRepository.findById(reviewid).orElseThrow(() -> new ReviewException(ReviewErrorCode.NO_REVIEW));
 
@@ -63,14 +78,19 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
-    public List<ReviewListResponse> get(Long consultantId) {
+    public List<ReviewResponse> get(Long consultantId) {
         Consultant consultant = consultantRepository.findById(consultantId).
                 orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
-        List<ReviewListResponse> reviewListResponses = reviewRepository.findAllByConsultant(consultant)
-                .stream().map(Review::toreviewListResponse).collect(Collectors.toList());
+        List<Review> reviews = reviewRepository.findAllByConsultant(consultant).orElseThrow(()->new ReviewException(ReviewErrorCode.NO_REVIEW));
 
-        return reviewListResponses;
+
+//        List<ReviewListResponse> reviewListResponses = reviewRepository.findAllByConsultant(consultant)
+//                .stream().map(Review::from).collect(Collectors.toList());
+
+
+        return reviews.stream().map(Review::from).collect(Collectors.toList());
+
     }
 
 }

@@ -14,6 +14,7 @@ export const ButtonBox = styled.button`
   color: ${props => props.color || 'white'};
   font-size: medium;
   font-weight: bold;
+  
 `;
 
 

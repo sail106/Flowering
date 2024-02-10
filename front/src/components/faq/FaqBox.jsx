@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import DropDown from "../../assets/DropDown.png";
 
 const FaqContainer = styled.div`
   justify-content: center;
@@ -27,7 +28,6 @@ const FaqText = styled.div`
 const Image = styled.img``;
 
 const FaqAnswer = styled.div`
-
   color: #6d6d6d;
   font-family: Noto Sans KR;
   width: 50%;
@@ -46,12 +46,12 @@ const DropdownWrapper = styled.div`
 `;
 
 const NomarginP = styled.p`
-  margin:0;
+  margin: 0;
   line-height: 24px;
-`
+`;
 
-const FaQBox = ({question, answer}) => {
-  const answerLines = answer.split('/n');
+const FaQBox = ({ question, answer }) => {
+  const answerLines = answer.split("/n");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -63,13 +63,13 @@ const FaQBox = ({question, answer}) => {
         <FaqWrapper>
           <FaqText>{question}</FaqText>
 
-          <DropdownWrapper >
-            <Image src="src/assets/DropDown.png" alt="DropDown" />
+          <DropdownWrapper>
+            <Image src={DropDown} alt="DropDown" />
           </DropdownWrapper>
         </FaqWrapper>
       </FaqContainer>
       <FaqAnswer open={isOpen}>
-      {answerLines.map((line, index) => (
+        {answerLines.map((line, index) => (
           <NomarginP key={index}>{line}</NomarginP>
         ))}
       </FaqAnswer>

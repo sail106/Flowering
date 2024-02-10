@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import Logo from "../../assets/Logo.svg"
 const ImgBox = styled.div`
   padding-bottom: 80px;
 `;
@@ -7,7 +7,7 @@ const ImgBox = styled.div`
 const LoginHeader = () => {
   return (
     <ImgBox>
-      <img src="../../../src/assets/Logo.svg" alt="" />
+      <img src={Logo} alt="" />
     </ImgBox>
   )
 };

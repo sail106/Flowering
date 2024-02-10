@@ -3,9 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
-import isPropValid from '@emotion/is-prop-valid';
+import isPropValid from "@emotion/is-prop-valid";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
 const NavBox = styled.div.withConfig({
-  shouldForwardProp: prop => isPropValid(prop) && prop !== 'backgroundColor' && prop !== 'textColor',
+  shouldForwardProp: (prop) =>
+    isPropValid(prop) && prop !== "backgroundColor" && prop !== "textColor",
 })`
   position: fixed;
   width: 100%;
@@ -21,7 +25,7 @@ const NavBox = styled.div.withConfig({
 `;
 
 const MyLink = styled(Link)`
-  color:inherit;
+  color: inherit;
   padding: 40px;
   font-family: "Lexend Deca", sans-serif;
   font-weight: 400;
@@ -33,7 +37,7 @@ const MyLink = styled(Link)`
 const NavMenu = styled.div`
   list-style: none;
   a {
-    padding: 8px 12px;
+    padding: 0px 15px;
     color: inherit;
   }
   a:hover {
@@ -45,27 +49,55 @@ const NavMenu = styled.div`
   font-style: normal;
 `;
 
-const NavInfoLogo = styled.div`
-  color:inherit;
+const NavMenu2 = styled(NavMenu)`
   padding-right: 100px;
-  img {
-    /* border: 1px solid black; */
-    padding-left: 10px;
-    padding-right: 10px;
+  :hover {
+    color: #f28482;
   }
-  /* img:hover {
-    content: url("src/assets/pinkCartIcon.svg");
-  } */
+  align-items: center;
+  justify-content: center;
+  display: flex;
 `;
 
 const StyledPerson = styled(GoPerson)`
-  font-size:30px;
-`
+  font-size: 30px;
+`;
+const LoginText = styled.div`
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+`;
 
 const Navbar = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const User = useSelector(
+    (state) => state.auth.logonUser
+  );
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [textColor, setTextColor] = useState("black");
   const location = useLocation();
+  // const handleLogout = () => {
+  //   console.log('로그1아웃')
+  //   const state = useSelector((state) => state); 
+  //   console.log(state,'2222222222222222222222')
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${state.auth.logonUser.access_token}`,
+  //       "Content-Type": "application/json",
+  //       // 다른 필요한 헤더도 추가할 수 있습니다.
+  //     },
+  //   };
+  //   axios
+  //     .post("http://i10c106.p.ssafy.io:8080/v1/auth/logout", config)
+  //     .then((response) => {
+  //       console.log('로그아웃asdasdasdasd')
+  //       // dispatch(signOut(isAuthenticated));
+  //       state.auth.isAuthenticated = false;
+  //       // 로그아웃 성공 시 처리할 작업을 여기에 작성해주세요.
+  //     })
+  //     .catch((error) => {
+  //       // 로그아웃 실패 시 처리할 작업을 여기에 작성해주세요.
+  //     });
+  // };
   const checkScroll = () => {
     const currentScrollY = window.scrollY;
     const viewportHeight = window.innerHeight;
@@ -81,7 +113,7 @@ const Navbar = () => {
       setBackgroundColor("#f8e4a9");
     } else {
       setTextColor("black");
-      setBackgroundColor('white');
+      setBackgroundColor("white");
     }
   };
 
@@ -89,7 +121,7 @@ const Navbar = () => {
     if (location.pathname === "/") {
       checkScroll();
     } else {
-      setTextColor('black')
+      setTextColor("black");
       setBackgroundColor("white");
     }
 
@@ -105,21 +137,52 @@ const Navbar = () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [location]);
+
   return (
     <NavBox backgroundColor={backgroundColor} textColor={textColor}>
       <MyLink to="/">Flowering</MyLink>
       <NavMenu>
- 
-        <Link to={"/"} reloadDocument>Home</Link>
-        <Link to={"/beautyconsulting"} reloadDocument>Consulting</Link>
-        <Link to={"/"} reloadDocument>Community</Link>
-        <Link to={"#"} reloadDocument>Contents</Link>
-        <Link to={"/faq"} reloadDocument>FAQ</Link>
-       </NavMenu>
-      <NavInfoLogo>
+        <Link to={"/"} reloadDocument>
+          Home
+        </Link>
+        <Link to={"/beautyconsulting"} reloadDocument>
+          Consulting
+        </Link>
+        <Link to={"/"} reloadDocument>
+          Community
+        </Link>
+        <Link to={"#"} reloadDocument>
+          Contents
+        </Link>
+        <Link to={"/faq"} reloadDocument>
+          FAQ
+        </Link>
+      </NavMenu>
+      <NavMenu2>
+        {isAuthenticated ? (
+          <Link to="/" reloadDocument>
+            Logout
+          </Link>
+        ) : (
+          <Link to="/login" reloadDocument>
+            Login
+          </Link>
+        )}
+        {isAuthenticated && User.role === 'USER' ? (
+        <Link to={`/mypage/${User.id}`} reloadDocument>
+          <StyledPerson />
+        </Link>
+      ) : isAuthenticated && User.role === 'CONSULTANT' ? (
+        <Link to={`/expertmypage/${User.id}`} reloadDocument>
+          <StyledPerson />
+        </Link>
+      ) : (
+        <Link to="/login" reloadDocument>
+          <StyledPerson />
+        </Link>
+      )}
         
-        <StyledPerson />
-      </NavInfoLogo>
+      </NavMenu2>
     </NavBox>
   );
 };

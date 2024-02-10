@@ -1,3 +1,6 @@
 [submodule "back/secure-settings"]
 	path = back/secure-settings
 	url = https://github.com/sail106/settings.git
+[submodule "settings"]
+	path = settings
+	url = https://github.com/sail106/settings.git

@@ -7,8 +7,8 @@ import com.sail.back.review.exception.ReviewErrorCode;
 import com.sail.back.review.exception.ReviewException;
 import com.sail.back.review.model.dto.request.ReviewModifyRequest;
 import com.sail.back.review.model.dto.request.ReviewcreateRequest;
-import com.sail.back.review.model.dto.response.ReviewListResponse;
-import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+ import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.review.model.repository.ReviewRepository;
 import com.sail.back.review.model.service.ReviewService;
@@ -38,6 +38,7 @@ public class ReviewController {
 
         reviewService.create(user, reviewcreateRequest);
 
+
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 
@@ -56,10 +57,9 @@ public class ReviewController {
     }
 
     @GetMapping("/consultant/{consultantId}")
-    public ResponseEntity<MessageUtils<List<ReviewListResponse>>> get(@PathVariable Long consultantId) {
-        List<ReviewListResponse> reviewListResponses = reviewService.get(consultantId);
+    public ResponseEntity<MessageUtils<List<ReviewResponse>>> get(@PathVariable Long consultantId) {
+        List<ReviewResponse> reviewListResponses = reviewService.get(consultantId);
         return ResponseEntity.ok().body(MessageUtils.success(reviewListResponses));
     }
-
 
 }

@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { Page } from "../common/Page";
+import RedLine from "../../assets/RedLine.png"
+import Beauty from "../../assets/PersonalBeauty.svg"
+import Communityimg from "../../assets/Community.svg"
 
 const MyPage = styled(Page)`
   height: 120vh;
@@ -90,11 +93,11 @@ const ThirdPage = () => {
           뷰티와 관련된 다양한 주제에 대해 AI와 <br />
           전문가의 조언을 받는 서비스입니다.
         </DescrText>
-        <Image src="src/assets/RedLine.png" alt="RedLine" />
+        <Image src={RedLine} alt="RedLine" />
       </PersonalBeauty>
 
       <PersonalBeautyCard>
-        <Image src="src/assets/personalBeauty.svg" alt="personalBeauty" />
+        <Image src={Beauty} alt="personalBeauty" />
       </PersonalBeautyCard>
 
       <Community>
@@ -104,11 +107,11 @@ const ThirdPage = () => {
           피부 관련 고민을 나눌 수 있는 <br />
           화상 커뮤니티입니다.
         </DescrText>
-        <ReverseImage src="src/assets/RedLine.png" alt="RedLine" />
+        <ReverseImage src={RedLine} alt="RedLine" />
       </Community>
 
       <CommunityCard>
-        <Image src="src/assets/Community.svg" alt="Community" />
+        <Image src={Communityimg} alt="Community" />
       </CommunityCard>
     </MyPage>
   );

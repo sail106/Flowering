@@ -1,8 +1,8 @@
 package com.sail.back.review.model.entity;
 
 import com.sail.back.consultant.model.entity.Consultant;
-import com.sail.back.review.model.dto.response.ReviewListResponse;
-import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+ import com.sail.back.review.model.dto.response.ReviewModifyResponse;
+import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,17 +32,20 @@ public class Review {
     private String content;
 
     private int star;
+
     public void updateReview(int newStar, String newContent) {
-        this.star=newStar;
-        this.content=newContent;
+        this.star = newStar;
+        this.content = newContent;
 
     }
 
-    public static ReviewListResponse toreviewListResponse(Review review) {
-        return ReviewListResponse.builder()
-                .review_id(review.getReview_id() )
+
+    public static ReviewResponse from(Review review) {
+        return ReviewResponse.builder()
+                .review_id(review.getReview_id())
                 .star(review.getStar())
-                .consultantDetailResponse( Consultant.toConsultantDetailResponse(review.getConsultant()))
+//                .consultantDetailResponse(Consultant.toConsultantDetailResponse(review.getConsultant()))
+                .user(review.getUser())
                 .content(review.getContent())
                 .build();
     }
@@ -55,8 +58,21 @@ public class Review {
                 .content(content)
                 .build();
     }
-    public void setConsultant(Consultant consultant){
-        this.consultant=consultant;
+
+    public void setConsultant(Consultant consultant) {
+        this.consultant = consultant;
+
+        double newStarAverage = ((consultant.getStarAverage() * consultant.getReviewnum() + this.getStar()) / (consultant.getReviewnum() + 1));
+        ;
+        consultant.setReviewnum(consultant.getReviewnum() + 1);
+
+        consultant.setStarAverage(newStarAverage);
     }
+
+    public void setUser(User user) {
+        this.user = user;
+
+    }
+
 
 }

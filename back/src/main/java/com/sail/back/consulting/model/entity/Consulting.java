@@ -48,11 +48,12 @@ public class Consulting {
 //    @NotNull
 //    private String sessionId;
 
-    public void create(User user, Consultant consultant,
-                       LocalDateTime time) {
+    public void create(User user, Consultant consultant
+                        ) {
         this.user = user;
         this.consultant = consultant;
-        this.time = time;
+//        this.time = time;
+//        this.title=title;
     }
 
 //    public void setSession(String sessionId) {
@@ -69,24 +70,10 @@ public class Consulting {
     }
 
     public ConsultingResponse toResponse() {
-
-        FindRequest findRequest = FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-                .name(true)
-                .build();
-
         return ConsultingResponse.builder()
                 .consultingId(this.consulting_id)
                 .consultantData(this.consultant.toResponse())
-                .userResponse(UserResponse.of(findRequest, this.user))
+                .userResponse(this.user.toResponse())
                 .reservationDateTime(this.time)
                 .build();
     }

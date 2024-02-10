@@ -8,7 +8,9 @@ import ContentsCard from "./common/ContentsCard";
 import { useSelector } from 'react-redux'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import BIBI from "../assets/BIBI.png"
+import blogpost1 from "../assets/blogpost1.png"
+import communityHome1 from "../assets/communityHome1.png"
 const StyledDiv = styled.div`
   color: #6D6D6D;
   text-align: center;
@@ -190,7 +192,7 @@ const CommunityPage = () => {
         <CenterContainer>
           <CommunityHeader />
           <CircleImg
-            src="../src/assets/BIBI.png"
+            src={BIBI}
             scale="1.2"
             margin-bottom="40px"
           />
@@ -207,7 +209,7 @@ const CommunityPage = () => {
         <ContentsCard
           cardMarginTop="0px"
           // paddingTop="0px"
-          imageSrc="../src/assets/communityHome1.png"
+          imageSrc={communityHome1}
           imageAlt="recommend-item"
           title="깐달걀 피부 만드는 추천템 공개"
           description="여드름 피부였던 제가
@@ -221,7 +223,7 @@ const CommunityPage = () => {
         <ContentsCard
           cardMarginTop="0px"
           // paddingTop="0px"
-          imageSrc="../src/assets/blog post 1.png"
+          imageSrc={blogpost1}
           imageAlt="recommend-item"
           title="일상 생활 속 나의 뷰티 습관"
           description="저만의 뷰티 습관 공개합니닷 ㅋㅋ"

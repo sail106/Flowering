@@ -33,6 +33,6 @@ public class ConsultingCreateResponse  {
     private String request;//요청사항
 
     //세션아이디
-    private String sessionId;
+    private String title;
 
 }

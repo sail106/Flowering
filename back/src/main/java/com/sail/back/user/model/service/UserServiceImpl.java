@@ -31,19 +31,16 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void registUser(UserRegistRequest userRegistRequest, UserRole role, AuthProvider provider) {
-        User user = User.builder()
-                .email(userRegistRequest.getEmail())
-                .password(passwordEncoder.encode(userRegistRequest.getPassword()))
-                .role(role)
-                .provider(provider)
-                .build();
-        userRepository.save(user);
+    public void registUser(UserRegistRequest request, UserRole role, AuthProvider provider) {
+        userRepository.findByEmail(request.getEmail()).ifPresent(value -> {
+            throw new UserException(UserErrorCode.ALREADY_IN_EMAIL);
+        });
+        userRepository.save(request.createUser(passwordEncoder, role, provider));
     }
 
     @Override
     public UserResponse infoUser(FindRequest findRequest, User user) {
-        return UserResponse.of(findRequest, user);
+        return findRequest.toResponse(user);
     }
 
     @Override
@@ -62,6 +59,9 @@ public class UserServiceImpl implements UserService {
         if (request.getNickName() != null) user.setNickname(request.getNickName());
         if (request.getStatus() != null) user.setStatus(request.getStatus());
         if (request.getProfileImgUrl() != null) user.setProfileImgUrl(request.getProfileImgUrl());
+        if (request.getPassword() != null) user.setPassword(passwordEncoder.encode(request.getPassword()));
+        System.out.println("user"+user);
+
         userRepository.save(user);
     }
 
@@ -71,8 +71,17 @@ public class UserServiceImpl implements UserService {
 
         List<Consulting> consultings = consultingRepository.findAllByUserIdAndTime(id, localDateTime).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
 
+
         return consultings.stream().map(Consulting::from).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<MyConsultinglistResponse> myallconsultinglist(Long id) {
+
+        List<Consulting> consultings = consultingRepository.findAllByUserId(id).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
+
+        return consultings.stream().map(Consulting::from).collect(Collectors.toList());
     }
 
 }

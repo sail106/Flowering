@@ -5,6 +5,7 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { StyledSmallDiv } from "../common/Experts";
 import Review from "./ExpertsCard";
+import BIBI from "../../assets/BIBI.png"
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -69,7 +70,7 @@ const ExpertsProfile = () => {
           ratenum={172}
           tag1={"스킨케어"}
           tag2={"자연주의"}
-          imgsrc={"src/assets/BIBI.png"}
+          imgsrc={BIBI}
           width={"280px"}
           height={"405px"}
           path={"/expertsReservation"}

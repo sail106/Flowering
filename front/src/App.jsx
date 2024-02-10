@@ -3,8 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 // import LoginForm from "./components/LoginForm";
 import PasswordFindForm from './components/PasswordFindForm';
 import SpinnerTest from './components/SpinnerTest';
-import SignupForm from './components/SignupForm';
-import SignupPw from './components/SignupPw';
+import SignupForm from './components/signup/SignupForm';
+import SignupPw from './components/signup/SignupPw';
+import SignupRequired from './components/signup/SignupRequired';
 import { Page } from './components/common/Page';
 import MyPage from './components/MyPage';
 import Navbar from './components/Navbar';
@@ -39,11 +40,15 @@ import FirstSurveyEnd from './components/FirstSurveyEnd';
 import PhotoTest from './components/PhotoTest';
 import SignupRequired from './components/SignupRequired';
 
+import PhotoTest from './components/PhotoTest';
+import Finalresult3step from './components/consultingresult/Finalresult3step';
+import SkinProductCard from './components/consultingresult/SkinProductCard';
+import Orderpage from './components/OrderPage';
+import OrderResult from './components/OrderResult';
+import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
+
 import SecondSurveyResult from './components/SecondSurveyResult';
-import FirstSurveyPage from './components/FirstSurvey';
-import SecondSurveyEnd from './components/SecondSurveyEnd';
-import FinalSurveyResult from './components/FinalSurveyResult';
-import FirstSurveyResult from './components/FirstSurveyResult';
+import FirstSurveyPage from './components/FirstSurveyPage';
 function App() {
 	return (
 		<>
@@ -62,13 +67,17 @@ function App() {
 					<Route path='/signupPw' element={<SignupPw />} />
 					<Route path='/signupRequired' element={<SignupRequired />} />
 					<Route path='/consulting' element={<ConsultReservation />} />
-					<Route path='/mypage' element={<MyPage />} />
-					<Route path='/mypage2' element={<ExpertPage />} />
-					<Route path='/editmyinfo' element={<EditMyInfo />} />
+					<Route path='/orderpage' element={<Orderpage />} />
+					<Route path='/orderResult' element={<OrderResult />} />
+					<Route path='/mypage/:routeid' element={<MyPage />} />
+					<Route path='/expertmypage/:routeid' element={<ExpertPage />} />
+					<Route path='/editmyinfo/:routeid' element={<EditMyInfo />} />
 					<Route path='/faq' element={<FaQ />} />
 					<Route path='/beautyconsulting' element={<BeautyConsulting />} />
 					<Route path='/communitymod' element={<CommunityModify />} />
 					<Route path='/experts' element={<ExpertsIntroduction />} />
+					<Route path='/expertsProfilecommon/:id' element={<ExpertsProfileCommon />} />
+
 					<Route path='/expertsprofileBibi' element={<ExpertsProfileBibi />} />
 					<Route path='/expertsprofileLeina' element={<ExpertsProfileLeina />} />
 					<Route path='/expertsprofileDiana' element={<ExpertsProfileDiana />} />
@@ -77,7 +86,7 @@ function App() {
 					<Route path='/communityHome' element={<CommunityPage />} />
 					<Route path='/expertsReservation' element={<ExpertsReservation />} />
 					<Route path='/review' element={<Review />} />
-
+					<Route path='/consulting1stepresult' element={<consulting1stepresult />} />
 					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
 					<Route path='/manager' element={<Manager />} />
 

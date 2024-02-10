@@ -1,5 +1,10 @@
 import styled from "styled-components";
-
+import makeup6 from "../../assets/makeup6.png"
+import makeup5 from "../../assets/makeup5.png"
+import makeup4 from "../../assets/makeup4.png"
+import makeup3 from "../../assets/makeup3.png"
+import makeup2 from "../../assets/makeup2.png"
+import makeup1 from "../../assets/makeup1.png"
 const P = styled.p`
   white-space: pre-line;
   font-family: "Noto Sans KR";
@@ -16,7 +21,7 @@ const IMG = styled.img`
   width: 148px;
   height: 148px;
   /* background-color: rgba(169, 169, 169, 0.1); */
-  background-image: src= "src/assets/backskin.png";
+  background-image: src= "../../assets/backskin.png";
 `;
 
 const Card = styled.div`
@@ -34,7 +39,7 @@ const MakeupProductCard = () => {
     <>
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup6.png" alt="" />
+        <IMG src={makeup6} alt="makeup6" />
         <Content>
           <H2>라네즈 네오 쿠션</H2>
           <P>
@@ -52,7 +57,7 @@ const MakeupProductCard = () => {
 
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup5.png" alt="" />
+        <IMG src={makeup5} alt="makeup5" />
         <Content>
           <H2>데이지크 섀도우 팔레트</H2>
           <P>
@@ -68,7 +73,7 @@ const MakeupProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup4.png" alt="" />
+        <IMG src={makeup4} alt="makeup4" />
         <Content>
           <H2>롬앤 쥬시 래스팅 틴트</H2>
           <P>
@@ -83,7 +88,7 @@ const MakeupProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup2.png" alt="" />
+        <IMG src={makeup2} alt="makeup2" />
         <Content>
           <H2>크리니크 치크 팝</H2>
           <P>
@@ -100,7 +105,7 @@ const MakeupProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup1.png" alt="" />
+        <IMG src={makeup1} alt="makeup1" />
         <Content>
           <H2>페리페라 브이 쉐딩</H2>
           <P>
@@ -116,7 +121,7 @@ const MakeupProductCard = () => {
       </Card>
       <Margin />
       <Card>
-        <IMG src="src/assets/makeup3.png" alt="" />
+        <IMG src={makeup3} alt="makeup3" />
         <Content>
           <H2>프리즘 하이라이터</H2>
           <P>

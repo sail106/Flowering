@@ -9,6 +9,7 @@ import Radio, { radioClasses } from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { useSelector } from "react-redux"; // useSelector import 추가
 
 
 
@@ -174,18 +175,28 @@ const items = [
 
 const userInfo = {
     username: "김혜미",
-    email : "hyeinsuin@gmail.com"
+    email: "hyeinsuin@gmail.com"
 }
 
 
 
-const Order = () =>{
+const Order = () => {
+
+
     const [selectedPaymentId, setSelectedPaymentId] = useState(null);
     const handlePaymentSelectionChange = (selectedId) => {
         setSelectedPaymentId(selectedId);
     };
     const navigate = useNavigate();
-    
+
+    const { selectedTime, selectedDate } = useSelector(state => state.selected);
+    const { name, role, id, nickname, imageUrl,access_token,email } = useSelector(state => state.auth.logonUser)
+
+    // alert('dddd' + selectedDate + " " + selectedTime)
+
+
+
+
     useEffect(() => {
         const jquery = document.createElement("script");
         jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -198,12 +209,12 @@ const Order = () =>{
             document.head.removeChild(iamport);
         };
     }, []);
-    
+
     const requestPay = () => {
-        
+        console.log('ssss' + selectedDate + "T" + selectedTime)
         const { IMP } = window;
         IMP.init('imp03878765');
-    
+
         IMP.request_pay({
             // pg: ,
             pg: selectedPaymentId,
@@ -217,18 +228,60 @@ const Order = () =>{
             buyer_addr: '서울특별시',
             buyer_postcode: '123-456',
         }, async (rsp) => {
-        try {
-            const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
-            if (rsp.paid_amount === data.response.amount) {
-                navigate('/order-result');
+            try {
 
-            } else {
+                console.log('first try'+rsp)
+                const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                        // 다른 필요한 헤더도 추가할 수 있습니다.
+                    }
+                };
+                console.log('config'+JSON.stringify(config))
+                console.log('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid)
+                // const { data } = await axios.post('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid );
+                const { data } = await axios.post('http://localhost:8080/verifyIamport/' + rsp.imp_uid);
+               
+                if (rsp.paid_amount === data.response.amount) {
+                    console.log('in if')
+                    try {
+                        // const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
+                        // const config = {
+                        //     headers: {
+                        //         'Authorization': `Bearer ${token}`,
+                        //         'Content-Type': 'application/json'
+                        //         // 다른 필요한 헤더도 추가할 수 있습니다.
+                        //     }
+                        // };
+                        console.log('emailll'+email)
+
+                        const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/consultings/1', {
+                            time: selectedDate + "T" + selectedTime,
+                            title:  email+"님의 상담"
+                            // 다른 필요한 데이터
+                        }, config);
+
+                        // 요청 성공 시 수행할 작업
+                        console.log('Response:', response.data);
+                    }
+
+                    catch (error) {
+                        console.error('Error :', error);
+                        // alert('결제 실패');
+                    }
+
+                    navigate('/orderResult');
+
+                } else {
+                    alert('결제 실패sss');
+                }
+
+            } catch (error) {
+                console.log('Error while verifying payment:', error);
                 alert('결제 실패');
             }
-        } catch (error) {
-            console.error('Error while verifying payment:', error);
-            alert('결제 실패');
-            } 
         });
     };
 
@@ -264,28 +317,28 @@ export function DataTable({ headers, items = [] }) {
         <StyledTable>
             <thead>
                 <tr>
-                {headers.map((header) => 
-                    <th key={header.text}>
-                        {header.text} {/* 컬럼명 바인딩 */}
-                    </th> 
-                )}
+                    {headers.map((header) =>
+                        <th key={header.text}>
+                            {header.text} {/* 컬럼명 바인딩 */}
+                        </th>
+                    )}
                 </tr>
             </thead>
             <tbody>
                 {items.map((item, index) => (
                     <tr key={index}>
-                    {headerKey.map((key) => 
-                        <td key={key + index}>
-                            {/* key 값에 따라 조건부 렌더링을 수행, item_price일 경우 원화 기호 추가 */}
-                            {key === 'item_price' ? 
-                                `₩ ${item[key]}` : // item_price 값 앞에 원화 기호(₩) 추가
-                                (key === 'consultant_img' ? 
-                                    <img src={item[key]} alt="Consultant" style={{ width: '100px', height: 'auto' }} /> : 
-                                    item[key]
-                                )
-                            }
-                        </td>
-                    )}
+                        {headerKey.map((key) =>
+                            <td key={key + index}>
+                                {/* key 값에 따라 조건부 렌더링을 수행, item_price일 경우 원화 기호 추가 */}
+                                {key === 'item_price' ?
+                                    `₩ ${item[key]}` : // item_price 값 앞에 원화 기호(₩) 추가
+                                    (key === 'consultant_img' ?
+                                        <img src={item[key]} alt="Consultant" style={{ width: '100px', height: 'auto' }} /> :
+                                        item[key]
+                                    )
+                                }
+                            </td>
+                        )}
                     </tr>
                 ))}
             </tbody>
@@ -293,7 +346,7 @@ export function DataTable({ headers, items = [] }) {
     )
 }
 
-export function OrderUserTable({userInfo}){
+export function OrderUserTable({ userInfo }) {
     return <OrderTable>
         <OrderSubTitleAndBar>
             <OrderSubTitleBar>
@@ -333,19 +386,19 @@ const kakaopay = {
     type : "radio",
     id : "kakaopay.TC0ONETIME",
     value : "카카오페이",
-    img : "src/assets/kakaoFavicon.png"
+    img : "../assets/kakaoFavicon.png"
 
 }
 const inicis = {
-    type : "radio",
-    id : "html5_inicis.INIBillTst",
-    value : "KG이니시스",
-    img : "https://www.inicis.com/wp-content/themes/inicis2020/assets/images/sub07-010301.png"
+    type: "radio",
+    id: "html5_inicis.INIBillTst",
+    value: "KG이니시스",
+    img: "https://www.inicis.com/wp-content/themes/inicis2020/assets/images/sub07-010301.png"
 }
 
 function IconsRadio({ selectedValue, onChange }) {
 
-    
+
     // onChange 핸들러 수정
     const handleChange = (event) => {
         onChange(event.target.value); // 상위 컴포넌트의 handleChange 호출
@@ -353,56 +406,56 @@ function IconsRadio({ selectedValue, onChange }) {
 
 
     return (
-      <RadioGroup
-        aria-label="platform"
-        value={selectedValue}
-        onChange={handleChange}
-        overlay
-        name="platform"
-        sx={{
-          flexDirection: 'row',
-          gap: 2,
-          [`& .${radioClasses.checked}`]: {
-            [`& .${radioClasses.action}`]: {
-              inset: -1,
-              border: '3px solid',
-              borderColor: 'primary.500',
-            },
-          },
-          [`& .${radioClasses.radio}`]: {
-            display: 'contents',
-            '& > svg': {
-              zIndex: 2,
-              position: 'absolute',
-              top: '-8px',
-              right: '-8px',
-              bgcolor: 'background.surface',
-              borderRadius: '50%',
-            },
-          },
-        }}
-      >
-        {[kakaopay, inicis].map((option) => (
-        
-          <Sheet
-            key={option.id} // key 값을 option의 id로 변경
-            variant="outlined"
+        <RadioGroup
+            aria-label="platform"
+            value={selectedValue}
+            onChange={handleChange}
+            overlay
+            name="platform"
             sx={{
-              borderRadius: 'md',
-              boxShadow: 'sm',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 1.5,
-              p: 2,
-              minWidth: 120,
+                flexDirection: 'row',
+                gap: 2,
+                [`& .${radioClasses.checked}`]: {
+                    [`& .${radioClasses.action}`]: {
+                        inset: -1,
+                        border: '3px solid',
+                        borderColor: 'primary.500',
+                    },
+                },
+                [`& .${radioClasses.radio}`]: {
+                    display: 'contents',
+                    '& > svg': {
+                        zIndex: 2,
+                        position: 'absolute',
+                        top: '-8px',
+                        right: '-8px',
+                        bgcolor: 'background.surface',
+                        borderRadius: '50%',
+                    },
+                },
             }}
-          >
-            <Radio id={option.id} value={option.value} checkedIcon={<CheckCircleRoundedIcon />} />
-            <Avatar variant="soft" size="sm" src={option.img} /> {/* src 속성을 option 객체에서 가져옴 */}
-            <FormLabel htmlFor={option.id}>{option.value}</FormLabel> {/* htmlFor와 내부 텍스트를 option 객체의 속성으로 변경 */}
-          </Sheet>
-        ))}
-      </RadioGroup>
+        >
+            {[kakaopay, inicis].map((option) => (
+
+                <Sheet
+                    key={option.id} // key 값을 option의 id로 변경
+                    variant="outlined"
+                    sx={{
+                        borderRadius: 'md',
+                        boxShadow: 'sm',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 1.5,
+                        p: 2,
+                        minWidth: 120,
+                    }}
+                >
+                    <Radio id={option.id} value={option.value} checkedIcon={<CheckCircleRoundedIcon />} />
+                    <Avatar variant="soft" size="sm" src={option.img} /> {/* src 속성을 option 객체에서 가져옴 */}
+                    <FormLabel htmlFor={option.id}>{option.value}</FormLabel> {/* htmlFor와 내부 텍스트를 option 객체의 속성으로 변경 */}
+                </Sheet>
+            ))}
+        </RadioGroup>
     );
-  }
+}

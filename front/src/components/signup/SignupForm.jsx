@@ -1,12 +1,12 @@
-import SignupEmailHeader from "./signup/SignupEmailHeader"
-import Input from "./common/Input"
-import Button from "./common/Button"
-import EmailContainer from "./signup/EmailContainer"
-import Card from "./common/Card"
-import CenterContainer from "./common/CenterContainer"
-import NotAuthNumber from "./signup/NotAuthNumber"
+import SignupEmailHeader from "./SignupEmailHeader"
+import Input from "../common/Input"
+import Button from "../common/Button"
+import EmailContainer from "./EmailContainer"
+import Card from "../common/Card"
+import CenterContainer from "../common/CenterContainer"
+import NotAuthNumber from "./NotAuthNumber"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
@@ -14,19 +14,24 @@ import { useNavigate } from "react-router-dom"
 const StyledP = styled.p`
   color: #F28482;
 `;
-
 const SignupForm = () => {
   const [isAuthCode, setIsAuthCode] = useState(false);
   const [authCorrect, setAuthCorrect] = useState(false);
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState({
     signupEmail: '',
     authNumber: '',
     // ... (다른 상태값들)
   });
-
+  
   const buttonNavigate = () => {
-    navigate('/signupPw');
+    setUserEmail(formData.email);
+    navigate('/signupPw', {
+      state: {
+        userEmail: userEmail
+      }
+    });
   }
 
   const alertMessage = () => {
@@ -44,36 +49,32 @@ const SignupForm = () => {
         email: formData.signupEmail,
         // ... (다른 필요한 데이터)
       });
-  
       setIsAuthCode(true);
-      // console.log(response);
   
       // TODO: 응답에 따른 처리 로직 작성
-      // 예를 들어, 서버로부터 인증 성공 여부를 받아와서 상태를 업데이트하거나,
-      // 사용자에게 메시지를 보여줄 수 있습니다.
-      console.log("인증 요청 성공");
       alert('인증번호가 요청되었습니다');
     } catch (error) {
-      console.error('인증 요청 실패:', error);
       alert('올바르지 않은 이메일 형식입니다');
     }
   };
 
   const handleAuthChange = async (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    console.log("formData.authNumber : ", formData.authNumber);
     try {
       await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/confirm', {
         email: formData.signupEmail,
         code: e.target.value,
       })
       setAuthCorrect(true);
-      console.log("성공성공성공성ㄱ오!!")
+      setUserEmail(formData.signupEmail);
     } catch(error) {
-      console.log("에러에러에러 : ", error);
       setAuthCorrect(false);
     }
   }
+
+  useEffect(() => {
+    setUserEmail(formData.signupEmail);
+  }, [authCorrect]);
 
   return (
     <Card>
@@ -84,6 +85,7 @@ const SignupForm = () => {
           htmlFor="signupEmail" width="250px" id="signupEmail" placeholder="이메일 입력"
           value={formData.signupEmail}
           onChange={handleInputChange}
+          disabled={authCorrect}
         />
         <Button width="25%" onClick={handleAuthRequest}>인증 요청</Button>
       </EmailContainer>
@@ -94,6 +96,7 @@ const SignupForm = () => {
             htmlFor="authNumber" id="authNumber" placeholder="인증번호"
             value={formData.authNumber}
             onChange={handleAuthChange}
+            disabled={authCorrect}
           />
           {!authCorrect && (
             <p>✓ 인증 번호가 같아요</p>

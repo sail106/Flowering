@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.hashtag.model.entity.HashTag;
 import com.sail.back.user.model.entity.User;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +21,15 @@ public class ConsultantUpdateRequest {
 
 
     private String self_introduce;
+    private String simple_introduce;
+    private List<HashTag>  hashTags;
 
 
     public Consultant toEntity() {
         return Consultant
                 .builder()
                 .self_introduce(this.self_introduce)
+                .simple_introduce(this.simple_introduce)
                 .build();
 
     }

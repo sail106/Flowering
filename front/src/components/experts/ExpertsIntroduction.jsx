@@ -1,6 +1,14 @@
 import Title from "../modify/Title";
 import styled from "styled-components";
 import Experts from "../common/Experts";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { setExpertList } from "../../store/ExpertsListSlice";
+import BIBI from "../../assets/BIBI.png"
+import LEINA from "../../assets/LEINA.png"
+import DIANA from "../../assets/DIANA.png"
+import RUNA from "../../assets/RUNA.png"
 
 const ExpertCard = styled.div`
   justify-content: center;
@@ -14,10 +22,96 @@ const Margin = styled.div`
 `;
 // 컴포넌트 정의
 const ExpertsIntroduction = () => {
+
+  const { access_token } = useSelector(state => state.auth.logonUser);
+  const [expertsData, setExpertsData] = useState([]);
+  const [extraData, setextraData] = useState([]);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+
+    console.log("ssss")
+    const fetchData = async () => {
+
+      try {
+        const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+        console.log('tooo   ' + token)
+
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        };
+
+        const url = import.meta.env.VITE_APP_API_KEY;
+
+        const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', config);
+
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+        console.log('data_body  :', response.data.data_body);
+
+        console.log('hashhhh:', response.data.data_body.hash_tag_responses);
+        console.log('user_response:', response.data.data_body.user_response);
+
+        setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
+        dispatch(setExpertList(response.data.data_body))
+
+      }
+      catch (error) {
+        console.error('Error :', error);
+        // alert('결제 실패');
+      }
+
+    };
+
+    fetchData(); // fetchData 함수 호출
+
+  }, [access_token]);
+
+  console.log('succcc' + JSON.stringify(expertsData))
+
+  if (expertsData.length > 0) {
+    console.log('succcc' + JSON.stringify(expertsData[1]))
+    console.log('succcc', JSON.stringify(expertsData[1].user_response));
+    console.log('succcc', JSON.stringify(expertsData[1].hash_tag_responses));
+
+    if (expertsData[1].hash_tag_responses.length > 0) {
+      console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
+    }
+
+
+  }
+
+
   return (
     <>
       <Title text={"Beauty consulting experts"} />
+
       <ExpertCard>
+
+        {expertsData.map((expert) => (
+
+          <Experts
+            key={expert.consultant_id} // 각 전문가의 ID를 키로 사용
+            id={expert.consultant_id} // 고유한 키 추가
+            nickname={expert.user_response.nickname}
+            text={expert.simple_introduce}
+            rate={expert.star}
+            ratenum={expert.reviewnum}
+            tag1={expert.hash_tag_responses.length > 0 ? expert.hash_tag_responses[0].workplace : ""}
+            tag2={expert.hash_tag_responses.length > 0 ? expert.hash_tag_responses[1].workplace : ""}
+           
+            imgsrc={expert.user_response.profile_img_url}
+            width={"280px"}
+            height={"405px"}
+            path={"/expertsProfilecommon/" + expert.consultant_id}
+          />
+
+        ))}
+
         <Experts
           nickname={"BIBI"}
           text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
@@ -25,11 +119,12 @@ const ExpertsIntroduction = () => {
           ratenum={172}
           tag1={"기초케어"}
           tag2={"자연주의"}
-          imgsrc={"src/assets/BIBI.png"}
+          imgsrc={BIBI}
           width={"280px"}
           height={"405px"}
           path={"/expertsProfileBibi"}
         />
+
         <Experts
           nickname={"LEINA"}
           text={"나를 마음껏 표현할 수 있을 때, 진정 아름다워집니다."}
@@ -37,7 +132,7 @@ const ExpertsIntroduction = () => {
           ratenum={289}
           tag1={"스킨케어"}
           tag2={"헤어스타일링"}
-          imgsrc={"src/assets/LEINA.png"}
+          imgsrc={LEINA}
           width={"305px"}
           height={"370px"}
           path={"/expertsProfileLeina"}
@@ -49,7 +144,7 @@ const ExpertsIntroduction = () => {
           ratenum={117}
           tag1={"트렌드"}
           tag2={"웨딩뷰티"}
-          imgsrc={"src/assets/DIANA.png"}
+          imgsrc={DIANA}
           width={"296px"}
           height={"415px"}
           path={"/expertsProfileDiana"}
@@ -61,7 +156,7 @@ const ExpertsIntroduction = () => {
           ratenum={390}
           tag1={"에코뷰티"}
           tag2={"컬러리스트"}
-          imgsrc={"src/assets/RUNA.png"}
+          imgsrc={RUNA}
           width={"294px"}
           height={"363px"}
           path={"/expertsProfileRuna"}

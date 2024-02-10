@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import moment from "moment";
 import styled from 'styled-components';
 
 import 'react-calendar/dist/Calendar.css'
+import { setSelectedDate, setSelectedTime } from '../../store/selectedSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const StyledCalendar = styled(Calendar)`
   &.react-calendar {
@@ -176,6 +179,17 @@ const StyledCalendar = styled(Calendar)`
 
 const MyCalendar = () => {
   const [value, onChange] = useState(new Date());
+  // value 상태 감시
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const formattedDate = moment(value).format('YYYY-MM-DD'); // 선택된 날짜를 형식화
+    // setSelectedDate(formattedDate); // 형식화된 날짜를 상태로 설정
+    console.log('선택된 날짜:', formattedDate);
+    dispatch(setSelectedDate(formattedDate));
+    
+  }, [value]);
 
   return (
     <>

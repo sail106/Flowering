@@ -3,6 +3,10 @@ import Stack from "@mui/material/Stack";
 import styled from "styled-components";
 import { ButtonBox } from "./Button";
 import { Link } from "react-router-dom";
+// import { setSeletedId } from "../../store/ExpertsListSlice";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedId } from "../../store/authSlice";
 
 const Container = styled.div`
   position: relative;
@@ -35,6 +39,7 @@ const StyledDiv = styled.div`
 
 const BIBIText = styled.div`
   text-align: center;
+  justify-content:start;
   color: black;
   font-size: 30px;
   font-family: "Lexend Deca";
@@ -43,7 +48,9 @@ const BIBIText = styled.div`
   word-wrap: break-word;
   position: absolute;
   top: 150px;
+  display:flex;
   left: 450px;
+  width:500px;
 `;
 
 const OneText = styled.div`
@@ -94,6 +101,7 @@ const MyButton = styled(ButtonBox)`
 
 // 컴포넌트 정의
 const Experts = ({
+  id,
   nickname,
   text,
   rate,
@@ -103,8 +111,23 @@ const Experts = ({
   imgsrc,
   width,
   height,
-  path,
+  path, 
 }) => {
+  const dispatch = useDispatch();
+
+  // console.log("tag1"+tag1+" "+nickname)
+  // console.log('imggg'+imgsrc)
+  const btnclick = (id) => {
+    // 예약하기 버튼 클릭 시 동작할 함수 정의
+    console.log('bttt' + id)
+    if (id == undefined) {
+
+    }
+    else
+      dispatch(setSelectedId(id))
+  };
+
+  console.log('star' + rate)
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />
@@ -115,7 +138,9 @@ const Experts = ({
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            defaultValue={rate}
+            // defaultValue={rate}
+            value={parseFloat(rate)}
+
             precision={0.5}
             readOnly
           />
@@ -124,9 +149,17 @@ const Experts = ({
       </OneText>
       <StyledSmallDiv>{tag1}</StyledSmallDiv>
       <StyledSmallDiv2>{tag2}</StyledSmallDiv2>
-      <Link to={path} reloadDocument>
-        <MyButton>예약하기</MyButton>
+
+      {/* <Link to={path} reloadDocument>
+        <MyButton >예약하기</MyButton>
+      </Link> */}
+
+      <Link to={{
+        pathname: path,
+      }}>
+        <MyButton onClick={() => btnclick(id)}>예약하기</MyButton>
       </Link>
+
     </Container>
   );
 };

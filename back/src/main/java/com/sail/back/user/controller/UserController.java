@@ -9,10 +9,12 @@ import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.AuthProvider;
 import com.sail.back.user.model.entity.enums.UserRole;
 import com.sail.back.user.model.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -25,15 +27,13 @@ import java.util.List;
 @Slf4j
 public class UserController {
 
-
     private final UserService userService;
 
 
     @PostMapping("/regist")
-    public ResponseEntity<MessageUtils> register(@RequestBody UserRegistRequest userRegistRequest) {
-        log.debug("UserRegistRequest={}", userRegistRequest);
+    public ResponseEntity<MessageUtils> register(@Valid @RequestBody UserRegistRequest userRegistRequest) {
+        log.debug("UserRegistRequest={}", userRegistRequest.toString());
         userService.registUser(userRegistRequest, UserRole.USER, AuthProvider.GENERAL);
-
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 
@@ -44,7 +44,13 @@ public class UserController {
 
     @GetMapping("/myconsultinglist")
     public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myconsultinglist(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
-        return ResponseEntity.ok().body( MessageUtils.success( userService.myconsultinglist(user.getId(), localDateTime)));
+        return ResponseEntity.ok().body(MessageUtils.success(userService.myconsultinglist(user.getId(), localDateTime)));
+    }
+
+    @GetMapping("/myallconsultinglist")
+    public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myallconsultinglist(@AuthenticationPrincipal User user) {
+       log.info("alllll"+user.getId());
+        return ResponseEntity.ok().body(MessageUtils.success(userService.myallconsultinglist(user.getId())));
     }
 
     @DeleteMapping("/withdraw")
@@ -56,7 +62,7 @@ public class UserController {
     @PatchMapping("/update")
     public ResponseEntity<MessageUtils> update(@RequestBody UserUpdateRequest request, @AuthenticationPrincipal User user) {
         userService.updateUser(request, user);
-
+        log.info("user"+user);
         return ResponseEntity.ok().body(MessageUtils.success());
     }
 
