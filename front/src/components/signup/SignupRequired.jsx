@@ -31,10 +31,10 @@ const SignupRequired = () => {
     // 서버로 전송할 데이터 객체 생성
     const userData = {
       name: name,
-      nickName: nickname,
+      nick_name: nickname,
       gender: gender,
-      birthdateYear: birthdate.slice(0, 4),
-      birthdateMonth: birthdate.slice(4, 6),
+      birthdate_year: birthdate.slice(0, 4),
+      birthdate_month: birthdate.slice(4, 6),
     };
     const config = {
       headers: {
