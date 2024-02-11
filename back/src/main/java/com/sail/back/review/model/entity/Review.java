@@ -71,6 +71,16 @@ public class Review {
         consultant.setStarAverage(newStarAverage);
     }
 
+
+    public void removeConsultant(Consultant consultant) {
+        this.consultant = consultant;
+
+        double newStarAverage = ((consultant.getStarAverage() * consultant.getReviewnum() - this.getStar()) / (consultant.getReviewnum() - 1));
+        ;
+        consultant.setReviewnum(consultant.getReviewnum() - 1);
+
+        consultant.setStarAverage(newStarAverage);
+    }
     public void setUser(User user) {
         this.user = user;
 

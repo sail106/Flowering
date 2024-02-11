@@ -70,10 +70,19 @@ public class ReviewService {
     }
 
     public void delete(User user, Long reviewId) {
+        //여기 유저는 지우는 사람
+
+
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewException(ReviewErrorCode.NO_REVIEW));
         if (user.getId() != review.getUser().getId()) {
             throw new ReviewException(ReviewErrorCode.NOT_MY_REVIEW);
         }
+        User consultantuser=review.getConsultant().getUser();
+
+        Consultant consultant = consultantRepository.findByUser(consultantuser).
+                orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+
+        review.removeConsultant(consultant);
 
         reviewRepository.delete(review);
     }
