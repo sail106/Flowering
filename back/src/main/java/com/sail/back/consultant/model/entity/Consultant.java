@@ -26,30 +26,33 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 
 public class Consultant {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long consultant_id;
 
-    private String self_introduce;
+    @Builder.Default
+    private String self_introduce = "";
 
-    private String simple_introduce;
+    @Builder.Default
+    private String simple_introduce = "";
 
+    @Builder.Default
     @OneToMany(mappedBy = "consultant", cascade = CascadeType.ALL)
     private List<HashTag> hashTags = new ArrayList<>();
 
+    @Builder.Default
+    private double starAverage = 0.0;
 
-    private double starAverage;
-    private int reviewnum;
-
+    @Builder.Default
+    private int reviewnum = 0;
 
     @OneToMany(mappedBy = "consultant")
     private List<Review> reviews;
 
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 
     // HashTag을 Consultant에 추가하는 메서드
     public void addHashTag(HashTag hashTag) {
@@ -124,18 +127,18 @@ public class Consultant {
     }
 
     public ConsultantResponse toResponse() {
-        FindRequest findRequest = FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-
-                .build();
+//        FindRequest findRequest = FindRequest.builder().
+//                id(true)
+//                .role(true)
+//                .gender(true)
+//                .nickname(true)
+//                .email(true)
+//                .birthdate_month(true)
+//                .birthdate_year(true)
+//                .status(true)
+//                .profile_img_url(true)
+//
+//                .build();
 
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)
@@ -146,5 +149,6 @@ public class Consultant {
                 .reviewnum(this.getReviewnum())
                 .build();
     }
+
 
 }
