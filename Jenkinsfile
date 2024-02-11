@@ -36,6 +36,8 @@ pipeline {
                 script{
                     // 현재 디렉토리 위치 출력
                     sh 'pwd'
+                    // 디렉토리 내의 파일 및 하위 디렉토리 목록 재귀적으로 출력
+                    sh 'ls -alR'
                     sh 'ls -al'
                     // .env 파일 복사
                     sh 'cp back/secure-settings/.env front/'
@@ -48,6 +50,8 @@ pipeline {
                 script {
                     // 현재 디렉토리 위치 출력
                     sh 'pwd'
+                    // 디렉토리 내의 파일 및 하위 디렉토리 목록 재귀적으로 출력
+                    sh 'ls -alR'
                     sh 'ls -al'
                     // Docker Compose를 사용하여 서비스 빌드
                     sh "docker-compose -f back/docker-compose.yml build"
