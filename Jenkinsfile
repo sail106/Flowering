@@ -34,6 +34,8 @@ pipeline {
         stage("Copy Env") {
             steps{
                 script{
+                    // 현재 디렉토리 위치 출력
+                    sh 'pwd'
                     sh 'ls -al'
                     // .env 파일 복사
                     sh 'cp back/secure-settings/.env front/'
@@ -44,6 +46,8 @@ pipeline {
         stage("Build") {
             steps {
                 script {
+                    // 현재 디렉토리 위치 출력
+                    sh 'pwd'
                     sh 'ls -al'
                     // Docker Compose를 사용하여 서비스 빌드
                     sh "docker-compose -f back/docker-compose.yml build"
