@@ -5,6 +5,7 @@ import com.sail.back.consulting.model.entity.Consulting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -15,6 +16,8 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
 
     Optional<List<Consulting>> findAllByConsultantAndTime(Consultant consultant, LocalDateTime time);
+
+    Optional<List<Consulting>> findAllByConsultant(Consultant consultant  );
 
     Optional<List<Consulting>> findAllByUserIdAndTime(Long id, LocalDateTime time);
 

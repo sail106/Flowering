@@ -52,13 +52,32 @@ public class ConsultantService {
     }
 
 
-    public List<ConsultingmylistResponse> getMyConsultingList(Long consultantId, LocalDateTime localDateTime) {
-
-        Consultant consultant = consultantRepository.findById(consultantId).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+    public List<ConsultingmylistResponse> getMyConsultingList(User user, LocalDateTime localDateTime) {
+        Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
 
         List<Consulting> consultings = consultingRepository.
                 findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() ->
+                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
+
+        List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
+                map(ConsultingmylistResponse::fromEntity)
+                .collect(Collectors.toList());
+
+        System.out.println("본인 상담내역조회" + consultings.toString());
+
+
+        return consultingmylistResponses;
+    }
+
+
+    public List<ConsultingmylistResponse> getAllMyConsultingList(User user) {
+
+        Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+
+
+        List<Consulting> consultings = consultingRepository.
+                findAllByConsultant(consultant).orElseThrow(() ->
                         new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
 
         List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
@@ -82,13 +101,13 @@ public class ConsultantService {
     }
 
     public ConsultantDetailResponse update(User user, ConsultantUpdateRequest consultantUpdateRequest) {
-        Consultant consultant = consultantRepository.findById(user.getId()).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+        Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
         if (!UserRole.CONSULTANT.equals(user.getRole())) {
             throw new ConsultantException(ConsultantErrorCode.NOT_CONSULTANT);
         }
 
-        consultant.update(user, consultantUpdateRequest.getSelf_introduce(), consultantUpdateRequest.getSimple_introduce(),consultantUpdateRequest.getHashTags());
+        consultant.update(user, consultantUpdateRequest.getSelf_introduce(), consultantUpdateRequest.getSimple_introduce(), consultantUpdateRequest.getHashTags());
 
         consultantRepository.save(consultant);
 

@@ -5,7 +5,7 @@ import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
 import BIBI from "../../assets/BIBI.png"
 import camera from "../../assets/camera.png"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -197,11 +197,32 @@ const ReviewInput = styled.textarea`
   }
 `;
 const ExpertsProfileRegistration = () => {
-  
   const User = useSelector(
     (state) => state.auth.logonUser
   );
 
+  console.log('전문가등록' + User.id)
+  const dispatch = useDispatch();
+
+
+  // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
+  dispatch(fetchExpertById(selectedid)).then((response) => {
+    console.log('ExpertsProfile', response);
+    console.log(JSON.stringify(response, null, 2)); //잘받음
+    console.log(JSON.stringify(response.payload.user_response, null, 2));
+    setExpertData(response);
+    console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
+    // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
+    console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
+    console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
+    console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
+    console.log('expppp' + expertData?.payload.star ?? ' ')
+    console.log(expertData?.payload.simple_introduce ?? '')
+
+
+  }).catch((error) => {
+    console.log('error');
+  });
 
   return (
     <>
