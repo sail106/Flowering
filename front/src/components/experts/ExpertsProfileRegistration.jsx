@@ -5,6 +5,7 @@ import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
 import BIBI from "../../assets/BIBI.png"
 import camera from "../../assets/camera.png"
+import { useSelector } from "react-redux";
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -196,6 +197,12 @@ const ReviewInput = styled.textarea`
   }
 `;
 const ExpertsProfileRegistration = () => {
+  
+  const User = useSelector(
+    (state) => state.auth.logonUser
+  );
+
+
   return (
     <>
       <MyPage>

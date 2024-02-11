@@ -94,6 +94,7 @@ const ExpertsProfile = () => {
         console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
         console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
         console.log('expppp' + expertData?.payload.star ?? ' ')
+        console.log(expertData?.payload.simple_introduce ?? '')
 
 
       }).catch((error) => {
@@ -122,7 +123,7 @@ const ExpertsProfile = () => {
       <ExpertCard>
         <Experts
           nickname={expertData?.payload.user_response.nickname ?? ''}
-          text={expertData?.payload.user_response.simple_introduce ?? ''}
+          text={expertData?.payload.simple_introduce ?? ''}
           // text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
           rate={expertData?.payload.star ?? ' '}
 
