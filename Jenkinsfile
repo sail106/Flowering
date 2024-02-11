@@ -38,7 +38,7 @@ pipeline {
                             sh "docker compose -p test-server build ${entry.key.toLowerCase()}"
                         }
                     }
-                }
+                } 
             }
         }
         stage("Login") {
