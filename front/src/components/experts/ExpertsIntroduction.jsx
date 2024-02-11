@@ -45,9 +45,9 @@ const ExpertsIntroduction = () => {
           }
         };
 
-        const url = import.meta.env.VITE_APP_API_KEY;
+        const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-        const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/consultant/list', config);
+        const response = await axios.get(baseurl+'consultant/list', config);
 
         // 요청 성공 시 수행할 작업
         console.log('Response:', response.data);
@@ -75,10 +75,10 @@ const ExpertsIntroduction = () => {
 
   if (expertsData.length > 0) {
     console.log('succcc' + JSON.stringify(expertsData[1]))
-    console.log('succcc', JSON.stringify(expertsData[1].user_response));
-    console.log('succcc', JSON.stringify(expertsData[1].hash_tag_responses));
+    // console.log('succcc', JSON.stringify(expertsData[1].user_response));
+    // console.log('succcc', JSON.stringify(expertsData[1].hash_tag_responses));
 
-    if (expertsData[1].hash_tag_responses.length > 0) {
+    if (expertsData[1]?.hash_tag_responses.length??'' > 0) {
       console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
     }
 

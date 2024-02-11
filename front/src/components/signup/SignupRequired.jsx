@@ -47,8 +47,11 @@ const SignupRequired = () => {
     try {
       // 서버로 데이터 전송
       // post? 여기서 토큰도 함께 보내줘야할 것 같다.
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      
       const response = await axios.patch(
-        "http://i10c106.p.ssafy.io:8080/v1/users/update",
+        baseurl+"users/update",  
+        // "http://i10c106.p.ssafy.io:8080/v1/users/update",
         userData,
         config
       );

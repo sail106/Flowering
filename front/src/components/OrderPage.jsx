@@ -256,8 +256,9 @@ const Order = () => {
                         //     }
                         // };
                         console.log('emailll'+email)
+                        const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-                        const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/consultings/1', {
+                        const response = await axios.post(baseurl+'consultings/1', {
                             time: selectedDate + "T" + selectedTime,
                             title:  email+"님의 상담"
                             // 다른 필요한 데이터
