@@ -103,9 +103,10 @@ if (!getApps().length) {
 } else {
 	getApp();
 }
+
+// Firebase Storage 인스턴스 생성
 const storage = getStorage();
 
-// const storage = getStorage();
 const PhotoTest = () => {
 	const [imageUrl, setImageUrl] = useState(null);
 
