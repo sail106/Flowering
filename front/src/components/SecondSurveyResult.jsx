@@ -1,5 +1,8 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import SecondResultPage from "./SecondServeyResult/SecondResultPage";
+import SecondResultPage from "./SecondSurveyResult/SecondResultPage";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const DefaultPage = styled.div`
   display: flex;
@@ -21,12 +24,32 @@ const PageTitle = styled.div`
 `;
 
 const SecondServeyResult = () => {
+  const Token = useSelector((state) => state.auth.logonUser);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://i10c106.p.ssafy.io:8080/v1/analysis/find/1",
+      headers: {
+        Authorization: `Bearer ${Token.access_token}`,
+      },
+    })
+      .then((res) => {
+        setData(res.data.data_body);
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error(error);
+      });
+  }, [Token.access_token]);
+
   return (
     <DefaultPage>
       <PageLayout>
         <PageTitle>2차 카메라 테스트</PageTitle>
         <hr></hr>
-        <SecondResultPage />
+        {data && <SecondResultPage data={data} />}
       </PageLayout>
     </DefaultPage>
   );

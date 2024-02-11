@@ -87,7 +87,7 @@ const EditMyInfo = () => {
   );
   const navigate = useNavigate();
   const { routeid } = useParams();
-  const isAccessible = (Number(routeid) === User.id && isAuthenticated && User.role ==='USER')
+  const isAccessible = (Number(routeid) === User.id && isAuthenticated)
 
   useEffect(() => {
     if (!isAccessible) {
@@ -175,33 +175,7 @@ const EditMyInfo = () => {
   const alertMessage = () => {
     alert("비밀번호 형식을 다시 확인해주세요!");
   };
-  
-  const updateUserInfo = async () => {
-    const data = {
-      pwOne:pwOne,
-      nickname:nickname
-    };
-    const config = {
-      headers: {
-          'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
-          'Content-Type': 'application/json'
-          // 다른 필요한 헤더도 추가할 수 있습니다.
-      }
-    };
-    console.log(data)
-    try {
-      const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
-      console.log(response.data);
-      // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
-      // navigate('/success');
-    } catch (error) {
-      console.error("Failed to update user info:", error);
-      // 요청이 실패하면 사용자에게 오류 메시지를 보여줄 수 있습니다.
-      // alert('사용자 정보 업데이트에 실패했습니다.');
-    }
-  };
-  console.log('nick',nickname);
-  console.log('pw',pwOne);
+
   return (
     <>
       <MyPage>
@@ -246,7 +220,7 @@ const EditMyInfo = () => {
         </InfoContainer>
         {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne}/>}
         {(!checkPwOne || !checkPwTwo) && (
-          <Button onClick={alertMessage}>수정</Button>
+          <Button onClick={alertMessage}>수정하기</Button>
         )}
 
         <Withdrawal />

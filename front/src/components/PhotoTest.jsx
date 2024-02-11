@@ -87,56 +87,40 @@ const WebcamContainer = styled.div`
   padding-bottom: 27%;
 `;
 
-const FirebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_API_KEY,
-  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_APP_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_APP_ID,
-};
-
 if (!getApps().length) {
-  initializeApp(FirebaseConfig);
-} else {
-  getApp();
+  const firebaseConfig = {
+    apiKey: import.meta.env.VITE_APP_API_KEY,
+    authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_APP_PROJECT_ID,
+    storageBucket: "sail106.appspot.com",
+    messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_APP_ID,
+  };
+  initializeApp(firebaseConfig);
 }
+
+// Firebase Storage 인스턴스 생성
 const storage = getStorage();
 
-// const storage = getStorage();
 const PhotoTest = () => {
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        const url = await getDownloadURL(ref(storage, 'image'));
-        setImageUrl(url);
-        console.log(url)
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    loadImage();
-  }, []);
+  console.log(storage)
   const webcamRef = useRef(null);
-  // const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     const base64Image = imageSrc.split(';base64,').pop();
 
-    // 이미지를 Firebase Storage에 업로드
-    let imageRef = ref(storage, 'images/imageNam');
-    uploadString(imageRef, base64Image, 'base64', {contentType:'image/jpg'}).then((snapshot) => {
-      // 진행 상태를 보여주는 코드를 여기에 작성할 수 있습니다.
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        // console.log('File available at', downloadURL);
+    // Firebase Storage에 이미지 업로드
+    const imageRef = ref(storage, 'imagename');
+    uploadString(imageRef, base64Image, 'base64', { contentType: 'image/jpeg' })
+      .then((snapshot) => {
+        // 업로드 성공 시 실행할 코드
+        console.log('File uploaded successfully');
+      })
+      .catch((error) => {
+        // 업로드 실패 시 실행할 코드
+        console.error('Error uploading file:', error);
       });
-    }).catch((error) => {
-      console.log(error);
-    });
-
   }, [webcamRef, storage]);
   return (
     <BackPage>
@@ -213,7 +197,7 @@ const PhotoTest = () => {
 
       <Mybutton>결과 보기</Mybutton>
       <div>
-      {imageUrl && <img src={imageUrl} alt="From Firebase Storage" />}
+      {/* {imageUrl && <img src={imageUrl} alt="From Firebase Storage" />} */}
     </div>
     </BackPage>
   );
