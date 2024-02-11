@@ -87,7 +87,7 @@ const EditMyInfo = () => {
   );
   const navigate = useNavigate();
   const { routeid } = useParams();
-  const isAccessible = (Number(routeid) === User.id && isAuthenticated && User.role ==='USER')
+  const isAccessible = (Number(routeid) === User.id && isAuthenticated)
 
   useEffect(() => {
     if (!isAccessible) {

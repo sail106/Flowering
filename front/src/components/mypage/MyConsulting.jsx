@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
-
-
+import axios from "axios";
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import { Link } from "react-router-dom";
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
   vertical-align: middle;
@@ -108,7 +111,32 @@ const MyConsulting = () => {
     }
 
   }
+  
+  const [consultingData, setConsultingData] = useState([]); // 상태 초기화
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
 
+  const mydata = async () => {
+    
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
+      console.log(response.data);
+      console.log('성공');
+      setConsultingData(response.data.data_body); // 데이터를 상태에 저장
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+    }
+  };
+
+  useEffect(() => {
+    mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
+  }, []);
+  console.log(consultingData)
   return (
     <Consulting>
       <H2>마이 컨설팅</H2>
@@ -121,19 +149,26 @@ const MyConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((row, index) => (
+        {consultingData.map((row, index) => {
+          const date = new Date(row.time);
+          const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
+          const formattedTime = format(date, 'HH:mm');
+
+          return (
             <Tr key={index}>
-              <Td>{row.title}</Td>
+              <Td>뷰티 솔루션 컨설팅</Td>
               <Td>
-                <Calendar /> {row.date}
+                <Calendar /> {formattedDate}
                 {"  "}|{"  "}
-                <Clock /> {row.time}
+                <Clock /> {formattedTime}
               </Td>
               <ButtonTd>
                 <FinalButton>최종 결과 보고서</FinalButton>
               </ButtonTd>
               <ButtonTd>
+              <Link to={`/review/${row.consulting_id}`} reloadDocument>
                 <Button>리뷰 작성</Button>
+        </Link>
               </ButtonTd>
               <ButtonTd>
                 <Button>일정 변경</Button>
@@ -141,9 +176,9 @@ const MyConsulting = () => {
               <ButtonTd>
                 <Button onClick={() => btnclick(row.consulting_id)}>바로가기</Button>
               </ButtonTd>
-
             </Tr>
-          ))}
+          );
+        })}
         </Tbody>
       </Table>
     </Consulting>
