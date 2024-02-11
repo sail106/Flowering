@@ -7,6 +7,9 @@ import BIBI from "../../assets/BIBI.png"
 import camera from "../../assets/camera.png"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExpertById } from "../../store/ExpertsListSlice";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -201,29 +204,65 @@ const ExpertsProfileRegistration = () => {
   const User = useSelector(
     (state) => state.auth.logonUser
   );
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
 
   console.log('전문가등록' + User.id)
+
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+  const [Selectedid, setSelecteid] = useState(null);
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate();
 
-  // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
-  dispatch(fetchExpertById(selectedid)).then((response) => {
-    console.log('ExpertsProfile', response);
-    console.log(JSON.stringify(response, null, 2)); //잘받음
-    console.log(JSON.stringify(response.payload.user_response, null, 2));
-    setExpertData(response);
-    console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
-    // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
-    console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
-    console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
-    console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
-    console.log('expppp' + expertData?.payload.star ?? ' ')
-    console.log(expertData?.payload.simple_introduce ?? '')
+  const handleEnterButtonClick = async () => {
+    console.log('버튼클릭' + User.id)
 
 
-  }).catch((error) => {
-    console.log('error');
-  });
+    try {
+      console.log(baseurl)
+      console.log(accessToken)
+      // 서버에 인증 요청을 보냅니다.
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      };
+      // await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/join-code', {
+      const { data } = await axios.get(baseurl + 'consultant/myinfo' ,config);
+      console.log('d'+data)
+
+      // TODO: 응답에 따른 처리 로직 작성
+    } catch (error) {
+      console.log('e'+error)
+
+    }
+
+
+
+    // // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
+    // dispatch(fetchExpertById(Selectedid)).then((response) => {
+    //   console.log('ExpertsProfile', response);
+    //   console.log(JSON.stringify(response, null, 2)); //잘받음
+    //   console.log(JSON.stringify(response.payload.user_response, null, 2));
+    //   setExpertData(response);
+    //   console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
+    //   // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
+    //   console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
+    //   console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
+    //   console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
+    //   console.log('expppp' + expertData?.payload.star ?? ' ')
+    //   console.log(expertData?.payload.simple_introduce ?? '')
+
+
+    // }).catch((error) => {
+    //   console.log('error');
+    // });
+
+    navigate('/expertsprofileregistration')
+
+  };
+
+
 
   return (
     <>
@@ -271,7 +310,7 @@ const ExpertsProfileRegistration = () => {
 
         <br />
         <ButtonContainer>
-          <MyButton>저장하기</MyButton>
+          <MyButton onClick={handleEnterButtonClick}>저장하기</MyButton>
         </ButtonContainer>
       </MyPage>
     </>
