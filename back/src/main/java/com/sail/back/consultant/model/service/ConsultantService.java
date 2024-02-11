@@ -6,6 +6,7 @@ import com.sail.back.consultant.model.dto.request.ConsultantUpdateRequest;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
 import com.sail.back.consultant.model.dto.request.ConsultantSignupRequest;
+import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.consultant.model.repository.ConsultantRepository;
 import com.sail.back.consulting.model.dto.request.ConsultingmylistRequest;
@@ -114,5 +115,10 @@ public class ConsultantService {
         return Consultant.toConsultantDetailResponse(consultant);
     }
 
+    public ConsultantResponse getmyconsultantinfo(User user) {
+        Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+
+        return consultant.toResponse();
+    }
 }
 
