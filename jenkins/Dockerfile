@@ -27,3 +27,4 @@ RUN apt install sudo
 USER jenkins
 
 EXPOSE 8080
+ 
