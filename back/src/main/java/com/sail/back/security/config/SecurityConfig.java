@@ -50,8 +50,10 @@ public class SecurityConfig{
                         exceptionHandling
                                 .authenticationEntryPoint(authFailureHandler)
                 )
+
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// JwtFilter 추가
                 .addFilterBefore(exceptionHandlerFilter, JwtFilter.class) // ExceptionHandlerFilter 추가
+
                 .oauth2Login(customizer ->
                         customizer
                                 .failureHandler(authFailureHandler)

@@ -37,7 +37,7 @@ public class ConsultingController {
             @AuthenticationPrincipal User user,
             @RequestBody ConsultingCreateRequest reservationCreateRequest) {
 
-        log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
+//        log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
 
         UserRole userRole = user.getRole();
 //

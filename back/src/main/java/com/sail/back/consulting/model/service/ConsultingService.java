@@ -60,6 +60,11 @@ public class ConsultingService {
 
         Consultant consultant = consultantRepository.findById(consultantId)
                 .orElseThrow(() -> new NotFoundException(CONSULTANT_NOT_FOUND));
+        //자기가 자신과 상담잡는 경우 예외처리
+        if(user.getId()==consultant.getUser().getId())
+        {
+            throw new ConsultingException(ConsultingErrorCode.MYSELF);
+        }
 
         List<Consulting> consultings = consultingRepository.
                 findAllByConsultantAndTime(consultant, consultingCreateRequest.getTime()).orElseThrow(() ->
