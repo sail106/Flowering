@@ -50,8 +50,15 @@ public class ConsultantController {
 
     @GetMapping("/mylist")
     public ResponseEntity<MessageUtils<List<ConsultingmylistResponse>>> getMyConsultingList(@AuthenticationPrincipal User user, @RequestParam LocalDateTime localDateTime) {
-        List<ConsultingmylistResponse> consultingList = consultantService.getMyConsultingList(user.getId(), localDateTime);
+        List<ConsultingmylistResponse> consultingList = consultantService.getMyConsultingList(user, localDateTime);
         log.info("나의 컨설팅 목록 조회");
+        return ResponseEntity.ok().body(MessageUtils.success(consultingList));
+    }
+
+    @GetMapping("/myAlllist")
+    public ResponseEntity<MessageUtils<List<ConsultingmylistResponse>>> getAllMyConsultingList(@AuthenticationPrincipal User user) {
+        List<ConsultingmylistResponse> consultingList = consultantService.getAllMyConsultingList(user );
+        log.info("나의 모든 컨설팅 목록 조회");
         return ResponseEntity.ok().body(MessageUtils.success(consultingList));
     }
 

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -75,6 +77,21 @@ const ButtonDiv = styled.div`
 `
 
 const ExpertInfoNProfile = () => {
+
+  const navigate = useNavigate();
+
+  const User = useSelector(
+    (state) => state.auth.logonUser
+  );
+
+  const handleEnterButtonClick = ( ) => {
+    console.log('버튼클릭' +  User.id)
+    
+
+    navigate('/expertsprofileregistration')
+
+  };
+
   return (
     <ConsultingDiv>
       <ConsultingProfile>
@@ -85,7 +102,9 @@ const ExpertInfoNProfile = () => {
           <Half>당신만의 고유한 아름다움을 찾아드리겠습니다.</Half>
         </Body>
         <ButtonDiv>
-          <MyButton>수정하기</MyButton>
+        {/* onClick={() => handleEnterButtonClick("0")} */}
+
+          <MyButton onClick={handleEnterButtonClick}>수정하기</MyButton>
         </ButtonDiv>
       </ConsultingProfile>
       <ConsultingInfo>
