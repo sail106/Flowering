@@ -6,61 +6,54 @@ def component = [
 ]
 pipeline {
     agent any
-    environment{
+    environment {
+        // 환경변수 설정
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
         stage('Checkout') {
             steps {
-                checkout scm(
-                    branches: [[name: 'main']],
-                    extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
+                // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
                     userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/sail106/settings']]
-                )
+                ]
             }
         }
-        stage("Copy Env"){
+        stage("Copy Env") {
             steps{
                 script{
                     sh 'ls -al'
-                    //Git submodule 내부의 .env 파일을 현재 작업 디렉토리로 이동
+                    // .env 파일 복사
                     sh 'cp back/secure-settings/.env front/'
-                    sh 'ls frontend -al'
+                    sh 'ls front -al'
                 }
             }
         }
-        stage("Build"){
+        stage("Build") {
             steps {
                 script {
                     sh 'ls -al'
-                    component.each {
-                        entry -> if (entry.value){
-                            sh "docker compose -p test-server build ${entry.key.toLowerCase()}"
-                        }
-                    }
-                } 
-            }
-        }
-        stage("Login") {
-            steps{
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]){
-                    sh """
-                        set +x
-                        echo $DOCKER_USER_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
-                        set -x
-                    """
+                    // Docker Compose를 사용하여 서비스 빌드
+                    sh "docker-compose -f back/docker-compose.yml build"
                 }
             }
         }
-        stage("Tag and Push"){
+        stage("Docker Login") {
+            steps {
+                // Docker Hub 크리덴셜을 사용하여 Docker에 로그인
+                withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin'
+                }
+            }
+        }
+        stage("Tag and Push") {
             steps {
                 script {
-                    component.each{entry->if(entry.value){
-                        def var = entry.key
-                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]){
-                            sh "docker push ${DOCKER_USER_ID}/toritest-${var.toLowerCase()}"
-                        }
-                    }}
+                    // Docker 이미지 태그 및 푸시
+                    sh "docker-compose -f back/docker-compose.yml push"
                 }
             }
         }
