@@ -67,7 +67,17 @@ pipeline {
                     // 현재 디렉토리 위치 출력
                     sh 'pwd'
                     sh 'ls -al'
-                    sh 'echo $PATH'
+                    // docker-compose가 설치되어 있는지 확인하고, 없으면 설치
+                    sh '''
+                    if ! command -v docker-compose &> /dev/null
+                    then
+                        echo "docker-compose not found, installing..."
+                        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                        sudo chmod +x /usr/local/bin/docker-compose
+                    else
+                        echo "docker-compose is already installed."
+                    fi
+                    '''
                     // Docker Compose를 사용하여 서비스 빌드
                     sh "docker-compose -f back/docker-compose.yml build"
                 }
