@@ -8,6 +8,15 @@ pipeline {
     agent any
     environment {
         // 환경변수 설정
+                // Docker 이미지 태그 설정
+        NGINX_TAG = "latest"
+        FRONT_TAG = "v1.0"
+        BACK_TAG = "v2.1"
+        REDIS_TAG = "alpine"
+        
+        // Docker Hub 및 GitHub 크리덴셜 ID
+        DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
+        GITHUB_CREDENTIALS_ID = "Github-access-token"
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
