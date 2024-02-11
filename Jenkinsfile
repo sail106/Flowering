@@ -25,10 +25,27 @@ pipeline {
                 // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
                 checkout scm: [
                     $class: 'GitSCM',
-                    branches: [[name: '*/main']],
+                    branches: [[name: '*/develop']],
                     extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
                     userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/sail106/settings']]
                 ]
+            }
+        }
+        stage('Setup Environment') {
+            steps {
+                dir("${env.WORKSPACE}/backend"){
+                    script {
+                        sh "ls . -al"
+                        sh "chmod +x ./gradlew"
+                        def version_value = sh(returnStdout: true, script: "./gradlew properties -q | grep 'version:'").trim()
+                        version = version_value.split(/:/)[1].trim()
+                        env.TAG = version
+                        //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
+                        //docker에 동적으로 tag를 지정하기 위해 사용했다.
+                        sh "echo TAG=$version >> .env"
+                        sh "cat .env"
+                    }
+                }
             }
         }
         stage("Copy Env") {
@@ -36,11 +53,10 @@ pipeline {
                 script{
                     // 현재 디렉토리 위치 출력
                     sh 'pwd'
-
                     sh 'ls -al'
                     // .env 파일 복사
-                    // sh 'cp back/secure-settings/.env front/'
-                    sh 'cp .env front/'
+                    sh 'cp back/secure-settings/.env front/'
+                    // sh 'cp .env front/'
                     sh 'ls front -al'
                 }
             }
