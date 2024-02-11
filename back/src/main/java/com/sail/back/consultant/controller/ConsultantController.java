@@ -3,6 +3,7 @@ package com.sail.back.consultant.controller;
 import com.sail.back.consultant.model.dto.request.ConsultantUpdateRequest;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
+import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.consultant.model.service.ConsultantService;
 import com.sail.back.consulting.model.dto.request.ConsultingmylistRequest;
@@ -41,6 +42,17 @@ public class ConsultantController {
 
     }
 
+
+    @GetMapping("/myinfo")
+    public ResponseEntity<MessageUtils<ConsultantResponse>> getmyconsultantinfo(@AuthenticationPrincipal User user) {
+        ConsultantResponse consultant = consultantService.getmyconsultantinfo(user);
+
+        log.info("내 컨설턴트 정보 조회 성공");
+
+        return ResponseEntity.ok().body(MessageUtils.success(consultant));
+
+    }
+
     @GetMapping("/detail/{consultantid}")
     public ResponseEntity<MessageUtils<ConsultantDetailResponse>> getConsultant(@PathVariable Long consultantid) {
         ConsultantDetailResponse consultant = consultantService.getConsultant(consultantid);
@@ -57,7 +69,7 @@ public class ConsultantController {
 
     @GetMapping("/myAlllist")
     public ResponseEntity<MessageUtils<List<ConsultingmylistResponse>>> getAllMyConsultingList(@AuthenticationPrincipal User user) {
-        List<ConsultingmylistResponse> consultingList = consultantService.getAllMyConsultingList(user );
+        List<ConsultingmylistResponse> consultingList = consultantService.getAllMyConsultingList(user);
         log.info("나의 모든 컨설팅 목록 조회");
         return ResponseEntity.ok().body(MessageUtils.success(consultingList));
     }

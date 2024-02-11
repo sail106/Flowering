@@ -6,6 +6,7 @@ import { GoPlus } from "react-icons/go";
 import BIBI from "../../assets/BIBI.png"
 import camera from "../../assets/camera.png"
 import { useDispatch, useSelector } from "react-redux";
+import { fetchExpertById } from "../../store/ExpertsListSlice";
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -203,7 +204,7 @@ const ExpertsProfileRegistration = () => {
 
   console.log('전문가등록' + User.id)
   const dispatch = useDispatch();
-
+  
 
   // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
   dispatch(fetchExpertById(selectedid)).then((response) => {

@@ -47,6 +47,7 @@ public class UserController {
         return ResponseEntity.ok().body(MessageUtils.success(userService.myconsultinglist(user.getId(), localDateTime)));
     }
 
+
     @GetMapping("/myallconsultinglist")
     public ResponseEntity<MessageUtils<List<MyConsultinglistResponse>>> myallconsultinglist(@AuthenticationPrincipal User user) {
        log.info("alllll"+user.getId());
