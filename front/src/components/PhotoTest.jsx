@@ -5,8 +5,12 @@ import InfoBox from "./consultingresult/InfoBox";
 import { ButtonBox } from "./common/Button";
 import Webcam from "react-webcam";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { initializeApp, getApps, getApp  } from "firebase/app";
-import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
 // import FirebaseConfig from "./common/FirebaseConfig";
 
 const BackPage = styled(Page)`
@@ -87,39 +91,25 @@ const WebcamContainer = styled.div`
   padding-bottom: 27%;
 `;
 
-if (!getApps().length) {
-  const firebaseConfig = {
-    apiKey: import.meta.env.VITE_APP_API_KEY,
-    authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_APP_PROJECT_ID,
-    storageBucket: "sail106.appspot.com",
-    messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_APP_APP_ID,
-  };
-  initializeApp(firebaseConfig);
-}
-
 // Firebase Storage 인스턴스 생성
-const storage = getStorage();
-
 const PhotoTest = () => {
-  console.log(storage)
+	const storage = getStorage();
   const webcamRef = useRef(null);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    const base64Image = imageSrc.split(';base64,').pop();
+    const base64Image = imageSrc.split(";base64,").pop();
 
     // Firebase Storage에 이미지 업로드
-    const imageRef = ref(storage, 'imagename');
-    uploadString(imageRef, base64Image, 'base64', { contentType: 'image/jpeg' })
+    const imageRef = ref(storage, "imagename");
+    uploadString(imageRef, base64Image, "base64", { contentType: "image/jpeg" })
       .then((snapshot) => {
         // 업로드 성공 시 실행할 코드
-        console.log('File uploaded successfully');
+        console.log("File uploaded successfully");
       })
       .catch((error) => {
         // 업로드 실패 시 실행할 코드
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       });
   }, [webcamRef, storage]);
   return (
@@ -187,18 +177,16 @@ const PhotoTest = () => {
       <Header4>원 안에 얼굴을 잘 맞춰주세요</Header4>
 
       <WebcamContainer>
-        <WebcamStyled ref={webcamRef}
-        screenshotFormat="image/jpeg"
-         />
+        <WebcamStyled ref={webcamRef} screenshotFormat="image/jpeg" />
 
-         <Overlay />
+        <Overlay />
       </WebcamContainer>
       <Mybutton onClick={capture}>촬영하기</Mybutton>
 
       <Mybutton>결과 보기</Mybutton>
       <div>
-      {/* {imageUrl && <img src={imageUrl} alt="From Firebase Storage" />} */}
-    </div>
+        {/* {imageUrl && <img src={imageUrl} alt="From Firebase Storage" />} */}
+      </div>
     </BackPage>
   );
 };

@@ -5,7 +5,6 @@ import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
 import BIBI from "../assets/BIBI.png";
 import camera from "../assets/camera.png";
-import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getStorage,
   ref,
@@ -64,11 +63,6 @@ const Mylabel = styled.label`
 const Margin = styled.div`
   height: 35%;
 `;
-if (!getApps().length) {
-  initializeApp(FirebaseConfig);
-} else {
-  getApp();
-}
 
 const Button = styled(ButtonBox)`
   border-radius: 100px;
@@ -77,8 +71,6 @@ const Button = styled(ButtonBox)`
   background-color: "#B1B1B1";
   border-color: "#B1B1B1";
 `;
-
-const storage = getStorage();
 
 const EditMyInfo = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -102,13 +94,13 @@ const EditMyInfo = () => {
 
   const fileInput = useRef(null);
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(file.name);
-    await fileRef.put(file);
-    console.log(`${file.name} has been uploaded.`);
-  };
+  // const handleFileUpload = async (event) => {
+  //   const file = event.target.files[0];
+  //   const storageRef = firebase.storage().ref();
+  //   const fileRef = storageRef.child(file.name);
+  //   await fileRef.put(file);
+  //   console.log(`${file.name} has been uploaded.`);
+  // };
 
   const [checkEn, setCheckEn] = useState(false);
   const [checkNum, setCheckNum] = useState(false);

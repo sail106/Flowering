@@ -8,7 +8,7 @@ import store, { persistor } from "../src/store/index.js"; // Import Redux store 
 import App from "./App.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {" "}
@@ -18,5 +18,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </BrowserRouter>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+
 );
