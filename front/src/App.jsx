@@ -86,7 +86,7 @@ function App() {
 					<Route path='/expertconsulting' element={<ExpertConsulting />} />
 					<Route path='/communityHome' element={<CommunityPage />} />
 					<Route path='/expertsReservation' element={<ExpertsReservation />} />
-					<Route path='/review' element={<Review />} />
+					<Route path='/review/:routeid' element={<Review />} />
 
 					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
 					<Route path='/manager' element={<Manager />} />

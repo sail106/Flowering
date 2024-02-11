@@ -3,7 +3,11 @@ import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import { ButtonBox } from "../common/Button";
-import LEINA from "../../assets/LEINA.png"
+import LEINA from "../../assets/LEINA.png";
+import { useState } from "react";
+import axios from "axios";
+import { useParams, useNavigate   } from 'react-router-dom';
+import { useSelector } from "react-redux";
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#F28482",
@@ -83,6 +87,32 @@ const ReviewInput = styled.textarea`
 `;
 
 const Review = () => {
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const { routeid } = useParams();
+  const navigate = useNavigate();
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+  const submitReview = async () => {
+    const data = {
+      "content":review,
+      "star":rating,
+      "consultantid":routeid
+    };
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    console.log(review,rating,routeid)
+    try {
+      const response = await axios.post("http://i10c106.p.ssafy.io:8080/v1/review/create",data,config);
+      navigate('/'); 
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+    }
+  };
   return (
     <Cal>
       <Margin2 />
@@ -102,14 +132,21 @@ const Review = () => {
           // defaultValue={rate}
           style={{ fontSize: "4rem" }}
           precision={0.5}
-          readOnly
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
         />
         <span></span>
       </Stack>
       <Text>이용해보니 어떠셨나요?</Text>
-      <ReviewInput placeholder="이용 후기를 남겨주세요." />
+      <ReviewInput
+        placeholder="이용 후기를 남겨주세요."
+        value={review}
+        onChange={(event) => setReview(event.target.value)}
+      />
 
-      <MyButton>작성완료</MyButton>
+      <MyButton onClick={submitReview}>작성완료</MyButton>
     </Cal>
   );
 };
