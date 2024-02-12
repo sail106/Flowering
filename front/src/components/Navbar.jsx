@@ -148,7 +148,7 @@ const Navbar = () => {
         <Link to={"/beautyconsulting"} reloadDocument>
           Consulting
         </Link>
-        <Link to={"/"} reloadDocument>
+        <Link to={"/communityHome"} reloadDocument>
           Community
         </Link>
         <Link to={"#"} reloadDocument>

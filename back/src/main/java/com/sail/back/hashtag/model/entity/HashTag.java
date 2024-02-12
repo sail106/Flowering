@@ -14,12 +14,12 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @AllArgsConstructor
-
+@ToString
 public class HashTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long HahstagId;
+    private Long HashtagId;
 
 
     @ManyToOne

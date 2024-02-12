@@ -11,7 +11,7 @@ import MyPage from './components/MyPage';
 import Navbar from './components/Navbar';
 import GlobalStyles from '../GlobalStyles';
 import MainPage from './components/MainPage';
-import ConsultReservation from './components/ConsultReservation';
+import CommunityReservation from './components/community/CommunityReservation';
 import FaQ from './components/FaQ';
 import Footer from './components/Footer';
 import EditMyInfo from './components/EidtMyInfo';
@@ -83,7 +83,7 @@ function App() {
 					<Route path='/signup' element={<SignupForm />} />
 					<Route path='/signupPw' element={<SignupPw />} />
 					<Route path='/signupRequired' element={<SignupRequired />} />
-					<Route path='/consulting' element={<ConsultReservation />} />
+					<Route path='/communityReservation' element={<CommunityReservation />} />
 					<Route path='/orderpage' element={<Orderpage />} />
 					<Route path='/orderResult' element={<OrderResult />} />
 					<Route path='/mypage/:routeid' element={<MyPage />} />
