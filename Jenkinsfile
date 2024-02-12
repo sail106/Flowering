@@ -136,18 +136,18 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         script {
-    //             def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-    //             def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-    //             mattermostSend (color: 'good',
-    //                     message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
-    //                     endpoint: 'https://meeting.ssafy.com/hooks/',
-    //                     channel: 'C106-Jenkins'
-    //             )
-    //         }
-    //     }
-    // }
+    post {
+        always {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'good',
+                        message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
+                        endpoint: 'https://meeting.ssafy.com/hooks/xnzz7hmewpb4jqugb8eu51refy',
+                        channel: 'C106-Jenkins'
+                )
+            }
+        }
+    }
     
 }
