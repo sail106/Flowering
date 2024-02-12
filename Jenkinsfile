@@ -52,7 +52,7 @@ pipeline {
                         sh "echo TAG=$version > .env"
                         
                         // 'secure-settings' 디렉토리에서 REDIS_PASSWORD 값을 읽어와 현재 '.env' 파일에 추가
-                        sh "grep 'REDIS_PASSWORD' ../secure-settings/.env >> .env"
+                        sh "grep 'REDIS_PASSWORD' /secure-settings/.env >> .env"
                         
                         // 최종 '.env' 파일 내용 확인
                         sh "cat .env"
