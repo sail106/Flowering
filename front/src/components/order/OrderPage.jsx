@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from "styled-components";
-import { ButtonBox } from "./common/Button";
-import { useNavigate } from 'react-router-dom';
+ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@mui/joy/Avatar';
 import FormLabel from '@mui/joy/FormLabel';
@@ -10,6 +9,7 @@ import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { useSelector } from "react-redux"; // useSelector import 추가
+import { ButtonBox } from '../common/Button';
 
 
 
