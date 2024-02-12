@@ -34,15 +34,19 @@ pipeline {
         }
         stage('Checkout GitLab Code') {
             steps {
-                // GitLab 크리덴셜을 사용하여 메인 프로젝트 코드 체크아웃
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/develop']],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
+                    extensions: [
+                        [
+                            $class: 'PreBuildMerge',
+                            options: [fastForwardMode: 'FF', mergeRemote: 'origin', mergeStrategy: 'DEFAULT', mergeTarget: 'develop']
+                        ]
+                    ],
                     userRemoteConfigs: [[
-                        credentialsId: GITLAB_CREDENTIALS_ID,
-                        url: "https://gitlab.com/${REPO}.git"
+                        credentialsId: 'GitLab-Access-Token', // 크리덴셜 ID를 정확하게 지정
+                        url: "https://gitlab.com/s10-webmobile1-sub2/S10P12C106.git"
                     ]]
                 ])
             }
