@@ -41,7 +41,8 @@ services:
     networks:
       - jenkins-network
     environment:
-      - "USE_PROFILE=prod"
+      - USE_PROFILE=prod
+      - SPRING_PROFILES_ACTIVE=prod
 
   redis:
     container_name: redis
