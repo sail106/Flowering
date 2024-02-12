@@ -310,7 +310,7 @@ const OneToOneVideoChat = () => {
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))
-      console.log('customer ' +JSON.stringify( subscriber.stream))
+      console.log('customer ' +  subscriber.stream)
 
     }
 
