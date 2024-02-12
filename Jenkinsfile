@@ -17,7 +17,7 @@ pipeline {
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
-        GITLAB_CREDENTIALS_ID = "GitLab-access-token" // GitLab 크리덴셜 ID 추가
+        GITLAB_CREDENTIALS_ID = "SCMFORGITLAB" // GitLab 크리덴셜 ID 추가
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
@@ -45,7 +45,7 @@ pipeline {
                         ]
                     ],
                     userRemoteConfigs: [[
-                        credentialsId: 'GitLab-access-token', // 크리덴셜 ID를 정확하게 지정
+                        credentialsId: 'SCMFORGITLAB', // 크리덴셜 ID를 정확하게 지정
                         url: "https://gitlab.com/s10-webmobile1-sub2/S10P12C106.git"
                     ]]
                 ])
