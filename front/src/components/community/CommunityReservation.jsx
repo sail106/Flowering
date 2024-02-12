@@ -1,9 +1,13 @@
-import Title from "./Title";
+import Title from "../modify/Title";
 import MyCalendar from "../common/MyCalendar";
 import RadioButton from "../common/RadioButton";
-import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import Input from "../common/Input";
+
+import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -29,7 +33,7 @@ const Margin = styled.div`
   margin: -20px;
 `;
 
-const AddImageButton = styled.button`
+const AddImageButton = styled.label`
   border: 1px solid #f5f5f5;
   border-radius: 30px;
   background-color: white;
@@ -53,13 +57,48 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-const CommunityModify = () => {
+const CommunityReservation = () => {
   const firstTimes = [
     "10:00", "11:00", "12:00", "13:00",
   ];
   const secondTimes = [
     "15:00", "16:00", "17:00", "18:00"
   ];
+
+  const selectedDate = useSelector(state => state.selected.selectedDate);
+  const selectedTime = useSelector(state => state.selected.selectedTime);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
+  
+  const handleTitleChange = (newTitle) => {
+    setTitle(newTitle);
+  }
+
+  const handleContentChange = (newContent) => {
+    setContent(newContent);
+  }
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+    console.log("selectedImage : ", selectedImage)
+  }
+
+  const reservationHandler = async () => {
+    const body = {
+      title: title,
+      content: content,
+      thumbnail_img_url: image,
+      open_day: selectedDate.slice(5,),
+      time: selectedTime.slice(0,5),
+    }
+    const response = await axios.post('http://i10c106.p.ssafy.io:8080//v1/community/add', body)
+    console.log(response);
+  }
+
+  console.log("image : ", image);
+
 
   return (
     <Cal>
@@ -99,18 +138,31 @@ const CommunityModify = () => {
 
       <Center>
         <H3>주제</H3>
-        <Input placeholder="주제를 입력하세요" />
+        <Input
+          placeholder="주제를 입력하세요"
+          onInputChange={handleTitleChange}
+        />
         <H3>설명</H3>
-        <Input placeholder="설명을 입력하세요" />
+        <Input
+          placeholder="설명을 입력하세요"
+          onInputChange={handleContentChange}
+        />
         <H3>썸네일 이미지</H3>
-        <AddImageButton>+ 사진 추가</AddImageButton>
+        <AddImageButton>
+          + 사진 추가
+          <Input
+            type="file"
+            display="none"
+            onChange={handleImageChange}
+          />
+        </AddImageButton>
+        {image && <img src={image} alt="사진 미리보기"/>}
       </Center>
       <ButtonContainer>
-        <MyButton>예약취소</MyButton>
-        <MyButton>수정완료</MyButton>
+        <MyButton onClick={reservationHandler}>예약하기</MyButton>
       </ButtonContainer>
     </Cal>
   );
 };
 
-export default CommunityModify;
+export default CommunityReservation;

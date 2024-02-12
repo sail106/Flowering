@@ -38,8 +38,6 @@ const selectedSlice = createSlice({
     },
 
     setSelectedDate: (state, { payload }) => {
-      console.log('date' + state.selectedDate)
-
       state.selectedDate = payload
     },
   },
