@@ -93,15 +93,8 @@ pipeline {
         }
         stage("Tag and Push") {
             steps {
-                script {
-                    component.each{ entry ->
-                        if(entry.value&&entry.key!="redis"){
-                            def var = entry.key
-                            withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
-                                sh "docker push ${DOCKER_USER_ID}/s10c106-${var.toLowerCase()}:${env.TAG}"
-                            }
-                        }
-                    }
+                withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh "docker-compose -f back/docker-compose.yml push"
                 }
             }
         }
