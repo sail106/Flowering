@@ -33,7 +33,6 @@ services:
     container_name: back
     image: toritest-back:${TAG}
     build:
-      context: back
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
