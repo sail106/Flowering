@@ -54,6 +54,13 @@ const ButtonContainer = styled.div`
 `;
 
 const CommunityModify = () => {
+  const firstTimes = [
+    "10:00", "11:00", "12:00", "13:00",
+  ];
+  const secondTimes = [
+    "15:00", "16:00", "17:00", "18:00"
+  ];
+
   return (
     <Cal>
       <Title text={"Reservation"} />
@@ -61,24 +68,33 @@ const CommunityModify = () => {
       <MyCalendar />
      
       <M1>
+        {firstTimes.map((value) => (
         <RadioButton
+          key={value}
           type="radio"
           id="myradio"
-          value="10:00"
+          value={value}
           width="200px"
           height="100px"
           htmlFor="myradio"
-        ></RadioButton>
-        <RadioButton value="11:00"></RadioButton>
-        <RadioButton value="12:00"></RadioButton>
-        <RadioButton value="13:00"></RadioButton>
+          margin-right="10px"
+        />
+        ))}
       </M1>
 
       <M1>
-        <RadioButton value="15:00"></RadioButton>
-        <RadioButton value="16:00"></RadioButton>
-        <RadioButton value="17:00"></RadioButton>
-        <RadioButton value="18:00"></RadioButton>
+        {secondTimes.map((value) => (
+        <RadioButton
+          key={value}
+          type="radio"
+          id="myradio"
+          value={value}
+          width="200px"
+          height="100px"
+          htmlFor="myradio"
+          margin-right="10px"
+        />
+        ))}
       </M1>
 
       <Center>

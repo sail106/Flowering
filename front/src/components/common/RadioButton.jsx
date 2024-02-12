@@ -9,6 +9,7 @@ const StyledLabel = styled.label`
   height: 40px;
   border-radius: 20px;
   border: 1px solid black;
+  margin-right: ${props => props['margin-right'] || '0px'};
   text-align: center;
   line-height: 40px;
   &:hover {
@@ -48,7 +49,7 @@ const RadioButton = (props) => {
         checked={isChecked}
         name={props.name}
       />
-      <StyledLabel htmlFor={props.htmlFor}>{props.value}</StyledLabel>
+      <StyledLabel htmlFor={props.htmlFor} margin-right={props['margin-right']} >{props.value}</StyledLabel>
     </>
   );
 };
