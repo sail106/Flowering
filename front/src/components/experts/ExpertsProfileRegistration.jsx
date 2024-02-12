@@ -89,6 +89,7 @@ const H33 = styled.h3`
   text-align: start;
   position: absolute;
   left: 362px;
+
   top: 753px;
 `;
 
@@ -200,11 +201,28 @@ const ReviewInput = styled.textarea`
     color: #b7b5b5;
   }
 `;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px; /* 이 부분을 추가하여 간격을 조정합니다. */
+
+`;
+
+const TagInput = styled.input`
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
 const ExpertsProfileRegistration = () => {
   const User = useSelector(
     (state) => state.auth.logonUser
   );
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
+
+  const [shortIntroduction, setShortIntroduction] = useState(""); // 한줄 소개
+  const [detailedIntroduction, setDetailedIntroduction] = useState(""); // 자세한 소개
 
   console.log('전문가등록' + User.id)
 
@@ -213,9 +231,11 @@ const ExpertsProfileRegistration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
+  const [tags, setTags] = useState([]);
 
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const config = {
@@ -225,7 +245,19 @@ const ExpertsProfileRegistration = () => {
           },
         };
         const { data } = await axios.get(baseurl + 'consultant/myinfo', config);
+        console.log(data.data_body)
+        console.log(data.data_body.simple_introduce)
+        console.log(data.data_body.hash_tags)
         setSelecteid(data.data_body.consultant_id);
+        setShortIntroduction(data.data_body.simple_introduce)
+        setDetailedIntroduction(data.data_body.self_introduce)
+
+        // setTags(data.data_body.hash_tags.workplace);
+        // setTags(data.data_body.hash_tags.map(tag => tag.workplace));
+        setTags(data.data_body.hash_tags.map(tag => ({ id: tag.hashtagId, workplace: tag.workplace })));
+
+        // hahstagId
+
       } catch (error) {
         console.error(error);
       }
@@ -234,6 +266,31 @@ const ExpertsProfileRegistration = () => {
     fetchData();
   }, [accessToken, baseurl]);
 
+
+  // useEffect(() => {
+  //   // 서버에서 기존 해시태그 목록을 가져와서 설정합니다.
+  //   const fetchTags = async () => {
+  //     try {
+  //       const config = {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       };
+  //       const { data } = await axios.get(baseurl + 'hashtags', config);
+  //       // 서버에서 가져온 해시태그 목록을 설정합니다.
+
+  //       setTags(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchTags();
+  // }, [accessToken, baseurl]);
+
+
+
   useEffect(() => {
     if (Selectedid) {
       dispatch(fetchExpertById(Selectedid))
@@ -241,41 +298,174 @@ const ExpertsProfileRegistration = () => {
           setExpertData(response);
           console.log(response);
           console.log(response.payload.user_response.nickname);
+          console.log(Selectedid);
         })
         .catch((error) => {
           console.error(error);
         });
     }
   }, [Selectedid, dispatch]);
+  const { access_token } = useSelector(state => state.auth.logonUser);
 
-  const handleEnterButtonClick = () => {
-    navigate('/expertsprofileregistration');
+  const handleEnterButtonClick = async () => {
+
+    try {
+      const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+      console.log('tooo   ' + token)
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      console.log(tags)
+      const body = {
+        self_introduce: detailedIntroduction,
+        simple_introduce: shortIntroduction,
+      };
+
+      const response = await axios.put(baseurl + 'consultant/update', body, config);
+
+      // 요청 성공 시 수행할 작업
+      console.log('Response:', response.data);
+      console.log(shortIntroduction)
+      console.log(detailedIntroduction)
+      alert('저장완료')
+    }
+    catch (error) {
+      console.error('Error :', error);
+      // alert('결제 실패');
+    }
+
+
+
+
+
+
+    try {
+      const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+      console.log('tooo   ' + token)
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      console.log(tags)
+
+      for (const tag of tags) {
+        const body = {
+          workplace: tag.workplace
+        };
+
+        const response = await axios.post(baseurl + 'hashtags/create', body, config);
+
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+      }
+
+      alert('해시태그저장완료')
+    }
+    catch (error) {
+      console.error('Error :', error);
+      // alert('결제 실패');
+    }
+
+ 
+    // navigate(`/expertmypage/${User.id}`);
+  };
+
+  const handleTagInputChange = (e) => {
+    if (e.key === 'Enter' && e.target.value.trim() !== '' && tags.length < 2) {
+      const newTag = {
+        // hashtagId: tags.length + 1, // 태그의 ID를 현재 태그 배열의 길이에 1을 더한 값으로 설정합니다.
+        workplace: e.target.value.trim()
+      };
+      setTags([...tags, newTag]);
+      e.target.value = '';
+    }
   };
 
 
+  const handleRemoveTag = async (tag) => {
+    console.log(tag)
+    const updatedTags = tags.filter((tag) => tag.hashtagId !== tag.id);
+    setTags(updatedTags);
+  
+    try {
+      const token = access_token;
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      const response = await axios.delete(baseurl + `hashtags/${tag.id}`, config);
+      console.log('Response:', response.data);
+      alert('삭제완료');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
     <>
       <MyPage>
-        <MyImg src={expertData?.payload?.user_response?.profile_img_url??''} alt="프로필 사진" />
+        <MyImg src={expertData?.payload?.user_response?.profile_img_url ?? ''} alt="프로필 사진" />
         <CameraImg src={camera} alt="프로필 사진" />
         <Container>전문가 소개</Container>
         <PP>
           <Regist>
             <h3>전문가 닉네임</h3>
-            <Nic>{expertData?.payload?.user_response?.nickname??''}   </Nic>
+            <Nic>{expertData?.payload?.user_response?.nickname ?? ''}   </Nic>
           </Regist>
 
           <H3>한줄 소개</H3>
           <Put>
-            <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
+            <Input
+              width={"587px"}
+              placeholder="한줄 소개를 입력하세요"
+              value={shortIntroduction}
+              onChange={(e) => setShortIntroduction(e.target.value)}
+            />
           </Put>
           <H32>자세한 소개</H32>
-          <ReviewInput placeholder=" 자세한 소개를 입력하세요" />
+          <ReviewInput
+            placeholder="자세한 소개를 입력하세요"
+            value={detailedIntroduction}
+            onChange={(e) => setDetailedIntroduction(e.target.value)}
+          />
+
           <H33>전문 분야</H33>
-          <Put>
+
+
+          {/* <Put>
+            
             <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
-          </Put>
+          </Put> */}
         </PP>
+
+        <InputContainer>
+          {tags.map((tag, index) => (
+            <div key={tag.hashtagId}>
+              <span>{tag.workplace}</span>
+              <button onClick={() => handleRemoveTag(tag)}>Remove</button>
+            </div>
+          ))}
+          <TagInput
+            type="text"
+            placeholder="hashtag를 입력하세요"
+            onKeyDown={handleTagInputChange}
+          />
+        </InputContainer>
+
         <Container>경력 사항</Container>
 
         <Margin />

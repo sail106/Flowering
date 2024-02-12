@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.hashtag.model.entity.HashTag;
 import com.sail.back.review.model.dto.response.ReviewResponse;
 import com.sail.back.review.model.entity.Review;
 import com.sail.back.user.model.dto.response.UserResponse;
@@ -11,6 +12,7 @@ import com.sail.back.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -31,6 +33,8 @@ public class ConsultantResponse {
     private UserResponse userResponse;
     private double star;
     private int reviewnum;
+    private List<HashTag> hashTags = new ArrayList<>();
+
 
     public Consultant toEntity() {
         return Consultant
@@ -40,7 +44,7 @@ public class ConsultantResponse {
                 .simple_introduce(this.simpleIntroduce)
                 .self_introduce(this.selfIntroduce)
                 .starAverage(this.star)
-
+                .hashTags(this.hashTags)
                 .build();
     }
 }

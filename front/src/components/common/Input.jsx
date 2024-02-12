@@ -14,6 +14,7 @@ const InputBox = styled.input`
 `;
 
 const Input = (props) => {
+  console.log(JSON.stringify(props))
   return (
     <div>
       <InputBox
@@ -25,7 +26,7 @@ const Input = (props) => {
         onChange={props.onChange}
         required={props.required}
         disabled={props.disabled}
-        // value={props.value}
+        value={props.value}
       />
     </div>
   )

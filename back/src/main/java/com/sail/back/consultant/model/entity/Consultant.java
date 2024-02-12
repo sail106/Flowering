@@ -147,6 +147,7 @@ public class Consultant {
                 .simpleIntroduce(this.simple_introduce)
                 .star(this.getStarAverage())
                 .reviewnum(this.getReviewnum())
+                .hashTags(this.getHashTags())
                 .build();
     }
 
