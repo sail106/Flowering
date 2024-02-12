@@ -13,7 +13,7 @@ pipeline {
         FRONT_TAG = "v1.0"
         BACK_TAG = "v2.1"
         REDIS_TAG = "alpine"
-        
+        DOCKER_USER_ID = 'rlagudals0420'
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
@@ -87,7 +87,6 @@ pipeline {
             steps {
                 // Docker Hub 크리덴셜을 사용하여 Docker에 로그인
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    def DOCKER_USER_ID = 'rlagudals0420'
                     sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin'
                 }
             }
