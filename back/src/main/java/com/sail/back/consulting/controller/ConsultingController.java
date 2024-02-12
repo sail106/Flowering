@@ -65,6 +65,30 @@ public class ConsultingController {
 
     }
 
+
+    @PutMapping("/activate/{consultingId}")
+    public ResponseEntity<MessageUtils> activateReservation(@AuthenticationPrincipal User user,
+                                                          @PathVariable Long consultingId) {
+
+        MessageUtils message = consultingService.activateReservation(user, consultingId);
+        log.info("예약 활성화 성공");
+        return ResponseEntity.ok()
+                .body(message);
+    }
+
+    @PutMapping("/deactivate/{consultingId}")
+    public ResponseEntity<MessageUtils> deactivateReservation(@AuthenticationPrincipal User user,
+                                                            @PathVariable Long consultingId) {
+
+        MessageUtils message = consultingService.deactivateReservation(user, consultingId);
+        log.info("예약 비활성화 성공");
+        return ResponseEntity.ok()
+                .body(message);
+    }
+
+
+
+
     @GetMapping("/{consultingId}")
     public ResponseEntity<MessageUtils<ConsultingResponse>> getReservation(
             @PathVariable Long consultingId) {

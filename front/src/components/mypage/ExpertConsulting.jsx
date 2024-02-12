@@ -3,11 +3,12 @@ import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
-import { getCustomer, setConsultantSessionName, setconsultid } from "../../store/consultSlice";
+import { getCustomer, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
-import { appendParticipantList, setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
+import { appendParticipantList, setconsultantSessionName } from "../../store/consultsessionnameSlice";
 import Axios from "../../api/Axios";
+import axios from "axios";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -90,14 +91,14 @@ const ExpertConsulting = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
   const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
+  const { access_token } = useSelector(state => state.auth.logonUser);
 
-  const buttonclick = (consultingid) => {
+  const buttonclick = async (consultingid) => {
     console.log('click' + consultingid)
     dispatch(setRole('CONSULTANT'))
     dispatch(setname('CONSULTANT'))
-    dispatch(setConsultantSessionName2(consultingid))
+    dispatch(setconsultantSessionName(consultingid))
     console.log('consultingid', consultingid)
 
     const consultant = {
@@ -130,6 +131,32 @@ const ExpertConsulting = () => {
     };
 
     // dispatch(appendParticipantList(customer))
+
+    try {
+      const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+      // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+          // 다른 필요한 헤더도 추가할 수 있습니다.
+        }
+      };
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      console.log(baseurl + 'consultings/activate/' + consultingid, config);
+      const url = `${baseurl}consultings/activate/${consultingid}`;
+
+      const response = await axios.put(url, null, config);
+
+      // 요청 성공 시 수행할 작업
+      console.log('Response:', response.data);
+    }
+
+    catch (error) {
+      console.error('Error :', error);
+      // alert('결제 실패');
+    }
+
 
     navigate('/OneToOneVideoChat')
 

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../api/Axios';
 
 const initialState = {
-  consultantSessionName2: '', 
+  consultantSessionName: '', 
 
   participantId: 2,
 
@@ -20,8 +20,8 @@ const initialState = {
   ]
 }
 
-export const getConsultantSessionName2 = createAsyncThunk(
-  'consult/getConsultantSessionName2',
+export const getconsultantSessionName = createAsyncThunk(
+  'consult/getconsultantSessionName',
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
@@ -53,11 +53,11 @@ const consultsessionnameSlice = createSlice({
     setSession: (state, { payload }) => {
       state.session = payload
     },
-    setConsultantSessionName2: (state, { payload }) => {
-      state.consultantSessionName2 = payload
+    setconsultantSessionName: (state, { payload }) => {
+      state.consultantSessionName = payload
     },
-    removeConsultantSessionName2: (state) => {
-      state.consultantSessionName2 = '';
+    removeconsultantSessionName: (state) => {
+      state.consultantSessionName = '';
     },
     setConsultid: (state, { payload }) => {
       state.consult_id = payload
@@ -83,16 +83,16 @@ const consultsessionnameSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getConsultantSessionName2.fulfilled, (state, { payload }) => {
-        state.consultantSessionName2 = payload.sessionId
+      .addCase(getconsultantSessionName.fulfilled, (state, { payload }) => {
+        state.consultantSessionName = payload.sessionId
       })
   }
 
 })
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName,
-  setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName2
-  , appendParticipantList,removeConsultantSessionName2
+  setReservationId, resetMsg, setconsultid, setCustomer, setconsultantSessionName
+  , appendParticipantList,removeconsultantSessionName
 } = consultsessionnameSlice.actions;
 
 export default consultsessionnameSlice.reducer;

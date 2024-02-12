@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ConsultingResponse {
 
     Long consultingId;
-
+    boolean active;
     private UserResponse userResponse;
 
     private ConsultantResponse consultantData;

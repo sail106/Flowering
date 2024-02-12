@@ -31,8 +31,9 @@ import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
-import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
-const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+import { removeconsultantSessionName } from '../store/consultsessionnameSlice';
+// const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -41,29 +42,19 @@ const OneToOneVideoChat = () => {
 
   //   // const tmp = email?.replace(/[@\.]/g, '-')
   const [creator, setCreator] = useState(undefined)
-
-  //   const [mySessionId, setMySessionId] = useState(
-  //     role === CONSULTANT ? tmp : consultantSessionName
-  //   )
+ 
   const [OV, setOV] = useState(null)
   const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const { creatorid } = useSelector(state => state.community.creator)
-  const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
-  const { consultantSessionName2 } = useSelector(state => state.consultsessionname)
+  const { session, customer, reservationId } = useSelector(state => state.consult)
+  const { consultantSessionName } = useSelector(state => state.consultsessionname)
   const navigate = useNavigate();
 
-  useEffect(() => {
-
-    // setIsMic(isMic);
-    // setIsCam(isCam);
-    console.log('consultantSessionName2' + consultantSessionName2)
-
-  }, [consultantSessionName2]);
-
+   
 
   const [mySessionId, setMySessionId] = useState(
-    consultantSessionName2
+    consultantSessionName
   )
 
   const dispatch = useDispatch();
@@ -77,6 +68,7 @@ const OneToOneVideoChat = () => {
 
   //   const [OV, setOV] = useState(null)
   const [customerStream, setCustomerStream] = useState(null);
+  const { access_token } = useSelector(state => state.auth.logonUser);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -122,8 +114,8 @@ const OneToOneVideoChat = () => {
         setPublisher(publisher);  // stream 생성....
 
          console.log('streamcreate')
-        if (role === CUSTOMER) {
-
+        if (role === "USER") {
+          console.log('setcustomer')
           dispatch(setCustomer(publisher))
 
           const persondata = {
@@ -145,7 +137,7 @@ const OneToOneVideoChat = () => {
           setConsultant(publisher)
 
           //payload 에 consultingid 가 온다.
-          dispatch(getCustomer(consultantSessionName2)).then((response) => {
+          dispatch(getCustomer(consultantSessionName)).then((response) => {
 
             console.log('getCustomer 액션 성공:', response)
 
@@ -223,7 +215,7 @@ const OneToOneVideoChat = () => {
 
     if (role == 'CONSULTANT')
 
-      console.log('consultantSessionName2', consultantSessionName2)
+      console.log('consultantSessionName', consultantSessionName)
 
     const mine = {
       id: 11,
@@ -254,7 +246,7 @@ const OneToOneVideoChat = () => {
 
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
-    if(role==CUSTOMER)
+    if(role=="USER")
     {
       navigate('/mypage')
     }
@@ -319,18 +311,18 @@ const OneToOneVideoChat = () => {
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))
-      console.log('customer ' + subscriber.stream)
+      console.log('customer ' +  subscriber.stream)
 
     }
 
-    else if (role === CUSTOMER) {
+    else if (role === "USER") {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber)
 
 
       if (subRole == CONSULTANT) {
         // payload 에 consultingid 가 온다.
-        dispatch(getConsultant(consultantSessionName2)).then((response) => {
+        dispatch(getConsultant(consultantSessionName)).then((response) => {
 
           console.log('getConsultant 액션 성공:', response)
 
@@ -379,18 +371,63 @@ const OneToOneVideoChat = () => {
   }
 
   const consultingFinishRequest = {
-    consultingid: consultantSessionName2,
+    consultingid: consultantSessionName,
     // consultingComment: consultingComment,
 
 
   }
 
   //   // 컨설턴트, 고객 종료시 분리 필요
-  const leaveSession = () => {
+  const leaveSession =  () => {
     console.log('session' + session)
     // role==CONSULTANT &&
     if (role == CONSULTANT && session) {
       session.disconnect();
+
+
+
+
+
+
+
+
+
+
+      try {
+        const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+        // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            // 다른 필요한 헤더도 추가할 수 있습니다.
+          }
+        };
+        const baseurl = import.meta.env.VITE_APP_BASE_URL;
+        console.log(baseurl + 'consultings/deactivate/' + consultantSessionName, config);
+        const url = `${baseurl}consultings/deactivate/${consultantSessionName}`;
+  
+        const response = axios.put(url, null, config);
+  
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+      }
+  
+      catch (error) {
+        console.error('Error :', error);
+        // alert('결제 실패');
+      }
+
+
+
+
+
+
+
+
+
+
+      
       dispatch(makeResult({ consultingFinishRequest }))
         .then(() => {
           // dispatch(changeComment(''))
@@ -398,24 +435,26 @@ const OneToOneVideoChat = () => {
         })
     }
 
-    if (role === CUSTOMER && session) {
+    if (role === "USER" && session) {
       session.disconnect();
       navigate('/mypage')
 
     }
 
     setOV(null);
-    setMySessionId(consultantSessionName2)
+    setMySessionId(consultantSessionName)
     dispatch(setSession(undefined))
     dispatch(setCustomer(undefined))
     dispatch(resetMsg())
     // setMyUserName(nickname)
     setConsultant(undefined)
 
-    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName2}`, {
+    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName}`, {
+
+
 
     axios
-      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName2, {
+      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName, {
         headers: {
           Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
           'Content-Type': 'application/json',
@@ -441,7 +480,7 @@ const OneToOneVideoChat = () => {
       });
 
     //redux 에 저장된 consultantsessionanme 도 제거
-    dispatch(removeConsultantSessionName2())
+    dispatch(removeconsultantSessionName())
 
   }
 
@@ -601,7 +640,7 @@ const OneToOneVideoChat = () => {
                       }
 
                       {
-                        role == CUSTOMER && consultant &&
+                        role == "USER" && consultant &&
 
                         <VideoContainer>
                           <UserVideoComponent
@@ -659,7 +698,7 @@ const OneToOneVideoChat = () => {
                 }
 
                 {
-                  isCam && customer !== undefined && role == CUSTOMER &&
+                  isCam && customer !== undefined && role == "USER" &&
 
                   <MyVideoContainer>
                     <UserVideoComponent

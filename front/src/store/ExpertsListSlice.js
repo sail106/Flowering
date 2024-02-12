@@ -29,8 +29,9 @@ export const fetchExpertById = createAsyncThunk(
 
 
     // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
+    const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-    const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/consultant/detail/${selectedid}`, config);
+    const response = await axios.get(baseurl+`consultant/detail/${selectedid}`, config);
 
     // console.log('sss' + response.data_body)
     console.dir('sss' + response.data.data_body)
