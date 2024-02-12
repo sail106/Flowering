@@ -113,8 +113,8 @@ const OneToOneVideoChat = () => {
         setPublisher(publisher);  // stream 생성....
 
          console.log('streamcreate')
-        if (role === CUSTOMER) {
-
+        if (role === "USER") {
+          console.log('setcustomer')
           dispatch(setCustomer(publisher))
 
           const persondata = {
@@ -245,7 +245,7 @@ const OneToOneVideoChat = () => {
 
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
-    if(role==CUSTOMER)
+    if(role=="USER")
     {
       navigate('/mypage')
     }
@@ -310,11 +310,11 @@ const OneToOneVideoChat = () => {
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))
-      console.log('customer ' + subscriber.stream)
+      console.log('customer ' +JSON.stringify( subscriber.stream))
 
     }
 
-    else if (role === CUSTOMER) {
+    else if (role === "USER") {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber)
 
@@ -389,7 +389,7 @@ const OneToOneVideoChat = () => {
         })
     }
 
-    if (role === CUSTOMER && session) {
+    if (role === "USER" && session) {
       session.disconnect();
       navigate('/mypage')
 
@@ -592,7 +592,7 @@ const OneToOneVideoChat = () => {
                       }
 
                       {
-                        role == CUSTOMER && consultant &&
+                        role == "USER" && consultant &&
 
                         <VideoContainer>
                           <UserVideoComponent
@@ -650,7 +650,7 @@ const OneToOneVideoChat = () => {
                 }
 
                 {
-                  isCam && customer !== undefined && role == CUSTOMER &&
+                  isCam && customer !== undefined && role == "USER" &&
 
                   <MyVideoContainer>
                     <UserVideoComponent

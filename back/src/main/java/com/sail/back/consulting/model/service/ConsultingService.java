@@ -137,7 +137,7 @@ public class ConsultingService {
         Consulting consulting=consultingRepository.findById(consultingId).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
 
         consulting.setActive(false);
-
+ 
         consultingRepository.save(consulting);
 
         return MessageUtils.success("deactivated", "200", "success");

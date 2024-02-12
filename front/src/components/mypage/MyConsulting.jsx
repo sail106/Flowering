@@ -94,12 +94,12 @@ const MyConsulting = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const consultantSessionName = useSelector(state => state.consultsessionname.consultantSessionName)
 
-  const [isactive,Setisactive]= useState('');
+  const [isactive, Setisactive] = useState(null);
 
-  const btnclick = async(consulting_id) => {
+  const btnclick = async (consulting_id) => {
 
     console.log('consulting_id ' + consulting_id)
 
@@ -117,12 +117,15 @@ const MyConsulting = () => {
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-      const response = await axios.get(baseurl+'consultings/'+consulting_id, config);
+      const response = await axios.get(baseurl + 'consultings/' + consulting_id, config);
 
       // 요청 성공 시 수행할 작업
       console.log('Response:', response.data);
       console.log('data_body  :', response.data.data_body);
-      Setisactive( response.data.data_body.active)
+      Setisactive(response.data.data_body.active)
+      dispatch(setconsultantSessionName(consulting_id))
+
+      console.log('isactive' + isactive)
 
     }
 
@@ -131,22 +134,28 @@ const MyConsulting = () => {
       // alert('결제 실패');
     }
 
-    console.log('isactive'+  isactive)
+    console.log('isactive' + isactive)
 
-
-    if (isactive) {
-
-      dispatch(setRole('CUSTOMER'))
-      dispatch(setname('CUSTOMER'))
-      // dispatch(setconsultantSessionName(consulting_id))
-
-      navigate('/OneToOneVideoChat')
-    }
-    else {
-      alert('컨설턴트가 아직 방을 입장하지 않았습니다')
-    }
 
   }
+
+  useEffect(() => {
+    console.log('isactive', isactive);
+
+    if (isactive === null) { // isactive가 null일 때는 아무것도 하지 않음
+      return;
+    }
+  
+    if (isactive) {
+      dispatch(setRole('USER'));
+      dispatch(setname('USER'));
+
+      navigate('/OneToOneVideoChat');
+    } else {
+      alert('컨설턴트가 아직 방을 입장하지 않았습니다');
+    }
+  }, [isactive]);
+
 
   const [consultingData, setConsultingData] = useState([]); // 상태 초기화
   const accessToken = useSelector(state => state.auth.logonUser.access_token);
@@ -175,7 +184,9 @@ const MyConsulting = () => {
   useEffect(() => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
+
   console.log(consultingData)
+
   return (
     <Consulting>
       <H2>마이 컨설팅</H2>
