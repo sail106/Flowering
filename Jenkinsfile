@@ -2,7 +2,8 @@ def component = [
     'front': true,
     'back': true,
     'nginx': true,
-    'redis': true 
+    'redis': true,
+    'openvidu' : true
 ]
 pipeline {
     agent any
@@ -109,7 +110,7 @@ pipeline {
             steps {
                 script {
                     component.each{entry ->
-                        if(entry.value&&entry.key!="redis"){
+                        if(entry.value&&entry.key!="redis"||entry.value&&entry.key!="openvidu"){
                             def var = entry.key
                             sh "docker-compose -f back/docker-compose.yml -p develop-server pull ${var.toLowerCase()}"
                         }
