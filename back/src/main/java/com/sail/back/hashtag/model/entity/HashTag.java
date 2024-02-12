@@ -19,7 +19,7 @@ public class HashTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long HashtagId;
+    private Long hashtagId;
 
 
     @ManyToOne
