@@ -6,6 +6,8 @@ import Input from "../common/Input";
 
 import styled from "styled-components";
 import { useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -31,7 +33,7 @@ const Margin = styled.div`
   margin: -20px;
 `;
 
-const AddImageButton = styled.button`
+const AddImageButton = styled.label`
   border: 1px solid #f5f5f5;
   border-radius: 30px;
   background-color: white;
@@ -62,9 +64,12 @@ const CommunityReservation = () => {
   const secondTimes = [
     "15:00", "16:00", "17:00", "18:00"
   ];
-  
+
+  const selectedDate = useSelector(state => state.selected.selectedDate);
+  const selectedTime = useSelector(state => state.selected.selectedTime);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
   
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
@@ -73,8 +78,25 @@ const CommunityReservation = () => {
   const handleContentChange = (newContent) => {
     setContent(newContent);
   }
-  console.log("title : ", title)
-  console.log("content : ", content)
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(URL.createObjectURL(selectedImage));
+  }
+
+  const reservationHandler = async () => {
+    const body = {
+      title: title,
+      content: content,
+      thumbnail_img_url: image,
+      open_day: selectedDate.slice(5,),
+      time: selectedTime.slice(0,5),
+    }
+    const response = await axios.post('http://i10c106.p.ssafy.io:8080//v1/community/add', body)
+  }
+
+  console.log("image : ", image);
+
 
   return (
     <Cal>
@@ -124,10 +146,18 @@ const CommunityReservation = () => {
           onInputChange={handleContentChange}
         />
         <H3>썸네일 이미지</H3>
-        <AddImageButton>+ 사진 추가</AddImageButton>
+        <AddImageButton>
+          + 사진 추가
+          <Input
+            type="file"
+            display="none"
+            onChange={handleImageChange}
+          />
+        </AddImageButton>
+        {image && <img src={image} alt="사진 미리보기"/>}
       </Center>
       <ButtonContainer>
-        <MyButton>예약하기</MyButton>
+        <MyButton onClick={reservationHandler}>예약하기</MyButton>
       </ButtonContainer>
     </Cal>
   );
