@@ -14,6 +14,10 @@ const InputBox = styled.input`
 `;
 
 const Input = (props) => {
+  const changeTitleHandler = (e) => {
+    props.onInputChange(e.target.value);
+  }
+
   return (
     <div>
       <InputBox
@@ -22,10 +26,10 @@ const Input = (props) => {
         placeholder={props.placeholder}
         width={props.width}
         name={props.name}
-        onChange={props.onChange}
+        onChange={changeTitleHandler}
         required={props.required}
         disabled={props.disabled}
-        // value={props.value}
+        value={props.value}
       />
     </div>
   )

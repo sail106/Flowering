@@ -5,6 +5,7 @@ import { ButtonBox } from "../common/Button";
 import Input from "../common/Input";
 
 import styled from "styled-components";
+import { useState } from "react";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -61,6 +62,19 @@ const CommunityReservation = () => {
   const secondTimes = [
     "15:00", "16:00", "17:00", "18:00"
   ];
+  
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  
+  const handleTitleChange = (newTitle) => {
+    setTitle(newTitle);
+  }
+
+  const handleContentChange = (newContent) => {
+    setContent(newContent);
+  }
+  console.log("title : ", title)
+  console.log("content : ", content)
 
   return (
     <Cal>
@@ -100,9 +114,15 @@ const CommunityReservation = () => {
 
       <Center>
         <H3>주제</H3>
-        <Input placeholder="주제를 입력하세요" />
+        <Input
+          placeholder="주제를 입력하세요"
+          onInputChange={handleTitleChange}
+        />
         <H3>설명</H3>
-        <Input placeholder="설명을 입력하세요" />
+        <Input
+          placeholder="설명을 입력하세요"
+          onInputChange={handleContentChange}
+        />
         <H3>썸네일 이미지</H3>
         <AddImageButton>+ 사진 추가</AddImageButton>
       </Center>
