@@ -32,6 +32,16 @@ pipeline {
                 ]
             }
         }
+        stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+            steps {
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}.git"]]
+                ]
+            }
+        }
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back"){
