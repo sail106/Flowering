@@ -32,25 +32,6 @@ pipeline {
                 ]
             }
         }
-        stage('Checkout GitLab Code') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/develop']],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [
-                        [
-                            $class: 'PreBuildMerge',
-                            options: [fastForwardMode: 'FF', mergeRemote: 'origin', mergeStrategy: 'DEFAULT', mergeTarget: 'develop']
-                        ]
-                    ],
-                    userRemoteConfigs: [[
-                        credentialsId: 'GitLab-access-token', // 크리덴셜 ID를 정확하게 지정
-                        url: "https://gitlab.com/s10-webmobile1-sub2/S10P12C106.git"
-                    ]]
-                ])
-            }
-        }
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back"){
