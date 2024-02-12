@@ -35,26 +35,15 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}/back"){
                     script {
-                        // 현재 'back' 디렉토리의 내용을 나열
                         sh "ls . -al"
-                        
-                        // gradlew 실행 권한 부여
                         sh "chmod +x ./gradlew"
-                        
-                        // gradlew를 통해 프로젝트 버전 정보 추출
                         def version_value = sh(returnStdout: true, script: "./gradlew properties -q | grep 'version:'").trim()
-                        def version = version_value.split(/:/)[1].trim()
-                        
-                        // 추출한 버전 정보를 TAG 환경 변수에 설정
+                        version = version_value.split(/:/)[1].trim()
                         env.TAG = version
-                        
-                        // 현재 디렉토리('.env')에 TAG 정보 추가
-                        sh "echo TAG=$version > .env"
-                        
-                        // 'secure-settings' 디렉토리에서 REDIS_PASSWORD 값을 읽어와 현재 '.env' 파일에 추가
-                        sh "grep 'REDIS_PASSWORD' ../back/secure-settings/.env >> .env"
-                        
-                        // 최종 '.env' 파일 내용 확인
+                        //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
+                        //docker에 동적으로 tag를 지정하기 위해 사용했다.
+                        sh "echo TAG=$version >> .env"
+                        sh "grep REDIS_PASSWORD ${env.WORKSPACE}/secure-settings/.env >> ${env.WORKSPACE}/back/.env"
                         sh "cat .env"
                     }
                 }
