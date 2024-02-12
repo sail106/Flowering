@@ -9,7 +9,6 @@ pipeline {
     agent any
     environment {
         // 환경변수 설정
-                // Docker 이미지 태그 설정
         NGINX_TAG = "latest"
         FRONT_TAG = "v1.0"
         BACK_TAG = "v2.1"
@@ -18,10 +17,11 @@ pipeline {
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
+        GITLAB_CREDENTIALS_ID = "Gitlab-access-token" // GitLab 크리덴셜 ID 추가
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout GitHub') {
             steps {
                 // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
                 checkout scm: [
@@ -30,6 +30,21 @@ pipeline {
                     extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
                     userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/sail106/settings']]
                 ]
+            }
+        }
+        stage('Checkout GitLab Code') {
+            steps {
+                // GitLab 크리덴셜을 사용하여 메인 프로젝트 코드 체크아웃
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        credentialsId: GITLAB_CREDENTIALS_ID,
+                        url: "https://gitlab.com/${REPO}.git"
+                    ]]
+                ])
             }
         }
         stage('Setup Environment') {
