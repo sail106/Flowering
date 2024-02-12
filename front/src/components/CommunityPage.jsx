@@ -35,14 +35,13 @@ const CommunityPage = () => {
   const { session } = useSelector(state => state.community)
   const navigate = useNavigate();
 
+  const fetchData = async () => {
+    const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/community/findlist')
+    console.log(res);
+  }
+
   useEffect(() => {
-    axios.get('http://i10c106.p.ssafy.io:8080/v1/community/findlist')
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("errr:", err);
-      })
+    fetchData();
   }, [])
 
   useEffect(() => {
