@@ -68,6 +68,7 @@ const OneToOneVideoChat = () => {
 
   //   const [OV, setOV] = useState(null)
   const [customerStream, setCustomerStream] = useState(null);
+  const { access_token } = useSelector(state => state.auth.logonUser);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -377,11 +378,56 @@ const OneToOneVideoChat = () => {
   }
 
   //   // 컨설턴트, 고객 종료시 분리 필요
-  const leaveSession = () => {
+  const leaveSession =  () => {
     console.log('session' + session)
     // role==CONSULTANT &&
     if (role == CONSULTANT && session) {
       session.disconnect();
+
+
+
+
+
+
+
+
+
+
+      try {
+        const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+        // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            // 다른 필요한 헤더도 추가할 수 있습니다.
+          }
+        };
+        const baseurl = import.meta.env.VITE_APP_BASE_URL;
+        console.log(baseurl + 'consultings/deactivate/' + consultantSessionName, config);
+        const url = `${baseurl}consultings/deactivate/${consultantSessionName}`;
+  
+        const response = axios.put(url, null, config);
+  
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+      }
+  
+      catch (error) {
+        console.error('Error :', error);
+        // alert('결제 실패');
+      }
+
+
+
+
+
+
+
+
+
+
+      
       dispatch(makeResult({ consultingFinishRequest }))
         .then(() => {
           // dispatch(changeComment(''))
@@ -404,6 +450,8 @@ const OneToOneVideoChat = () => {
     setConsultant(undefined)
 
     // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName}`, {
+
+
 
     axios
       .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName, {
