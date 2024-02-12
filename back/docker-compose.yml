@@ -18,10 +18,10 @@ services:
       - back
 
   front:
-    container_name: ./front
+    container_name: front
     image: toritest-front:${TAG}
     build:
-      context: front
+      context: ../front
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
