@@ -41,7 +41,7 @@ import PhotoTest from './components/PhotoTest';
 
 import FinalSurveyResult from './components/FinalSurveyResult';
 import SkinProductCard from './components/consultingresult/SkinProductCard';
-import Orderpage from './components/OrderPage';
+import Orderpage from './components/order/OrderPage';
 import OrderResult from './components/OrderResult';
 import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
 
