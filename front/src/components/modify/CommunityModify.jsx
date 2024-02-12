@@ -72,11 +72,11 @@ const CommunityModify = () => {
         <RadioButton
           key={value}
           type="radio"
-          id="myradio"
+          // id="myradio"
           value={value}
           width="200px"
           height="100px"
-          htmlFor="myradio"
+          htmlFor={value}
           margin-right="10px"
         />
         ))}
