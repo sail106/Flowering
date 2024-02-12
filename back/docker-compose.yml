@@ -21,7 +21,7 @@ services:
     container_name: front
     image: toritest-front:${TAG}
     build:
-      context: frontend
+      context: front
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -33,7 +33,7 @@ services:
     container_name: back
     image: toritest-back:${TAG}
     build:
-      context: backend
+      context: back
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
