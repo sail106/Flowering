@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {OrderUserTable, DataTable, Content, Filed, BtnList} from "./OrderPage";
+import {OrderUserTable, DataTable, Content, Filed, BtnList} from "./order/OrderPage";
 import { ButtonBox } from "./common/Button";
 import { useNavigate } from "react-router-dom";
 import success_animation from "../assets/success_animation.gif"
