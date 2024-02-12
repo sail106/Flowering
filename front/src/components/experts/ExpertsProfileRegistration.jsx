@@ -339,11 +339,7 @@ const ExpertsProfileRegistration = () => {
       console.error('Error :', error);
       // alert('결제 실패');
     }
-
-
-
-
-
+ 
 
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
@@ -360,14 +356,16 @@ const ExpertsProfileRegistration = () => {
       console.log(tags)
 
       for (const tag of tags) {
-        const body = {
-          workplace: tag.workplace
-        };
-
-        const response = await axios.post(baseurl + 'hashtags/create', body, config);
-
-        // 요청 성공 시 수행할 작업
-        console.log('Response:', response.data);
+        if (!tag.id) {
+          const body = {
+            workplace: tag.workplace
+          };
+        
+          const response = await axios.post(baseurl + 'hashtags/create', body, config);
+        
+          // 요청 성공 시 수행할 작업
+          console.log('Response:', response.data);
+        }
       }
 
       alert('해시태그저장완료')
@@ -387,6 +385,7 @@ const ExpertsProfileRegistration = () => {
         // hashtagId: tags.length + 1, // 태그의 ID를 현재 태그 배열의 길이에 1을 더한 값으로 설정합니다.
         workplace: e.target.value.trim()
       };
+      console.log(newTag)
       setTags([...tags, newTag]);
       e.target.value = '';
     }
@@ -395,10 +394,11 @@ const ExpertsProfileRegistration = () => {
 
   const handleRemoveTag = async (tag) => {
     console.log(tag)
-    const updatedTags = tags.filter((tag) => tag.hashtagId !== tag.id);
+    const updatedTags = tags.filter((t) => t.id !== tag.id);
     setTags(updatedTags);
   
     try {
+      
       const token = access_token;
       const config = {
         headers: {
