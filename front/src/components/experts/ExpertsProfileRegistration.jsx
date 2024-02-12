@@ -123,6 +123,19 @@ const H52 = styled.h3`
   left: 362px;
   top: 1052px;
 `;
+
+const Company = styled.h3`
+  padding-top: 30px;
+  text-align: start;
+   
+`;
+const Workperiod = styled.h3`
+  padding-top: 40px;
+  text-align: start;
+   
+`;
+
+
 const Put = styled.div`
   margin-left: 150px;
 `;
@@ -164,7 +177,8 @@ const ButtonContainer = styled.div`
 
 const Plus = styled(GoPlus)`
   font-size: 30px;
-  position: absolute;
+  display: flex;
+  /* position: absolute; */
   left: 1140px;
   top: 1190px;
   color: gray;
@@ -172,7 +186,6 @@ const Plus = styled(GoPlus)`
 `;
 const Remove = styled(IoMdRemove)`
   font-size: 27px;
-  position: absolute;
   left: 1140px;
   top: 1081px;
   color: gray;
@@ -234,6 +247,9 @@ const ExpertsProfileRegistration = () => {
   const [tags, setTags] = useState([]);
 
 
+  const [workplace, setWorkplace] = useState('');
+  const [employmentPeriod, setEmploymentPeriod] = useState('');
+
   useEffect(() => {
 
     const fetchData = async () => {
@@ -267,29 +283,6 @@ const ExpertsProfileRegistration = () => {
   }, [accessToken, baseurl]);
 
 
-  // useEffect(() => {
-  //   // 서버에서 기존 해시태그 목록을 가져와서 설정합니다.
-  //   const fetchTags = async () => {
-  //     try {
-  //       const config = {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       };
-  //       const { data } = await axios.get(baseurl + 'hashtags', config);
-  //       // 서버에서 가져온 해시태그 목록을 설정합니다.
-
-  //       setTags(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchTags();
-  // }, [accessToken, baseurl]);
-
-
 
   useEffect(() => {
     if (Selectedid) {
@@ -308,7 +301,7 @@ const ExpertsProfileRegistration = () => {
   const { access_token } = useSelector(state => state.auth.logonUser);
 
   const handleEnterButtonClick = async () => {
-
+    console.log(workplaces + " " + employmentPeriods)
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
       console.log('tooo   ' + token)
@@ -339,7 +332,7 @@ const ExpertsProfileRegistration = () => {
       console.error('Error :', error);
       // alert('결제 실패');
     }
- 
+
 
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
@@ -360,9 +353,9 @@ const ExpertsProfileRegistration = () => {
           const body = {
             workplace: tag.workplace
           };
-        
+
           const response = await axios.post(baseurl + 'hashtags/create', body, config);
-        
+
           // 요청 성공 시 수행할 작업
           console.log('Response:', response.data);
         }
@@ -375,7 +368,46 @@ const ExpertsProfileRegistration = () => {
       // alert('결제 실패');
     }
 
- 
+
+
+    // employmentPeriod + " " + workplace)
+    try {
+      const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+      console.log('tooo   ' + token)
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
+      for (const career of careers) { // 경력 객체를 사용하여 반복문을 수행합니다.
+        if (!career.id) {
+          const body = {
+            consultantId: 1,
+            workplace: career.workplace,
+            start_date_of_employment: career.startDateOfEmployment,
+            end_date_of_employment: career.endDateOfEmployment
+          };
+
+          const response = await axios.post(baseurl + 'careers/create', body, config);
+
+          // 요청 성공 시 수행할 작업
+          console.log('Response:', response.data);
+        }
+      }
+
+      alert('경력저장완료')
+    }
+    catch (error) {
+      console.error('Error :', error);
+      // alert('결제 실패');
+    }
+
+
     // navigate(`/expertmypage/${User.id}`);
   };
 
@@ -396,9 +428,9 @@ const ExpertsProfileRegistration = () => {
     console.log(tag)
     const updatedTags = tags.filter((t) => t.id !== tag.id);
     setTags(updatedTags);
-  
+
     try {
-      
+
       const token = access_token;
       const config = {
         headers: {
@@ -414,7 +446,42 @@ const ExpertsProfileRegistration = () => {
       console.error('Error:', error);
     }
   };
-  
+
+
+  const [workplaces, setWorkplaces] = useState([]);
+  const [employmentPeriods, setEmploymentPeriods] = useState([]);
+
+  // 회사명 변경 핸들러
+  const handleWorkplaceChange = (index, value) => {
+    const updatedWorkplaces = [...workplaces];
+    updatedWorkplaces[index] = value;
+    setWorkplaces(updatedWorkplaces);
+  };
+
+  // 근무 기간 변경 핸들러
+  const handleEmploymentPeriodChange = (index, value) => {
+    const updatedEmploymentPeriods = [...employmentPeriods];
+    updatedEmploymentPeriods[index] = value;
+    setEmploymentPeriods(updatedEmploymentPeriods);
+  };
+
+  // 경력 추가 버튼 클릭 시
+  const handleAddCareer = () => {
+    setWorkplaces([...workplaces, '']);
+    setEmploymentPeriods([...employmentPeriods, '']);
+  };
+
+  // 경력 삭제 버튼 클릭 시
+  const handleRemoveCareer = (index) => {
+    const updatedWorkplaces = [...workplaces];
+    updatedWorkplaces.splice(index, 1);
+    setWorkplaces(updatedWorkplaces);
+
+    const updatedEmploymentPeriods = [...employmentPeriods];
+    updatedEmploymentPeriods.splice(index, 1);
+    setEmploymentPeriods(updatedEmploymentPeriods);
+  };
+
   return (
     <>
       <MyPage>
@@ -476,16 +543,75 @@ const ExpertsProfileRegistration = () => {
         <Career2>2018.08 ~ 2022.03</Career2>
         <Remove />
 
+
+
+
+
+
+
+
         <Plus />
         <br />
         <H5>회사명</H5>
         <Put2>
-          <Input width={"587px"} placeholder="회사명을 입력하세요" />
+          <Input
+            width={"587px"}
+            placeholder="회사명을 입력하세요"
+            value={workplace}
+            onChange={(e) => setWorkplace(e.target.value)}
+          />
         </Put2>
         <H52>근무기간</H52>
         <Put2>
-          <Input width={"587px"} placeholder="0000년00월~0000년00 월" />
+          <Input
+            width={"587px"}
+            placeholder="0000-00-00 ~ 0000-00-00"
+            value={employmentPeriod}
+            onChange={(e) => setEmploymentPeriod(e.target.value)}
+          />
         </Put2>
+
+
+
+
+        {workplaces.map((workplace, index) => (
+          <div key={index}>
+            <Remove />
+
+            <br />
+            <Company>회사명</Company>
+            <Put2>
+              <Input
+                width={"587px"}
+                placeholder="회사명을 입력하세요"
+                value={workplace}
+                onChange={(e) => handleWorkplaceChange(index, e.target.value)}
+              />
+            </Put2>
+            <Workperiod>근무기간</Workperiod>
+            <Put2>
+              <Input
+                width={"587px"}
+                placeholder="0000-00-00 ~ 0000-00-00"
+                value={employmentPeriods[index]}
+                onChange={(e) => handleEmploymentPeriodChange(index, e.target.value)}
+              />
+            </Put2>
+            {/* <Remove onClick={() => handleRemoveCareer(index)}/> */}
+            <Plus />
+
+            {/* <button onClick={() => handleRemoveCareer(index)}>Remove</button> */}
+          </div>
+        ))}
+
+        {/* <button onClick={handleAddCareer}>Add Career</button> */}
+
+
+
+
+
+
+
 
         <br />
         <ButtonContainer>

@@ -14,7 +14,7 @@ const InputBox = styled.input`
 `;
 
 const Input = (props) => {
-  console.log(JSON.stringify(props))
+  // console.log(JSON.stringify(props))
   return (
     <div>
       <InputBox

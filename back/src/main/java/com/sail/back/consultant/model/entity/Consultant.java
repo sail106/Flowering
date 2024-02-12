@@ -61,28 +61,6 @@ public class Consultant {
     }
 
 //
-//    public double getStarAverage() {
-//
-//        if (reviews == null || reviews.isEmpty()) {
-//            return 0;
-//        }
-//
-//        int sum = 0;
-//        for (Review review : reviews) {
-//            sum += review.getStar();
-//        }
-//        return (double) sum / reviews.size();
-//    }
-//
-//
-//    public int getReviewnum() {
-//
-//        if (reviews == null || reviews.isEmpty()) {
-//            return 0;
-//        }
-//
-//        return reviews.size();
-//    }
 
     public void setStarAverage(double starAverage) {
         this.starAverage = starAverage;
@@ -127,18 +105,6 @@ public class Consultant {
     }
 
     public ConsultantResponse toResponse() {
-//        FindRequest findRequest = FindRequest.builder().
-//                id(true)
-//                .role(true)
-//                .gender(true)
-//                .nickname(true)
-//                .email(true)
-//                .birthdate_month(true)
-//                .birthdate_year(true)
-//                .status(true)
-//                .profile_img_url(true)
-//
-//                .build();
 
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)

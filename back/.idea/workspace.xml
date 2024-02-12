@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/career/controller/CareerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/entity/Career.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/entity/Career.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/controller/HashTagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/controller/HashTagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/model/entity/HashTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/model/entity/HashTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/model/service/HashTagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/hashtag/model/service/HashTagService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfileRegistration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfileRegistration.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../settings" beforeDir="false" afterPath="$PROJECT_DIR$/../settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" afterDir="false" />
@@ -87,41 +85,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.Dockerfile build.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build back.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.BackApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/#6-frontcommunity-communitypage2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Downloads/0203test/back/src/main/java/com/sail/back/hashtag&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile build.executor": "Run",
+    "Gradle.Build back.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.BackApplication.executor": "Run",
+    "git-widget-placeholder": "feat/#6-frontcommunity-communitypage2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/Downloads/0203test/back/src/main/java/com/sail/back/career",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;redis&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.sail.back.career.model.dto.request" />
+      <recent name="com.sail.back.career.controller" />
       <recent name="com.sail.back.hashtag.model.service" />
       <recent name="com.sail.back.hashtag.controller" />
       <recent name="com.sail.back.review.model.entity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Downloads\0203test\back\src\main\java\com\sail\back\career" />
       <recent name="C:\Users\SSAFY\Downloads\0203test\back\src\main\java\com\sail\back\hashtag" />
       <recent name="C:\Users\SSAFY\Downloads\0203test\back\secure-settings" />
       <recent name="C:\Users\SSAFY\Downloads\0203test\back\src\main" />
@@ -132,6 +133,7 @@
       <recent name="C:\Users\SSAFY\Downloads\0122\back\src\main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sail.back.career.model.entity" />
       <recent name="com.sail.back.hashtag.model.dto.response" />
       <recent name="com.sail.back.hashtag.model.entity" />
     </key>
@@ -195,7 +197,7 @@
       <workItem from="1706834989045" duration="10442000" />
       <workItem from="1706944677915" duration="137373000" />
       <workItem from="1707644039770" duration="14143000" />
-      <workItem from="1707701172311" duration="6340000" />
+      <workItem from="1707701172311" duration="12205000" />
     </task>
     <task id="LOCAL-00001" summary="feat: #6 Community 생성 api 작성&#10;- repository 생성&#10;- service 생성&#10;- controller 수정&#10;- request dto 생성&#10;- response dto 생성">
       <option name="closed" value="true" />
