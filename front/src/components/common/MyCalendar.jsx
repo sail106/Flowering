@@ -186,10 +186,9 @@ const MyCalendar = () => {
   useEffect(() => {
     const formattedDate = moment(value).format('YYYY-MM-DD'); // 선택된 날짜를 형식화
     // setSelectedDate(formattedDate); // 형식화된 날짜를 상태로 설정
-    console.log('선택된 날짜:', formattedDate);
     dispatch(setSelectedDate(formattedDate));
     
-  }, [value]);
+  }, [value, dispatch]);
 
   return (
     <>

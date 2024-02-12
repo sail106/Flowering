@@ -3,14 +3,17 @@ import CircleImg from "./common/CircleImg";
 import Button from "./common/Button";
 import Card from "./common/Card";
 import CenterContainer from "./common/CenterContainer";
-import styled from "styled-components";
 import ContentsCard from "./common/ContentsCard";
-import { useSelector } from 'react-redux'
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import BIBI from "../assets/BIBI.png"
 import blogpost1 from "../assets/blogpost1.png"
 import communityHome1 from "../assets/communityHome1.png"
+
+import styled from "styled-components";
+import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+
 const StyledDiv = styled.div`
   color: #6D6D6D;
   text-align: center;
@@ -31,6 +34,15 @@ const CommunityPage = () => {
 
   const { session } = useSelector(state => state.community)
   const navigate = useNavigate();
+
+  const fetchData = async () => {
+    const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/community/findlist')
+    console.log(res);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   useEffect(() => {
     if (session) {
@@ -171,19 +183,17 @@ const CommunityPage = () => {
     console.log('버튼클릭' + community_id)
     console.log('session' + session)
 
-    if (session)
+    if (session) {
       console.log('session' + session)
-
-    else
+    }
+    else {
       console.log('dsfsdf')
-
+    }
     navigate('/OneToManyVideoChat')
-
   };
 
-  const makeroom = ()=>{
-
-    
+  const makeroom = () => {
+    navigate('/communityReservation')
   };
 
   return (
