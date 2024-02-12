@@ -43,7 +43,7 @@ pipeline {
                         //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
                         //docker에 동적으로 tag를 지정하기 위해 사용했다.
                         sh "echo TAG=$version >> .env"
-                        sh "grep REDIS_PASSWORD ${env.WORKSPACE}/secure-settings/.env >> ${env.WORKSPACE}/back/.env"
+                        sh "grep REDIS_PASSWORD ${env.WORKSPACE}/bakc/secure-settings/.env >> ${env.WORKSPACE}/back/.env"
                         sh "cat .env"
                     }
                 }
