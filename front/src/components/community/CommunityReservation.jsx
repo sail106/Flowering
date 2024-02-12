@@ -54,7 +54,7 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-const CommunityModify = () => {
+const CommunityReservation = () => {
   const firstTimes = [
     "10:00", "11:00", "12:00", "13:00",
   ];
@@ -113,4 +113,4 @@ const CommunityModify = () => {
   );
 };
 
-export default CommunityModify;
+export default CommunityReservation;
