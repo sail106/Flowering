@@ -10,6 +10,7 @@ import {
   ref,
   uploadString,
   getDownloadURL,
+  uploadBytesResumable
 } from "firebase/storage";
 import FirebaseConfig from "./common/FirebaseConfig";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -93,14 +94,13 @@ const EditMyInfo = () => {
   }
 
   const fileInput = useRef(null);
-
-  // const handleFileUpload = async (event) => {
-  //   const file = event.target.files[0];
-  //   const storageRef = firebase.storage().ref();
-  //   const fileRef = storageRef.child(file.name);
-  //   await fileRef.put(file);
-  //   console.log(`${file.name} has been uploaded.`);
-  // };
+  const storage = getStorage();
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    const storageRef = ref(storage, "imagename/" + file.name);
+    await uploadBytesResumable(storageRef, file);
+    console.log(`${file.name} has been uploaded.`);
+  };
 
   const [checkEn, setCheckEn] = useState(false);
   const [checkNum, setCheckNum] = useState(false);
