@@ -11,7 +11,7 @@ import MyPage from './components/MyPage';
 import Navbar from './components/Navbar';
 import GlobalStyles from '../GlobalStyles';
 import MainPage from './components/MainPage';
-import ConsultReservation from './components/ConsultReservation';
+import ConsultReservation from './components/community/ConsultReservation';
 import FaQ from './components/FaQ';
 import Footer from './components/Footer';
 import EditMyInfo from './components/EidtMyInfo';
