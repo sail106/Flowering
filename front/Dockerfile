@@ -16,4 +16,4 @@ COPY . .
 ENV PATH /front/node_modules/.bin:$PATH
 
 # 애플리케이션 실행
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host"]
