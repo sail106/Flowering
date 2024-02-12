@@ -87,6 +87,7 @@ pipeline {
             steps {
                 // Docker Hub 크리덴셜을 사용하여 Docker에 로그인
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    def DOCKER_USER_ID = 'rlagudals0420'
                     sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin'
                 }
             }
