@@ -83,7 +83,7 @@ function App() {
 					<Route path='/signup' element={<SignupForm />} />
 					<Route path='/signupPw' element={<SignupPw />} />
 					<Route path='/signupRequired' element={<SignupRequired />} />
-					<Route path='/communityReser' element={<CommunityReservation />} />
+					<Route path='/communityReservation' element={<CommunityReservation />} />
 					<Route path='/orderpage' element={<Orderpage />} />
 					<Route path='/orderResult' element={<OrderResult />} />
 					<Route path='/mypage/:routeid' element={<MyPage />} />
