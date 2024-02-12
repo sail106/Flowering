@@ -33,32 +33,12 @@ public class HashTagController {
     }
 
 
-//
-//    @GetMapping
-//    public ResponseEntity<MessageUtils<HashTagResponse>> getHashTagByconsultantId(@AuthenticationPrincipal User user) {
-//
-//        List<HashTag> hashtag = hashTagService.getHashTagByuserId(user.getId());
-//
-//
-//    }
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<MessageUtils<HashTagResponse>> updateHashTag(@AuthenticationPrincipal User user
-//            , @RequestBody HashTagRequest hashTagRequest) {
-//
-//        HashTag updatedHashTag = hashTagService.updateHashTag(user, hashTagRequest);
-//
-//        HashTagResponse hashTagResponse=updatedHashTag.from(updatedHashTag);
-//
-//        return ResponseEntity.ok(MessageUtils.success(hashTagResponse));
-//    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageUtils> deleteHashTag(@PathVariable("id") Long id, @AuthenticationPrincipal User user) {
 
         hashTagService.deleteHashTag(user,id);
 
-        return ResponseEntity.ok(MessageUtils.success());
+        return ResponseEntity.ok(MessageUtils.success("deleted"));
     }
 
 
