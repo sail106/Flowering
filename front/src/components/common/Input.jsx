@@ -33,7 +33,7 @@ const Input = (props) => {
         onChange={changeInputHandler}
         required={props.required}
         disabled={props.disabled}
-        value={props.value}
+        // value={props.value}
         display={props.display}
       />
     </div>
