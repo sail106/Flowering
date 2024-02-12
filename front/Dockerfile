@@ -1,22 +1,19 @@
-# Node.js 공식 이미지를 기반으로 한 빌드 스테이지 정의
-FROM node:lts-alpine as builder
+# 기존 멀티 스테이지 빌드의 builder 단계 제거 (필요에 따라)
+FROM node:lts-alpine
 
-# 작업 디렉토리 설정
 WORKDIR /front
 
-# 의존성 파일 복사
-COPY package.json package-lock.json /front/
+# package.json과 package-lock.json을 먼저 복사
+COPY package*.json ./
 
 # 프로젝트 의존성 설치
 RUN npm install
-# React 스크립트 글로벌 설치는 권장되지 않음 (필요한 경우만 설치)
-# RUN npm install react-scripts@3.0.1 -g
 
-# 나머지 앱 소스 복사
-COPY . /front/
+# 프로젝트 소스 복사
+COPY . .
 
-# 빌드 스크립트 실행 (프로덕션 빌드를 위해, 개발 환경에서는 주석 처리)
-# RUN npm run build
+# 환경변수 PATH 설정 (이미 설정되어 있음)
+ENV PATH /front/node_modules/.bin:$PATH
 
-# 애플리케이션 시작
+# 애플리케이션 실행
 CMD ["npm", "start"]
