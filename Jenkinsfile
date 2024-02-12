@@ -30,6 +30,11 @@ pipeline {
                     extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
                     userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/sail106/settings']]
                 ]
+                script {
+                    // 서브모듈 초기화 및 업데이트
+                    sh 'git submodule init'
+                    sh 'git submodule update'
+                }
             }
         }
         stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
