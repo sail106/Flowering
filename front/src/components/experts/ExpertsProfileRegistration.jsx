@@ -7,8 +7,8 @@ import BIBI from "../../assets/BIBI.png"
 import camera from "../../assets/camera.png"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExpertById } from "../../store/ExpertsListSlice";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
 const MyPage = styled.div`
   width: 100vw;
@@ -212,68 +212,57 @@ const ExpertsProfileRegistration = () => {
   const [Selectedid, setSelecteid] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleEnterButtonClick = async () => {
-    console.log('버튼클릭' + User.id)
+  const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
 
 
-    try {
-      console.log(baseurl)
-      console.log(accessToken)
-      // 서버에 인증 요청을 보냅니다.
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      };
-      // await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/join-code', {
-      const { data } = await axios.get(baseurl + 'consultant/myinfo' ,config);
-      console.log('d'+data)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const { data } = await axios.get(baseurl + 'consultant/myinfo', config);
+        setSelecteid(data.data_body.consultant_id);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-      // TODO: 응답에 따른 처리 로직 작성
-    } catch (error) {
-      console.log('e'+error)
+    fetchData();
+  }, [accessToken, baseurl]);
 
+  useEffect(() => {
+    if (Selectedid) {
+      dispatch(fetchExpertById(Selectedid))
+        .then((response) => {
+          setExpertData(response);
+          console.log(response);
+          console.log(response.payload.user_response.nickname);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
+  }, [Selectedid, dispatch]);
 
-
-
-    // // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
-    // dispatch(fetchExpertById(Selectedid)).then((response) => {
-    //   console.log('ExpertsProfile', response);
-    //   console.log(JSON.stringify(response, null, 2)); //잘받음
-    //   console.log(JSON.stringify(response.payload.user_response, null, 2));
-    //   setExpertData(response);
-    //   console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
-    //   // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
-    //   console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
-    //   console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
-    //   console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
-    //   console.log('expppp' + expertData?.payload.star ?? ' ')
-    //   console.log(expertData?.payload.simple_introduce ?? '')
-
-
-    // }).catch((error) => {
-    //   console.log('error');
-    // });
-
-    navigate('/expertsprofileregistration')
-
+  const handleEnterButtonClick = () => {
+    navigate('/expertsprofileregistration');
   };
-
 
 
   return (
     <>
       <MyPage>
-        <MyImg src={BIBI} alt="프로필 사진" />
+        <MyImg src={expertData?.payload?.user_response?.profile_img_url??''} alt="프로필 사진" />
         <CameraImg src={camera} alt="프로필 사진" />
         <Container>전문가 소개</Container>
         <PP>
           <Regist>
             <h3>전문가 닉네임</h3>
-            <Nic>BIBI</Nic>
+            <Nic>{expertData?.payload?.user_response?.nickname??''}   </Nic>
           </Regist>
 
           <H3>한줄 소개</H3>

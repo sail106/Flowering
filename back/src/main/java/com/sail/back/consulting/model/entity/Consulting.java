@@ -41,6 +41,11 @@ public class Consulting {
     @NotNull
     private String title; //제목
 
+    private boolean active;
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
 
 
@@ -75,6 +80,7 @@ public class Consulting {
                 .consultantData(this.consultant.toResponse())
                 .userResponse(this.user.toResponse())
                 .reservationDateTime(this.time)
+                .active(this.active)
                 .build();
     }
 

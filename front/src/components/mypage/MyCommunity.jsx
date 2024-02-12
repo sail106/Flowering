@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { setConsultantSessionName } from "../../store/consultSlice";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -268,7 +269,7 @@ const MyCommunity = () => {
     dispatch(setRole('creator'))
     dispatch(setname('creator'))
 
-    dispatch(setConsultantSessionName2(community_id))
+    dispatch(setConsultantSessionName(community_id))
     console.log('community_id', community_id)
 
 

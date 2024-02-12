@@ -83,6 +83,8 @@ export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
     async ({ info }, { rejectWithValue,getState }) => { 
         try {
+            const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
             const state = getState(); // 전체 Redux 상태를 얻습니다.
             const config = {
                 headers: {
@@ -92,7 +94,7 @@ export const UserInfo = createAsyncThunk(
                 }
             };
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-            const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info`, config);
+            const response = await axios.get(baseurl +`users/info`, config);
             const res = response.data.data_body
 
             // saveToken(token);
@@ -118,8 +120,10 @@ export const loginUser = createAsyncThunk(
         }
 
         try {
+            const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
             // start
-            const response = await axios.post('http://i10c106.p.ssafy.io:8080/v1/auth/login', loginrequest);
+            const response = await axios.post(baseurl +'auth/login', loginrequest);
             const token = response.data.data_body
             // saveToken(token);
             return token;
