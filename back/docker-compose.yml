@@ -3,7 +3,7 @@ version: '3.8'
 services:
   nginx:
     container_name: nginx
-    image: toritest-nginx:${TAG}
+    image: gudals0420/s10c106-nginx:${TAG}
     build:
       context: nginx
       dockerfile: Dockerfile
@@ -19,9 +19,9 @@ services:
 
   front:
     container_name: front
-    image: toritest-front:${TAG}
+    image: gudals0420/s10c106-front:${TAG}
     build:
-      context: frontend
+      context: ../front
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -31,9 +31,9 @@ services:
 
   back:
     container_name: back
-    image: toritest-back:${TAG}
+    image: gudals0420/s10c106-back:${TAG}
     build:
-      context: backend
+      context: .
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -41,7 +41,8 @@ services:
     networks:
       - jenkins-network
     environment:
-      - "SPRING_PROFILES_ACTIVE=prod"
+      - USE_PROFILE=prod
+      - SPRING_PROFILES_ACTIVE=prod
 
   redis:
     container_name: redis
@@ -53,7 +54,6 @@ services:
     volumes:
       - ~/redis/data:/data
     user: root
-    command: redis-server --requirepass ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
 

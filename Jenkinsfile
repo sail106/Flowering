@@ -2,7 +2,7 @@ def component = [
     'front': true,
     'back': true,
     'nginx': true,
-    'redis': true
+    'redis': false
 ]
 pipeline {
     agent any
@@ -13,7 +13,7 @@ pipeline {
         FRONT_TAG = "v1.0"
         BACK_TAG = "v2.1"
         REDIS_TAG = "alpine"
-        
+        DOCKER_USER_ID = 'rlagudals0420'
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
@@ -31,23 +31,23 @@ pipeline {
                 ]
             }
         }
-        // stage('Setup Environment') {
-        //     steps {
-        //         dir("${env.WORKSPACE}"){
-        //             script {
-        //                 sh "ls . -al"
-        //                 sh "chmod +x ./gradlew"
-        //                 def version_value = sh(returnStdout: true, script: "./gradlew properties -q | grep 'version:'").trim()
-        //                 version = version_value.split(/:/)[1].trim()
-        //                 env.TAG = version
-        //                 //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
-        //                 //docker에 동적으로 tag를 지정하기 위해 사용했다.
-        //                 sh "echo TAG=$version >> .env"
-        //                 sh "cat .env"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Setup Environment') {
+            steps {
+                dir("${env.WORKSPACE}/back"){
+                    script {
+                        sh "ls . -al"
+                        sh "chmod +x ./gradlew"
+                        def version_value = sh(returnStdout: true, script: "./gradlew properties -q | grep 'version:'").trim()
+                        version = version_value.split(/:/)[1].trim()
+                        env.TAG = version
+                        //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
+                        //docker에 동적으로 tag를 지정하기 위해 사용했다.
+                        sh "echo TAG=$version >> .env"
+                        sh "cat .env"
+                    }
+                }
+            }
+        }
         stage("Copy Env") {
             steps{
                 script{
@@ -93,8 +93,7 @@ pipeline {
         }
         stage("Tag and Push") {
             steps {
-                script {
-                    // Docker 이미지 태그 및 푸시
+                withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh "docker-compose -f back/docker-compose.yml push"
                 }
             }
@@ -112,7 +111,7 @@ pipeline {
                     component.each{entry ->
                         if(entry.value&&entry.key!="redis"){
                             def var = entry.key
-                            sh "docker compose -p test-server pull ${var.toLowerCase()}"
+                            sh "docker-compose -f back/docker-compose.yml -p develop-server pull ${var.toLowerCase()}"
                         }
                     }
                 }
@@ -125,11 +124,11 @@ pipeline {
                         if(entry.value){
                             def var = entry.key
                             try {
-                                sh "docker compose -p test-server up -d ${var.toLowerCase()}"
+                                sh "docker-compose -f back/docker-compose.yml -p develop-server up -d ${var.toLowerCase()}"
                             } catch (Exception e) {
                                 // 'docker compose up -d' 명령이 실패한 경우
                                 echo "Failed to up. Starting 'docker compose start'..."
-                                sh "docker compose -p test-server restart ${var.toLowerCase()}"
+                                sh "docker-compose -f back/docker-compose.yml -p develop-server restart ${var.toLowerCase()}"
                             }
                         }
                     }

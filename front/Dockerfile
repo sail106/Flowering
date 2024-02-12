@@ -1,15 +1,19 @@
-FROM node:lts-alpine as builder
+# 기존 멀티 스테이지 빌드의 builder 단계 제거 (필요에 따라)
+FROM node:lts-alpine
 
 WORKDIR /front
 
-ENV PATH /front/node_modules/.bin:$PATH
+# package.json과 package-lock.json을 먼저 복사
+COPY package*.json ./
 
-COPY package.json /front/package.json
+# 프로젝트 의존성 설치
+RUN npm install
 
-# 앱 소스 복사
+# 프로젝트 소스 복사
 COPY . .
 
-RUN npm install
-RUN npm install react-scripts@3.0.1 -g
+# 환경변수 PATH 설정 (이미 설정되어 있음)
+ENV PATH /front/node_modules/.bin:$PATH
 
+# 애플리케이션 실행
 CMD ["npm", "start"]
