@@ -17,7 +17,7 @@ pipeline {
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
-        GITLAB_CREDENTIALS_ID = "GitLab-access-token" // GitLab 크리덴셜 ID 추가
+        GITLAB_CREDENTIALS_ID = "leikra44" // GitLab 크리덴셜 ID 추가
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
@@ -37,16 +37,16 @@ pipeline {
                 }
             }
         }
-        // stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
-        //     steps {
-        //         checkout scm: [
-        //             $class: 'GitSCM',
-        //             branches: [[name: '*/develop']],
-        //             extensions: [],
-        //             userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}.git"]]
-        //         ]
-        //     }
-        // }
+        stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+            steps {
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}.git"]]
+                ]
+            }
+        }
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back"){
