@@ -34,7 +34,6 @@ const LoginForm = () => {
 
     if (isAuthenticated === true) {
       dispatch(UserInfo(info)).then((response) => {
-        console.log('상세정보조회' + response)
       }).catch((error) => {
         console.log('error' + error)
       })
