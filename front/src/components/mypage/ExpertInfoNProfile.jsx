@@ -88,7 +88,7 @@ const ExpertInfoNProfile = () => {
 
   const [consultantData, setConsultantData] = useState(); // 상태 초기화
   const accessToken = useSelector(state => state.auth.logonUser.access_token);
-
+console.log('ppp')
   const mydata = async () => {
 
     const config = {
@@ -99,6 +99,7 @@ const ExpertInfoNProfile = () => {
     };
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      console.log(baseurl)
       // const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
       const response = await axios.get(baseurl + "consultant/myinfo", config);
       setConsultantData(response.data.data_body); // 데이터를 상태에 저장
@@ -106,7 +107,9 @@ const ExpertInfoNProfile = () => {
       console.error("Failed to update user info:", error);
     }
   };
+
   useEffect(() => {
+    console.log('usee')
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
 
@@ -119,7 +122,7 @@ const ExpertInfoNProfile = () => {
         <hr></hr>
         <NickName>BIBI</NickName>
         <Body>
-          <Half>{consultantData.simple_introduce}</Half>
+          <Half>{consultantData?.simple_introduce??''}</Half>
         </Body>
         <ButtonDiv>
           <Link to={`/expertsprofileregistration`} reloadDocument>
