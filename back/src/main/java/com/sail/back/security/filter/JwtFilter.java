@@ -1,6 +1,6 @@
 package com.sail.back.security.filter;
 
-import com.sail.back.security.model.repository.UnsafeTokenRepository;
+
 import com.sail.back.security.utils.JwtUtils;
 
 import com.sail.back.user.exception.UserErrorCode;
