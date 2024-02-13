@@ -77,7 +77,7 @@ pipeline {
                     // sh 'cp back/secure-settings/.env front/'
                     // sh 'cp .env front/'
                     sh 'ls front -al'
-                    sh 'cat .env'
+                    sh 'cat /front/.env'
                 }
             }
         }
