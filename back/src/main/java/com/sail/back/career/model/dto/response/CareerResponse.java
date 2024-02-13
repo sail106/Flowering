@@ -29,4 +29,12 @@ public class CareerResponse {
             .startDateOfEmployment(career.getStartDateOfEmployment())
             .build();
     }
+
+    public Career toEntity(){
+        return Career.builder()
+                .workplace(this.getWorkplace())
+                .endDateOfEmployment(this.getEndDateOfEmployment())
+                .startDateOfEmployment(this.getStartDateOfEmployment())
+                .build();
+    }
 }

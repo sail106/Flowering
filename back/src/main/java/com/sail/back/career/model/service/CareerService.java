@@ -27,6 +27,8 @@ public class CareerService {
         Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
         Career career = request.toEntity(consultant);
+        consultant.addcareers(career);
+
         careerRepository.save(career);
         return CareerResponse.from(career);
     }
