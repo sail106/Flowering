@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "5442:5442"
     networks:
       - jenkins-network
     volumes:
@@ -57,16 +57,6 @@ services:
     ports:
       - "6379:6379"
 
-  openvidu:
-    container_name: openvidu
-    image: openvidu/openvidu-dev:2.29.0
-    restart: unless-stopped
-    ports:
-      - "4443:4443"
-    environment:
-      - OPENVIDU_SECRET=MY_SECRET
-    networks:
-      - jenkins-network
 
 networks:
   jenkins-network:
