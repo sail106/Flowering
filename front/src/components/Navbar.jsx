@@ -1,10 +1,12 @@
+import { logoutUser } from "../store/authSlice";
+
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
 import isPropValid from "@emotion/is-prop-valid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const NavBox = styled.div.withConfig({
@@ -75,6 +77,13 @@ const Navbar = () => {
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [textColor, setTextColor] = useState("black");
   const location = useLocation();
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state);
+
+  const handleLogout = async () => {
+    // 로그아웃 누르면 JWT토큰 만료 + 리덕스 초기화
+    dispatch(logoutUser())
+  }
   // const handleLogout = () => {
   //   console.log('로그1아웃')
   //   const state = useSelector((state) => state); 
@@ -137,7 +146,7 @@ const Navbar = () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, [location]);
-
+  
   return (
     <NavBox backgroundColor={backgroundColor} textColor={textColor}>
       <MyLink to="/">Flowering</MyLink>
@@ -160,7 +169,7 @@ const Navbar = () => {
       </NavMenu>
       <NavMenu2>
         {isAuthenticated ? (
-          <Link to="/" reloadDocument>
+          <Link to="/" reloadDocument onClick={handleLogout}>
             Logout
           </Link>
         ) : (
