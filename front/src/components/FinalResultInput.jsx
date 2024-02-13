@@ -170,7 +170,12 @@ const FinalresultInput = () => {
         <InputSet>
           <H3>피부 상태 |</H3>
           <Put>
-            <Input width={"1175px"} value={skinCondition} onChange={(e) => handleInputChange(e, setSkinCondition)} placeholder="피부상태를 입력하세요" />
+            <Input
+              width="1175px"
+              value={skinCondition}
+              placeholder="피부상태를 입력하세요"
+              onChange={(e) => handleInputChange(e, setSkinCondition)}
+            />
           </Put>
         </InputSet>
         <Margin2 />
@@ -181,10 +186,10 @@ const FinalresultInput = () => {
           <H3>아침 :</H3>
           <Put>
             <Input
-              width={"1215px"}
+              width="1215px"
               value={morningSkincareRoutine}
-              onChange={(e) => handleInputChange(e, setMorningSkincareRoutine)}
               placeholder="아침 스킨케어 루틴을 입력하세요"
+              onChange={(e) => handleInputChange(e, setMorningSkincareRoutine)}
             />
           </Put>
         </InputSet>
@@ -192,10 +197,10 @@ const FinalresultInput = () => {
           <H3>저녁 :</H3>
           <Put>
             <Input
-              width={"1215px"}
+              width="1215px"
               value={eveningSkincareRoutine}
-              onChange={(e) => handleInputChange(e, setEveningSkincareRoutine)}
               placeholder="저녁 스킨케어 루틴을 입력하세요"
+              onChange={(e) => handleInputChange(e, setEveningSkincareRoutine)}
             />
           </Put>
         </InputSet>
@@ -213,51 +218,95 @@ const FinalresultInput = () => {
         <InputSet>
           <H3>얼굴 유형 |</H3>
           <Put>
-            <Input width={"1175px"} value={faceType} onChange={(e) => handleInputChange(e, setFaceType)} placeholder="얼굴 유형을 입력하세요" />
+            <Input
+              width="1175px"
+              value={faceType}
+              onChange={(e) => handleInputChange(e, setFaceType)}
+              placeholder="얼굴 유형을 입력하세요" 
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>얼굴 분위기 |</H3>
           <Put>
-            <Input width={"1160px"} value={faceMood} onChange={(e) => handleInputChange(e, setFaceMood)} placeholder="얼굴 분위기를 입력하세요" />
+            <Input
+              width={"1160px"}
+              value={faceMood}
+              placeholder="얼굴 분위기를 입력하세요"
+              onChange={(e) => handleInputChange(e, setFaceMood)}
+            />
           </Put>
         </InputSet>
         <H3>전문가 솔루션</H3>
-        <ReviewInput placeholder="솔루션을 입력해주세요" value={makeupSolution} onChange={(e) => handleInputChange(e, setMakeupSolution)} />
+        <ReviewInput
+          value={makeupSolution}
+          placeholder="솔루션을 입력해주세요"
+          onChange={(e) => handleInputChange(e, setMakeupSolution)}
+        />
         <InputSet>
           <H3>피부 메이크업 :</H3>
           <Put>
-            <Input width={"1140px"} value={faceMakeup} onChange={(e) => handleInputChange(e, setFaceMakeup)} placeholder="방법을 입력하세요" />
+            <Input
+              width="1140px"
+              value={faceMakeup}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setFaceMakeup)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>아이 메이크업 :</H3>
           <Put>
-            <Input width={"1140px"} value={eyeMakeup} onChange={(e) => handleInputChange(e, setEyeMakeup)} placeholder="방법을 입력하세요" />
+            <Input
+              width={"1140px"}
+              value={eyeMakeup}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setEyeMakeup)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>립 메이크업 :</H3>
           <Put>
-            <Input width={"1160px"} value={lipMakeup} onChange={(e) => handleInputChange(e, setLipMakeup)} placeholder="방법을 입력하세요" />
+            <Input
+              width="1160px"
+              value={lipMakeup}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setLipMakeup)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>블러셔 :</H3>
           <Put>
-            <Input width={"1200px"} value={blusher} onChange={(e) => handleInputChange(e, setBlusher)} placeholder="방법을 입력하세요" />
+            <Input
+              width="1200px"
+              value={blusher}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setBlusher)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>쉐이딩 :</H3>
           <Put>
-            <Input width={"1200px"} value={shading} onChange={(e) => handleInputChange(e, setShading)} placeholder="방법을 입력하세요" />
+            <Input
+              width="1200px"
+              value={shading}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setShading)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>하이라이팅 :</H3>
           <Put>
-            <Input width={"1165px"} value={highlighting} onChange={(e) => handleInputChange(e, setHighlighting)} placeholder="방법을 입력하세요" />
+            <Input
+              width="1165px"
+              value={highlighting}
+              placeholder="방법을 입력하세요"
+              onChange={(e) => handleInputChange(e, setHighlighting)}
+            />
           </Put>
         </InputSet>
         <Margin2 />
@@ -275,17 +324,31 @@ const FinalresultInput = () => {
         <InputSet>
           <H3>헤어 컬러 |</H3>
           <Put>
-            <Input width={"1175px"} value={hairColor} onChange={(e) => handleInputChange(e, setHairColor)} placeholder="헤어 컬러를 입력하세요" />
+            <Input
+              width="1175px"
+              value={hairColor}
+              placeholder="헤어 컬러를 입력하세요"
+              onChange={(e) => handleInputChange(e, setHairColor)}
+            />
           </Put>
         </InputSet>
         <InputSet>
           <H3>헤어 스타일 |</H3>
           <Put>
-            <Input width={"1160px"} value={hairStyle} onChange={(e) => handleInputChange(e, setHairStyle)} placeholder="헤어 스타일을 입력하세요" />
+            <Input
+              width="1160px"
+              value={hairStyle}
+              placeholder="헤어 스타일을 입력하세요"
+              onChange={(e) => handleInputChange(e, setHairStyle)}
+            />
           </Put>
         </InputSet>
         <H3>전문가 솔루션</H3>
-        <ReviewInput placeholder="솔루션을 입력해주세요" value={hairstyleSolution} onChange={(e) => handleInputChange(e, setHairstyleSolution)} />
+        <ReviewInput
+          value={hairstyleSolution}
+          placeholder="솔루션을 입력해주세요"
+          onChange={(e) => handleInputChange(e, setHairstyleSolution)}
+        />
         <Margin2 />
         <ButtonContainer>
           <MyButton1>임시저장</MyButton1>
