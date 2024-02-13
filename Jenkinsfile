@@ -98,6 +98,7 @@ pipeline {
                 }
             }
         }
+
         stage('Prune old images'){
             steps{
                 script{
@@ -105,6 +106,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Pull') {
             steps {
                 script {

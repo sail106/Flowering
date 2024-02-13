@@ -3,6 +3,7 @@ package com.sail.back.consultant.model.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.sail.back.career.model.dto.response.CareerResponse;
 import com.sail.back.career.model.entity.Career;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.hashtag.model.dto.response.HashTagResponse;
@@ -36,7 +37,8 @@ public class ConsultantResponse {
     private UserResponse userResponse;
     private double star;
     private int reviewnum;
-    private List<HashTagResponse> hashTags = new ArrayList<>();
+    private List<HashTagResponse> hashTagsResponses = new ArrayList<>();
+    private List<CareerResponse> careerResponses = new ArrayList<>();
 
 
     public Consultant toEntity() {
@@ -47,7 +49,8 @@ public class ConsultantResponse {
                 .simple_introduce(this.simpleIntroduce)
                 .self_introduce(this.selfIntroduce)
                 .starAverage(this.star)
-                .hashTags( this.hashTags.stream().map(HashTagResponse::toEntity).collect(Collectors.toList()))
+                .hashTags( this.hashTagsResponses.stream().map(HashTagResponse::toEntity).collect(Collectors.toList()))
+                .careers(this.careerResponses.stream().map(CareerResponse::toEntity).collect(Collectors.toList()))
                 .build();
     }
 }
