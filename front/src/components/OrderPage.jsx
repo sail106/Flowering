@@ -181,7 +181,7 @@ const Order = () => {
 
   const { selectedTime, selectedDate } = useSelector((state) => state.selected);
   const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
-  const baseurl = import.meta.env.VITE_APP_API_KEY;
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   // alert('dddd' + selectedDate + " " + selectedTime)
 
   useEffect(() => {
@@ -210,15 +210,15 @@ const Order = () => {
         merchant_uid: new Date().getTime(),
         name: "테스트 상품",
         amount: 1,
-        buyer_email: "test@naver.com",
-        buyer_name: "김형민",
+        buyer_email: { email },
+        buyer_name: { name },
         buyer_tel: "010-1234-5678",
         buyer_addr: "서울특별시",
         buyer_postcode: "123-456",
       },
       async (rsp) => {
         try {
-          console.log("first try" + rsp);
+          console.log(rsp);
           const token = access_token; // 여기에 액세스 토큰을 설정합니다.
           const config = {
             headers: {
@@ -228,21 +228,21 @@ const Order = () => {
             },
           };
           console.log("config" + JSON.stringify(config));
-          console.log(`${baseurl}verifyIamport/${rsp.imp_uid}`);
+          console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
           // const { data } = await axios.post('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid );
-          const { data } = await axios.post(`${baseurl}verifyIamport/${rsp.imp_uid}`);
+          const { data } = await axios.post(`${baseurl}verifyIamport/` + rsp.imp_uid);
 
           if (rsp.paid_amount === data.response.amount) {
             console.log("in if");
             try {
-              // const token =  access_token ; // 여기에 액세스 토큰을 설정합니다.
-              // const config = {
-              //     headers: {
-              //         'Authorization': `Bearer ${token}`,
-              //         'Content-Type': 'application/json'
-              //         // 다른 필요한 헤더도 추가할 수 있습니다.
-              //     }
-              // };
+              const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                  // 다른 필요한 헤더도 추가할 수 있습니다.
+                },
+              };
               console.log("emailll" + email);
 
               const response = await axios.post(
