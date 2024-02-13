@@ -35,6 +35,14 @@ pipeline {
                             // 서브모듈 초기화 및 업데이트
                             sh "git submodule update --init --recursive"
                             sh "ls -al"
+
+                            // 현재 디렉토리 위치 출력
+                            sh 'pwd'
+                            // sh "ls back/secure-settings"
+                            // .env 파일 복사
+                            sh 'cp .env ../front/'
+                            // sh 'cp .env front/'
+                            // sh 'ls front -al'
                         }
                     }
                 }
@@ -65,9 +73,10 @@ pipeline {
                     sh 'pwd'
                     sh "ls back/secure-settings"
                     // .env 파일 복사
-                    sh 'cp back/secure-settings/.env front/'
+                    // sh 'cp back/secure-settings/.env front/'
                     // sh 'cp .env front/'
                     sh 'ls front -al'
+                    sh 'cat .env'
                 }
             }
         }
