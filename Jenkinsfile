@@ -28,6 +28,7 @@ pipeline {
                     dir("${env.WORKSPACE}/back/secure-settings") {
                         // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
                         withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                            sh "pwd"
                             sh "ls -al"
                             // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
                             sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
