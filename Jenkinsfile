@@ -21,34 +21,34 @@ pipeline {
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
-        stage('Checkout Submodule with Credentials') {
-            steps {
-                script {
-                    // 서브모듈 디렉토리로 이동
-                    dir("${env.WORKSPACE}/back/secure-settings") {
-                        // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
-                        withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                            sh "pwd"
-                            sh "ls -al"
-                            // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
-                            sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
-                            // 서브모듈 초기화 및 업데이트
-                            sh "git submodule update --init --recursive"
-                            sh "ls -al"
+        // stage('Checkout Submodule with Credentials') {
+        //     steps {
+        //         script {
+        //             // 서브모듈 디렉토리로 이동
+        //             dir("${env.WORKSPACE}/back/secure-settings") {
+        //                 // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
+        //                 withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+        //                     sh "pwd"
+        //                     sh "ls -al"
+        //                     // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
+        //                     sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
+        //                     // 서브모듈 초기화 및 업데이트
+        //                     sh "git submodule update --init --recursive"
+        //                     sh "ls -al"
 
-                            // 현재 디렉토리 위치 출력
-                            sh 'pwd'
-                            // sh "ls back/secure-settings"
-                            // .env 파일 복사
-                            sh 'cp .env /var/jenkins_home/workspace/gitlab/front/'
-                            sh 'cp application-prod.yml /var/jenkins_home/workspace/gitlab/back/src/main/resources/'
-                            // sh 'cp .env front/'
-                            // sh 'ls front -al'
-                        }
-                    }
-                }
-            }
-        }
+        //                     // 현재 디렉토리 위치 출력
+        //                     sh 'pwd'
+        //                     // sh "ls back/secure-settings"
+        //                     // .env 파일 복사
+        //                     sh 'cp .env /var/jenkins_home/workspace/gitlab/front/'
+        //                     sh 'cp application-prod.yml /var/jenkins_home/workspace/gitlab/back/src/main/resources/'
+        //                     // sh 'cp .env front/'
+        //                     // sh 'ls front -al'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         // stage('Checkout GitHub') {
         //     steps {
         //         // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
@@ -67,31 +67,31 @@ pipeline {
         //         }
         //     }
         // }
-        stage("Copy Env") {
-            steps{
-                script{
-                    // 현재 디렉토리 위치 출력
-                    sh 'pwd'
-                    sh "ls back/secure-settings"
-                    // .env 파일 복사
-                    // sh 'cp back/secure-settings/.env front/'
-                    // sh 'cp .env front/'
-                    sh 'ls front -al'
-                    sh 'cat /var/jenkins_home/workspace/gitlab/front/.env'
-                    sh 'cat /var/jenkins_home/workspace/gitlab/back/src/main/resources/application-prod.yml'
-                }
-            }
-        }
-        stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
-            steps {
-                checkout scm: [
-                    $class: 'GitSCM',
-                    branches: [[name: '*/develop']],
-                    extensions: [],
-                    userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}"]]
-                ]
-            }
-        }
+        // stage("Copy Env") {
+        //     steps{
+        //         script{
+        //             // 현재 디렉토리 위치 출력
+        //             sh 'pwd'
+        //             sh "ls back/secure-settings"
+        //             // .env 파일 복사
+        //             // sh 'cp back/secure-settings/.env front/'
+        //             // sh 'cp .env front/'
+        //             sh 'ls front -al'
+        //             sh 'cat /var/jenkins_home/workspace/gitlab/front/.env'
+        //             sh 'cat /var/jenkins_home/workspace/gitlab/back/src/main/resources/application-prod.yml'
+        //         }
+        //     }
+        // }
+        // stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+        //     steps {
+        //         checkout scm: [
+        //             $class: 'GitSCM',
+        //             branches: [[name: '*/develop']],
+        //             extensions: [],
+        //             userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}"]]
+        //         ]
+        //     }
+        // }
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back"){
