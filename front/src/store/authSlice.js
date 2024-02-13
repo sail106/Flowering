@@ -28,7 +28,7 @@ const initialState = {
         birth: '',
         contact: '',
         email: '',
-        imageUrl: '../assets/anon.jpg',
+        imageUrl: '',
         introduction: '',
         consultingFile: '',
         role: '',
@@ -303,10 +303,12 @@ const authSlice = createSlice({
                 state.logonUser.email = action.payload.email;
                 state.logonUser.name = action.payload.name;
                 state.logonUser.nickname = action.payload.nickname;
-                if (action.payload.profile_img_url !== 'undefined') {
+                if (action.payload.profile_img_url !== null) {
                     state.logonUser.imageUrl = action.payload.profile_img_url;
                 }
-                console.log(action.payload.profile_img_url)
+                else{
+                    state.logonUser.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'
+                }
                 // role: action.payload.data
             })
 
