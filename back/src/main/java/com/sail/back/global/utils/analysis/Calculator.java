@@ -178,7 +178,7 @@ public class Calculator {
     // 주어진 함수 function에서 t에서의 미분값을 계산하는 메서드
     private double calculateDerivative(DoubleUnaryOperator function, double t) {
         // 수치적 미분을 사용하여 근사적으로 미분값 계산
-        double delta = 0.0001;
+        double delta = 0.0000001;
         double valueAtT = function.applyAsDouble(t);
         double valueAtTPlusDelta = function.applyAsDouble(t + delta);
         return (valueAtTPlusDelta - valueAtT) / delta;

@@ -33,14 +33,12 @@ import ExpertsProfileDiana from './components/experts/ExpertsProfileDiana';
 import ExpertsProfileRuna from './components/experts/ExpertsProfileRuna';
 import Manager from './components/ManagerPage/Manager';
 import LoginForm from './components/LoginForm';
-import FinalresultInput from './components/consultingresult/FinalresultInput';
 
 import FirstSurveyEnd from './components/FirstSurveyEnd';
 
 import PhotoTest from './components/PhotoTest';
 
 import FinalSurveyResult from './components/FinalSurveyResult';
-import SkinProductCard from './components/consultingresult/SkinProductCard';
 import Orderpage from './components/OrderPage';
 import OrderResult from './components/OrderResult';
 import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
@@ -48,6 +46,7 @@ import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
 import SecondSurveyResult from './components/SecondSurveyResult';
 import FirstSurvey from './components/FirstSurvey';
 import FirstSurveyResult from './components/FirstSurveyResult';
+import FinalresultInput from './components/FinalresultInput';
 
 import SecondSurveyEnd from './components/SecondSurveyEnd';
 function App() {
@@ -91,7 +90,7 @@ function App() {
 					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
 					<Route path='/manager' element={<Manager />} />
 
-					<Route path='/finalresultInput' element={<FinalresultInput />} />
+					<Route path='/finalresultinput' element={<FinalresultInput />} />
 
 					<Route path='/phototest' element={<PhotoTest />} />
 

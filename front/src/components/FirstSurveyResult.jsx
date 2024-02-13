@@ -10,7 +10,7 @@ const FirstSurveyResult = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get('http://i10c106.p.ssafy.io:8080/v1/survey/find/7', {
+				const response = await axios.get('http://i10c106.p.ssafy.io/api/v1/survey/find/7', {
 					headers: {
 						Authorization: `Bearer ${Token.access_token}`,
 					},
