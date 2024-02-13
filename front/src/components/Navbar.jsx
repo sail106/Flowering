@@ -78,7 +78,6 @@ const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
   const location = useLocation();
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state);
 
   const handleLogout = async () => {
     // 로그아웃 누르면 JWT토큰 만료 + 리덕스 초기화

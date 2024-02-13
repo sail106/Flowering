@@ -112,8 +112,9 @@ const EditMyInfo = () => {
       "profile_img_url":url
     };
 
+    const baseurl = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = await axios.patch("http://i10c106.p.ssafy.io/api/v1/users/update", data, config);
+      const response = await axios.patch( baseurl + "users/update", data, config);
       console.log(response.data);
       console.log('성공');
       dispatch(UserInfo(true))

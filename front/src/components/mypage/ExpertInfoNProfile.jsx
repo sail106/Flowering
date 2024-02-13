@@ -113,7 +113,7 @@ console.log('ppp')
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
 
-  console.log(consultantData)
+  // console.log(consultantData.simple_introduce)
 
   return (
     <ConsultingDiv>

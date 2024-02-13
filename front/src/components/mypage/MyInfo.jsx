@@ -66,7 +66,7 @@ const MyButton = () => {
 
 const MyInfo = () => {
   const User = useSelector((state) => state.auth.logonUser);
-
+  console.log(User)
   // 유저 프로필 이미지 사용법
   return (
     <InfoDiv>
