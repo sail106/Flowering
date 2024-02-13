@@ -24,7 +24,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scmGit(
-                        branches: [[name: 'develop']],
+                        branches: [[name: '*/develop']],
                         extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
                         userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
                 )
@@ -56,6 +56,19 @@ pipeline {
         //         ]
         //     }
         // }
+        stage("Copy Env") {
+            steps{
+                script{
+                    // 현재 디렉토리 위치 출력
+                    sh 'pwd'
+                    sh "ls back/secure-settings"
+                    // .env 파일 복사
+                    sh 'cp back/secure-settings/.env front/'
+                    // sh 'cp .env front/'
+                    sh 'ls front -al'
+                }
+            }
+        }
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back"){
@@ -70,19 +83,6 @@ pipeline {
                         sh "echo TAG=$version >> .env"
                         sh "cat .env"
                     }
-                }
-            }
-        }
-        stage("Copy Env") {
-            steps{
-                script{
-                    // 현재 디렉토리 위치 출력
-                    sh 'pwd'
-                    sh 'ls -al'
-                    // .env 파일 복사
-                    sh 'cp back/secure-settings/.env front/'
-                    // sh 'cp .env front/'
-                    sh 'ls front -al'
                 }
             }
         }
