@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserToConsultantRequest {
 
-    private Long id;
+//    private Long id;
+    private String  email;
 
 
 }
