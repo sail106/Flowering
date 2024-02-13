@@ -30,11 +30,6 @@ public class HashTag {
 
     @Column(nullable = false)
     private String workplace;
-//
-//    @Column(nullable = false)
-//    private LocalDate startDateOfEmployment;
-//
-//    private LocalDate endDateOfEmployment;
 
     public HashTagResponse from(HashTag hashTag) {
         return HashTagResponse.builder()

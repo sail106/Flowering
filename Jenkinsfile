@@ -2,13 +2,13 @@ def component = [
     'front': true,
     'back': true,
     'nginx': true,
-    'redis': false
+    'redis': true,
+    'openvidu' : true
 ]
 pipeline {
     agent any
     environment {
         // 환경변수 설정
-                // Docker 이미지 태그 설정
         NGINX_TAG = "latest"
         FRONT_TAG = "v1.0"
         BACK_TAG = "v2.1"
@@ -17,18 +17,56 @@ pipeline {
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
         GITHUB_CREDENTIALS_ID = "Github-access-token"
+        GITLAB_CREDENTIALS_ID = "GitLab-access-token" // GitLab 크리덴셜 ID 추가
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
         stage('Checkout') {
             steps {
-                // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
-                checkout scm: [
-                    $class: 'GitSCM',
-                    branches: [[name: '*/develop']],
-                    extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
-                    userRemoteConfigs: [[credentialsId: 'Github-access-token', url: 'https://github.com/sail106/settings']]
-                ]
+                checkout scmGit(
+                        branches: [[name: '*/develop']],
+                        extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
+                        userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
+                )
+            }
+        }
+        // stage('Checkout GitHub') {
+        //     steps {
+        //         // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
+        //         checkout scm: [
+        //             $class: 'GitSCM',
+        //             branches: [[name: '*/develop']],
+        //             extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
+        //             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
+        //         ]
+        //         script {
+        //             // 서브모듈 초기화 및 업데이트
+        //             sh 'git submodule init'
+        //             sh 'git submodule update'
+        //         }
+        //     }
+        // }
+        // stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+        //     steps {
+        //         checkout scm: [
+        //             $class: 'GitSCM',
+        //             branches: [[name: '*/develop']],
+        //             extensions: [],
+        //             userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}.git"]]
+        //         ]
+        //     }
+        // }
+        stage("Copy Env") {
+            steps{
+                script{
+                    // 현재 디렉토리 위치 출력
+                    sh 'pwd'
+                    sh "ls back/secure-settings"
+                    // .env 파일 복사
+                    sh 'cp back/secure-settings/.env front/'
+                    // sh 'cp .env front/'
+                    sh 'ls front -al'
+                }
             }
         }
         stage('Setup Environment') {
@@ -45,19 +83,6 @@ pipeline {
                         sh "echo TAG=$version >> .env"
                         sh "cat .env"
                     }
-                }
-            }
-        }
-        stage("Copy Env") {
-            steps{
-                script{
-                    // 현재 디렉토리 위치 출력
-                    sh 'pwd'
-                    sh 'ls -al'
-                    // .env 파일 복사
-                    sh 'cp back/secure-settings/.env front/'
-                    // sh 'cp .env front/'
-                    sh 'ls front -al'
                 }
             }
         }
@@ -79,7 +104,7 @@ pipeline {
                     fi
                     '''
                     // Docker Compose를 사용하여 서비스 빌드
-                    sh "docker-compose -f back/docker-compose.yml build"
+                    sh "docker-compose -f back/docker-compose.yml build --no-cache"
                 }
             }
         }
@@ -111,7 +136,7 @@ pipeline {
             steps {
                 script {
                     component.each{entry ->
-                        if(entry.value&&entry.key!="redis"){
+                        if(entry.value&&entry.key!="redis"||entry.value&&entry.key!="openvidu"){
                             def var = entry.key
                             sh "docker-compose -f back/docker-compose.yml -p develop-server pull ${var.toLowerCase()}"
                         }
@@ -138,18 +163,18 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         script {
-    //             def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-    //             def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-    //             mattermostSend (color: 'good',
-    //                     message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
-    //                     endpoint: 'https://meeting.ssafy.com/hooks/',
-    //                     channel: 'C106-Jenkins'
-    //             )
-    //         }
-    //     }
-    // }
+    post {
+        always {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'good',
+                        message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
+                        endpoint: 'https://meeting.ssafy.com/hooks/xnzz7hmewpb4jqugb8eu51refy',
+                        channel: 'C106-jenkins'
+                )
+            }
+        }
+    }
     
 }

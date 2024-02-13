@@ -6,7 +6,6 @@ WORKDIR /front
 # package.json과 package-lock.json을 먼저 복사
 COPY package*.json ./
 
-RUN rm -rf node_modules
 # 프로젝트 의존성 설치
 RUN npm install
 
@@ -17,4 +16,4 @@ COPY . .
 ENV PATH /front/node_modules/.bin:$PATH
 
 # 애플리케이션 실행
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev", "--", "--host"]
