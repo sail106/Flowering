@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
-      <change beforePath="$PROJECT_DIR$/../Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/dto/response/CareerResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/dto/response/CareerResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/entity/Career.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/entity/Career.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/service/CareerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/career/model/service/CareerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/dto/response/ConsultantResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consultant/model/entity/Consultant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/OneToOneVideoChat.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../settings" beforeDir="false" afterPath="$PROJECT_DIR$/../settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" afterDir="false" />
@@ -200,7 +192,7 @@
       <workItem from="1706834989045" duration="10442000" />
       <workItem from="1706944677915" duration="137373000" />
       <workItem from="1707644039770" duration="14143000" />
-      <workItem from="1707701172311" duration="22644000" />
+      <workItem from="1707701172311" duration="23465000" />
     </task>
     <task id="LOCAL-00001" summary="feat: #6 Community 생성 api 작성&#10;- repository 생성&#10;- service 생성&#10;- controller 수정&#10;- request dto 생성&#10;- response dto 생성">
       <option name="closed" value="true" />
