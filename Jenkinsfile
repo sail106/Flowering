@@ -24,6 +24,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: true]], userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]])
+                
+                script {
+                    // 서브모듈 초기화 및 업데이트
+                    sh 'git submodule init'
+                    sh 'git submodule update'
+                }
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [], userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: 'https://lab.ssafy.com/s10-webmobile1-sub2/S10P12C106']]])
+
                 // checkout scmGit(
                 //         branches: [[name: '*/develop']],
                 //         extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
