@@ -297,15 +297,11 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-                console.log('userinfofulll', JSON.stringify(action.payload));
-
-
                  state.logonUser.role = action.payload.role;
                  state.logonUser.id = action.payload.id;
                  state.logonUser.email = action.payload.email;
                  state.logonUser.name = action.payload.name;
                  state.logonUser.nickname = action.payload.nickname;
-
                 // role: action.payload.data
             })
 

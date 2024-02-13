@@ -84,29 +84,7 @@ const Navbar = () => {
     // 로그아웃 누르면 JWT토큰 만료 + 리덕스 초기화
     dispatch(logoutUser())
   }
-  // const handleLogout = () => {
-  //   console.log('로그1아웃')
-  //   const state = useSelector((state) => state); 
-  //   console.log(state,'2222222222222222222222')
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${state.auth.logonUser.access_token}`,
-  //       "Content-Type": "application/json",
-  //       // 다른 필요한 헤더도 추가할 수 있습니다.
-  //     },
-  //   };
-  //   axios
-  //     .post("http://i10c106.p.ssafy.io:8080/v1/auth/logout", config)
-  //     .then((response) => {
-  //       console.log('로그아웃asdasdasdasd')
-  //       // dispatch(signOut(isAuthenticated));
-  //       state.auth.isAuthenticated = false;
-  //       // 로그아웃 성공 시 처리할 작업을 여기에 작성해주세요.
-  //     })
-  //     .catch((error) => {
-  //       // 로그아웃 실패 시 처리할 작업을 여기에 작성해주세요.
-  //     });
-  // };
+
   const checkScroll = () => {
     const currentScrollY = window.scrollY;
     const viewportHeight = window.innerHeight;
@@ -169,7 +147,7 @@ const Navbar = () => {
       </NavMenu>
       <NavMenu2>
         {isAuthenticated ? (
-          <Link to="/" reloadDocument onClick={handleLogout}>
+          <Link to="/" onClick={handleLogout}>
             Logout
           </Link>
         ) : (
