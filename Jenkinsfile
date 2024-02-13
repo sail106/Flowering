@@ -40,7 +40,8 @@ pipeline {
                             sh 'pwd'
                             // sh "ls back/secure-settings"
                             // .env 파일 복사
-                            sh 'cp .env ../front/'
+                            sh 'cp .env /var/jenkins_home/workspace/gitlab/front/'
+                            sh 'cp application-prod.yml /var/jenkins_home/workspace/gitlab/back/src/main/resources/'
                             // sh 'cp .env front/'
                             // sh 'ls front -al'
                         }
