@@ -59,7 +59,7 @@ const Container = styled.div`
   font-size: 25px;
 `;
 
-const PP = styled.p`
+const PP = styled.div`
   margin-top: -50px;
   width: 53%;
 `;
@@ -261,17 +261,21 @@ const ExpertsProfileRegistration = () => {
           },
         };
         const { data } = await axios.get(baseurl + 'consultant/myinfo', config);
+        console.log(data, '나의데이터')
         console.log(data.data_body)
         console.log(data.data_body.simple_introduce)
-        console.log(data.data_body.hash_tags)
+        console.log(data.data_body.hash_tags_responses)
         setSelecteid(data.data_body.consultant_id);
         setShortIntroduction(data.data_body.simple_introduce)
         setDetailedIntroduction(data.data_body.self_introduce)
 
         // setTags(data.data_body.hash_tags.workplace);
         // setTags(data.data_body.hash_tags.map(tag => tag.workplace));
-        setTags(data.data_body.hash_tags.map(tag => ({ id: tag.hashtagId, workplace: tag.workplace })));
-
+        console.log('여기까진 성공')
+        if (data.data_body.hash_tags_responses) {
+          setTags(data.data_body.hash_tags_responses.map(tag => ({ id: tag.hashtagId, workplace: tag.workplace })));
+        }
+  
         // hahstagId
 
       } catch (error) {
@@ -314,7 +318,7 @@ const ExpertsProfileRegistration = () => {
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log(tags)
+      console.log('태그스',tags)
       const body = {
         self_introduce: detailedIntroduction,
         simple_introduce: shortIntroduction,

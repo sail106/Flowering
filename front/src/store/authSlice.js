@@ -28,7 +28,7 @@ const initialState = {
         birth: '',
         contact: '',
         email: '',
-        imageUrl: '',
+        imageUrl: '../assets/anon.jpg',
         introduction: '',
         consultingFile: '',
         role: '',
@@ -57,7 +57,7 @@ export const UserInfo = createAsyncThunk(
     async ({ info }, { rejectWithValue, getState }) => {
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
-
+            console.log('userinfo')
             const state = getState(); // 전체 Redux 상태를 얻습니다.
             const config = {
                 headers: {
@@ -303,12 +303,16 @@ const authSlice = createSlice({
                 state.logonUser.email = action.payload.email;
                 state.logonUser.name = action.payload.name;
                 state.logonUser.nickname = action.payload.nickname;
-                state.logonUser.imageUrl = action.payload.profile_img_url;
+                if (action.payload.profile_img_url !== 'undefined') {
+                    state.logonUser.imageUrl = action.payload.profile_img_url;
+                }
+                console.log(action.payload.profile_img_url)
                 // role: action.payload.data
             })
 
             .addCase(UserInfo.rejected, (state) => {
                 state.status = 'failed';
+                console.log('실패!')
             });
     }
 

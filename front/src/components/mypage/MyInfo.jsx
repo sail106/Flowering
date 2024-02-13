@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import BIBI from "../../assets/BIBI.png";
 import { useSelector } from "react-redux";
 import { Co2Sharp } from "@mui/icons-material";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 const InfoDiv = styled.span`
   margin: 0% 12%;
@@ -72,18 +68,9 @@ const MyInfo = () => {
   const User = useSelector((state) => state.auth.logonUser);
 
   // 유저 프로필 이미지 사용법
-  const storage = getStorage();
-  const [imageUrl, setImageUrl] = useState(null);
-  const fetchImageUrl = async () => {
-    const storageRef = ref(storage, `${User.id}_profile`);
-    const url = await getDownloadURL(storageRef);
-    setImageUrl(url); // 이미지 URL 상태 업데이트
-  };
-  
-  fetchImageUrl();
   return (
     <InfoDiv>
-      <MyImg src={imageUrl} alt="프로필 사진" />
+      <MyImg src={User.imageUrl} alt="프로필 사진" />
       <ProfileDiv>
         <LeftDiv>
           <StyledP>이{"     "}름</StyledP>
