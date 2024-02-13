@@ -28,10 +28,22 @@ pipeline {
                     dir("${env.WORKSPACE}/back/secure-settings") {
                         // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
                         withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                            sh "pwd"
+                            sh "ls -al"
                             // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
                             sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
                             // 서브모듈 초기화 및 업데이트
                             sh "git submodule update --init --recursive"
+                            sh "ls -al"
+
+                            // 현재 디렉토리 위치 출력
+                            sh 'pwd'
+                            // sh "ls back/secure-settings"
+                            // .env 파일 복사
+                            sh 'cp .env /var/jenkins_home/workspace/gitlab/front/'
+                            sh 'cp application-prod.yml /var/jenkins_home/workspace/gitlab/back/src/main/resources/'
+                            // sh 'cp .env front/'
+                            // sh 'ls front -al'
                         }
                     }
                 }
@@ -62,9 +74,11 @@ pipeline {
                     sh 'pwd'
                     sh "ls back/secure-settings"
                     // .env 파일 복사
-                    sh 'cp back/secure-settings/.env front/'
+                    // sh 'cp back/secure-settings/.env front/'
                     // sh 'cp .env front/'
                     sh 'ls front -al'
+                    sh 'cat /var/jenkins_home/workspace/gitlab/front/.env'
+                    sh 'cat /var/jenkins_home/workspace/gitlab/back/src/main/resources/application-prod.yml'
                 }
             }
         }
