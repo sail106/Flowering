@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import Input from "./common/Input";
 import { IoMdSearch } from "react-icons/io";
 import styled from "styled-components";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+import Input from "./common/Input";
 import { ButtonBox } from "./common/Button";
 import Search from "./modals/Search";
-import axios from "axios";
 import ProductList from "./FinalResultInput/ProductList";
-import { useSelector } from "react-redux";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -29,12 +30,12 @@ const ButtonContainer = styled.div`
   margin-right: 100px;
 `;
 
-const Consulting1stepresultpage = styled.div`
+const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 5%;
+  margin-top: 10%;
 `;
 
 const ConsultingContent = styled.div`
@@ -42,9 +43,6 @@ const ConsultingContent = styled.div`
   flex-direction: column;
 `;
 
-const Margin = styled.div`
-  margin: 10px;
-`;
 const Margin2 = styled.div`
   margin-top: 50px;
 `;
@@ -166,9 +164,8 @@ const FinalresultInput = () => {
   };
 
   return (
-    <Consulting1stepresultpage>
+    <Card>
       <ConsultingContent>
-        <Margin />
         <H2>스킨케어</H2>
         <InputSet>
           <H3>피부 상태 |</H3>
@@ -212,7 +209,6 @@ const FinalresultInput = () => {
           </Put>
         </ModalBox>
         <Margin2 />
-        <Margin />
         <H2>메이크업</H2>
         <InputSet>
           <H3>얼굴 유형 |</H3>
@@ -275,7 +271,6 @@ const FinalresultInput = () => {
         </ModalBox>
         {/* <ProductList></ProductList> */}
         <Margin2 />
-        <Margin />
         <H2>헤어스타일</H2>
         <InputSet>
           <H3>헤어 컬러 |</H3>
@@ -298,7 +293,7 @@ const FinalresultInput = () => {
         </ButtonContainer>
         <Margin2 />
       </ConsultingContent>
-    </Consulting1stepresultpage>
+    </Card>
   );
 };
 
