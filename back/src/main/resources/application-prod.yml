@@ -20,14 +20,9 @@ spring:
     auto-commit: true
     pool-name: DevLogHikariCP
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MariaDB53Dialect
-    show-sql: true
     hibernate:
       ddl-auto: create-drop
-    properties:
-      hibernate:
-        format_sql: true
+
   data:
     redis:
       host: redis
