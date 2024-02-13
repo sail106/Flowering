@@ -3,7 +3,6 @@ def component = [
     'back': true,
     'nginx': true,
     'redis': true,
-    'openvidu' : true
 ]
 pipeline {
     agent any
