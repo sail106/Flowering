@@ -35,7 +35,7 @@ const initialState = {
         isMic: 'false',
         isCam: 'false',
         access_token: '',
-        id:'', //pk
+        id: '', //pk
         // refresh_token: '',
     },
     selectedid: '',
@@ -48,7 +48,7 @@ const initialState = {
 
     // server status
     status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
-    
+
 }
 
 // actions
@@ -81,7 +81,7 @@ const initialState = {
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
-    async ({ info }, { rejectWithValue,getState }) => { 
+    async ({ info }, { rejectWithValue, getState }) => {
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
@@ -94,7 +94,7 @@ export const UserInfo = createAsyncThunk(
                 }
             };
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-            const response = await axios.get(baseurl +`users/info`, config);
+            const response = await axios.get(baseurl + `users/info`, config);
             const res = response.data.data_body
 
             // saveToken(token);
@@ -121,9 +121,9 @@ export const loginUser = createAsyncThunk(
 
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
-            console.log(loginrequest.email+" "+loginrequest.password)
+            console.log(loginrequest.email + " " + loginrequest.password)
             // start
-            const response = await axios.post(baseurl +'auth/login', loginrequest);
+            const response = await axios.post(baseurl + 'auth/login', loginrequest);
             const token = response.data.data_body
             // saveToken(token);
             return token;
@@ -134,7 +134,7 @@ export const loginUser = createAsyncThunk(
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
-        
+
     }
 );
 
@@ -269,13 +269,13 @@ const authSlice = createSlice({
         },
 
         setRole: (state, { payload }) => {
-            console.log('settrolll'+payload)
+            console.log('settrolll' + payload)
             state.logonUser.role = payload
         },
         setSelectedId: (state, { payload }) => {
             console.log('settt  ')
             state.selectedid = payload;
-          },
+        },
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
@@ -299,7 +299,7 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log('fullllll'+action.payload.access_token)
+                console.log('fullllll' + action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -331,12 +331,12 @@ const authSlice = createSlice({
                 console.log('userinfofulll', JSON.stringify(action.payload));
 
 
-                 state.logonUser.role = action.payload.role;
-                 state.logonUser.id = action.payload.id;
-                 state.logonUser.email = action.payload.email;
-                 state.logonUser.name = action.payload.name;
-                 state.logonUser.nickname = action.payload.nickname;
-
+                state.logonUser.role = action.payload.role;
+                state.logonUser.id = action.payload.id;
+                state.logonUser.email = action.payload.email;
+                state.logonUser.name = action.payload.name;
+                state.logonUser.nickname = action.payload.nickname;
+                state.logonUser.imageUrl = action.payload.profile_img_url;
                 // role: action.payload.data
             })
 
@@ -348,7 +348,7 @@ const authSlice = createSlice({
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole, setname,setSelectedId } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer
