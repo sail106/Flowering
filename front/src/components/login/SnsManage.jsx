@@ -1,7 +1,9 @@
-import styled from "styled-components";
 import naverFavicon from "../../assets/naverFavicon.jpg";
 import kakaoFavicon from "../../assets/kakaoFavicon.png";
 import googleFavicon from "../../assets/googleFavicon.jpg";
+
+import styled from "styled-components";
+import axios from "axios";
 
 const SnsWordContainer = styled.p`
   color: #98A2B3;
@@ -13,7 +15,6 @@ const SnsWordContainer = styled.p`
 `;
 
 const ImgContainer = styled.div`
-  margin-left: 70px;
   padding-bottom: 40px;
 `;
 
@@ -22,6 +23,7 @@ const LogoImg = styled.img`
   width: 40px;
   height: 40px;
   margin-left: 40px;
+  cursor: pointer;
 `;
 
 const DashSpan = styled.span`
@@ -30,14 +32,29 @@ const DashSpan = styled.span`
   color: #D0D5DD;
 `;
 
+const LogoHandler = async () => {
+  const response = await axios.get('http://i10c106.p.ssafy.io/api/oauth2/authorization/naver')
+  console.log("LogoHandler!");
+  console.log("response : ", response);
+}
+
 const SnsManage = () => {
   return (
     <>
       <SnsWordContainer><DashSpan>——————</DashSpan> SNS 계정으로 로그인 <DashSpan>——————</DashSpan></SnsWordContainer>
       <ImgContainer>
-        <a href="#"><LogoImg src={naverFavicon} alt="네이버 로고" /></a>
-        <a href="#"><LogoImg src={kakaoFavicon} alt="카카오 로고" /></a>
-        <a href="#"><LogoImg src={googleFavicon} alt="구글 로고" /></a>
+        <LogoImg
+          src={naverFavicon} alt="네이버 로고"
+          onClick={LogoHandler}
+        />
+        <LogoImg
+          src={kakaoFavicon} alt="카카오 로고"
+          onClick={LogoHandler}
+        />
+        <LogoImg
+          src={googleFavicon} alt="구글 로고"
+          onClick={LogoHandler}
+        />
       </ImgContainer>
     </>
     

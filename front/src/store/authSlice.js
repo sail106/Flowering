@@ -51,33 +51,6 @@ const initialState = {
 
 }
 
-// actions
-// signup actions
-// export const signUpMember = createAsyncThunk(
-//     'auth/signup',
-//     async (userInfo, { rejectWithValue }) => {
-//         try {
-//             let response
-
-//             if (userInfo.role === CUSTOMER) {
-//                 response = await Axios.post('customers', userInfo);
-//             } else if (userInfo.role === CONSULTANT) {
-//                 response = await Axios.post('consultants', userInfo);
-//             }
-//             return response.status;
-//         } catch (err) {
-//             let errRes = 400;
-//             if (err.status < 500) {
-//                 errRes = 400;
-//             } else if (err.status < 600) {
-//                 errRes = 500;
-//             }
-//             return errRes;
-//         }
-//     }
-// )
-
-
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
@@ -121,7 +94,6 @@ export const loginUser = createAsyncThunk(
 
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
-            console.log(loginrequest.email + " " + loginrequest.password)
             // start
             const response = await axios.post(baseurl + 'auth/login', loginrequest);
             const token = response.data.data_body
@@ -256,7 +228,6 @@ const authSlice = createSlice({
                 role: '',
                 imageUrl: '/images/default/avatar01.png',
             }
-            console.log('isauthentictedddd')
             state.isAuthenticated = false;
             deleteToken();
         },
@@ -299,7 +270,6 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log('fullllll' + action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -328,9 +298,6 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-                console.log('userinfofulll', JSON.stringify(action.payload));
-
-
                 state.logonUser.role = action.payload.role;
                 state.logonUser.id = action.payload.id;
                 state.logonUser.email = action.payload.email;
