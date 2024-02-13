@@ -77,7 +77,8 @@ pipeline {
                     // sh 'cp back/secure-settings/.env front/'
                     // sh 'cp .env front/'
                     sh 'ls front -al'
-                    sh 'cat /front/.env'
+                    sh 'cat /var/jenkins_home/workspace/gitlab/front/.env'
+                    sh 'cat /var/jenkins_home/workspace/gitlab/back/src/main/resources/application-prod.yml'
                 }
             }
         }
