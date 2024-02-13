@@ -24,7 +24,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scmGit(
-                        branches: [[name: '*/develop']],
+                        branches: [[name: 'develop']],
                         extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
                         userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
                 )
