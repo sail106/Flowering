@@ -95,7 +95,7 @@ pipeline {
                     fi
                     '''
                     // Docker Compose를 사용하여 서비스 빌드
-                    sh "docker-compose -f back/docker-compose.yml build"
+                    sh "docker-compose -f back/docker-compose.yml build --no-cache"
                 }
             }
         }
