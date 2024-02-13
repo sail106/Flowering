@@ -1,5 +1,6 @@
 package com.sail.back.consultant.model.entity;
 
+import com.sail.back.career.model.entity.Career;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantResponse;
@@ -41,6 +42,10 @@ public class Consultant {
     private List<HashTag> hashTags = new ArrayList<>();
 
     @Builder.Default
+    @OneToMany(mappedBy = "consultant", cascade = CascadeType.ALL)
+    private List<Career> careers = new ArrayList<>();
+
+    @Builder.Default
     private double starAverage = 0.0;
 
     @Builder.Default
@@ -58,6 +63,11 @@ public class Consultant {
     public void addHashTag(HashTag hashTag) {
         hashTags.add(hashTag);
         hashTag.setConsultant(this);
+    }
+
+    public void addcareers(Career career) {
+        careers.add(career);
+        career.setConsultant(this);
     }
 
 //
@@ -113,8 +123,8 @@ public class Consultant {
                 .simpleIntroduce(this.simple_introduce)
                 .star(this.getStarAverage())
                 .reviewnum(this.getReviewnum())
-                .hashTags(this.getHashTags().stream().map(HashTag::toHashTagResponse).collect(Collectors.toList()))
-
+                .hashTagsResponses(this.getHashTags().stream().map(HashTag::toHashTagResponse).collect(Collectors.toList()))
+                .careerResponses(this.getCareers().stream().map(Career::toresponse).collect(Collectors.toList()))
                 .build();
     }
 
