@@ -9,9 +9,10 @@ import CenterContainer from "../common/CenterContainer";
 import Button from "../common/Button";
 
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UserInfo } from "../../store/authSlice";
 
 const SignupRequired = () => {
   const [name, setName] = useState("");
@@ -20,11 +21,16 @@ const SignupRequired = () => {
   const [gender, setGender] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userInfo = useSelector((state) => state.auth.userInfo);
 
-  console.log('access' + accessToken)
-  console.log('alllll' + name+" "+nickname+" "+gender+" "+birthdate.slice(0, 4))
+  useEffect(() => {
+    if(userInfo){
+      console.log("userInfo updated : ", userInfo)
+    }
+  }, [userInfo])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,11 +48,8 @@ const SignupRequired = () => {
         "Content-Type": "application/json",
       },
     };
-    console.log("accessToken : ", accessToken);
-    console.log("isAuthenticated : ", isAuthenticated);
     try {
       // 서버로 데이터 전송
-      // post? 여기서 토큰도 함께 보내줘야할 것 같다.
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
       
       const response = await axios.patch(
@@ -55,9 +58,11 @@ const SignupRequired = () => {
         userData,
         config
       );
-      console.log(response.data);
+      // console.log(response.data);
+      dispatch(UserInfo())
       alert("회원가입 완료!");
-      navigate("/");
+      console.log("userInfo : ", userInfo);
+      // navigate("/");
     } catch (error) {
       console.error("Error occurred:", error);
     }
