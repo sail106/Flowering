@@ -13,7 +13,6 @@ const SnsWordContainer = styled.p`
 `;
 
 const ImgContainer = styled.div`
-  margin-left: 70px;
   padding-bottom: 40px;
 `;
 
