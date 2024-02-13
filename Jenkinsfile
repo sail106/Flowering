@@ -21,41 +21,24 @@ pipeline {
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout GitHub') {
             steps {
-                checkout scmGit(
-                        branches: [[name: '*/develop']],
-                        extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
-                        userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
-                )
+                // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
+                    userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: "https://github.com/sail106/settings"]]
+                ]
+                script {
+                    // 서브모듈 초기화 및 업데이트
+                    sh "ls back/secure-settings"
+                    sh 'git submodule init'
+                    sh 'git submodule update'
+                    sh "ls back/secure-settings"
+                }
             }
         }
-        // stage('Checkout GitHub') {
-        //     steps {
-        //         // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
-        //         checkout scm: [
-        //             $class: 'GitSCM',
-        //             branches: [[name: '*/develop']],
-        //             extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
-        //             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
-        //         ]
-        //         script {
-        //             // 서브모듈 초기화 및 업데이트
-        //             sh 'git submodule init'
-        //             sh 'git submodule update'
-        //         }
-        //     }
-        // }
-        // stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
-        //     steps {
-        //         checkout scm: [
-        //             $class: 'GitSCM',
-        //             branches: [[name: '*/develop']],
-        //             extensions: [],
-        //             userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}.git"]]
-        //         ]
-        //     }
-        // }
         stage("Copy Env") {
             steps{
                 script{
@@ -67,6 +50,16 @@ pipeline {
                     // sh 'cp .env front/'
                     sh 'ls front -al'
                 }
+            }
+        }
+        stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+            steps {
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    extensions: [],
+                    userRemoteConfigs: [[credentialsId: GITLAB_CREDENTIALS_ID, url: "https://lab.ssafy.com/${REPO}"]]
+                ]
             }
         }
         stage('Setup Environment') {
