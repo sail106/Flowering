@@ -23,7 +23,7 @@ public class AdminController {
 
     @PutMapping("/toconsultant")
     public ResponseEntity<MessageUtils> toconsultant(@AuthenticationPrincipal User user, @RequestBody UserToConsultantRequest userToConsultantRequest) {
-        System.out.println("toconsult admincontrollerrr"+userToConsultantRequest.getId());
+        System.out.println("toconsult admincontrollerrr"+userToConsultantRequest.getEmail());
         adminService.toConsultant(user,userToConsultantRequest);
         return ResponseEntity.ok().body(MessageUtils.success());
     }

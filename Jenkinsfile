@@ -9,16 +9,16 @@ pipeline {
     agent any
     environment {
         // 환경변수 설정
-        NGINX_TAG = "latest"
-        FRONT_TAG = "v1.0"
-        BACK_TAG = "v2.1"
-        REDIS_TAG = "alpine"
+        NGINX_TAG = 'latest'
+        FRONT_TAG = 'v1.0'
+        BACK_TAG = 'v2.1'
+        REDIS_TAG = 'alpine'
         DOCKER_USER_ID = 'rlagudals0420'
         // Docker Hub 및 GitHub 크리덴셜 ID
-        DOCKER_HUB_CREDENTIALS_ID = "Docker-hub"
-        GITHUB_CREDENTIALS_ID = "Github-access-token"
-        GITLAB_CREDENTIALS_ID = "GitLab-access-token" // GitLab 크리덴셜 ID 추가
-        REPO = "s10-webmobile1-sub2/S10P12C106"
+        DOCKER_HUB_CREDENTIALS_ID = 'Docker-hub'
+        GITHUB_CREDENTIALS_ID = 'Github-access-token'
+        GITLAB_CREDENTIALS_ID = 'GitLab-access-token' // GitLab 크리덴셜 ID 추가
+        REPO = 's10-webmobile1-sub2/S10P12C106'
     }
     stages {
         stage('Checkout Submodule with Credentials') {
@@ -28,22 +28,22 @@ pipeline {
                     dir("${env.WORKSPACE}/back/secure-settings") {
                         // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
                         withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                            sh "pwd"
-                            sh "ls -al"
+                            sh 'pwd'
+                            sh 'ls -al'
                             // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
                             sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
                             // 서브모듈 초기화 및 업데이트
-                            sh "git submodule update --init --recursive"
-                            sh "ls -al"
-
+                            sh 'git submodule update --init --recursive'
+                            sh 'ls -al'
+                            sh 'cat .env'
                             // 현재 디렉토리 위치 출력
                             sh 'pwd'
                             // sh "ls back/secure-settings"
                             // .env 파일 복사
                             sh 'cp .env /var/jenkins_home/workspace/gitlab/front/'
                             sh 'cp application-prod.yml /var/jenkins_home/workspace/gitlab/back/src/main/resources/'
-                            // sh 'cp .env front/'
-                            // sh 'ls front -al'
+                        // sh 'cp .env front/'
+                        // sh 'ls front -al'
                         }
                     }
                 }
@@ -67,12 +67,12 @@ pipeline {
         //         }
         //     }
         // }
-        stage("Copy Env") {
-            steps{
-                script{
+        stage('Copy Env') {
+            steps {
+                script {
                     // 현재 디렉토리 위치 출력
                     sh 'pwd'
-                    sh "ls back/secure-settings"
+                    sh 'ls back/secure-settings'
                     // .env 파일 복사
                     // sh 'cp back/secure-settings/.env front/'
                     // sh 'cp .env front/'
@@ -82,7 +82,7 @@ pipeline {
                 }
             }
         }
-        stage('Checkout GitLab Code') {// GitLab 리포지토리 체크아웃 스테이지 추가
+        stage('Checkout GitLab Code') { // GitLab 리포지토리 체크아웃 스테이지 추가
             steps {
                 checkout scm: [
                     $class: 'GitSCM',
@@ -94,22 +94,22 @@ pipeline {
         }
         stage('Setup Environment') {
             steps {
-                dir("${env.WORKSPACE}/back"){
+                dir("${env.WORKSPACE}/back") {
                     script {
-                        sh "ls . -al"
-                        sh "chmod +x ./gradlew"
+                        sh 'ls . -al'
+                        sh 'chmod +x ./gradlew'
                         def version_value = sh(returnStdout: true, script: "./gradlew properties -q | grep 'version:'").trim()
                         version = version_value.split(/:/)[1].trim()
                         env.TAG = version
                         //이 명령은 현재 작업 디렉토리에 .env 파일을 생성하고, 그 파일 안에 TAG라는 이름의 변수와 그 값을 씀.
                         //docker에 동적으로 tag를 지정하기 위해 사용했다.
                         sh "echo TAG=$version >> .env"
-                        sh "cat .env"
+                        sh 'cat .env'
                     }
                 }
             }
         }
-        stage("Build") {
+        stage('Build') {
             steps {
                 script {
                     // 현재 디렉토리 위치 출력
@@ -125,13 +125,13 @@ pipeline {
                     else
                         echo "docker-compose is already installed."
                     fi
-                    ''' 
+                    '''
                     // Docker Compose를 사용하여 서비스 빌드
-                    sh "docker-compose -f back/docker-compose.yml build --no-cache"
+                    sh 'docker-compose -f back/docker-compose.yml build --no-cache'
                 }
             }
         }
-        stage("Docker Login") {
+        stage('Docker Login') {
             steps {
                 // Docker Hub 크리덴셜을 사용하여 Docker에 로그인
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -139,27 +139,27 @@ pipeline {
                 }
             }
         }
-        stage("Tag and Push") {
+        stage('Tag and Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh "docker-compose -f back/docker-compose.yml push"
+                    sh 'docker-compose -f back/docker-compose.yml push'
                 }
             }
         }
 
-        stage('Prune old images'){
-            steps{
-                script{
-                    sh "docker image prune --filter until=1h"
+        stage('Prune old images') {
+            steps {
+                script {
+                    sh 'docker image prune --filter until=1h'
                 }
             }
         }
-        
+
         stage('Pull') {
             steps {
                 script {
-                    component.each{entry ->
-                        if(entry.value&&entry.key!="redis"||entry.value&&entry.key!="openvidu"){
+                    component.each { entry ->
+                        if (entry.value && entry.key != 'redis' || entry.value && entry.key != 'openvidu') {
                             def var = entry.key
                             sh "docker-compose -f back/docker-compose.yml -p develop-server pull ${var.toLowerCase()}"
                         }
@@ -170,8 +170,8 @@ pipeline {
         stage('Up') {
             steps {
                 script {
-                    component.each{ entry ->
-                        if(entry.value){
+                    component.each { entry ->
+                        if (entry.value) {
                             def var = entry.key
                             try {
                                 sh "docker-compose -f back/docker-compose.yml -p develop-server up -d ${var.toLowerCase()}"
@@ -189,9 +189,9 @@ pipeline {
     post {
         always {
             script {
-                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-                mattermostSend (color: 'good',
+                def Author_ID = sh(script: 'git show -s --pretty=%an', returnStdout: true).trim()
+                def Author_Name = sh(script: 'git show -s --pretty=%ae', returnStdout: true).trim()
+                mattermostSend(color: 'good',
                         message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
                         endpoint: 'https://meeting.ssafy.com/hooks/xnzz7hmewpb4jqugb8eu51refy',
                         channel: 'C106-jenkins'
@@ -199,5 +199,4 @@ pipeline {
             }
         }
     }
-    
 }
