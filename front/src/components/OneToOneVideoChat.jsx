@@ -32,8 +32,8 @@ import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
 import { removeconsultantSessionName } from '../store/consultsessionnameSlice';
-// const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+// const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
