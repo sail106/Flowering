@@ -21,24 +21,40 @@ pipeline {
         REPO = "s10-webmobile1-sub2/S10P12C106"
     }
     stages {
-        stage('Checkout GitHub') {
+        stage('Checkout Submodule with Credentials') {
             steps {
-                // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
-                checkout scm: [
-                    $class: 'GitSCM',
-                    branches: [[name: '*/develop']],
-                    extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
-                    userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: "https://github.com/sail106/settings"]]
-                ]
                 script {
-                    // 서브모듈 초기화 및 업데이트
-                    sh "ls back/secure-settings"
-                    sh 'git submodule init'
-                    sh 'git submodule update'
-                    sh "ls back/secure-settings"
+                    // 서브모듈 디렉토리로 이동
+                    dir("${env.WORKSPACE}/back/secure-settings") {
+                        // GitHub 크리덴셜을 사용하여 서브모듈을 체크아웃
+                        withCredentials([usernamePassword(credentialsId: GITHUB_CREDENTIALS_ID, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                            // 서브모듈 URL 설정 (여기서는 서브모듈의 GitHub URL을 사용)
+                            sh "git config --file=.gitmodules submodule.${env.WORKSPACE}/back/secure-settings.url https://github.com/sail106/settings.git"
+                            // 서브모듈 초기화 및 업데이트
+                            sh "git submodule update --init --recursive"
+                        }
+                    }
                 }
             }
         }
+        // stage('Checkout GitHub') {
+        //     steps {
+        //         // GitHub 크리덴셜을 사용하여 소스 코드 체크아웃
+        //         checkout scm: [
+        //             $class: 'GitSCM',
+        //             branches: [[name: '*/develop']],
+        //             extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
+        //             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: "https://github.com/sail106/settings"]]
+        //         ]
+        //         script {
+        //             // 서브모듈 초기화 및 업데이트
+        //             sh "ls back/secure-settings"
+        //             sh 'git submodule init'
+        //             sh 'git submodule update'
+        //             sh "ls back/secure-settings"
+        //         }
+        //     }
+        // }
         stage("Copy Env") {
             steps{
                 script{
