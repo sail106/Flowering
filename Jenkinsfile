@@ -28,7 +28,7 @@ pipeline {
                     $class: 'GitSCM',
                     branches: [[name: '*/develop']],
                     extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
-                    userRemoteConfigs: [[credentialsId: 'github-access-token', url: 'https://github.com/sail106/settings']]
+                    userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
                 ]
                 script {
                     // 서브모듈 초기화 및 업데이트
