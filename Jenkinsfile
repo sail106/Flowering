@@ -23,11 +23,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scmGit(
-                        branches: [[name: '*/develop']],
-                        extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
-                        userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
-                )
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: true]], userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings.git']]])
+                // checkout scmGit(
+                //         branches: [[name: '*/develop']],
+                //         extensions: [submodule(parentCredentials: true, trackingSubmodules: true)],
+                //         userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings.git']]
+                // )
             }
         }
         // stage('Checkout GitHub') {
@@ -37,7 +38,7 @@ pipeline {
         //             $class: 'GitSCM',
         //             branches: [[name: '*/develop']],
         //             extensions: [[$class: 'SubmoduleOption', parentCredentials: true, recursiveSubmodules: true]],
-        //             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings']]
+        //             userRemoteConfigs: [[credentialsId: GITHUB_CREDENTIALS_ID, url: 'https://github.com/sail106/settings.git']]
         //         ]
         //         script {
         //             // 서브모듈 초기화 및 업데이트
