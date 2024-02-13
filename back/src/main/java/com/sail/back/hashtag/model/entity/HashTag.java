@@ -44,7 +44,7 @@ public class HashTag {
     public static HashTagResponse toHashTagResponse (HashTag hashTag)
     {
         return  HashTagResponse.builder()
-                .consultantResponse(hashTag.consultant.toResponse())
+//                .consultantResponse(hashTag.consultant.toResponse())
                 .workplace(hashTag.getWorkplace())
                 .build();
     }

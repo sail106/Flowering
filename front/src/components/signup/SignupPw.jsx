@@ -24,7 +24,6 @@ const SignupPw = () => {
   const [checkSp, setCheckSp] = useState(false);
   const [checkLen, setCheckLen] = useState(false);
   const [pwOne, setPwOne] = useState("");
-  const [pwTwo, setPwTwo] = useState("");
   const [checkPwOne, setCheckPwOne] = useState(false);
   const [checkPwTwo, setCheckPwTwo] = useState(false);
 
@@ -84,24 +83,17 @@ const SignupPw = () => {
 
   const buttonNavigate = async () => {
     // 여기서 axios로 쏘기, 이렇게 하면 회원가입이 DB에 저장된다.
-    // 이메일 : userEmail
-    // 패스워드: pwOne
-    console.log(userEmail + " " + pwOne)
-
     const body = {
       email: userEmail,
       password: pwOne
     }
-    console.log(`body ${JSON.stringify(body)}`);
 
     const response = await axios.post(
-      'http://i10c106.p.ssafy.io:8080/v1/users/regist', body
+      'http://i10c106.p.ssafy.io/api/v1/users/regist', body
     );
     
     console.log(response);
-    console.log("userEmail : ", userEmail);
-    // 로그인 시켜야한다.
-    // 하지만 로그인이 되지 않는다.
+    // 로그인 시키기
     dispatch(loginUser(
       {
         Email: userEmail,
@@ -154,13 +146,6 @@ const SignupPw = () => {
             다음
           </Button>
         )}
-
-        {/* <Button
-          width="40%"
-          marginTop="50px"
-        >
-          다음
-        </Button> */}
       </CenterContainer>
     </Card>
   );

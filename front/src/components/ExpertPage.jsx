@@ -5,8 +5,8 @@ import ExpertInfoNProfile from "./mypage/ExpertInfoNProfile";
 import { Page } from "./common/Page";
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate  } from 'react-router-dom';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import axios from "axios";
 const BackPage = styled(Page)`
   height: auto;
   align-items: center;
@@ -35,13 +35,16 @@ const ExpertPage = () => {
   const navigate = useNavigate();
   const { routeid } = useParams();
   const isAccessible = (Number(routeid) === User.id && isAuthenticated && User.role ==='CONSULTANT')
-  
+
+
   useEffect(() => {
     if (!isAccessible) {
       alert('잘못된 접근입니다.'); // 시스템 경고창을 띄웁니다.
       navigate('/'); // 홈으로 리다이렉트합니다.
     }
   }, [isAccessible, navigate]);
+
+
   return (
     <BackPage>
       <Header>EXPERT PAGE</Header>

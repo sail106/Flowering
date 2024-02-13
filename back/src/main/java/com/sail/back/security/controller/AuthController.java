@@ -7,6 +7,7 @@ import com.sail.back.security.model.dto.response.GeneratedToken;
 import com.sail.back.security.model.service.AuthService;
 import com.sail.back.security.model.service.TokenService;
 import com.sail.back.user.model.entity.User;
+import com.sail.back.user.model.entity.enums.AuthProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +38,16 @@ public class AuthController {
     public ResponseEntity<MessageUtils> refresh(@RequestBody RefreshRequest refreshRequest){
         return ResponseEntity.ok().body(MessageUtils.success(authService.refresh(refreshRequest.getRefreshToken())));
     }
+
+//    @PostMapping("/login/{provider}")
+//    public ResponseEntity<MessageUtils> Oauth2Login(
+//            @PathVariable AuthProvider provider
+//            ){
+//        return ResponseEntity.ok().body(MessageUtils.success(authService.));
+//    }
+
+
+
+
 
 }

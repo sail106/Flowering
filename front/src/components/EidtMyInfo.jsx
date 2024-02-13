@@ -10,13 +10,14 @@ import {
   ref,
   uploadString,
   getDownloadURL,
+  uploadBytesResumable
 } from "firebase/storage";
-import FirebaseConfig from "./common/FirebaseConfig";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useNavigate   } from 'react-router-dom';
 import { ButtonBox } from "./common/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
+import { UserInfo } from "../store/authSlice";
 
 const MyPage = styled(Page)`
   display: flex;
@@ -35,9 +36,9 @@ const MyImg = styled.img`
 
 const CameraImg = styled(MyImg)`
   position: absolute;
-  top: 24%;
+  top: 22%;
   right: 43%;
-  width: 3%;
+  width: 50px;
   height: auto;
   background-color: #e2dfd8;
 `;
@@ -78,6 +79,7 @@ const EditMyInfo = () => {
     (state) => state.auth.logonUser
   );
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { routeid } = useParams();
   const isAccessible = (Number(routeid) === User.id && isAuthenticated)
 
@@ -93,14 +95,32 @@ const EditMyInfo = () => {
   }
 
   const fileInput = useRef(null);
+  const storage = getStorage();
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    const storageRef = ref(storage, `${User.id}_profile`);
+    await uploadBytesResumable(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    const data = {
+      "profile_img_url":url
+    };
 
-  // const handleFileUpload = async (event) => {
-  //   const file = event.target.files[0];
-  //   const storageRef = firebase.storage().ref();
-  //   const fileRef = storageRef.child(file.name);
-  //   await fileRef.put(file);
-  //   console.log(`${file.name} has been uploaded.`);
-  // };
+    try {
+      const response = await axios.patch("http://i10c106.p.ssafy.io/api/v1/users/update", data, config);
+      console.log(response.data);
+      console.log('성공');
+      dispatch(UserInfo(true))
+    } catch (error) {
+      console.error('요청 중 에러 발생:', error);
+    }
+  };
 
   const [checkEn, setCheckEn] = useState(false);
   const [checkNum, setCheckNum] = useState(false);
@@ -171,7 +191,7 @@ const EditMyInfo = () => {
   return (
     <>
       <MyPage>
-        <MyImg src={BIBI} alt="프로필 사진" />
+        <MyImg src={User.imageUrl} alt="프로필 사진" />
         <CameraImg
           src={camera}
           alt="프로필 사진"

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { saveToken, deleteToken } from '../api/JWToken'
 import { OK, CUSTOMER, CONSULTANT } from '../api/CustomConst'
 import axios from 'axios';
-// import Axios from '../api/Axios';
+
 
 // state
 const initialState = {
@@ -28,14 +28,14 @@ const initialState = {
         birth: '',
         contact: '',
         email: '',
-        imageUrl: '',
+        imageUrl: '../assets/anon.jpg',
         introduction: '',
         consultingFile: '',
         role: '',
         isMic: 'false',
         isCam: 'false',
         access_token: '',
-        id:'', //pk
+        id: '', //pk
         // refresh_token: '',
     },
     selectedid: '',
@@ -48,43 +48,16 @@ const initialState = {
 
     // server status
     status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
-    
+
 }
-
-// actions
-// signup actions
-// export const signUpMember = createAsyncThunk(
-//     'auth/signup',
-//     async (userInfo, { rejectWithValue }) => {
-//         try {
-//             let response
-
-//             if (userInfo.role === CUSTOMER) {
-//                 response = await Axios.post('customers', userInfo);
-//             } else if (userInfo.role === CONSULTANT) {
-//                 response = await Axios.post('consultants', userInfo);
-//             }
-//             return response.status;
-//         } catch (err) {
-//             let errRes = 400;
-//             if (err.status < 500) {
-//                 errRes = 400;
-//             } else if (err.status < 600) {
-//                 errRes = 500;
-//             }
-//             return errRes;
-//         }
-//     }
-// )
-
 
 // login actions
 export const UserInfo = createAsyncThunk(
     'auth/UserInfo',
-    async ({ info }, { rejectWithValue,getState }) => { 
+    async ({ info }, { rejectWithValue, getState }) => {
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
-
+            console.log('userinfo')
             const state = getState(); // 전체 Redux 상태를 얻습니다.
             const config = {
                 headers: {
@@ -94,7 +67,7 @@ export const UserInfo = createAsyncThunk(
                 }
             };
             // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-            const response = await axios.get(baseurl +`users/info`, config);
+            const response = await axios.get(baseurl + `users/info`, config);
             const res = response.data.data_body
 
             // saveToken(token);
@@ -121,9 +94,8 @@ export const loginUser = createAsyncThunk(
 
         try {
             const baseurl = import.meta.env.VITE_APP_BASE_URL;
-            console.log(loginrequest.email+" "+loginrequest.password)
             // start
-            const response = await axios.post(baseurl +'auth/login', loginrequest);
+            const response = await axios.post(baseurl + 'auth/login', loginrequest);
             const token = response.data.data_body
             // saveToken(token);
             return token;
@@ -134,6 +106,7 @@ export const loginUser = createAsyncThunk(
             return rejectWithValue(err);
             // return rejectWithValue(err.response);
         }
+
     }
 );
 
@@ -255,7 +228,6 @@ const authSlice = createSlice({
                 role: '',
                 imageUrl: '/images/default/avatar01.png',
             }
-            console.log('isauthentictedddd')
             state.isAuthenticated = false;
             deleteToken();
         },
@@ -268,13 +240,13 @@ const authSlice = createSlice({
         },
 
         setRole: (state, { payload }) => {
-            console.log('settrolll'+payload)
+            console.log('settrolll' + payload)
             state.logonUser.role = payload
         },
         setSelectedId: (state, { payload }) => {
             console.log('settt  ')
             state.selectedid = payload;
-          },
+        },
         setname: (state, { payload }) => {
             state.logonUser.name = payload
         },
@@ -298,7 +270,6 @@ const authSlice = createSlice({
             // })
             // login extra reducers 로그인 처리에 따른 실행 함수
             .addCase(loginUser.fulfilled, (state, action) => {
-                console.log('fullllll'+action.payload.access_token)
                 state.logonUser = {
                     // nickname: action.payload.data.nickname,
                     // role: action.payload.data
@@ -327,27 +298,28 @@ const authSlice = createSlice({
             })
 
             .addCase(UserInfo.fulfilled, (state, action) => {
-                console.log('userinfofulll', JSON.stringify(action.payload));
-
-
-                 state.logonUser.role = action.payload.role;
-                 state.logonUser.id = action.payload.id;
-                 state.logonUser.email = action.payload.email;
-                 state.logonUser.name = action.payload.name;
-                 state.logonUser.nickname = action.payload.nickname;
-
+                state.logonUser.role = action.payload.role;
+                state.logonUser.id = action.payload.id;
+                state.logonUser.email = action.payload.email;
+                state.logonUser.name = action.payload.name;
+                state.logonUser.nickname = action.payload.nickname;
+                if (action.payload.profile_img_url !== 'undefined') {
+                    state.logonUser.imageUrl = action.payload.profile_img_url;
+                }
+                console.log(action.payload.profile_img_url)
                 // role: action.payload.data
             })
 
             .addCase(UserInfo.rejected, (state) => {
                 state.status = 'failed';
+                console.log('실패!')
             });
     }
 
 })
 
 
-export const { logoutUser, modifyLogonUser, setRole, setname,setSelectedId } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

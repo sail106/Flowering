@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState,  useEffect } from "react";
+import axios from "axios";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -84,13 +86,34 @@ const ExpertInfoNProfile = () => {
     (state) => state.auth.logonUser
   );
 
-  const handleEnterButtonClick = ( ) => {
-    console.log('버튼클릭' +  User.id)
-    
+  const [consultantData, setConsultantData] = useState(); // 상태 초기화
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+console.log('ppp')
+  const mydata = async () => {
 
-    navigate('/expertsprofileregistration')
-
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      console.log(baseurl)
+      // const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
+      const response = await axios.get(baseurl + "consultant/myinfo", config);
+      setConsultantData(response.data.data_body); // 데이터를 상태에 저장
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+    }
   };
+
+  useEffect(() => {
+    console.log('usee')
+    mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
+  }, []);
+
+  console.log(consultantData)
 
   return (
     <ConsultingDiv>
@@ -99,12 +122,12 @@ const ExpertInfoNProfile = () => {
         <hr></hr>
         <NickName>BIBI</NickName>
         <Body>
-          <Half>당신만의 고유한 아름다움을 찾아드리겠습니다.</Half>
+          <Half>{consultantData?.simple_introduce??''}</Half>
         </Body>
         <ButtonDiv>
-        {/* onClick={() => handleEnterButtonClick("0")} */}
-
-          <MyButton onClick={handleEnterButtonClick}>수정하기</MyButton>
+          <Link to={`/expertsprofileregistration`} reloadDocument>
+          <MyButton>수정하기</MyButton>
+          </Link>
         </ButtonDiv>
       </ConsultingProfile>
       <ConsultingInfo>

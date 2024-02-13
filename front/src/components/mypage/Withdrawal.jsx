@@ -50,7 +50,7 @@ export default function Withdrawal() {
   return (
     <>
       <WithdrawalButton
-        color="neutral"
+        color="white"
         onClick={() => setOpen(true)}
       >
         탈퇴하기

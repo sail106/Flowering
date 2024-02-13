@@ -46,7 +46,6 @@ const SignupForm = () => {
     const baseurl= import.meta.env.VITE_APP_BASE_URL;
 
     try {
-      console.log(baseurl+'email/join-code')
       // 서버에 인증 요청을 보냅니다.
       // await axios.post('http://i10c106.p.ssafy.io:8080/v1/email/join-code', {
       await axios.post(baseurl+'email/join-code', {

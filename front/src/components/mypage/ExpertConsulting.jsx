@@ -7,7 +7,6 @@ import { getCustomer, setconsultid } from "../../store/consultSlice";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
 import { appendParticipantList, setconsultantSessionName } from "../../store/consultsessionnameSlice";
-import Axios from "../../api/Axios";
 import axios from "axios";
 
 const Clock = styled(LuClock3)`

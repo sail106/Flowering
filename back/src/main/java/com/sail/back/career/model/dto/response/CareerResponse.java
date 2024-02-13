@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
 public class CareerResponse {
@@ -28,5 +27,13 @@ public class CareerResponse {
             .workplace(career.getWorkplace())
             .startDateOfEmployment(career.getStartDateOfEmployment())
             .build();
+    }
+
+    public Career toEntity(){
+        return Career.builder()
+                .workplace(this.getWorkplace())
+                .endDateOfEmployment(this.getEndDateOfEmployment())
+                .startDateOfEmployment(this.getStartDateOfEmployment())
+                .build();
     }
 }

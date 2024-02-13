@@ -1,5 +1,6 @@
 package com.sail.back.career.model.entity;
 
+import com.sail.back.career.model.dto.response.CareerResponse;
 import com.sail.back.consultant.model.entity.Consultant;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,19 +15,32 @@ import java.time.LocalDate;
 
 public class Career {
 
- @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
- private Long careerId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long careerId;
 
- @ManyToOne
- @JoinColumn(name = "consultant_id")
- private Consultant consultant;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "consultant_id")
+    private Consultant consultant;
 
- @Column(nullable = false)
- private String workplace;
+    @Column(nullable = false)
+    private String workplace;
 
- private LocalDate startDateOfEmployment;
+    private LocalDate startDateOfEmployment;
 
- private LocalDate endDateOfEmployment;
+    private LocalDate endDateOfEmployment;
+
+    public void setConsultant(Consultant consultant) {
+        this.consultant = consultant;
+    }
+
+    public static CareerResponse toresponse(Career career) {
+        return CareerResponse.builder()
+                .startDateOfEmployment(career.getStartDateOfEmployment())
+                .endDateOfEmployment(career.getEndDateOfEmployment())
+                .workplace(career.getWorkplace())
+                .build();
+
+    }
 
 }

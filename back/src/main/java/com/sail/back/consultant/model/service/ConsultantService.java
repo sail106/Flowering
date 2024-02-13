@@ -78,7 +78,7 @@ public class ConsultantService {
 
 
         List<Consulting> consultings = consultingRepository.
-                findAllByConsultant(consultant).orElseThrow(() ->
+                findAllByConsultantOrderByTimeDesc(consultant).orElseThrow(() ->
                         new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
 
         List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
