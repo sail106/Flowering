@@ -31,8 +31,12 @@ public class AdminService {
     private final ConsultantRepository consultantRepository;
 
     public ResponseEntity<MessageUtils> toConsultant(  User me, UserToConsultantRequest userToConsultantRequest) {
-        System.out.println("consultatnttt"+ userToConsultantRequest.getId());
-        User user = userRepository.findById(userToConsultantRequest.getId()).
+        System.out.println("consultatnttt"+ userToConsultantRequest.getEmail());
+
+//        User user = userRepository.findById(userToConsultantRequest.getId()).
+//                orElseThrow(() -> new UserException(UserErrorCode.NOT_EXISTS_USER));
+
+        User user = userRepository.findByEmail(userToConsultantRequest.getEmail()).
                 orElseThrow(() -> new UserException(UserErrorCode.NOT_EXISTS_USER));
 
         user.setRole(UserRole.CONSULTANT);

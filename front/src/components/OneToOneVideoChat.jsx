@@ -32,8 +32,9 @@ import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
 import { removeconsultantSessionName } from '../store/consultsessionnameSlice';
-// const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
-const OPENVIDU_SERVER_URL = 'http://localhost:4443';
+const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io:4443';
+
+// const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -72,7 +73,9 @@ const OneToOneVideoChat = () => {
 
 
   const sessionConnect = (token) => {  //스트림 생성 
-    console.log('in connection  ')
+    console.log('in connection  '+token) //in connection  ws://localhost:4443?sessionId=1&token=tok_MF2VTBpuHQz79T5o
+    // token = token.replace('localhost', 'i10c106.p.ssafy.io');
+    // console.log('in connection  '+token) // in connection ws://i10c106.p.ssafy.io:4443?sessionId=1&token=tok_BC6nORx9VG3G5RQB
 
     session
       .connect(
@@ -385,12 +388,7 @@ const OneToOneVideoChat = () => {
       session.disconnect();
 
 
-
-
-
-
-
-
+ 
 
 
       try {
@@ -418,14 +416,7 @@ const OneToOneVideoChat = () => {
         // alert('결제 실패');
       }
 
-
-
-
-
-
-
-
-
+ 
 
       
       dispatch(makeResult({ consultingFinishRequest }))

@@ -1,5 +1,6 @@
 package com.sail.back.hashtag.model.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -17,8 +18,8 @@ import lombok.*;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
 public class HashTagResponse {
-
-    private ConsultantResponse consultantResponse;
+//    @JsonIgnore
+//    private ConsultantResponse consultantResponse;
 
     private String workplace;
 
@@ -30,7 +31,9 @@ public class HashTagResponse {
 
     public HashTag toEntity() {
         return  HashTag.builder()
-                .consultant( this.consultantResponse.toEntity())
+//                .consultant( this.consultantResponse.toEntity())
+                .workplace(this.workplace)
+
                 .build();
 
     }

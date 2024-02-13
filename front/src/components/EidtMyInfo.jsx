@@ -10,6 +10,7 @@ import {
   ref,
   uploadString,
   getDownloadURL,
+  uploadBytesResumable
 } from "firebase/storage";
 import FirebaseConfig from "./common/FirebaseConfig";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -35,9 +36,9 @@ const MyImg = styled.img`
 
 const CameraImg = styled(MyImg)`
   position: absolute;
-  top: 24%;
+  top: 22%;
   right: 43%;
-  width: 3%;
+  width: 50px;
   height: auto;
   background-color: #e2dfd8;
 `;
@@ -93,14 +94,23 @@ const EditMyInfo = () => {
   }
 
   const fileInput = useRef(null);
+  const storage = getStorage();
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    const storageRef = ref(storage, `${User.id}_profile`);
+    await uploadBytesResumable(storageRef, file);
+    console.log(`${file.name} has been uploaded.`);
+    window.location.reload();
+  };
+  const [imageUrl, setImageUrl] = useState(null);
 
-  // const handleFileUpload = async (event) => {
-  //   const file = event.target.files[0];
-  //   const storageRef = firebase.storage().ref();
-  //   const fileRef = storageRef.child(file.name);
-  //   await fileRef.put(file);
-  //   console.log(`${file.name} has been uploaded.`);
-  // };
+  const fetchImageUrl = async () => {
+    const storageRef = ref(storage, `${User.id}_profile`);
+    const url = await getDownloadURL(storageRef);
+    setImageUrl(url); // 이미지 URL 상태 업데이트
+  };
+  
+  fetchImageUrl();
 
   const [checkEn, setCheckEn] = useState(false);
   const [checkNum, setCheckNum] = useState(false);
@@ -171,7 +181,7 @@ const EditMyInfo = () => {
   return (
     <>
       <MyPage>
-        <MyImg src={BIBI} alt="프로필 사진" />
+        <MyImg src={imageUrl} alt="프로필 사진" />
         <CameraImg
           src={camera}
           alt="프로필 사진"
