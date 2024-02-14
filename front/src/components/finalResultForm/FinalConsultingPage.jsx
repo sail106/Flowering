@@ -11,13 +11,13 @@ const HorizontalLine = styled.hr`
   width: 90%;
 `
 
-const FinalConsultingPage = () => {
+const FinalConsultingPage = ({ userType, usersCondition }) => {
   return (
     <>
       <MyCard>
-        <h1>I am Final Consulting Form</h1>
-        <ConsultingType>스킨케어</ConsultingType>
-        <UserCondition />
+        <h1>I am Final Consulting Page</h1>
+        <ConsultingType>{userType}</ConsultingType>
+        <UserCondition usersCondition={usersCondition}>{usersCondition}</UserCondition>
       </MyCard>
       <HorizontalLine />
       <MyCard>

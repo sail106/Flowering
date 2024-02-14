@@ -4,19 +4,29 @@ import ConditionLabel from "./ConditionLabel"
 import Input from "../common/Input"
 
 const MyCard = styled.div`
-  display: flex;
+  /* display: flex; */
   margin-bottom: 80px;
 `
+const MyContainer = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+`;
 
-const UserCondition = () => {
+const UserCondition = ({ usersCondition }) => {
   return (
     <MyCard>
-      <ConditionLabel>피부 상태 | </ConditionLabel>
-      <Input
-        placeholder="피부상태를 입력하세요"
-        padding-bottom="3px"
-        padding-top="8px"
-      />
+      {usersCondition.map((el, index) => {
+        return (
+          <MyContainer key={index}>
+            <ConditionLabel>{el}</ConditionLabel>
+            <Input
+              placeholder={`${el}(을)/를 입력하세요`}
+              padding-bottom="3px"
+              padding-top="8px"
+            />
+          </MyContainer>
+        )
+      })}
 
     </MyCard>
   )
