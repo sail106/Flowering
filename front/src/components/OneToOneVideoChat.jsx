@@ -98,7 +98,7 @@ const OneToOneVideoChat = () => {
           publishVideo: true,
 
           // 비디오 해상도: '1821x761'로 설정하여 비디오 해상도 지정
-          resolution: '1821x761',
+          resolution: '660x327',
 
           // 프레임 속도: 30으로 설정하여 초당 프레임 수 지정
           frameRate: 30,
