@@ -712,8 +712,6 @@ const FirstServeyPage = () => {
             navigate("/firstsurveyresult");
           })
           .catch((error) => {
-            console.log(Token.access_token);
-            console.log(result);
             console.log(error);
             throw new Error(error);
           });

@@ -32,8 +32,6 @@ const ExpertsIntroduction = () => {
     const fetchData = async () => {
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-        console.log("tooo   " + token);
-
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,8 +60,6 @@ const ExpertsIntroduction = () => {
 
     fetchData(); // fetchData 함수 호출
   }, [access_token]);
-
-  console.log("succcc" + JSON.stringify(expertsData));
 
   if (expertsData.length > 0) {
     console.log("succcc" + JSON.stringify(expertsData[1]));
