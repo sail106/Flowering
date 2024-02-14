@@ -5,17 +5,11 @@ import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
 import BIBI from "../assets/BIBI.png";
 import camera from "../assets/camera.png";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  getDownloadURL,
-  uploadBytesResumable
-} from "firebase/storage";
+import { getStorage, ref, uploadString, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useParams, useNavigate   } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import { ButtonBox } from "./common/Button";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { UserInfo } from "../store/authSlice";
 
@@ -75,28 +69,26 @@ const Button = styled(ButtonBox)`
 
 const EditMyInfo = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const User = useSelector(
-    (state) => state.auth.logonUser
-  );
+  const User = useSelector((state) => state.auth.logonUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { routeid } = useParams();
-  const isAccessible = (Number(routeid) === User.id && isAuthenticated)
+  const isAccessible = Number(routeid) === User.id && isAuthenticated;
 
   useEffect(() => {
     if (!isAccessible) {
-      alert('잘못된 접근입니다.'); // 시스템 경고창을 띄웁니다.
-      navigate('/'); // 홈으로 리다이렉트합니다.
+      alert("잘못된 접근입니다."); // 시스템 경고창을 띄웁니다.
+      navigate("/"); // 홈으로 리다이렉트합니다.
     }
   }, [isAccessible, navigate]); // isAccessible이 변경될 때마다 이 훅을 실행합니다.
-  
+
   if (!isAccessible) {
     return null; // 이후의 컴포넌트 렌더링을 막기 위해 null을 반환합니다.
   }
 
   const fileInput = useRef(null);
   const storage = getStorage();
-  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     const storageRef = ref(storage, `${User.id}_profile`);
@@ -104,22 +96,22 @@ const EditMyInfo = () => {
     const url = await getDownloadURL(storageRef);
     const config = {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
     };
     const data = {
-      "profile_img_url":url
+      profile_img_url: url,
     };
 
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = await axios.patch( baseurl + "users/update", data, config);
+      const response = await axios.patch(baseurl + "users/update", data, config);
       console.log(response.data);
-      console.log('성공');
-      dispatch(UserInfo(true))
+      console.log("성공");
+      dispatch(UserInfo(true));
     } catch (error) {
-      console.error('요청 중 에러 발생:', error);
+      console.error("요청 중 에러 발생:", error);
     }
   };
 
@@ -132,7 +124,7 @@ const EditMyInfo = () => {
   const [pwTwo, setPwTwo] = useState("");
   const [checkPwOne, setCheckPwOne] = useState(false);
   const [checkPwTwo, setCheckPwTwo] = useState(false);
-
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const passwordHandler = (e) => {
     setPwOne(e.target.value);
 
@@ -171,7 +163,7 @@ const EditMyInfo = () => {
 
   const nicknameHandler = (e) => {
     setNickname(e.target.value);
-  }
+  };
 
   useEffect(() => {
     setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
@@ -193,48 +185,23 @@ const EditMyInfo = () => {
     <>
       <MyPage>
         <MyImg src={User.imageUrl} alt="프로필 사진" />
-        <CameraImg
-          src={camera}
-          alt="프로필 사진"
-          onClick={() => fileInput.current && fileInput.current.click()}
-        />
-        <input
-          type="file"
-          style={{ display: "none" }}
-          ref={fileInput}
-          onChange={handleFileUpload}
-        />
+        <CameraImg src={camera} alt="프로필 사진" onClick={() => fileInput.current && fileInput.current.click()} />
+        <input type="file" style={{ display: "none" }} ref={fileInput} onChange={handleFileUpload} />
         <InfoContainer>
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
           <Input placeholder={User.nickname} id="nickname" width="90%" onChange={nicknameHandler}></Input>
           <Mylabel htmlFor="pw1">비밀번호</Mylabel>
-          <Input
-            htmlFor="pw1"
-            id="pw1"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordHandler}
-          />
+          <Input htmlFor="pw1" id="pw1" placeholder="**********" type="password" width="90%" onChange={passwordHandler} />
           <StyledCheck $isValid={checkEn}>✓ 영문</StyledCheck>
           <StyledCheck $isValid={checkNum}>✓ 숫자</StyledCheck>
           <StyledCheck $isValid={checkSp}>✓ 특수문자</StyledCheck>
           <StyledCheck $isValid={checkLen}>✓ 8~20자</StyledCheck>
           <Mylabel htmlFor="pw2">비밀번호 확인</Mylabel>
-          <Input
-            htmlFor="pw2"
-            id="pw2"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordChecker}
-          />
+          <Input htmlFor="pw2" id="pw2" placeholder="**********" type="password" width="90%" onChange={passwordChecker} />
           <StyledCheck $isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
         </InfoContainer>
-        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne}/>}
-        {(!checkPwOne || !checkPwTwo) && (
-          <Button onClick={alertMessage}>수정하기</Button>
-        )}
+        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne} />}
+        {(!checkPwOne || !checkPwTwo) && <Button onClick={alertMessage}>수정하기</Button>}
 
         <Withdrawal />
       </MyPage>

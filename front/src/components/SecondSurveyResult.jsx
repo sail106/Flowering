@@ -3,11 +3,13 @@ import styled from "styled-components";
 import SecondResultPage from "./SecondSurveyResult/SecondResultPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Button from "./common/Button";
+import { Link } from "react-router-dom";
 
 const DefaultPage = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
@@ -17,22 +19,26 @@ const PageLayout = styled.div`
   width: 75%;
 `;
 
-const PageTitle = styled.div`
-  font-family: "Noto Sans KR";
-  font-size: 38px;
-  margin-bottom: 15px;
+const ButtonBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  margin-top: 50px;
+  margin-bottom: 30px;
 `;
 
 const SecondServeyResult = () => {
-  const Token = useSelector((state) => state.auth.logonUser);
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+  const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
   const [data, setData] = useState(null);
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://i10c106.p.ssafy.io:8080/v1/analysis/find/1",
+      url: `${baseurl}analysis/find/7`,
       headers: {
-        Authorization: `Bearer ${Token.access_token}`,
+        Authorization: `Bearer ${access_token}`,
       },
     })
       .then((res) => {
@@ -42,15 +48,16 @@ const SecondServeyResult = () => {
         console.log(error);
         throw new Error(error);
       });
-  }, [Token.access_token]);
+  }, [access_token]);
 
   return (
     <DefaultPage>
-      <PageLayout>
-        <PageTitle>2차 카메라 테스트</PageTitle>
-        <hr></hr>
-        {data && <SecondResultPage data={data} />}
-      </PageLayout>
+      <PageLayout>{data && <SecondResultPage data={data} />}</PageLayout>
+      <ButtonBox>
+        <Link to={"/secondsurveyend"}>
+          <Button>닫기</Button>
+        </Link>
+      </ButtonBox>
     </DefaultPage>
   );
 };

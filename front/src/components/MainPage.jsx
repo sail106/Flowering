@@ -5,9 +5,9 @@ import ThirdPage from "./MainPage/ThirdPage";
 import FourthPage from "./MainPage/FourthPage";
 import FifthPage from "./MainPage/FifthPage";
 import SixthPage from "./MainPage/SixthPage";
-import pinkcream from "../assets/pinkcream.svg"
-import yellowcream from "../assets/yellowcream.svg"
-import whitecream from "../assets/whitecream.svg"
+import pinkcream from "../assets/pinkcream.svg";
+import yellowcream from "../assets/yellowcream.svg";
+import whitecream from "../assets/whitecream.svg";
 
 const PinkCreamWrapper = styled.div`
   position: absolute;
@@ -28,7 +28,7 @@ const YellowCreamWrapper = styled(PinkCreamWrapper)`
 const WhiteCreamWrapper = styled(YellowCreamWrapper)`
   bottom: -700%;
   right: -10%;
-  height:75%;
+  height: 75%;
 `;
 
 const Image = styled.img`
