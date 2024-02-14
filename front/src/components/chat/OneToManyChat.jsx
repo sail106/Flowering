@@ -17,7 +17,7 @@ const SmallChat = () => {
   const { session, messageId } = useSelector(state => state.consult)
   const dispatch = useDispatch()
   const [isPersonalSelected, setIsPersonalSelected] = useState(true); // State to manage personal button selection
-  const { name, role, id, nickname } = useSelector(state => state.auth.logonUser)
+  const { name, role, id, nickname,imageUrl } = useSelector(state => state.auth.logonUser)
 
   const handlePersonalClick = () => {
     setIsPersonalSelected(true); // Set personal button as selected
@@ -36,7 +36,7 @@ const SmallChat = () => {
       const mine = {
         id: messageId,
         role: role,
-        imageUrl: '',
+        imageUrl: imageUrl,
         // side: 'left',
         message: msg
       }
@@ -46,7 +46,7 @@ const SmallChat = () => {
       const data = {
         id: messageId,
         role: role,
-        imageUrl: imageUrl,
+        imageUrl: imageUrl, //immmmmm
         // side: 'left',
         nickname:name,
         message: msg
