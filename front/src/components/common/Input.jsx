@@ -9,8 +9,10 @@ const InputBox = styled.input`
 	}
   border-width: 0 0 1px;
   &:focus {
-  outline: none;
-}
+    outline: none;
+  }
+  padding-bottom: ${props => props['padding-bottom'] || '15px'};
+  padding-top: ${props => props['padding-top'] || '15px'};
 `;
 
 const Input = (props) => {
@@ -26,6 +28,8 @@ const Input = (props) => {
         required={props.required}
         disabled={props.disabled}
         // value={props.value}
+        padding-bottom={props['padding-bottom']}
+        padding-top={props['padding-top']}
       />
     </div>
   )

@@ -49,6 +49,8 @@ import FirstSurveyResult from './components/FirstSurveyResult';
 import FinalresultInput from './components/FinalResultInput';
 
 import SecondSurveyEnd from './components/SecondSurveyEnd';
+import FinalConsultingForm from './components/finalResultForm/FinalConsultingForm';
+
 function App() {
 	return (
 		<>
@@ -100,6 +102,7 @@ function App() {
 					<Route path='/firstsurveyend' element={<FirstSurveyEnd />} />
 					<Route path='/secondsurveyend' element={<SecondSurveyEnd />} />
 					<Route path='/finalresult' element={<FinalSurveyResult />} />
+					<Route path='/finalconsultingform' element={<FinalConsultingForm />} />
 				</Routes>
 
 				<Footer />

@@ -1,6 +1,6 @@
-const ConsultingType = () => {
+const ConsultingType = ({children}) => {
   return (
-    <h1>I am consulting type</h1>
+    <h1>{children}</h1>
   )
 }
 
