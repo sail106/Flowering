@@ -6,15 +6,10 @@ import Withdrawal from "./mypage/Withdrawal";
 import BIBI from "../assets/BIBI.png";
 import camera from "../assets/camera.png";
 import { initializeApp, getApps, getApp } from "firebase/app";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
 import FirebaseConfig from "./common/FirebaseConfig";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useParams, useNavigate   } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import { ButtonBox } from "./common/Button";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -82,20 +77,18 @@ const storage = getStorage();
 
 const EditMyInfo = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const User = useSelector(
-    (state) => state.auth.logonUser
-  );
+  const User = useSelector((state) => state.auth.logonUser);
   const navigate = useNavigate();
   const { routeid } = useParams();
-  const isAccessible = (Number(routeid) === User.id && isAuthenticated && User.role ==='USER')
+  const isAccessible = Number(routeid) === User.id && isAuthenticated && User.role === "USER";
 
   useEffect(() => {
     if (!isAccessible) {
-      alert('잘못된 접근입니다.'); // 시스템 경고창을 띄웁니다.
-      navigate('/'); // 홈으로 리다이렉트합니다.
+      alert("잘못된 접근입니다."); // 시스템 경고창을 띄웁니다.
+      navigate("/"); // 홈으로 리다이렉트합니다.
     }
   }, [isAccessible, navigate]); // isAccessible이 변경될 때마다 이 훅을 실행합니다.
-  
+
   if (!isAccessible) {
     return null; // 이후의 컴포넌트 렌더링을 막기 위해 null을 반환합니다.
   }
@@ -119,7 +112,7 @@ const EditMyInfo = () => {
   const [pwTwo, setPwTwo] = useState("");
   const [checkPwOne, setCheckPwOne] = useState(false);
   const [checkPwTwo, setCheckPwTwo] = useState(false);
-
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const passwordHandler = (e) => {
     setPwOne(e.target.value);
 
@@ -158,7 +151,7 @@ const EditMyInfo = () => {
 
   const nicknameHandler = (e) => {
     setNickname(e.target.value);
-  }
+  };
 
   useEffect(() => {
     setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
@@ -175,22 +168,22 @@ const EditMyInfo = () => {
   const alertMessage = () => {
     alert("비밀번호 형식을 다시 확인해주세요!");
   };
-  
+
   const updateUserInfo = async () => {
     const data = {
-      pwOne:pwOne,
-      nickname:nickname
+      pwOne: pwOne,
+      nickname: nickname,
     };
     const config = {
       headers: {
-          'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
-          'Content-Type': 'application/json'
-          // 다른 필요한 헤더도 추가할 수 있습니다.
-      }
+        Authorization: `Bearer ${state.auth.logonUser.access_token}`,
+        "Content-Type": "application/json",
+        // 다른 필요한 헤더도 추가할 수 있습니다.
+      },
     };
-    console.log(data)
+    console.log(data);
     try {
-      const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
+      const response = await axios.patch(`${baseurl}users/update`, data, config);
       console.log(response.data);
       // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
       // navigate('/success');
@@ -200,54 +193,29 @@ const EditMyInfo = () => {
       // alert('사용자 정보 업데이트에 실패했습니다.');
     }
   };
-  console.log('nick',nickname);
-  console.log('pw',pwOne);
+  console.log("nick", nickname);
+  console.log("pw", pwOne);
   return (
     <>
       <MyPage>
         <MyImg src={BIBI} alt="프로필 사진" />
-        <CameraImg
-          src={camera}
-          alt="프로필 사진"
-          onClick={() => fileInput.current && fileInput.current.click()}
-        />
-        <input
-          type="file"
-          style={{ display: "none" }}
-          ref={fileInput}
-          onChange={handleFileUpload}
-        />
+        <CameraImg src={camera} alt="프로필 사진" onClick={() => fileInput.current && fileInput.current.click()} />
+        <input type="file" style={{ display: "none" }} ref={fileInput} onChange={handleFileUpload} />
         <InfoContainer>
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
           <Input placeholder={User.nickname} id="nickname" width="90%" onChange={nicknameHandler}></Input>
           <Mylabel htmlFor="pw1">비밀번호</Mylabel>
-          <Input
-            htmlFor="pw1"
-            id="pw1"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordHandler}
-          />
+          <Input htmlFor="pw1" id="pw1" placeholder="**********" type="password" width="90%" onChange={passwordHandler} />
           <StyledCheck $isValid={checkEn}>✓ 영문</StyledCheck>
           <StyledCheck $isValid={checkNum}>✓ 숫자</StyledCheck>
           <StyledCheck $isValid={checkSp}>✓ 특수문자</StyledCheck>
           <StyledCheck $isValid={checkLen}>✓ 8~20자</StyledCheck>
           <Mylabel htmlFor="pw2">비밀번호 확인</Mylabel>
-          <Input
-            htmlFor="pw2"
-            id="pw2"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordChecker}
-          />
+          <Input htmlFor="pw2" id="pw2" placeholder="**********" type="password" width="90%" onChange={passwordChecker} />
           <StyledCheck $isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
         </InfoContainer>
-        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne}/>}
-        {(!checkPwOne || !checkPwTwo) && (
-          <Button onClick={alertMessage}>수정</Button>
-        )}
+        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne} />}
+        {(!checkPwOne || !checkPwTwo) && <Button onClick={alertMessage}>수정</Button>}
 
         <Withdrawal />
       </MyPage>

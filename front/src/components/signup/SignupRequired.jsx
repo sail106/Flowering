@@ -23,8 +23,8 @@ const SignupRequired = () => {
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  console.log('access' + accessToken)
-  console.log('alllll' + name+" "+nickname+" "+gender+" "+birthdate.slice(0, 4))
+  console.log("access" + accessToken);
+  console.log("alllll" + name + " " + nickname + " " + gender + " " + birthdate.slice(0, 4));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const SignupRequired = () => {
     };
     const config = {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
     };
@@ -47,11 +47,8 @@ const SignupRequired = () => {
     try {
       // 서버로 데이터 전송
       // post? 여기서 토큰도 함께 보내줘야할 것 같다.
-      const response = await axios.patch(
-        "http://i10c106.p.ssafy.io:8080/v1/users/update",
-        userData,
-        config
-      );
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      const response = await axios.patch(`${baseurl}users/update`, userData, config);
       console.log(response.data);
       alert("회원가입 완료!");
       navigate("/");
@@ -65,50 +62,22 @@ const SignupRequired = () => {
       <SignupRequiredHeader />
       <form onSubmit={handleSubmit}>
         <LabelStyle htmlFor="name">* 이름</LabelStyle>
-        <Input
-          id="name"
-          placeholder="이름 입력"
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <Input id="name" placeholder="이름 입력" onChange={(e) => setName(e.target.value)} required />
 
         <LabelStyle htmlFor="nickname">* 닉네임</LabelStyle>
-        <Input
-          id="nickname"
-          placeholder="닉네임 입력"
-          onChange={(e) => setNickname(e.target.value)}
-          required
-        />
+        <Input id="nickname" placeholder="닉네임 입력" onChange={(e) => setNickname(e.target.value)} required />
 
         <LabelStyle htmlFor="birth">* 생년월일</LabelStyle>
-        <Input
-          id="birth"
-          placeholder="8자리 Ex) 19990118"
-          onChange={(e) => setBirthdate(e.target.value)}
-          required
-        />
+        <Input id="birth" placeholder="8자리 Ex) 19990118" onChange={(e) => setBirthdate(e.target.value)} required />
 
         <LabelStyle htmlFor="gender">* 성별</LabelStyle>
         <LabelContainer>
           <LabelSignup htmlFor="male">
-            <Input
-              id="male"
-              name="gender"
-              type="radio"
-              width="1"
-              onChange={() => setGender("FEMALE")}
-              required
-            />
+            <Input id="male" name="gender" type="radio" width="1" onChange={() => setGender("FEMALE")} required />
             <RadioLabelText>여성</RadioLabelText>
           </LabelSignup>
           <LabelSignup htmlFor="female">
-            <Input
-              width="1"
-              id="female"
-              name="gender"
-              type="radio"
-              onChange={() => setGender("MALE")}
-            />
+            <Input width="1" id="female" name="gender" type="radio" onChange={() => setGender("MALE")} />
             <RadioLabelText>남성</RadioLabelText>
           </LabelSignup>
         </LabelContainer>

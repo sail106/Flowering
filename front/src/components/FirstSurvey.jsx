@@ -640,6 +640,7 @@ const FirstServeyPage = () => {
   const [MBTIScore, setMBTIScore] = useState([0, 0, 0, 0]);
   const [data, setData] = useState(null);
   const navigate = useNavigate();
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   let point = 0;
 
   const updateTrueFalseArray = (cardIndex, dataArray) => {
@@ -696,7 +697,7 @@ const FirstServeyPage = () => {
         // axios를 사용하여 POST 요청을 보냅니다.
         axios
           .post(
-            "http://i10c106.p.ssafy.io:8080/v1/survey/save/7",
+            `${baseurl}/survey/save/7`,
             {
               survey_type: `${result}`,
             },

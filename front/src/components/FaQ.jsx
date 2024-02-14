@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
 import axios from "axios";
-import { useEffect } from "react";
 
 const MyPage = styled(Page)`
   display: flex;
@@ -24,34 +23,11 @@ const Margin = styled.div`
 `;
 
 const FaQ = () => {
-
-  useEffect(() => {
-    const postData = async () => {
-      const body = {
-        email: "test@naver.com",
-        password: "test1000*",
-      };
-
-
-      try {
-        const response = await axios({
-          method: 'post',
-          url: '/v1/auth/login',
-          // headers: { 'Content-Type': 'application/json' },
-          data: body
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error("Failed to post data", error);
-      }
-    };
-
-    postData();
-  }, []);
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
   return (
     <>
-      <MyPage >
+      <MyPage>
         <Header>FAQ</Header>
         <FaQBox
           question="컨설팅은 어떻게 진행되나요?"
@@ -62,23 +38,11 @@ AI 얼굴 분석 : 기본 촬영 데이터를 바탕으로 AI로 얼굴을 분�
 전문가 컨설팅 : 뷰티 전문가가 분석데이터를 바탕으로 화상 컨설팅을 진행합니다./n
 최종 보고서 : 컨설팅 결과 보고서를 전송해드립니다."
         />
-        <FaQBox
-          question="결과 보고서는 어떻게 받아볼 수 있나요?"
-          answer="sdsafdd"
-        />
+        <FaQBox question="결과 보고서는 어떻게 받아볼 수 있나요?" answer="sdsafdd" />
         <FaQBox question="전문가는 어떻게 배정되나요?" answer="3번답" />
-        <FaQBox
-          question="커뮤니티 방 개설은 무제한으로 할 수 있나요?"
-          answer="4번답"
-        />
-        <FaQBox
-          question="예약을 변경하고 싶은데 어떻게 하면 되나요?"
-          answer="555"
-        />
-        <FaQBox
-          question="뷰티 컨설팅이랑 피부 컨설팅이랑 어떤 점이 다른가요?"
-          answer="666"
-        />
+        <FaQBox question="커뮤니티 방 개설은 무제한으로 할 수 있나요?" answer="4번답" />
+        <FaQBox question="예약을 변경하고 싶은데 어떻게 하면 되나요?" answer="555" />
+        <FaQBox question="뷰티 컨설팅이랑 피부 컨설팅이랑 어떤 점이 다른가요?" answer="666" />
       </MyPage>
       <Margin />
     </>

@@ -8,8 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const NavBox = styled.div.withConfig({
-  shouldForwardProp: (prop) =>
-    isPropValid(prop) && prop !== "backgroundColor" && prop !== "textColor",
+  shouldForwardProp: (prop) => isPropValid(prop) && prop !== "backgroundColor" && prop !== "textColor",
 })`
   position: fixed;
   width: 100%;
@@ -69,15 +68,14 @@ const LoginText = styled.div`
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const User = useSelector(
-    (state) => state.auth.logonUser
-  );
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+  const User = useSelector((state) => state.auth.logonUser);
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [textColor, setTextColor] = useState("black");
   const location = useLocation();
   // const handleLogout = () => {
   //   console.log('로그1아웃')
-  //   const state = useSelector((state) => state); 
+  //   const state = useSelector((state) => state);
   //   console.log(state,'2222222222222222222222')
   //   const config = {
   //     headers: {
@@ -105,10 +103,7 @@ const Navbar = () => {
     if (currentScrollY >= 0 && currentScrollY < viewportHeight) {
       setTextColor("white");
       setBackgroundColor("#ffc8b9");
-    } else if (
-      currentScrollY >= viewportHeight &&
-      currentScrollY < viewportHeight * 2
-    ) {
+    } else if (currentScrollY >= viewportHeight && currentScrollY < viewportHeight * 2) {
       setTextColor("white");
       setBackgroundColor("#f8e4a9");
     } else {
@@ -168,20 +163,19 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        {isAuthenticated && User.role === 'USER' ? (
-        <Link to={`/mypage/${User.id}`} reloadDocument>
-          <StyledPerson />
-        </Link>
-      ) : isAuthenticated && User.role === 'CONSULTANT' ? (
-        <Link to={`/expertmypage/${User.id}`} reloadDocument>
-          <StyledPerson />
-        </Link>
-      ) : (
-        <Link to="/login" reloadDocument>
-          <StyledPerson />
-        </Link>
-      )}
-        
+        {isAuthenticated && User.role === "USER" ? (
+          <Link to={`/mypage/${User.id}`} reloadDocument>
+            <StyledPerson />
+          </Link>
+        ) : isAuthenticated && User.role === "CONSULTANT" ? (
+          <Link to={`/expertmypage/${User.id}`} reloadDocument>
+            <StyledPerson />
+          </Link>
+        ) : (
+          <Link to="/login" reloadDocument>
+            <StyledPerson />
+          </Link>
+        )}
       </NavMenu2>
     </NavBox>
   );
