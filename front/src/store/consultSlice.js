@@ -27,8 +27,8 @@ const initialState = {
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'
       ,
       name: 'bot',
-      isMic: 'false',
-      isCam: 'false',
+      isMic: 'true',
+      isCam: 'true',
 
     }
   ]
@@ -56,7 +56,7 @@ export const postConsultingResult = createAsyncThunk(
 
 )
 
- 
+
 
 
 export const makeResult = createAsyncThunk(
@@ -87,7 +87,7 @@ export const getCustomer = createAsyncThunk(
   'consult/getCustomer',
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('payload'+payload)
+      console.log('payload' + payload)
 
       const response = await Axios.get(`consultings/` + payload)
 
@@ -126,7 +126,7 @@ export const getConsultantSessionName = createAsyncThunk(
   async (reservationId, { rejectWithValue }) => {
     try {
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
-      
+
       return response.data
     } catch (err) {
       console.log(err)
@@ -168,6 +168,8 @@ const consultSlice = createSlice({
     resetSessionName: (state) => {
       state.creatorSessionName = ''
     },
+ 
+
     setCustomer: (state, { payload }) => {
       state.customer = payload
     },
@@ -221,7 +223,7 @@ const consultSlice = createSlice({
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName, appendMessageList,
   setReservationId, resetMsg, setconsultid, setCustomer, setConsultantSessionName
-  , appendParticipantList,
+  , appendParticipantList, resetParticipant
 } = consultSlice.actions;
 
 export default consultSlice.reducer;

@@ -15,7 +15,7 @@ const ParticipantItem = ({
   isCam,
 }) => {
 
-
+  console.log(isMic)
   return (
 
     <GridContainer container alignItems="center">
@@ -30,16 +30,12 @@ const ParticipantItem = ({
 
           <Name side={side}>{name}</Name>
 
-          {isMic === 'true' ? <CiMicrophoneOn style={{ marginLeft: '10px' }} /> : <CiMicrophoneOff style={{ marginLeft: '10px' }} />}
+          {isMic == "true" ? <CiMicrophoneOn style={{ marginLeft: '10px' }} /> : <CiMicrophoneOff style={{ marginLeft: '10px' }} />}
 
-          {/* {
-            <CiMicrophoneOff style={{ marginLeft: '10px' }} />
+           
+          {isCam == "true" ? <Videocam style={{ marginLeft: '10px' }} /> : <BsCameraVideoOff style={{ marginLeft: '10px' }} />}
 
-          } */}
-          {isCam === 'true' ? <Videocam style={{ marginLeft: '10px' }} /> : <BsCameraVideoOff style={{ marginLeft: '10px' }} />}
-
-          {/* <BsCameraVideoOff style={{ marginLeft: '10px' }} /> */}
-
+ 
         </NameBox>
       </Grid>
     </GridContainer>
