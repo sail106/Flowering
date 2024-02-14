@@ -30,13 +30,7 @@ const ConsultantParticipant = ({ streamManager, audioPermission }) => {
   // const { session, messageId } = useSelector(state => state.consult)
   // const dispatch = useDispatch()
  
-
-  // useEffect(() => {
-  //   if (session) {
-  //     session.on('signal:chat', textChat)
-  //   }
-  // }, [session])
-
+ 
   const ContentWrapper = styled.div`
   width: 100%;
   display: flex;
