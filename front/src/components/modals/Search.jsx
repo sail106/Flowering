@@ -5,7 +5,9 @@ import ModalClose from "@mui/joy/ModalClose";
 import Sheet from "@mui/joy/Sheet";
 import { CiSearch } from "react-icons/ci";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSearchResults, deletesearchResults } from "../../store/authSlice";
+
 // 스타일 컴포넌트 정의
 const InputDiv = styled.div`
   display: flex;
@@ -67,7 +69,8 @@ function SearchModal(props) {
   const [autocompleteItems, setAutocompleteItems] = useState([]);
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
-
+  const dispatch = useDispatch()
+  const searchResults = useSelector(state => state.auth.searchResults);
   const fetchAutocompleteItems = async () => {
     if (!inputValue) return setAutocompleteItems([]);
     const token = access_token; // 여기에 액세스 토큰을 설정합니다.
@@ -79,18 +82,22 @@ function SearchModal(props) {
       },
     };
 
-    console.log(token);
     try {
       const response = await axios.get(
         `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
-
         config
       );
       setAutocompleteItems(response.data.data_body);
+
+      console.log('잘나오는부분',autocompleteItems)
+      dispatch(fetchSearchResults(autocompleteItems))// Add this line
+  
+      console.log('깁슨기타',searchResults)
     } catch (error) {
       console.error("Error fetching autocomplete data:", error);
     }
   };
+
 
   useEffect(() => {
     if (inputValue) {
@@ -107,7 +114,11 @@ function SearchModal(props) {
   return (
     <>
       <ModalButton onClick={() => setOpen(true)}>{props.title} 추천 제품 이름을 입력하세요.</ModalButton>
-      <Modal open={open} onClose={() => setOpen(false)} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Modal open={open} onClose={() => {
+  setOpen(false); 
+  dispatch(deletesearchResults()); // Add this line
+}} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+
         <Sheet
           sx={{
             maxWidth: 600,

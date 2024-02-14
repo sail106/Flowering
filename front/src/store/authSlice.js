@@ -5,6 +5,7 @@ import axios from 'axios';
 
 // state
 const initialState = {
+	searchResults: [],
 	// signup info state
 	userInfo: {
 		email: '',
@@ -49,6 +50,33 @@ const initialState = {
 	status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed',
 };
 
+
+export const fetchSearchResults = createAsyncThunk(
+	'search/fetchSearchResults',
+	async ({ inputValue }, { getState, rejectWithValue }) => {
+	  try {
+		const baseurl = import.meta.env.VITE_APP_BASE_URL;
+		const state = getState();
+		const token = state.auth.logonUser.access_token;
+  
+		const config = {
+		  headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		  },
+		};
+		console.log(inputValue,"inputvalue")
+		const response = await axios.get(
+		  `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
+		  config
+		);
+  
+		return response.data.data_body;
+	  } catch (err) {
+		return rejectWithValue(err);
+	  }
+	}
+  );
 // login actions
 export const UserInfo = createAsyncThunk('auth/UserInfo', async ({ info }, { rejectWithValue, getState }) => {
 	try {
@@ -205,6 +233,12 @@ const authSlice = createSlice({
 			state.isAuthenticated = false;
 			deleteToken();
 		},
+		deletesearchResults: (state) => {
+			state.searchResults = [];
+		},
+		fillResults: (state) => {
+			state.searchResults = [];
+		},
 		// modify reducers
 		modalOn: (state) => {
 			state.isModal = true;
@@ -268,6 +302,10 @@ const authSlice = createSlice({
 				state.status = 'failed';
 			})
 
+			.addCase(fetchSearchResults.fulfilled, (state,action) => {
+				state.searchResults = action.payload;
+			})
+
 			.addCase(UserInfo.fulfilled, (state, action) => {
 				state.logonUser.role = action.payload.role;
 				state.logonUser.id = action.payload.id;
@@ -290,7 +328,7 @@ const authSlice = createSlice({
 	},
 });
 
-export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId } = authSlice.actions;
+export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId, deletesearchResults } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
 export default authSlice.reducer

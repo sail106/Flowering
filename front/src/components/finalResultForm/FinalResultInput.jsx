@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
 import styled from "styled-components";
 import axios from "axios";
@@ -124,7 +124,7 @@ const FinalresultInput = () => {
   const [productList, setProductList] = useState(null);
 
   const Token = useSelector((state) => state.auth.logonUser);
-
+  const searchResults = useSelector(state => state.auth.searchResults);
   // 값이 변경될 때마다 호출되는 함수
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
@@ -162,7 +162,7 @@ const FinalresultInput = () => {
       console.error("Error submitting data:", error);
     }
   };
-
+console.log(searchResults)
   return (
     <Card>
       <ConsultingType />
