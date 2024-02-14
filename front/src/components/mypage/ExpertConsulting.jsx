@@ -109,11 +109,11 @@ const ExpertConsulting = () => {
   };
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const buttonclick = async (consultingid) => {
-    console.log("click" + consultingid);
-    dispatch(setRole("CONSULTANT"));
-    dispatch(setname("CONSULTANT"));
-    dispatch(setconsultantSessionName(consultingid));
-    console.log("consultingid", consultingid);
+    console.log('click' + consultingid)
+    dispatch(setRole('CONSULTANT'))
+    dispatch(setname(name))
+    dispatch(setconsultantSessionName(consultingid))
+    console.log('consultingid', consultingid)
 
     const consultant = {
       imageUrl: imageUrl,

@@ -91,6 +91,7 @@ const MyConsulting = () => {
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", consulting_id: "1" },
   ];
   const { access_token } = useSelector(state => state.auth.logonUser);
+  const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const MyConsulting = () => {
   
     if (isactive) {
       dispatch(setRole('USER'));
-      dispatch(setname('USER'));
+      dispatch(setname(name));
 
       navigate('/OneToOneVideoChat');
     } else {
