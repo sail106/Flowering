@@ -15,7 +15,6 @@ const FinalConsultingPage = ({ userType, usersCondition, expertMethod }) => {
   return (
     <>
       <MyCard>
-        <h1>I am Final Consulting Page</h1>
         <ConsultingType>{userType}</ConsultingType>
         <UserCondition usersCondition={usersCondition}>{usersCondition}</UserCondition>
       </MyCard>

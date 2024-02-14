@@ -1,4 +1,30 @@
+import styled from "styled-components";
+
 import FinalConsultingPage from "./FinalConsultingPage"
+import { ButtonBox } from "../common/Button";
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-right: 100px;
+`;
+
+
+const MyButton1 = styled(ButtonBox)`
+  background-color: gray;
+  border-color: gray;
+  border-radius: 300px;
+  margin: 80px;
+  width: 230px;
+  height: 60px;
+  `;
+
+  const MyButton2 = styled(ButtonBox)`
+    border-radius: 300px;
+    margin: 80px;
+    width: 230px;
+    height: 60px;
+  `;
 
 const FinalConsultingForm = () => {
   const consultData = [
@@ -17,9 +43,9 @@ const FinalConsultingForm = () => {
       condition: ['헤어 컬러', '헤어 스타일'],
     },
   ]
-
+  
   return (
-    <>
+    <form>
       {consultData.map((el) => {
         return (
           <FinalConsultingPage
@@ -30,7 +56,11 @@ const FinalConsultingForm = () => {
           />
         )
       })}
-    </>
+      <ButtonContainer>
+        <MyButton1>임시저장</MyButton1>
+        <MyButton2>제출하기</MyButton2>
+      </ButtonContainer>
+    </form>
   )
 }
 
