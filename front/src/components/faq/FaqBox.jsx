@@ -31,7 +31,7 @@ const FaqAnswer = styled.div`
   color: #6d6d6d;
   font-family: Noto Sans KR;
   width: 50%;
-  line-height: 22px;
+  line-height: 175%;
   display: flex;
   justify-content: start;
   text-align: start;
@@ -45,15 +45,8 @@ const DropdownWrapper = styled.div`
   height: 10%;
 `;
 
-const NomarginP = styled.p`
-  margin: 0;
-  line-height: 24px;
-`;
-
 const FaQBox = ({ question, answer }) => {
-  const answerLines = answer.split("/n");
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -69,9 +62,7 @@ const FaQBox = ({ question, answer }) => {
         </FaqWrapper>
       </FaqContainer>
       <FaqAnswer open={isOpen}>
-        {answerLines.map((line, index) => (
-          <NomarginP key={index}>{line}</NomarginP>
-        ))}
+       {answer}
       </FaqAnswer>
     </>
   );
