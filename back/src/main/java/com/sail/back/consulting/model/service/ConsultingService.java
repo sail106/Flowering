@@ -87,9 +87,12 @@ public class ConsultingService {
 
         consultingRepository.save(consulting);
 
+        Consulting newConsulting= consultingRepository.findByUserIdAndTime(user.getId(),consultingCreateRequest.getTime()).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
+
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
                 .title(consultingCreateRequest.getTitle())
+                .consultingid(newConsulting.getConsulting_id())
                 .build();
     }
 
