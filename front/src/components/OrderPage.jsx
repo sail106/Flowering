@@ -150,12 +150,18 @@ const Order = () => {
 		setSelectedPaymentId(selectedId);
 	};
 	const navigate = useNavigate();
-  const { selectedid } = useSelector(state => state.auth)
-
+	const { selectedid } = useSelector((state) => state.auth);
+	const [consultingId, setConsultingId] = useState(null);
 	const { selectedTime, selectedDate } = useSelector((state) => state.selected);
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
 	// alert('dddd' + selectedDate + " " + selectedTime)
+	useEffect(() => {
+		if (consultingId !== null) {
+			// 여기서 다음 페이지로 이동
+			navigate('/orderResult', { state: { value: { consultingId } } });
+		}
+	}, [consultingId]);
 
 	const headers = [
 		{
@@ -200,7 +206,7 @@ const Order = () => {
 
 	const requestPay = () => {
 		console.log('ssss' + selectedDate + 'T' + selectedTime);
-		const { IMP } = window;
+		const IMP = window?.IMP;
 		IMP.init('imp03878765');
 
 		IMP.request_pay(
@@ -246,13 +252,13 @@ const Order = () => {
 							);
 
 							// 요청 성공 시 수행할 작업
-							console.log('Response:', response.data);
+							console.log('Response:', response.data.data_body);
+							setConsultingId(response.data.data_body.consultingid);
+							console.log(consultingId);
 						} catch (error) {
 							console.error('Error :', error);
 							// alert('결제 실패');
 						}
-
-						navigate('/orderResult');
 					} else {
 						alert('결제 실패sss');
 					}
