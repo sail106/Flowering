@@ -162,6 +162,20 @@ const FinalresultInput = () => {
       console.error("Error submitting data:", error);
     }
   };
+  const [makeup, setMakeup] = useState([]);
+
+const handleReceiveItems = (item) => {
+  console.log(item);
+  setMakeup((prevMakeup) => [...prevMakeup, item]);
+};
+
+// 제거
+const handleRemoveItem = (indexToRemove) => {
+  setMakeup((prevMakeup) => prevMakeup.filter((_, index) => index !== indexToRemove));
+};
+const handleRemoveItemById = (idToRemove) => {
+  setMakeup((prevMakeup) => prevMakeup.filter((item) => item.id !== idToRemove));
+};
 
   return (
     <Card>
@@ -211,9 +225,14 @@ const FinalresultInput = () => {
             <IoMdSearch />
           </H3>
           <Put>
-            <Search title={"스킨케어"} />
+            <Search onReceiveItem={handleReceiveItems} title={"스킨케어"} />
           </Put>
         </ModalBox>
+        {makeup.map((item, index) => (
+        <li key={index}>
+          {item.price}
+        </li>
+      ))}
         <Margin2 />
         <H2>메이크업</H2>
         <InputSet>
