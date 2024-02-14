@@ -8,7 +8,7 @@ import ConsultantSolution from "./ConsultantSolution"
 const HorizontalLine = styled.hr`
   border: none;
   border-top: 1px solid black;
-  width: 85%;
+  width: 90%;
 `
 
 const FinalConsultingPage = ({ userType, usersCondition, expertMethod }) => {
@@ -18,7 +18,6 @@ const FinalConsultingPage = ({ userType, usersCondition, expertMethod }) => {
         <ConsultingType>{userType}</ConsultingType>
         <UserCondition usersCondition={usersCondition}>{usersCondition}</UserCondition>
       </MyCard>
-      <HorizontalLine />
       <MyCard>
         <ConsultantSolution expertMethod={expertMethod}/>
       </MyCard>

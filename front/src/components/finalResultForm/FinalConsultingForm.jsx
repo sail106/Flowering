@@ -43,7 +43,9 @@ const FinalConsultingForm = () => {
       condition: ['헤어 컬러', '헤어 스타일'],
     },
   ]
-  
+  // todo
+  // ConsultantSolution.jsx 파일에서 작업
+  // 
   return (
     <form>
       {consultData.map((el) => {
