@@ -12,6 +12,7 @@ public enum ConsultingErrorCode {
     ALREADY_IN("이미 유저는 해당 시간에 상담이 존재합니다.", HttpStatus.BAD_REQUEST),
     ALREADY_IN_CONSULTANT("이미 해당 컨설턴트는 이 시간에 상담이 존재합니다.", HttpStatus.BAD_REQUEST),
     MYSELF("자기 자신과 상담을 잡을수 없습니다.", HttpStatus.BAD_REQUEST),
+    HAVE_CONSULTING("이미 이시간에 상담이 있어서 상담을 잡을수 없습니다.", HttpStatus.BAD_REQUEST),
     IS_CONSULTANT("컨설턴트는 상담을 신청할수 없습니다.", HttpStatus.BAD_REQUEST);
 
     private final String message;
