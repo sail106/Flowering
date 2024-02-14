@@ -19,7 +19,7 @@ const FinalConsultingPage = ({ userType, usersCondition, expertMethod }) => {
         <UserCondition usersCondition={usersCondition}>{usersCondition}</UserCondition>
       </MyCard>
       <MyCard>
-        <ConsultantSolution expertMethod={expertMethod}/>
+        <ConsultantSolution expertMethod={expertMethod} userType={userType}/>
       </MyCard>
       <HorizontalLine />
     </>

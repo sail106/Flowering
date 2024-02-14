@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { IoMdSearch } from "react-icons/io";
 
 import SolutionArea from "./SolutionArea"
 import ConditionLabel from "./ConditionLabel";
 import Input from "../common/Input";
 import Search from "../modals/Search"
-import { IoMdSearch } from "react-icons/io";
+import SearchModal from "../modals/Search";
 
 const MyContainer = styled.div`
   display: flex;
@@ -21,7 +22,8 @@ const ModalBox = styled.div`
   margin-top: 100px;
 `;
 
-const ConsultantSolution = ({ expertMethod }) => {
+const ConsultantSolution = ({ expertMethod, userType }) => {
+
   return (
     <>
       <h2>전문가 솔루션</h2>
@@ -40,7 +42,7 @@ const ConsultantSolution = ({ expertMethod }) => {
       })}
       <ModalBox>
         <IoMdSearch />
-        <Search />
+        <Search title={userType}/>
       </ModalBox>
     </>
   )
