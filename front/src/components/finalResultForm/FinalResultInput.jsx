@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Input from "../common/Input";
 import { ButtonBox } from "../common/Button";
 import Search from "../modals/Search";
-import ProductList from "../FinalResultInput/ProductList";
+// import ProductList from "../FinalResultInput/ProductList";
 import ConsultingType from "./consultingType";
 
 const MyButton = styled(ButtonBox)`

@@ -150,6 +150,7 @@ const Order = () => {
 		setSelectedPaymentId(selectedId);
 	};
 	const navigate = useNavigate();
+  const { selectedid } = useSelector(state => state.auth)
 
 	const { selectedTime, selectedDate } = useSelector((state) => state.selected);
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
@@ -235,7 +236,7 @@ const Order = () => {
 							};
 
 							const response = await axios.post(
-								`${baseurl}consultings/1`,
+								`${baseurl}consultings/${selectedid}`,
 								{
 									time: selectedDate + 'T' + selectedTime,
 									title: email + '님의 상담',

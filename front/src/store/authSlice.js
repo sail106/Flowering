@@ -293,4 +293,4 @@ const authSlice = createSlice({
 export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;
 
-export default authSlice.reducer;
+export default authSlice.reducer

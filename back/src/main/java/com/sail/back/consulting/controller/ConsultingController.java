@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -66,9 +67,18 @@ public class ConsultingController {
     }
 
 
+    @PutMapping("/{consultingId}")
+    public ResponseEntity<MessageUtils> modifyReservation(
+            @PathVariable Long consultingId, LocalDateTime time) {
+        MessageUtils message = consultingService.modifyReservation(consultingId, time);
+        log.info("예약 변경 성공");
+        return ResponseEntity.ok()
+                .body(message);
+    }
+
     @PutMapping("/activate/{consultingId}")
     public ResponseEntity<MessageUtils> activateReservation(@AuthenticationPrincipal User user,
-                                                          @PathVariable Long consultingId) {
+                                                            @PathVariable Long consultingId) {
 
         MessageUtils message = consultingService.activateReservation(user, consultingId);
         log.info("예약 활성화 성공");
@@ -78,15 +88,13 @@ public class ConsultingController {
 
     @PutMapping("/deactivate/{consultingId}")
     public ResponseEntity<MessageUtils> deactivateReservation(@AuthenticationPrincipal User user,
-                                                            @PathVariable Long consultingId) {
+                                                              @PathVariable Long consultingId) {
 
         MessageUtils message = consultingService.deactivateReservation(user, consultingId);
         log.info("예약 비활성화 성공");
         return ResponseEntity.ok()
                 .body(message);
     }
-
-
 
 
     @GetMapping("/{consultingId}")
@@ -96,7 +104,7 @@ public class ConsultingController {
         ConsultingResponse consultingResponse = consultingService.getReservation(consultingId);
         log.info("컨설팅 번호의 정보 가져오기");
         return ResponseEntity.ok()
-                .body(MessageUtils.success(  consultingResponse ));
+                .body(MessageUtils.success(consultingResponse));
 
     }
 

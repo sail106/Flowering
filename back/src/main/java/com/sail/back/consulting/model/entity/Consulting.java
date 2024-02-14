@@ -48,6 +48,9 @@ public class Consulting {
     }
 
 
+    public void setdatetime(LocalDateTime time) {
+        this.time = time;
+    }
 
 //    //세션아이디
 //    @NotNull

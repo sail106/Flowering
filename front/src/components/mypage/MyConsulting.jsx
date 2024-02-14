@@ -146,7 +146,7 @@ const MyConsulting = () => {
     if (isactive === null) { // isactive가 null일 때는 아무것도 하지 않음
       return;
     }
-  
+
     if (isactive) {
       dispatch(setRole('USER'));
       dispatch(setname(name));
@@ -184,9 +184,10 @@ const MyConsulting = () => {
 
   useEffect(() => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
-  }, []);
 
-  console.log(consultingData)
+  }, []);
+  // console.log(consultingData)
+
 
   return (
     <Consulting>
@@ -200,7 +201,7 @@ const MyConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {consultingData.map((row, index) => {
+          { consultingData?.map((row, index) => {
             const date = new Date(row.time);
             const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
             const formattedTime = format(date, 'HH:mm');
@@ -229,7 +230,7 @@ const MyConsulting = () => {
                 </ButtonTd>
               </Tr>
             );
-          })}
+          } ) }
         </Tbody>
       </Table>
     </Consulting>

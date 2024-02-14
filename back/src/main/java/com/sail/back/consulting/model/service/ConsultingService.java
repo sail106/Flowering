@@ -61,8 +61,7 @@ public class ConsultingService {
         Consultant consultant = consultantRepository.findById(consultantId)
                 .orElseThrow(() -> new NotFoundException(CONSULTANT_NOT_FOUND));
         //자기가 자신과 상담잡는 경우 예외처리
-        if(user.getId()==consultant.getUser().getId())
-        {
+        if (user.getId() == consultant.getUser().getId()) {
             throw new ConsultingException(ConsultingErrorCode.MYSELF);
         }
 
@@ -120,27 +119,35 @@ public class ConsultingService {
     }
 
     public MessageUtils activateReservation(User user, Long consultingId) {
-            Consultant consultant=consultantRepository.findByUser(user).orElseThrow(()->new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+        Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
-            Consulting consulting=consultingRepository.findById(consultingId).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
+        Consulting consulting = consultingRepository.findById(consultingId).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
 
         consulting.setActive(true);
 
-            consultingRepository.save(consulting);
+        consultingRepository.save(consulting);
 
         return MessageUtils.success("activated", "200", "success");
     }
 
     public MessageUtils deactivateReservation(User user, Long consultingId) {
-        Consultant consultant=consultantRepository.findByUser(user).orElseThrow(()->new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
 
-        Consulting consulting=consultingRepository.findById(consultingId).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
+        Consulting consulting = consultingRepository.findById(consultingId).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
 
         consulting.setActive(false);
- 
+
         consultingRepository.save(consulting);
 
         return MessageUtils.success("deactivated", "200", "success");
+
+    }
+
+    public MessageUtils modifyReservation(Long consultingId, LocalDateTime time) {
+        Consulting consulting = consultingRepository.findById(consultingId).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
+
+        consulting.setdatetime(time);
+        consultingRepository.save(consulting);
+        return MessageUtils.success("modifyReservation", "200", "success");
 
     }
 
