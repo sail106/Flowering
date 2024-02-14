@@ -95,15 +95,16 @@ public class ConsultingService {
 
         consulting.create(user, consultant);
 
-        consultingRepository.save(consulting);
+        Consulting savedConsulting = consultingRepository.save(consulting);
+        Long id = savedConsulting.getConsulting_id();
 
-        Consulting newConsulting = consultingRepository.findByUserIdAndTime(user.getId(), consultingCreateRequest.getTime()).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
+
         reportService.createReport(consultantId, user);
 
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
                 .title(consultingCreateRequest.getTitle())
-                .consultingid(newConsulting.getConsulting_id())
+                .consultingid(id)
                 .build();
     }
 
