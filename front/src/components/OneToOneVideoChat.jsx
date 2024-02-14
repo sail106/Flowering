@@ -319,7 +319,7 @@ const OneToOneVideoChat = () => {
           console.log('getConsultant 액션 성공:', response)
 
 
-          const Consultant = {
+          const Consultant = {   ///////////////
             // imageUrl: response.data_body.imageUrl,
             imageUrl: '',
             name: 'Consultant',
