@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Modal from "@mui/joy/Modal";
-import ModalClose from "@mui/joy/ModalClose";
-import Sheet from "@mui/joy/Sheet";
-import { CiSearch } from "react-icons/ci";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Modal from '@mui/joy/Modal';
+import ModalClose from '@mui/joy/ModalClose';
+import Sheet from '@mui/joy/Sheet';
+import { CiSearch } from 'react-icons/ci';
+import axios from 'axios';
+
 // 스타일 컴포넌트 정의
 const InputDiv = styled.div`
   display: flex;
@@ -56,39 +56,19 @@ const AutocompleteItem = styled.div`
   }
 `;
 
-const ModalButton = styled.button`
-  font-size: 16px;
-  margin-bottom: 7px;
-`;
-
-function SearchModal(props) {
+function SearchModal() {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [autocompleteItems, setAutocompleteItems] = useState([]);
-  const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 
   const fetchAutocompleteItems = async () => {
     if (!inputValue) return setAutocompleteItems([]);
-    const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        // 다른 필요한 헤더도 추가할 수 있습니다.
-      },
-    };
 
-    console.log(token);
     try {
-      const response = await axios.get(
-        `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
-
-        config
-      );
+      const response = await axios.get(`http://localhost:8080/v1/product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`);
       setAutocompleteItems(response.data.data_body);
     } catch (error) {
-      console.error("Error fetching autocomplete data:", error);
+      console.error('Error fetching autocomplete data:', error);
     }
   };
 
@@ -106,27 +86,38 @@ function SearchModal(props) {
 
   return (
     <>
-      <ModalButton onClick={() => setOpen(true)}>{props.title} 추천 제품 이름을 입력하세요.</ModalButton>
-      <Modal open={open} onClose={() => setOpen(false)} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <button onClick={() => setOpen(true)}>Open Search Modal</button>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
         <Sheet
           sx={{
             maxWidth: 600,
-            width: "100%",
+            width: '100%',
             borderRadius: "md",
             p: 2,
             boxShadow: "lg",
-            position: "relative",
+            position: 'relative'
           }}
         >
-          <ModalClose variant="plain" onClick={() => setOpen(false)} sx={{ position: "absolute", right: 8, top: 8 }} />
+          <ModalClose variant="plain" onClick={() => setOpen(false)} sx={{ position: 'absolute', right: 8, top: 8 }} />
           <InputDiv>
             <Icon />
-            <Input placeholder="Search..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+            <Input
+              placeholder="Search..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
             {autocompleteItems.length > 0 && (
               <AutocompleteList>
                 {autocompleteItems.map((item, index) => (
-                  <AutocompleteItem key={index} onClick={() => setInputValue(item.product_name)}>
-                    <img src={item.product_image_uri} alt={item.product_name.replace(/<b>|<\/b>/g, "")} />
+                  <AutocompleteItem
+                    key={index}
+                    onClick={() => setInputValue(item.product_name)}
+                  >
+                    <img src={item.product_image_uri} alt={item.product_name.replace(/<b>|<\/b>/g, '')} />
                     <div dangerouslySetInnerHTML={{ __html: item.product_name }} /> - {item.price}원
                   </AutocompleteItem>
                 ))}

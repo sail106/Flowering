@@ -3,13 +3,11 @@ import styled from "styled-components";
 import SecondResultPage from "./SecondSurveyResult/SecondResultPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Button from "./common/Button";
-import { Link } from "react-router-dom";
 
 const DefaultPage = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
@@ -19,26 +17,22 @@ const PageLayout = styled.div`
   width: 75%;
 `;
 
-const ButtonBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 15%;
-  margin-top: 50px;
-  margin-bottom: 30px;
+const PageTitle = styled.div`
+  font-family: "Noto Sans KR";
+  font-size: 38px;
+  margin-bottom: 15px;
 `;
 
 const SecondServeyResult = () => {
-  const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
+  const Token = useSelector((state) => state.auth.logonUser);
   const [data, setData] = useState(null);
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${baseurl}analysis/find/7`,
+      url: "http://i10c106.p.ssafy.io:8080/v1/analysis/find/1",
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${Token.access_token}`,
       },
     })
       .then((res) => {
@@ -48,16 +42,15 @@ const SecondServeyResult = () => {
         console.log(error);
         throw new Error(error);
       });
-  }, [access_token]);
+  }, [Token.access_token]);
 
   return (
     <DefaultPage>
-      <PageLayout>{data && <SecondResultPage data={data} />}</PageLayout>
-      <ButtonBox>
-        <Link to={"/secondsurveyend"}>
-          <Button>닫기</Button>
-        </Link>
-      </ButtonBox>
+      <PageLayout>
+        <PageTitle>2차 카메라 테스트</PageTitle>
+        <hr></hr>
+        {data && <SecondResultPage data={data} />}
+      </PageLayout>
     </DefaultPage>
   );
 };

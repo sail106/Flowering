@@ -6,7 +6,7 @@ import { ButtonBox } from "../common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { UserInfo } from "../../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 const EditButton = styled(ButtonBox)`
   border-radius: 100px;
   width: 220px;
@@ -26,38 +26,39 @@ const OkayButtom = styled(EditButton)`
   width: 50%;
 `;
 
-export default function Edit({ nickname, pwOne }) {
+export default function Edit({nickname,pwOne}) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const User = useSelector((state) => state.auth.logonUser);
-  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
   const handleClose = () => {
     setOpen(false);
-    if (User.role === "USER") {
-      navigate(`/mypage/${User.id}`);
-    } else {
-      navigate(`/expertmypage/${User.id}`);
-    }
+    if (User.role === 'USER'){
+        navigate(`/mypage/${User.id}`)
+      }
+      else{
+        navigate(`/expertmypage/${User.id}`)
+      }
   };
 
   const updateUserInfo = async () => {
-    setOpen(true);
+    setOpen(true)
     const data = {
-      password: pwOne,
-      nick_name: nickname,
+      "password":pwOne,
+      "nick_name":nickname
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
     };
-    console.log("데이터 확인", data);
+    console.log('데이터 확인',data)
     try {
       const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
-      dispatch(UserInfo(true));
-
+      dispatch(UserInfo(true))
+      
       // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
       // navigate('/success');
     } catch (error) {
@@ -67,6 +68,7 @@ export default function Edit({ nickname, pwOne }) {
     }
   };
   return (
+    
     <>
       <EditButton onClick={updateUserInfo}>수정하기</EditButton>
       <Modal
@@ -90,6 +92,7 @@ export default function Edit({ nickname, pwOne }) {
             boxShadow: "lg",
           }}
         >
+          
           <Text>수정이 완료되었습니다.</Text>
           <OkayButtom onClick={handleClose}>확인</OkayButtom>
         </Sheet>

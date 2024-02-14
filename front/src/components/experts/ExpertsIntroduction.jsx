@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { setExpertList } from "../../store/ExpertsListSlice";
-import BIBI from "../../assets/BIBI.png";
-import LEINA from "../../assets/LEINA.png";
-import DIANA from "../../assets/DIANA.png";
-import RUNA from "../../assets/RUNA.png";
+import BIBI from "../../assets/BIBI.png"
+import LEINA from "../../assets/LEINA.png"
+import DIANA from "../../assets/DIANA.png"
+import RUNA from "../../assets/RUNA.png"
 
 const ExpertCard = styled.div`
   justify-content: center;
@@ -22,61 +22,78 @@ const Margin = styled.div`
 `;
 // 컴포넌트 정의
 const ExpertsIntroduction = () => {
-  const { access_token } = useSelector((state) => state.auth.logonUser);
+
+  const { access_token } = useSelector(state => state.auth.logonUser);
   const [expertsData, setExpertsData] = useState([]);
   const [extraData, setextraData] = useState([]);
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    console.log("ssss");
+
+    console.log("ssss")
     const fetchData = async () => {
+
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+        console.log('tooo   ' + token)
+
         const config = {
           headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         };
 
         const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-        const response = await axios.get(baseurl + "consultant/list", config);
+        const response = await axios.get(baseurl + 'consultant/list', config);
 
         // 요청 성공 시 수행할 작업
-        console.log("Response:", response.data);
-        console.log("data_body  :", response.data.data_body);
+        console.log('Response:', response.data);
+        console.log('data_body  :', response.data.data_body);
 
-        console.log("hashhhh:", response.data.data_body.hash_tag_responses);
-        console.log("user_response:", response.data.data_body.user_response);
+        console.log('hashhhh:', response.data.data_body.hash_tag_responses);
+        console.log('user_response:', response.data.data_body.user_response);
 
         setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
-        dispatch(setExpertList(response.data.data_body));
-      } catch (error) {
-        console.error("Error :", error);
+        dispatch(setExpertList(response.data.data_body))
+
+      }
+      catch (error) {
+        console.error('Error :', error);
         // alert('결제 실패');
       }
+
     };
 
     fetchData(); // fetchData 함수 호출
+
   }, [access_token]);
 
+  console.log('succcc' + JSON.stringify(expertsData))
+
   if (expertsData.length > 0) {
-    console.log("succcc" + JSON.stringify(expertsData[1]));
+    console.log('succcc' + JSON.stringify(expertsData[1]))
     // console.log('succcc', JSON.stringify(expertsData[1].user_response));
     // console.log('succcc', JSON.stringify(expertsData[1].hash_tag_responses));
 
-    if (expertsData[1]?.hash_tag_responses.length ?? "" > 0) {
-      console.log("succcc", expertsData[1].hash_tag_responses[0].workplace);
+    if (expertsData[1]?.hash_tag_responses.length ?? '' > 0) {
+      console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
     }
+
+
   }
+
 
   return (
     <>
       <Title text={"Beauty consulting experts"} />
 
       <ExpertCard>
+
         {expertsData.map((expert) => (
+
           <Experts
             key={expert.consultant_id} // 각 전문가의 ID를 키로 사용
             id={expert.consultant_id} // 고유한 키 추가
@@ -84,13 +101,15 @@ const ExpertsIntroduction = () => {
             text={expert.simple_introduce}
             rate={expert.star}
             ratenum={expert.reviewnum}
-            tag1={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[0]?.workplace ?? "" : ""}
-            tag2={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[1]?.workplace ?? "" : ""}
+            tag1={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[0]?.workplace ?? '' : ""}
+            tag2={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[1]?.workplace ?? '' : ""}
+
             imgsrc={expert.user_response.profile_img_url}
             width={"280px"}
             height={"405px"}
             path={"/expertsProfilecommon/" + expert.consultant_id}
           />
+
         ))}
 
         <Experts

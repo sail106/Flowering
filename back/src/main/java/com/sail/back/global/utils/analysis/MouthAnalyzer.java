@@ -25,7 +25,7 @@ public class MouthAnalyzer {
 
         if (compareValue > 1.6){
             return LipRatio.UPPER_LIB_SMALL;
-        }else if(compareValue < 1.4){
+        }else if(compareValue < 1.1){
             return LipRatio.UPPER_LIB_BIG;
         }else {
             return LipRatio.UPPER_PERFECT;

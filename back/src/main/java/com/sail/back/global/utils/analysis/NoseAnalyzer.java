@@ -52,9 +52,9 @@ public class NoseAnalyzer {
 
         double compareValue = noseMiddle/noseWidth;
 
-        if(compareValue > 0.85){
+        if(compareValue > 0.8){
             return AlarSize.SMALL_ALAR;
-        }else if(compareValue < 0.75){
+        }else if(compareValue < 0.8){
             return AlarSize.BIG_ALAR;
         }else{
             return AlarSize.PERFECT_ALAR;

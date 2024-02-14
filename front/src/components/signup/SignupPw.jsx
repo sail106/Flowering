@@ -85,21 +85,20 @@ const SignupPw = () => {
     // 여기서 axios로 쏘기, 이렇게 하면 회원가입이 DB에 저장된다.
     const body = {
       email: userEmail,
-      password: pwOne,
-    };
+      password: pwOne
+    }
 
-    const baseurl = import.meta.env.VITE_APP_BASE_URL;
-
-    const response = await axios.post(`${baseurl}users/regist`, body);
-
+    const response = await axios.post(
+      'http://i10c106.p.ssafy.io/api/v1/users/regist', body
+    );
+    
     console.log(response);
     // 로그인 시키기
-    dispatch(
-      loginUser({
+    dispatch(loginUser(
+      {
         Email: userEmail,
-        Password: pwOne,
-      })
-    );
+        Password: pwOne
+      }));
     navigate("/signupRequired");
   };
 
@@ -111,12 +110,24 @@ const SignupPw = () => {
     <Card>
       {/* 회원가입 패스워드 */}
       <SignupPwHeader />
-      <Input htmlFor="pw1" id="pw1" placeholder="영문, 숫자, 특수문자 포함 8~20자" type="password" onChange={passwordHandler} />
+      <Input
+        htmlFor="pw1"
+        id="pw1"
+        placeholder="영문, 숫자, 특수문자 포함 8~20자"
+        type="password"
+        onChange={passwordHandler}
+      />
       <StyledCheck isValid={checkEn}>✓ 영문</StyledCheck>
       <StyledCheck isValid={checkNum}>✓ 숫자</StyledCheck>
       <StyledCheck isValid={checkSp}>✓ 특수문자</StyledCheck>
       <StyledCheck isValid={checkLen}>✓ 8~20자</StyledCheck>
-      <Input htmlFor="pw2" id="pw2" placeholder="비밀번호 재입력" type="password" onChange={passwordChecker} />
+      <Input
+        htmlFor="pw2"
+        id="pw2"
+        placeholder="비밀번호 재입력"
+        type="password"
+        onChange={passwordChecker}
+      />
       <StyledCheck isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
       <CenterContainer>
         {checkPwOne && checkPwTwo && (
@@ -125,7 +136,13 @@ const SignupPw = () => {
           </Button>
         )}
         {(!checkPwOne || !checkPwTwo) && (
-          <Button width="40%" marginTop="50px" background-color="#B1B1B1" borderColor="#B1B1B1" onClick={alertMessage}>
+          <Button
+            width="40%"
+            marginTop="50px"
+            background-color="#B1B1B1"
+            borderColor="#B1B1B1"
+            onClick={alertMessage}
+          >
             다음
           </Button>
         )}
