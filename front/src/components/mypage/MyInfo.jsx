@@ -57,6 +57,7 @@ const StyledButton = styled(ButtonBox)`
 
 const MyButton = () => {
   const User = useSelector((state) => state.auth.logonUser);
+  console.log(User)
   return (
     <Link to={`/editmyinfo/${User.id}`} reloadDocument>
       <StyledButton>내 정보 수정하기</StyledButton>
