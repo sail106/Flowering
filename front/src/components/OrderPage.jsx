@@ -239,12 +239,12 @@ const Order = () => {
 								`${baseurl}consultings/${selectedid}`,
 								{
 									time: selectedDate + 'T' + selectedTime,
-									title: email + '님의 상담',
+									title: name + '님의 상담',
 									// 다른 필요한 데이터
 								},
 								config
 							);
-
+								console.log(name)
 							// 요청 성공 시 수행할 작업
 							console.log('Response:', response.data);
 						} catch (error) {

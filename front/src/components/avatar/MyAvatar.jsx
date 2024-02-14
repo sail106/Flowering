@@ -4,11 +4,12 @@ import { Avatar, styled } from '@mui/material'
 const MyAvatar = (
   { setSize, imgUrl }
 ) => {
-	const tmpImg = '/images/default/avatar20.png'
+  // const tmpImg = '/images/default/avatar20.png'
+  const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
-	return (
+  return (
     <SetAvatar si={setSize}>
-			<img src={imgUrl ? imgUrl : tmpImg} alt='' />
+      <img src={imageUrl} alt='' />
     </SetAvatar>
   )
 }

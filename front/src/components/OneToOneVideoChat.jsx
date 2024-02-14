@@ -145,17 +145,10 @@ const OneToOneVideoChat = () => {
             console.log('getCustomer 액션 성공:', response)
 
 
-            // const User = {
-            //   // imageUrl: response.data_body.imageUrl,
-            //   imageUrl: imageUrl,
-            //   name: 'Customer',
-            //   isMic: 'true',
-            //   isCam: 'true',
-            // };
+            
             console.log('User 넣기')
 
-            // dispatch(appendParticipantList(User))
-
+ 
 
 
           }).catch((error) => {
@@ -350,8 +343,7 @@ const OneToOneVideoChat = () => {
       }
     }
 
-    // dispatch(appendParticipantList())
-
+ 
   }
 
   useEffect(() => {
