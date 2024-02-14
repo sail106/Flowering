@@ -142,8 +142,7 @@ const ExpertConsulting = () => {
       isCam: "true",
     };
 
-    // dispatch(appendParticipantList(customer))
-
+ 
     try {
       // 여기에 액세스 토큰을 설정합니다.
       // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';

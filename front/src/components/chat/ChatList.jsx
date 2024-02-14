@@ -13,24 +13,44 @@ const ChatList = () => {
     let i = messageList.length < 10 ? 0 : messageList.length - 10
 
     // let i = 0;
+    const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
+    // const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
     for (; i < messageList.length; i++) {
-    // for (; i < 5; i++) {
-      msgList.push(
-        <ChatItem
-          // key={messageList[i].id}
-          key={i}
-          // avatar={messageList[i].imageUrl}
-          avatar={
-            'https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'
-          }
-          // side={messageList[i].side ?? 'left'}
-          side={'left'}
-          message={messageList[i].message}
-          // message={'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'}
-          name={messageList[i].name}
-        />
-      );
+      // for (; i < 5; i++) {
+        console.log('hhhh'+name)
+        
+      if (messageList[i].name== "bot") {
+        console.log('booot')
+        msgList.push(
+          <ChatItem
+            // key={messageList[i].id}
+            key={i}
+            // avatar={messageList[i].imageUrl}
+            avatar={'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'}
+            // side={messageList[i].side ?? 'left'}
+            side={'left'}
+            message={messageList[i].message}
+            name={messageList[i].name}
+          />
+        );
+      }
+      else {
+
+        msgList.push(
+          <ChatItem
+            // key={messageList[i].id}
+            key={i}
+            // avatar={messageList[i].imageUrl}
+            avatar={imageUrl}
+            // side={messageList[i].side ?? 'left'}
+            side={'left'}
+            message={messageList[i].message}
+            name={messageList[i].name}
+          />
+        );
+
+      }
       console.log(messageList[i].message)
     }
 

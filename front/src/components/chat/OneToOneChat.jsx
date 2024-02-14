@@ -88,8 +88,7 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
-      // dispatch(appendParticipantList(persondata));
-      console.log('event chat')
+       console.log('event chat')
  
       session.on('signal:participant', addparticiapnt)
 
@@ -115,8 +114,7 @@ const OneToOneChat = () => {
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
-      // dispatch(appendParticipantList(data))
-    }
+     }
   }
 
   const Foldpos = styled.div`

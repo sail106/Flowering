@@ -12,7 +12,7 @@ const initialState = {
     {
       id: 1,
       role: '',
-      imageUrl: '',
+      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143',
       side: 'left',
       message: '대화를 시작합니다.',
       name: 'bot',
@@ -24,7 +24,7 @@ const initialState = {
     {
       id: 1,
       role: '',
-      imageUrl: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'
+      imageUrl: 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'
       ,
       name: 'bot',
       isMic: 'false',
