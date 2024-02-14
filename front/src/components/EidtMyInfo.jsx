@@ -3,7 +3,6 @@ import { Page } from "./common/Page";
 import Input from "./common/Input";
 import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
-import BIBI from "../assets/BIBI.png";
 import camera from "../assets/camera.png";
 import {
   getStorage,
@@ -12,13 +11,14 @@ import {
   getDownloadURL,
   uploadBytesResumable,
 } from "firebase/storage";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ButtonBox } from "./common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { UserInfo } from "../store/authSlice";
 import { S3 } from "aws-sdk";
+
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -48,6 +48,7 @@ const InfoContainer = styled.div`
   margin-top: 2%;
   margin-bottom: 4%;
 `;
+
 const StyledCheck = styled.p`
   display: inline-block;
   margin-left: 10px;
@@ -61,6 +62,7 @@ const Mylabel = styled.label`
   margin-top: 5%;
   display: flex;
 `;
+
 const Margin = styled.div`
   height: 35%;
 `;
@@ -101,9 +103,8 @@ const EditMyInfo = () => {
     region: "ap-northeast-2", // AWS S3 버킷의 리전을 입력하세요
     accessKeyId: import.meta.env.VITE_APP_ACCESS_KEY, // AWS Access Key ID를 입력하세요
     secretAccessKey: import.meta.env.VITE_APP_SECRET_KEY, // AWS Secret Access Key를 입력하세요
-    // accessKeyId: "AKIA2UC3EQURXM3FBELT", // AWS Access Key ID를 입력하세요
-    // secretAccessKey: "/FuPhPdcRYL+GmahnILfrJUXOqDYdVT+89gBnijx" // AWS Secret Access Key를 입력하세요
   });
+
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     const config = {
@@ -128,8 +129,6 @@ const EditMyInfo = () => {
     };
     const uploadResult = await s3.upload(uploadParams).promise();
     const url = uploadResult.Location; // 업로드된 파일의 URL을 가져옵니다
-    console.log('result',uploadResult)
-    console.log('url',url)
 
     try {
       const data = {
@@ -144,12 +143,13 @@ const EditMyInfo = () => {
       console.log(response.data);
       console.log("성공");
       dispatch(UserInfo(true));
-
+      console.log(User)
     } catch (error) {
       console.error("요청 중 에러 발생:", error);
     }
   };
 
+  
   const [checkEn, setCheckEn] = useState(false);
   const [checkNum, setCheckNum] = useState(false);
   const [checkSp, setCheckSp] = useState(false);
@@ -159,7 +159,7 @@ const EditMyInfo = () => {
   const [pwTwo, setPwTwo] = useState("");
   const [checkPwOne, setCheckPwOne] = useState(false);
   const [checkPwTwo, setCheckPwTwo] = useState(false);
-  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
   const passwordHandler = (e) => {
     setPwOne(e.target.value);
 

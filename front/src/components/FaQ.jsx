@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
 import axios from "axios";
-
+import { useState, useEffect, Fragment } from "react";
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -29,7 +29,6 @@ const FaQ = () => {
     const mydata = async () => {
       try {
         const response = await axios.get(baseurl + "faq/list");
-        console.log(response.data.data_body);
         setfaqData(response.data.data_body); // 데이터를 상태에 저장
       } catch (error) {
         console.error("Failed to update user info:", error);
@@ -42,7 +41,15 @@ const FaQ = () => {
       <MyPage>
         <Header>FAQ</Header>
         {faqData.map((faq, index) => (
-          <FaQBox key={index} question={faq.title} answer={faq.content} />
+          <FaQBox key={index} question={faq.title} 
+          answer={faq.content.split('\n').map((line, index) => (
+            <Fragment key={index}>
+              {line}
+              <br />
+            </Fragment>
+          ))}
+
+          />
         ))}
       </MyPage>
       <Margin />
