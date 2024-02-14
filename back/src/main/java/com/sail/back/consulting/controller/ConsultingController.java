@@ -32,7 +32,7 @@ public class ConsultingController {
     private final ConsultingService consultingService;
 
     //상담예약등록
-    @PostMapping("/{consultantId}")
+    @PostMapping("create/{consultantId}")
     public ResponseEntity<MessageUtils<ConsultingCreateResponse>> createReservation(
             @PathVariable Long consultantId,
             @AuthenticationPrincipal User user,
