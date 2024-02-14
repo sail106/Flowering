@@ -71,6 +71,7 @@ function SearchModal(props) {
   const fetchAutocompleteItems = async () => {
     if (!inputValue) return setAutocompleteItems([]);
     const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -79,11 +80,10 @@ function SearchModal(props) {
       },
     };
 
-    console.log(token);
     try {
+      console.log("inputValue : ", inputValue)
       const response = await axios.get(
         `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
-
         config
       );
       setAutocompleteItems(response.data.data_body);

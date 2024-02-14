@@ -97,6 +97,7 @@ const ReviewInput = styled.textarea`
 `;
 
 const FinalresultInput = () => {
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   // 각 Input에 대한 상태(state) 정의
   const [skinCondition, setSkinCondition] = useState("");
   const [morningSkincareRoutine, setMorningSkincareRoutine] = useState("");
@@ -133,7 +134,7 @@ const FinalresultInput = () => {
   const handleSubmit = async () => {
     try {
       // axios를 사용하여 서버로 데이터 전송
-      const response = await axios.post("http://i10c106.p.ssafy.io/api/v1/expert-opinion/save/1", {
+      const response = await axios.post(baseurl, "/v1/expert-opinion/save/1", {
         data: {
           skincare_skin_state: `${skinCondition}`,
           skincare_solution: `${skincareSolution}`,
