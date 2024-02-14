@@ -40,7 +40,7 @@ const OneToOneChat = () => {
       const mine = {
         id: messageId,
         role: role,
-        imageUrl: '',
+        imageUrl: imageUrl,
         side: 'left',
         message: msg,
         name: name,
