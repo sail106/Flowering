@@ -12,16 +12,15 @@ import { IoMdVideocam } from "react-icons/io";
 import { HiOutlineVideoCameraSlash } from "react-icons/hi2";
 
 import { CONSULTANT, CUSTOMER } from '../api/CustomConst';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
 import Participant from '../components/participant/Participant';
 
 import { OpenVidu } from 'openvidu-browser';
 
 import {
   settingModalOn, setSession,
-  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList, makeResult,
+  resetSessionName, resetMsg, postConsultingResult, getConsultant, getCustomer, appendParticipantList, appendMessageList, makeResult, resetParticipant,
 } from '../store/consultSlice'
+import { useDispatch, useSelector } from "react-redux";
 
 import axios from 'axios';
 import UserVideoComponent from './community/UserVideoComponent';
@@ -52,14 +51,14 @@ const OneToOneVideoChat = () => {
   const { consultantSessionName } = useSelector(state => state.consultsessionname)
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
 
 
   const [mySessionId, setMySessionId] = useState(
     consultantSessionName
   )
 
-  const dispatch = useDispatch();
-  const [myUserName, setMyUserName] = useState(name)
+   const [myUserName, setMyUserName] = useState(name)
 
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
@@ -373,12 +372,11 @@ const OneToOneVideoChat = () => {
   const leaveSession = () => {
     console.log('session' + session)
     // role==CONSULTANT &&
+
+    dispatch(resetParticipant)
+
     if (role == CONSULTANT && session) {
       session.disconnect();
-
-
-
-
 
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
@@ -634,7 +632,7 @@ const OneToOneVideoChat = () => {
 
                       }
 
- 
+
 
 
                     </Grid>
