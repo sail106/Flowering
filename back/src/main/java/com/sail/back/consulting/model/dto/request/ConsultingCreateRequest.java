@@ -27,6 +27,7 @@ public class ConsultingCreateRequest {
     private LocalDateTime time; //예약을 몇시에 할건지
     private String title; //예약을 몇시에 할건지
 
+
     public Consulting toEntity() {
         return Consulting.builder()
                 .time(this.time)
