@@ -99,3 +99,5 @@ logging:
 iamport:
   key: 3730036181048481
   secret: AWDy8eyVev3rP46VrgPWdB5QLoJZmEGyPt6LOm6XdoO9piSF2d0Wf11hwPLjVuISZAB4iI2RWBM3YO3M
+chatgpt :
+  key : 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
