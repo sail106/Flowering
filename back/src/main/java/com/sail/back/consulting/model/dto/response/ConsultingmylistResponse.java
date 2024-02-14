@@ -4,8 +4,10 @@ package com.sail.back.consulting.model.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.consultant.model.entity.Consultant;
 import com.sail.back.consulting.model.entity.Consulting;
+import com.sail.back.user.model.dto.response.UserResponse;
 import com.sail.back.user.model.entity.User;
 import lombok.*;
 
@@ -20,9 +22,9 @@ import java.time.LocalTime;
 @Builder
 public class ConsultingmylistResponse {
 
-    private User user;
+    private UserResponse userResponse;
 
-    private Consultant consultant;
+    private ConsultantResponse consultantResponse;
 
     private LocalDate date; //예약을 어느날 할건지
 
@@ -36,7 +38,7 @@ public class ConsultingmylistResponse {
 
     public static ConsultingmylistResponse fromEntity(Consulting consulting) {
         return ConsultingmylistResponse.builder()
-                .user(consulting.getUser())
+                .userResponse(consulting.getUser().toResponse())
                 .time(consulting.getTime())
                 .consultingid(consulting.getConsulting_id())
                 .build();
