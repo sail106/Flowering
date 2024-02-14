@@ -4,6 +4,7 @@ const SolutionInput = styled.textarea`
   width: 1250px;
   height: 120px;
   padding: 10px;
+  margin-bottom: 50px;
   font-family: "Noto Sans KR";
   border: 1px solid #8e8c8c;
   border-radius: 5px;
