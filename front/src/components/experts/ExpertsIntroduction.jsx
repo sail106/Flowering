@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setExpertList } from '../../store/ExpertsListSlice';
+import { useNavigate } from 'react-router-dom';
 
 const ExpertCard = styled.div`
 	justify-content: center;
@@ -22,7 +23,7 @@ const ExpertsIntroduction = () => {
 	const [expertsData, setExpertsData] = useState([]);
 	const [extraData, setextraData] = useState([]);
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		console.log('ssss');
 		const fetchData = async () => {
@@ -45,6 +46,8 @@ const ExpertsIntroduction = () => {
 				dispatch(setExpertList(response.data.data_body));
 			} catch (error) {
 				console.error('Error :', error);
+				alert('로그인을 해주세요');
+				navigate('/login');
 				// alert('결제 실패');
 			}
 		};
