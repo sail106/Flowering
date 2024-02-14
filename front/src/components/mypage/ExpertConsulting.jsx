@@ -162,16 +162,17 @@ const ExpertConsulting = () => {
 
     navigate("/OneToOneVideoChat");
   };
-  
+
   useEffect(() => {
-  const mydata = async () => {
-    try {
-      const alllist = await axios.get(baseurl + "consultant/myAlllist", config);
-      setconsultingData(alllist.data.data_body);
-    } catch (error) {
-      console.error("Failed to update user info:", error);
-    }
-  };
+    const mydata = async () => {
+      try {
+        const alllist = await axios.get(baseurl + "consultant/myAlllist", config);
+        console.log(alllist)
+        setconsultingData(alllist.data.data_body);
+      } catch (error) {
+        console.error("Failed to update user info:", error);
+      }
+    };
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
 
@@ -187,33 +188,34 @@ const ExpertConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-        {consultingData && consultingData.length > 0 && (
-      // consultingData가 존재하고 비어 있지 않은 경우에만 map 함수 호출
-      consultingData.map((row, index) => {
-        const date = new Date(row.time);
-        const formattedDate = format(date, "MM.dd(E)", { locale: ko });
-        const formattedTime = format(date, "HH:mm");
+          {consultingData && consultingData.length > 0 && (
+            // consultingData가 존재하고 비어 있지 않은 경우에만 map 함수 호출
+            consultingData.map((row, index) => {
+              const date = new Date(row.time);
+              const formattedDate = format(date, "MM.dd(E)", { locale: ko });
+              const formattedTime = format(date, "HH:mm");
 
-        return (
-          <Tr key={index}>
-            <Td>'{row?.user?.name}'님 뷰티 컨설팅</Td>
-            <Td>
-              <Calendar /> {formattedDate}
-              {"  "}|{"  "}
-              <Clock /> {formattedTime}
-            </Td>
-            <ButtonTd>
-              <FinalButton>최종 결과 보고서 작성하기</FinalButton>
-            </ButtonTd>
-            <ButtonTd>
-              <Button onClick={() => buttonclick(row.consultingid)}>
-                바로가기
-              </Button>
-            </ButtonTd>
-          </Tr>
-        );
-      })
-    )}
+              return (
+                <Tr key={index}>
+                  <Td>'{row?.user_response
+                    ?.name}'님 뷰티 컨설팅</Td>
+                  <Td>
+                    <Calendar /> {formattedDate}
+                    {"  "}|{"  "}
+                    <Clock /> {formattedTime}
+                  </Td>
+                  <ButtonTd>
+                    <FinalButton>최종 결과 보고서 작성하기</FinalButton>
+                  </ButtonTd>
+                  <ButtonTd>
+                    <Button onClick={() => buttonclick(row.consultingid)}>
+                      바로가기
+                    </Button>
+                  </ButtonTd>
+                </Tr>
+              );
+            })
+          )}
         </Tbody>
       </Table>
     </Consulting>
