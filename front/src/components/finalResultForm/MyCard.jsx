@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
 const StyledCard = styled.div`
-  padding-top: 20px;
-  margin-left: 80px;
+  padding-top: 40px;
+  margin-left: 150px;
 `;
 
 const MyCard = ({ children }) => {

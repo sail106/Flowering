@@ -26,6 +26,7 @@ const FinalConsultingForm = () => {
             key={el.type}
             userType={el.type}
             usersCondition={el.condition}
+            expertMethod={el.solutionInput}
           />
         )
       })}
