@@ -42,7 +42,7 @@ const ChatList = () => {
             // key={messageList[i].id}
             key={i}
             // avatar={messageList[i].imageUrl}
-            avatar={imageUrl}
+            avatar={messageList[i].imageUrl}
             // side={messageList[i].side ?? 'left'}
             side={'left'}
             message={messageList[i].message}
