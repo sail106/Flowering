@@ -11,6 +11,7 @@ public enum ConsultantErrorCode {
     NOT_EXISTS_TIME("해당 시간에 상담이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
     NOT_CONSULTANT("해당 유저는 전문가가 아닙니다.", HttpStatus.BAD_REQUEST),
     NOT_MYSELF("컨설턴트 본인이 아닙니다.", HttpStatus.BAD_REQUEST),
+    NOT_AVAILABLE("이미 전문가가 상담일정이 있습니다.", HttpStatus.BAD_REQUEST),
     ALREADY_IN("이미 가입된 전문가입니다.", HttpStatus.BAD_REQUEST);
 
     private final String message;

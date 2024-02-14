@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
 
+    Optional<Consulting> findByConsultantAndTime(Consultant consultant, LocalDateTime time);
     Optional<List<Consulting>> findAllByConsultantAndTime(Consultant consultant, LocalDateTime time);
 
     Optional<List<Consulting>> findAllByConsultantOrderByTimeDesc(Consultant consultant  );
