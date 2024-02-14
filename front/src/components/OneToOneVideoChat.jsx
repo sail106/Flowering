@@ -31,8 +31,10 @@ import { setCustomer } from '../store/consultSlice';
 import { useNavigate } from 'react-router-dom';
 import { CiVideoOn } from "react-icons/ci";
 import ConsultantParticipant from './participant/ConsultantParticipant';
-import { removeConsultantSessionName2 } from '../store/consultsessionnameSlice';
-const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+import { removeconsultantSessionName } from '../store/consultsessionnameSlice';
+const OPENVIDU_SERVER_URL = 'https://i10c106.p.ssafy.io';
+
+// const OPENVIDU_SERVER_URL = 'http://localhost:4443';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 // rafce Arrow function style 
@@ -42,28 +44,18 @@ const OneToOneVideoChat = () => {
   //   // const tmp = email?.replace(/[@\.]/g, '-')
   const [creator, setCreator] = useState(undefined)
 
-  //   const [mySessionId, setMySessionId] = useState(
-  //     role === CONSULTANT ? tmp : consultantSessionName
-  //   )
   const [OV, setOV] = useState(null)
   const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
 
   const { creatorid } = useSelector(state => state.community.creator)
-  const { session, customer, reservationId, consultantSessionName } = useSelector(state => state.consult)
-  const { consultantSessionName2 } = useSelector(state => state.consultsessionname)
+  const { session, customer, reservationId } = useSelector(state => state.consult)
+  const { consultantSessionName } = useSelector(state => state.consultsessionname)
   const navigate = useNavigate();
 
-  useEffect(() => {
-
-    // setIsMic(isMic);
-    // setIsCam(isCam);
-    console.log('consultantSessionName2' + consultantSessionName2)
-
-  }, [consultantSessionName2]);
 
 
   const [mySessionId, setMySessionId] = useState(
-    consultantSessionName2
+    consultantSessionName
   )
 
   const dispatch = useDispatch();
@@ -77,10 +69,13 @@ const OneToOneVideoChat = () => {
 
   //   const [OV, setOV] = useState(null)
   const [customerStream, setCustomerStream] = useState(null);
+  const { access_token } = useSelector(state => state.auth.logonUser);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
-    console.log('in connection  ')
+    console.log('in connection  ' + token) //in connection  ws://localhost:4443?sessionId=1&token=tok_MF2VTBpuHQz79T5o
+    // token = token.replace('localhost', 'i10c106.p.ssafy.io');
+    // console.log('in connection  '+token) // in connection ws://i10c106.p.ssafy.io:4443?sessionId=1&token=tok_BC6nORx9VG3G5RQB
 
     session
       .connect(
@@ -121,9 +116,9 @@ const OneToOneVideoChat = () => {
         session.publish(publisher);
         setPublisher(publisher);  // stream 생성....
 
-         console.log('streamcreate')
-        if (role === CUSTOMER) {
-
+        console.log('streamcreate')
+        if (role === "USER") {
+          console.log('setcustomer')
           dispatch(setCustomer(publisher))
 
           const persondata = {
@@ -145,18 +140,18 @@ const OneToOneVideoChat = () => {
           setConsultant(publisher)
 
           //payload 에 consultingid 가 온다.
-          dispatch(getCustomer(consultantSessionName2)).then((response) => {
+          dispatch(getCustomer(consultantSessionName)).then((response) => {
 
             console.log('getCustomer 액션 성공:', response)
 
 
-            const User = {
-              // imageUrl: response.data_body.imageUrl,
-              imageUrl: '',
-              name: 'Customer',
-              isMic: 'true',
-              isCam: 'true',
-            };
+            // const User = {
+            //   // imageUrl: response.data_body.imageUrl,
+            //   imageUrl: imageUrl,
+            //   name: 'Customer',
+            //   isMic: 'true',
+            //   isCam: 'true',
+            // };
             console.log('User 넣기')
 
             // dispatch(appendParticipantList(User))
@@ -223,13 +218,13 @@ const OneToOneVideoChat = () => {
 
     if (role == 'CONSULTANT')
 
-      console.log('consultantSessionName2', consultantSessionName2)
+      console.log('consultantSessionName', consultantSessionName)
 
     const mine = {
       id: 11,
       role: role,
       name: name,
-      imageUrl: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAMAAzAMBIgACEQEDEQH/xAAcAAEAAAcBAAAAAAAAAAAAAAAAAQIDBAUGBwj/xABBEAABAwIDBQUEBgkDBQAAAAABAAIDBBEFEiEGEzFBUQciYXGBMpGhsRQjQlJywRUkM0NiktHh8DVzsgglNIKi/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAECAwT/xAAeEQEBAAICAwEBAAAAAAAAAAAAAQIRITEDEkETUf/aAAwDAQACEQMRAD8A7iiIgIiICIiAiIgIiICIpXvaxpc9wAHMlBMixeJY/hWFwb6tr4Y2Hh3rk+QGpVhh23GzWJzCGlxen3rjZscpMbneQcBdBsaKVpvYi3BTICIiAiIgIiICIiAiIgIiICIiAiIgIiICgeGiitY7QdpBsxs3PWRZDWSfVUjHcHSHh6AXcfAFBiNu+0KDAZX4XhTGVWK5e/c3jp78M1uJtrlHqRcLi20GM12JzF+MVtRWvcb7uWT6tvlH7I9yoUDpZpHzyyOknlcXZ3m5JOpcfFUqylOclhJ5uJWpEWwqag6xkMDvstsLqdtS9vdqYw+N3JzVTEb2sD+d1UbHJUA3Fxe5UNN62F2+qtn5ooKuV9TgjnZXte4l9N/E3+Efd6cOFj3mmmiqYo54HtkikaHMe03BB5ryxTUpjzOeRYDQldJ7F9qjFWO2arHu3T7vocx9gjV0flxcPJ3QIOyIiKKIiICIiAiIgIiICIiAiIgIiICIiAvPnbXjb8S2qOHxPvTYZGGWHOVwDnH0GQeGq9ATSMhifLI4NYxpc4nkBxXkjEa1+J1tViMmj6yZ9QW9M5Lrel7eiCaGpMTyGcrAW6/5dZ2CaCQshkaHE8QFrcDfrM/QLL4FA6SYyO5GwCu9LJtnjhkEos5tmtCpYfT01PUugDc+Ztzfos5U0xioXNjsXCMl5HXjZWjcNtitK/g10bInX6kf1WPd0mDV8ac+jqpIbdwnM0+CxkFVPT1cNXSSGOqgeJIn9HA3B+HzW37WUAdSGYgCSndkdbm3qtIlBDrg2H5K45bYyx1Xq3ZvF4MewShxWn0ZUxB5Z9x3BzT4ggj0WUXJ+wLFHS4fimESOuKaVs8PgyQG4/maT/7LrCrIiIgIiICIiAiIgIiICIiAiIgIiINW7Tas0WwONytdke+mMLT4yEMA/wDpeZzZ2YN0tYen+Bd37eK402yVLTA92qrmNf8Aha1z/wDk1q4hQQuqZdzEMz3d/wA0CkjfIBFEwue42DRzW40ODMwmmEmJxySSBpeWMvdo6k8Fn+zTA6alnknqWZ6pmhLxwJsV0t9FBMAXRNPjYLjln/Hoxx45aNguF01bQB9NFJDvBrvNbtvxCztXhFLHExhju0AG9tdFsDKaOLgNbdFCoa0zsB5sWa1HOhU0GIMkE2Dy/R94InPdYkEi+oXM9qMJOD4lLTtB3bjniB5NPBeinUcQOZzG2BuL8j1XEe1yZr9qjGPZjgaDbqbreF54Z8k45X3YfVGDbdsdzlqqGRlupBa4e7KfevQS829kUgZ2h4Q0XIfvh5HcvP5L0kurziIiAiIgIiICIiAiIgIiICIiAiIeCDl3/UDTuk2RoakAn6PiDC63JrmPHzyriNPLLSvZUQvLHsILXWvqF6W7TMM/S2wmM04BzspzOz8UffH/ABt6rzlGxrqeF2ne7w6cVR0Ls5x12ISzvlYyOYEZgzg4HgV1akmzNGovZebsBxE4Ni7KgX3TjlkHDu9fku84LWtqadj2EG40seK4Z46rvhluMzVvma3eQRb029jNbXzWNirqqonjjlpXRhujnE8D+at8SGKh4MNeyKB3Ebm5HrdY6n/SktdHmrgWDR2SOzSPfxXPb0TDjbZ62cMieDxsvOu1tV+lNosQqb3bvN223Rui6vt7tI3BcHlyutUSjJEOeY8/RcbpossF3m7nd51+Juu/imuXl8t+Nw7EaEVe3jJiDaipZJ78sxG7A9z3+5eiFyX/AKfsLMOG4risje9UTiFjrfZYNfifgutLpXIREUBERAREQEREBERAREQEREBETkgpzxR1EEkMozRyNLHDqCLFeWKilOHPkoJHh7qWWSnL2jRxY4suPUL0fjO1eAYM50eI4rTxzD9wH55f5G3d8F50x6rE+I1E5YGb6V8gaOV3Xt6XVgxVX+1100We2W2zrMELIZgZqYH2Bxb5LCVouGu+8FZlpCmWO+yZWXh6BwbbrAcSpm2rYmutrHK4NcPQq0x7b3AcLgduZ4qiYA5Yqd17nxtoFwXKNbc+KNbrYD3XWPydP2rJ43i9Vj+KmqrHWv7EbfZYOgVv9KMdnDU9P881QiOWQn+Eqm67mm3Hkt6105c73XprsnpmUuwGEZSCZojUOPjI4uI9L29Ft65P2MbaYYNmI8GxauhpKyhLmsFTI1gkjJzNykkXsLgjlZdGwXHMMxyKWbCK2Kriifke+I3aHdL8/RFZJERAREQEREBERAREQEREBarj+22FYRmjik+m1INt1C4Wb+J3AfNZ7FZvo+GVUuaxZC8g38CvPIkc92Z97u1JJuSVrGbS3TdK/tGxupu2lbT0jL6FjM7ve64+C13EsdxSvzCtxGrla4EOZvS1tvwjT4LHgqnKSQQOK6esY3WExCpgikEdPG24Ny4C1v6q1xKbeTnKQbdFXxHDp45N8O8CdbDgrAB0lQxoBJdoVitRPWBx3bAdWsv71bhsg8Sr2qb+tPtwaA34BSZVBakTdAoZZeQV2G6qcW6IKdNSGWCW187BceKsLEd063N1suDx5onPbYnNZW+IYQ90xlp2gh3Fniro2wu7YX5XMznmTw9y6PsVtZiezlC2lo46d9MXZ93LAL+JzNsfDW9uA0AC1fCsO3Mt5mgOLbhZoZbWHEcgFZilrqOGdp9HMQ3EqCamv9uF29b6iwI9xW34VjGHYtGZMOrYaho4hru83zB1HquAckilkglZLA90crT3ZGOILfVLgez0dcdVFcz2K26qZsQgwzF3sl3pyR1HB2bo7kfPRdLHksWaal2iiIooiIgIiICIiDAbcz/R9lMScDYmLKD5rhPj0K7P2oSbvZOYD7crG/FcYPsuI48l0wYyRv3mqnK57Wh7I85zC7fD+qmi7xeeIFlWjbn73ILTKVoEzerHdVQZh0LX7zKARcq+DWtsGiwsqdQ/dU0sh4NYSmhqsjs8sruRebHqpQoN0a0dAFErDaKKAKc1Bm8EZlpCeRcVf2HNWeDf6e3zPzV7oBrwXT4zVOVnsvGhjNyOoUI3/WgX4hSVcsrIslMwPlI4Hg3xVOZzopYXOd7TQD52RF6VK5wYCShdzKkeC9wFtFRCjkkZUx1MZs6JwezzBXonCqxmIYdTVkZu2aMOuvPOVrG25FdZ7KMRNRg01FI676aTug/dK55xrGt5REWGxERAREQEREGjdrUuXZ6GO/tzj4arkjdBqun9sMtqLDYhzlc4/wAq5a42jJ6Lph0xkUp7jvMqvSE2e3kHae4K0pz9UCPtC6uaZ31jh95od8f7haZXBVnizsuGTeIy+8q8Kx+M/wCnO/G35pRr9tR5IVGyELm2lsijZANUGdwY/qFv4j81ehY/BTekkB5P/IK/bxW50zUu7yg5BqTd3irTEe81vVivpn7qJ7/ui6xpdnMTXakjUKouIZc8TL8+au7a3WLpyY3GI8jdZJrrgII2uRddC7IWO+m4lJ+7EbG+tyVz++mizeym0k+z9WXMAfTykb2E8/I8ipks7dyuFFWOE4lTYrRx1dHIHxPHkQeh8VfLk6CIiAiIgIiIOWdsctqzDYb/ALt7retlzqT/AMd/kVu3a1PvNpYoif2VOLep/stKebU779CuuPTF7W9ObRMv90KrHJklY4nS9j5FUYf2TPwhRIEkcgv5KoyjuHmsfjR/7dJ+NvzV3SzGanY4+0ND5jirTFxfC5T4t+aI1/Mo3UgUVzbRumZQUEGawM3p5v8Ac/ILJN9yxmBfsJf9z8gso3QgrpOmap1XejbHexc+xPQBWmUNmsBcni4q4d36k24RtsfM6/0VCQESXRFGo7koeObdfRX0Dw+MEG6tKjQRuPDNr5JRExsew8A82PggyIOikdroqBmIPdUwqH823VG4dnW0EmE4syknd+qVbgw3Psv5H8vcuzjivNoeRZwJa4ag9D1Xf9msRGK4HR1oteWIFwHJ3Aj3rnnG8ayiIiw0IiICIiDhfaPUb/a6t1uY8sY9B/daxO79Vd5LJ7Tzmp2hxCY/andb00/JYufWmcBxsV1nTnVGnN4meSqQa38SqFK76pnkq0FxfzPzQT0Em5qXwu9mTvN8wq2JNzYbUN6MurKrDmhkjD32nMsg57aqjLmezIxUaqDoAoqUagdRxUbrm0ioFRUEGZwT9g/8aydwGkk2A4lYbBpLNcy+ubVZSX6y0bToRr5Lc6Z+qdK7OwyHjIc3vUs2hVWIBrctrW4KnUjoqihU3NObcgpYiTFmbrdTP1icFj48RfR3YG3DuvIqKyLWSOdo0q7jjIF3FWlDWONKH1JDXEnS2tuSmdidPexufFVFzI8HyHRdW7IMQ32FVVA4608udo6Ndr8w5cmZJG8ZoyC3otr7MsSFDtTFHIbR1bHQnXQO4tPwI9VMulxdtuoqA4qK5OgiIgKlUybumlk+6wu9wVVYvaWf6Ns/iE97ZKdxv6IPPVRLv55Zb33j3Pv5m6lkB3RHgpWiwAU7yBGu0c1hSH6keCuIjo7zVpTH6s+BKuYTooKsgDmHyVPCZsm9pHnq5nnzCqhWkv1NVHM0Ws7XwHNUYqQZZpgPsvI+Kgq+IjLiE4As0kH4BW651pG6E6aKBQ6BBXopsktgeKz9K7PEH8ytYYcsjT4rN4TNmjyk6jitYpV8DY6qSo4I/wBoKWY3atMqAPdIKxU7ctTFIP3bw7hfgbrKKylgdNLlbz5qVUQ6TFauWVzrBzi55Atck8AFkoaWKJuVsbfEnUpTQNhjDWjgrjgFZCpBHGw3aLeiljqjSVMVQ0kGF7ZAR1ab/koyXA1VjUklkgAucp0CVHqWI3YHdRdTFUqNhZSwsJvlY0X9FWXF1f/Z',
+      imageUrl: imageUrl,
     }
 
     dispatch(appendParticipantList(mine))
@@ -250,16 +245,14 @@ const OneToOneVideoChat = () => {
         onbeforeunload);
     }
   }, [])
- 
+
 
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
-    if(role==CUSTOMER)
-    {
+    if (role == "USER") {
       navigate('/mypage')
     }
-    else if(role==CONSULTANT)
-    {
+    else if (role == CONSULTANT) {
       navigate('/expertconsulting')
     }
   }
@@ -314,8 +307,8 @@ const OneToOneVideoChat = () => {
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole
-     // console.log('streamcreated ' + customer.stream)
- 
+    // console.log('streamcreated ' + customer.stream)
+
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber))
@@ -323,14 +316,14 @@ const OneToOneVideoChat = () => {
 
     }
 
-    else if (role === CUSTOMER) {
+    else if (role === "USER") {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber)
 
 
       if (subRole == CONSULTANT) {
         // payload 에 consultingid 가 온다.
-        dispatch(getConsultant(consultantSessionName2)).then((response) => {
+        dispatch(getConsultant(consultantSessionName)).then((response) => {
 
           console.log('getConsultant 액션 성공:', response)
 
@@ -379,7 +372,7 @@ const OneToOneVideoChat = () => {
   }
 
   const consultingFinishRequest = {
-    consultingid: consultantSessionName2,
+    consultingid: consultantSessionName,
     // consultingComment: consultingComment,
 
 
@@ -391,6 +384,38 @@ const OneToOneVideoChat = () => {
     // role==CONSULTANT &&
     if (role == CONSULTANT && session) {
       session.disconnect();
+
+
+
+
+
+      try {
+        const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+         const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            // 다른 필요한 헤더도 추가할 수 있습니다.
+          }
+        };
+        const baseurl = import.meta.env.VITE_APP_BASE_URL;
+        console.log(baseurl + 'consultings/deactivate/' + consultantSessionName, config);
+        const url = `${baseurl}consultings/deactivate/${consultantSessionName}`;
+
+        const response = axios.put(url, null, config);
+
+        // 요청 성공 시 수행할 작업
+        console.log('Response:', response.data);
+      }
+
+      catch (error) {
+        console.error('Error :', error);
+        // alert('결제 실패');
+      }
+
+
+
+
       dispatch(makeResult({ consultingFinishRequest }))
         .then(() => {
           // dispatch(changeComment(''))
@@ -398,24 +423,26 @@ const OneToOneVideoChat = () => {
         })
     }
 
-    if (role === CUSTOMER && session) {
+    if (role === "USER" && session) {
       session.disconnect();
       navigate('/mypage')
 
     }
 
     setOV(null);
-    setMySessionId(consultantSessionName2)
+    setMySessionId(consultantSessionName)
     dispatch(setSession(undefined))
     dispatch(setCustomer(undefined))
     dispatch(resetMsg())
     // setMyUserName(nickname)
     setConsultant(undefined)
 
-    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName2}`, {
+    // axios.delete(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${consultantSessionName}`, {
+
+
 
     axios
-      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName2, {
+      .delete(OPENVIDU_SERVER_URL + '/openvidu/api/sessions/' + consultantSessionName, {
         headers: {
           Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
           'Content-Type': 'application/json',
@@ -441,7 +468,7 @@ const OneToOneVideoChat = () => {
       });
 
     //redux 에 저장된 consultantsessionanme 도 제거
-    dispatch(removeConsultantSessionName2())
+    dispatch(removeconsultantSessionName())
 
   }
 
@@ -505,7 +532,7 @@ const OneToOneVideoChat = () => {
   }
 
   const createToken = (sessionId) => {
-    console.log('tokennnnnn'+sessionId)
+    console.log('tokennnnnn' + sessionId)
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",
@@ -574,7 +601,7 @@ const OneToOneVideoChat = () => {
 
                   consultant !== undefined ? (
 
-                    <Grid container item xs={12} sm={4}
+                    <Grid container item xs={12} sm={12} md={12}
                       sx={{
                         // height: "80%",
                         // justifyContent: "space-between",
@@ -601,7 +628,7 @@ const OneToOneVideoChat = () => {
                       }
 
                       {
-                        role == CUSTOMER && consultant &&
+                        role == "USER" && consultant &&
 
                         <VideoContainer>
                           <UserVideoComponent
@@ -659,7 +686,7 @@ const OneToOneVideoChat = () => {
                 }
 
                 {
-                  isCam && customer !== undefined && role == CUSTOMER &&
+                  isCam && customer !== undefined && role == "USER" &&
 
                   <MyVideoContainer>
                     <UserVideoComponent
@@ -672,7 +699,7 @@ const OneToOneVideoChat = () => {
 
               {/* </UserVideoSGrid> */}
 
- 
+
 
             </SGridContainer>
 
@@ -1023,4 +1050,3 @@ const MicCamExitGroup = styled(Grid)`
   align-items: center;
   left: 0;
   `;
- 

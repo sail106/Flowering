@@ -7,7 +7,7 @@ import { Box, styled, Typography } from '@mui/material'
 
 const UserVideoComponent = ({ streamManager }) => {
 
-    console.log('streamManager'+streamManager)
+    console.log('streamManager'+ streamManager)  
     const subRole = JSON.parse(streamManager.stream.connection.data).clientRole;
 
     const getNicknameTag = () => {
@@ -26,7 +26,7 @@ const UserVideoComponent = ({ streamManager }) => {
                         </ConsultantStream>
                     }
 
-                    {subRole === "CUSTOMER" &&
+                    {subRole === "USER" &&
                         <CustomerStream>
                             <div style={{ position: 'relative', }}>
                                 <OpenViduVideoComponent streamManager={streamManager} />

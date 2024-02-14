@@ -58,12 +58,7 @@ const Participant = ({ streamManager, audioPermission }) => {
       setMsg('')
     }
   }
-
-  // useEffect(() => {
-  //   if (session) {
-  //     session.on('signal:chat', textChat)
-  //   }
-  // }, [session])
+ 
 
   const ContentWrapper = styled.div`
   width: 100%;

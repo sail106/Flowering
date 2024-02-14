@@ -14,12 +14,12 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @AllArgsConstructor
-
+@ToString
 public class HashTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long HahstagId;
+    private Long hashtagId;
 
 
     @ManyToOne
@@ -30,11 +30,6 @@ public class HashTag {
 
     @Column(nullable = false)
     private String workplace;
-//
-//    @Column(nullable = false)
-//    private LocalDate startDateOfEmployment;
-//
-//    private LocalDate endDateOfEmployment;
 
     public HashTagResponse from(HashTag hashTag) {
         return HashTagResponse.builder()
@@ -49,7 +44,7 @@ public class HashTag {
     public static HashTagResponse toHashTagResponse (HashTag hashTag)
     {
         return  HashTagResponse.builder()
-                .consultantResponse(hashTag.consultant.toResponse())
+//                .consultantResponse(hashTag.consultant.toResponse())
                 .workplace(hashTag.getWorkplace())
                 .build();
     }

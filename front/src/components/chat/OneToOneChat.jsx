@@ -40,7 +40,7 @@ const OneToOneChat = () => {
       const mine = {
         id: messageId,
         role: role,
-        imageUrl: '',
+        imageUrl: imageUrl,
         side: 'left',
         message: msg,
         name: name,
@@ -90,8 +90,7 @@ const OneToOneChat = () => {
     if (session) {
       // dispatch(appendParticipantList(persondata));
       console.log('event chat')
-      // session.on('signal:chat', textChat)
-
+ 
       session.on('signal:participant', addparticiapnt)
 
     }
@@ -100,7 +99,6 @@ const OneToOneChat = () => {
 
   const textChat = (event) => {
     const data = JSON.parse(event.data)
-
 
     if (data.role !== role) {
       console.log('  dataid  role  message role' + ' ' + data.id + ' ' + role + data.message + data.role)

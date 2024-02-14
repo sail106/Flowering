@@ -6,7 +6,6 @@ import Input from "./common/Input";
 import Card from "./common/Card";
 import CenterContainer from "./common/CenterContainer";
 import { UserInfo, loginUser } from "../store/authSlice";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +34,6 @@ const LoginForm = () => {
 
     if (isAuthenticated === true) {
       dispatch(UserInfo(info)).then((response) => {
-        console.log('상세정보조회' + response)
       }).catch((error) => {
         console.log('error' + error)
       })
@@ -75,14 +73,16 @@ const LoginForm = () => {
             value={formData.password}
             onChange={handleInputChange}
           />
-          <Button
-            type="submit"
-            width="70%"
-            marginTop="20px"
-            onClick={handleLogin}
-          >
-            로그인
-          </Button>
+          <CenterContainer>
+            <Button
+              type="submit"
+              width="70%"
+              marginTop="20px"
+              onClick={handleLogin}
+            >
+              로그인
+            </Button>
+          </CenterContainer>          
         </form>
         <AccountManage />
         <SnsManage />

@@ -3,9 +3,10 @@ import Sheet from "@mui/joy/Sheet";
 import { useState } from "react";
 import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-
+import { UserInfo } from "../../store/authSlice";
+import { useNavigate } from "react-router-dom";
 const EditButton = styled(ButtonBox)`
   border-radius: 100px;
   width: 220px;
@@ -27,10 +28,17 @@ const OkayButtom = styled(EditButton)`
 
 export default function Edit({ nickname, pwOne }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const User = useSelector((state) => state.auth.logonUser);
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
-  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const handleClose = () => {
     setOpen(false);
+    if (User.role === "USER") {
+      navigate(`/mypage/${User.id}`);
+    } else {
+      navigate(`/expertmypage/${User.id}`);
+    }
   };
 
   const updateUserInfo = async () => {
@@ -47,9 +55,8 @@ export default function Edit({ nickname, pwOne }) {
     };
     console.log("데이터 확인", data);
     try {
-      const response = await axios.patch(`${baseurl}users/update`, data, config);
-      console.log(response.data);
-      console.log("성공");
+      const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
+      dispatch(UserInfo(true));
 
       // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
       // navigate('/success');

@@ -5,8 +5,12 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import { setRole, setname } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setConsultantSessionName2 } from "../../store/consultsessionnameSlice";
-
+import { setconsultantSessionName } from "../../store/consultsessionnameSlice";
+import axios from "axios";
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import { Link } from "react-router-dom";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -86,28 +90,103 @@ const MyConsulting = () => {
 
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", consulting_id: "1" },
   ];
+  const { access_token } = useSelector(state => state.auth.logonUser);
+  const { name, role, id, nickname, imageUrl } = useSelector(state => state.auth.logonUser)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const consultantSessionName2 = useSelector(state => state.consultsessionname.consultantSessionName2)
 
-  const btnclick = (consulting_id) => {
+  const consultantSessionName = useSelector(state => state.consultsessionname.consultantSessionName)
+
+  const [isactive, Setisactive] = useState(null);
+
+  const btnclick = async (consulting_id) => {
 
     console.log('consulting_id ' + consulting_id)
-    console.log('consultantSessionName2222 ' + consultantSessionName2)
 
-    if (consultantSessionName2) {
 
-      dispatch(setRole('CUSTOMER'))
-      dispatch(setname('CUSTOMER'))
-      dispatch(setConsultantSessionName2(consulting_id))
+    try {
+      const token = access_token; // 여기에 액세스 토큰을 설정합니다.
+      console.log('tooo   ' + token)
 
-      navigate('/OneToOneVideoChat')
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
+      const response = await axios.get(baseurl + 'consultings/' + consulting_id, config);
+
+      // 요청 성공 시 수행할 작업
+      console.log('Response:', response.data);
+      console.log('data_body  :', response.data.data_body);
+      Setisactive(response.data.data_body.active)
+      dispatch(setconsultantSessionName(consulting_id))
+
+      console.log('isactive' + isactive)
+
     }
-    else {
-      alert('컨설턴트가 아직 방을 입장하지 않았습니다')
+
+    catch (error) {
+      console.error('Error :', error);
+      // alert('결제 실패');
     }
+
+    console.log('isactive' + isactive)
+
 
   }
+
+  useEffect(() => {
+    console.log('isactive', isactive);
+
+    if (isactive === null) { // isactive가 null일 때는 아무것도 하지 않음
+      return;
+    }
+  
+    if (isactive) {
+      dispatch(setRole('USER'));
+      dispatch(setname(name));
+
+      navigate('/OneToOneVideoChat');
+    } else {
+      alert('컨설턴트가 아직 방을 입장하지 않았습니다');
+    }
+  }, [isactive]);
+
+
+  const [consultingData, setConsultingData] = useState([]); // 상태 초기화
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+
+  const mydata = async () => {
+
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
+      // const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
+      const response = await axios.get(baseurl + "users/myallconsultinglist", config);
+      console.log(response.data);
+      console.log('성공');
+      setConsultingData(response.data.data_body); // 데이터를 상태에 저장
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+    }
+  };
+
+  useEffect(() => {
+    mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
+  }, []);
+
+  console.log(consultingData)
 
   return (
     <Consulting>
@@ -121,29 +200,36 @@ const MyConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((row, index) => (
-            <Tr key={index}>
-              <Td>{row.title}</Td>
-              <Td>
-                <Calendar /> {row.date}
-                {"  "}|{"  "}
-                <Clock /> {row.time}
-              </Td>
-              <ButtonTd>
-                <FinalButton>최종 결과 보고서</FinalButton>
-              </ButtonTd>
-              <ButtonTd>
-                <Button>리뷰 작성</Button>
-              </ButtonTd>
-              <ButtonTd>
-                <Button>일정 변경</Button>
-              </ButtonTd>
-              <ButtonTd>
-                <Button onClick={() => btnclick(row.consulting_id)}>바로가기</Button>
-              </ButtonTd>
+          {consultingData.map((row, index) => {
+            const date = new Date(row.time);
+            const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
+            const formattedTime = format(date, 'HH:mm');
 
-            </Tr>
-          ))}
+            return (
+              <Tr key={index}>
+                <Td>뷰티 솔루션 컨설팅</Td>
+                <Td>
+                  <Calendar /> {formattedDate}
+                  {"  "}|{"  "}
+                  <Clock /> {formattedTime}
+                </Td>
+                <ButtonTd>
+                  <FinalButton>최종 결과 보고서</FinalButton>
+                </ButtonTd>
+                <ButtonTd>
+                  <Link to={`/review/${row.consulting_id}`} reloadDocument>
+                    <Button>리뷰 작성</Button>
+                  </Link>
+                </ButtonTd>
+                <ButtonTd>
+                  <Button>일정 변경</Button>
+                </ButtonTd>
+                <ButtonTd>
+                  <Button onClick={() => btnclick(row.consulting_id)}>바로가기</Button>
+                </ButtonTd>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
     </Consulting>

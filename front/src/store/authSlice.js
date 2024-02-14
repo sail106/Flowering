@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { saveToken, deleteToken } from "../api/JWToken";
-import { OK, CUSTOMER, CONSULTANT } from "../api/CustomConst";
-import axios from "axios";
-// import Axios from '../api/Axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { saveToken, deleteToken } from '../api/JWToken'
+import { OK, CUSTOMER, CONSULTANT } from '../api/CustomConst'
+import axios from 'axios';
+
 
 // state
 const initialState = {
@@ -21,24 +21,24 @@ const initialState = {
   },
   data: "",
 
-  // login state
-  logonUser: {
-    name: "",
-    nickname: "",
-    birth: "",
-    contact: "",
-    email: "",
-    imageUrl: "",
-    introduction: "",
-    consultingFile: "",
-    role: "",
-    isMic: "false",
-    isCam: "false",
-    access_token: "",
-    id: "", //pk
-    // refresh_token: '',
-  },
-  selectedid: "",
+    // login state
+    logonUser: {
+        name: '',
+        nickname: '',
+        birth: '',
+        contact: '',
+        email: '',
+        imageUrl: '',
+        introduction: '',
+        consultingFile: '',
+        role: '',
+        isMic: 'false',
+        isCam: 'false',
+        access_token: '',
+        id: '', //pk
+        // refresh_token: '',
+    },
+    selectedid: '',
 
   isLoading: false,
   isAuthenticated: false, // todo 로그인 가드
@@ -46,51 +46,29 @@ const initialState = {
   // common info state -> 사용자 기본정보
   isModal: false, // sample modal
 
-  // server status
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed',
-};
+    // server status
+    status: 'idle' // 'idle' | 'loading' | 'succeeded' | 'failed',
 
-// actions
-// signup actions
-// export const signUpMember = createAsyncThunk(
-//     'auth/signup',
-//     async (userInfo, { rejectWithValue }) => {
-//         try {
-//             let response
-
-//             if (userInfo.role === CUSTOMER) {
-//                 response = await Axios.post('customers', userInfo);
-//             } else if (userInfo.role === CONSULTANT) {
-//                 response = await Axios.post('consultants', userInfo);
-//             }
-//             return response.status;
-//         } catch (err) {
-//             let errRes = 400;
-//             if (err.status < 500) {
-//                 errRes = 400;
-//             } else if (err.status < 600) {
-//                 errRes = 500;
-//             }
-//             return errRes;
-//         }
-//     }
-// )
+}
 
 // login actions
-export const UserInfo = createAsyncThunk("auth/UserInfo", async ({ info }, { rejectWithValue, getState }) => {
-  try {
-    const state = getState(); // 전체 Redux 상태를 얻습니다.
-    const config = {
-      headers: {
-        Authorization: `Bearer ${state.auth.logonUser.access_token}`,
-        "Content-Type": "application/json",
-        // 다른 필요한 헤더도 추가할 수 있습니다.
-      },
-    };
-    // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
-    const baseurl = import.meta.env.VITE_APP_BASE_URL;
-    const response = await axios.get(`${baseurl}users/info`, config);
-    const res = response.data.data_body;
+export const UserInfo = createAsyncThunk(
+    'auth/UserInfo',
+    async ({ info }, { rejectWithValue, getState }) => {
+        try {
+            const baseurl = import.meta.env.VITE_APP_BASE_URL;
+            console.log('userinfo')
+            const state = getState(); // 전체 Redux 상태를 얻습니다.
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
+                    'Content-Type': 'application/json'
+                    // 다른 필요한 헤더도 추가할 수 있습니다.
+                }
+            };
+            // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=${role}`,config);
+            const response = await axios.get(baseurl + `users/info`, config);
+            const res = response.data.data_body
 
     // saveToken(token);
 
@@ -109,20 +87,23 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ Email, Pass
     password: Password,
   };
 
-  try {
-    // start
-    const baseurl = import.meta.env.VITE_APP_BASE_URL;
-    const response = await axios.post(`${baseurl}auth/login`, loginrequest);
-    const token = response.data.data_body;
-    // saveToken(token);
-    return token;
-  } catch (err) {
-    // 에러 자체를 반환해서 jsx에서 처리하는 방법
-    alert("이메일 또는 비밀번호가 잘못되었습니다!");
-    return rejectWithValue(err);
-    // return rejectWithValue(err.response);
-  }
-});
+        try {
+            const baseurl = import.meta.env.VITE_APP_BASE_URL;
+            // start
+            const response = await axios.post(baseurl + 'auth/login', loginrequest);
+            const token = response.data.data_body
+            // saveToken(token);
+            return token;
+
+        } catch (err) {
+            // 에러 자체를 반환해서 jsx에서 처리하는 방법
+            alert("이메일 또는 비밀번호가 잘못되었습니다!");
+            return rejectWithValue(err);
+            // return rejectWithValue(err.response);
+        }
+
+    }
+);
 
 export const signOut = createAsyncThunk("auth/signout", async (isAuthenticated, { rejectWithValue }) => {
   try {
@@ -215,67 +196,68 @@ export const selectAccessToken = (state) => state.logonUser.access_token;
 
 // createSlice
 const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    // login reducers
-    logoutUser: (state) => {
-      state.logonUser = {
-        nickname: "",
-        role: "",
-        imageUrl: "/images/default/avatar01.png",
-      };
-      console.log("isauthentictedddd");
-      state.isAuthenticated = false;
-      deleteToken();
-    },
-    // modify reducers
-    modalOn: (state) => {
-      state.isModal = true;
-    },
-    modalOff: (state) => {
-      state.isModal = false;
-    },
+    name: 'auth',
+    initialState,
+    reducers: {
+        // login reducers
+        logoutUser: (state) => {
+            state.logonUser = {
+                nickname: '',
+                role: '',
+                imageUrl: '/images/default/avatar01.png',
+            }
+            state.isAuthenticated = false;
+            deleteToken();
+        },
+        // modify reducers
+        modalOn: (state) => {
+            state.isModal = true;
+        },
+        modalOff: (state) => {
+            state.isModal = false;
+        },
 
-    setRole: (state, { payload }) => {
-      console.log("settrolll" + payload);
-      state.logonUser.role = payload;
-    },
-    setSelectedId: (state, { payload }) => {
-      console.log("settt  ");
-      state.selectedid = payload;
-    },
-    setname: (state, { payload }) => {
-      state.logonUser.name = payload;
+        setRole: (state, { payload }) => {
+            console.log('settrolll' + payload)
+            state.logonUser.role = payload
+        },
+        setSelectedId: (state, { payload }) => {
+            console.log('settt  ')
+            state.selectedid = payload;
+        },
+        setname: (state, { payload }) => {
+            state.logonUser.name = payload
+        },
+
     },
   },
 
-  extraReducers: (builder) => {
-    // signup extra reducers 통신 상태에 따른 실행 함수
-    builder
-      // signup extra reducers 통신 상태에 따른 실행 함수
-      // .addCase(signUpMember.pending, (state) => {
-      //     state.status = 'loading';
-      // })
-      // .addCase(signUpMember.fulfilled, (state, action) => {
-      //     state.status = 'succeeded';
-      //     state.data = action.payload;
-      // })
-      // .addCase(signUpMember.rejected, (state) => {
-      //     state.status = 'failed';
-      // })
-      // login extra reducers 로그인 처리에 따른 실행 함수
-      .addCase(loginUser.fulfilled, (state, action) => {
-        console.log("fullllll" + action.payload.access_token);
-        state.logonUser = {
-          // nickname: action.payload.data.nickname,
-          // role: action.payload.data
-          // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
-          access_token: action.payload.access_token,
-          // refresh_token : action.payload.refresh_token
-        };
-        state.isAuthenticated = true;
-      })
+    extraReducers: (builder) => {
+        // signup extra reducers 통신 상태에 따른 실행 함수
+        builder
+            // signup extra reducers 통신 상태에 따른 실행 함수
+            // .addCase(signUpMember.pending, (state) => {
+            //     state.status = 'loading';
+            // })
+            // .addCase(signUpMember.fulfilled, (state, action) => {
+            //     state.status = 'succeeded';
+            //     state.data = action.payload;
+            // })
+            // .addCase(signUpMember.rejected, (state) => {
+            //     state.status = 'failed';
+            // })
+            // login extra reducers 로그인 처리에 따른 실행 함수
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.logonUser = {
+                    // nickname: action.payload.data.nickname,
+                    // role: action.payload.data
+                    // imageUrl: (action.payload.data.imageUrl ? action.payload.data.imageUrl : '/images/default/avatar01.png'),
+                    access_token: action.payload.access_token,
+                    // refresh_token : action.payload.refresh_token
+
+                };
+                state.isAuthenticated = true;
+            })
 
       .addCase(loginUser.rejected, (state) => {
         state.isAuthenticated = false;
@@ -293,23 +275,29 @@ const authSlice = createSlice({
         state.status = "failed";
       })
 
-      .addCase(UserInfo.fulfilled, (state, action) => {
-        console.log("userinfofulll", JSON.stringify(action.payload));
+            .addCase(UserInfo.fulfilled, (state, action) => {
+                state.logonUser.role = action.payload.role;
+                state.logonUser.id = action.payload.id;
+                state.logonUser.email = action.payload.email;
+                state.logonUser.name = action.payload.name;
+                state.logonUser.nickname = action.payload.nickname;
+                if (action.payload.profile_img_url !== null) {
+                    state.logonUser.imageUrl = action.payload.profile_img_url;
+                }
+                else{
+                    state.logonUser.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'
+                }
+                // role: action.payload.data
+            })
 
-        state.logonUser.role = action.payload.role;
-        state.logonUser.id = action.payload.id;
-        state.logonUser.email = action.payload.email;
-        state.logonUser.name = action.payload.name;
-        state.logonUser.nickname = action.payload.nickname;
+            .addCase(UserInfo.rejected, (state) => {
+                state.status = 'failed';
+                console.log('실패!')
+            });
+    }
 
-        // role: action.payload.data
-      })
+})
 
-      .addCase(UserInfo.rejected, (state) => {
-        state.status = "failed";
-      });
-  },
-});
 
 export const { logoutUser, modifyLogonUser, setRole, setname, setSelectedId } = authSlice.actions;
 export const { modalOn, modalOff } = authSlice.actions;

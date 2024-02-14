@@ -1,10 +1,12 @@
+import { logoutUser } from "../store/authSlice";
+
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
 import isPropValid from "@emotion/is-prop-valid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const NavBox = styled.div.withConfig({
@@ -73,29 +75,13 @@ const Navbar = () => {
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [textColor, setTextColor] = useState("black");
   const location = useLocation();
-  // const handleLogout = () => {
-  //   console.log('로그1아웃')
-  //   const state = useSelector((state) => state);
-  //   console.log(state,'2222222222222222222222')
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${state.auth.logonUser.access_token}`,
-  //       "Content-Type": "application/json",
-  //       // 다른 필요한 헤더도 추가할 수 있습니다.
-  //     },
-  //   };
-  //   axios
-  //     .post("http://i10c106.p.ssafy.io:8080/v1/auth/logout", config)
-  //     .then((response) => {
-  //       console.log('로그아웃asdasdasdasd')
-  //       // dispatch(signOut(isAuthenticated));
-  //       state.auth.isAuthenticated = false;
-  //       // 로그아웃 성공 시 처리할 작업을 여기에 작성해주세요.
-  //     })
-  //     .catch((error) => {
-  //       // 로그아웃 실패 시 처리할 작업을 여기에 작성해주세요.
-  //     });
-  // };
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    // 로그아웃 누르면 JWT토큰 만료 + 리덕스 초기화
+    dispatch(logoutUser());
+  };
+
   const checkScroll = () => {
     const currentScrollY = window.scrollY;
     const viewportHeight = window.innerHeight;
@@ -143,7 +129,7 @@ const Navbar = () => {
         <Link to={"/beautyconsulting"} reloadDocument>
           Consulting
         </Link>
-        <Link to={"/"} reloadDocument>
+        <Link to={"/communityHome"} reloadDocument>
           Community
         </Link>
         <Link to={"#"} reloadDocument>
@@ -155,7 +141,7 @@ const Navbar = () => {
       </NavMenu>
       <NavMenu2>
         {isAuthenticated ? (
-          <Link to="/" reloadDocument>
+          <Link to="/" onClick={handleLogout}>
             Logout
           </Link>
         ) : (
@@ -169,6 +155,10 @@ const Navbar = () => {
           </Link>
         ) : isAuthenticated && User.role === "CONSULTANT" ? (
           <Link to={`/expertmypage/${User.id}`} reloadDocument>
+            <StyledPerson />
+          </Link>
+        ) : isAuthenticated && User.role === "ADMIN" ? (
+          <Link to={`/manager`} reloadDocument>
             <StyledPerson />
           </Link>
         ) : (

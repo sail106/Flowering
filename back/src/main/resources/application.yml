@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active : dev
+  cache :
+    type : redis
+
+server:
+  servlet:
+    context-path: /
+  forward-headers-strategy: framework

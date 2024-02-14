@@ -1,5 +1,6 @@
 package com.sail.back.review.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sail.back.consultant.model.entity.Consultant;
  import com.sail.back.review.model.dto.response.ReviewModifyResponse;
 import com.sail.back.review.model.dto.response.ReviewResponse;
@@ -22,6 +23,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "consultant_id")
+    @JsonBackReference
     private Consultant consultant;
 
     @ManyToOne
@@ -69,6 +71,16 @@ public class Review {
         consultant.setStarAverage(newStarAverage);
     }
 
+
+    public void removeConsultant(Consultant consultant) {
+        this.consultant = consultant;
+
+        double newStarAverage = ((consultant.getStarAverage() * consultant.getReviewnum() - this.getStar()) / (consultant.getReviewnum() - 1));
+        ;
+        consultant.setReviewnum(consultant.getReviewnum() - 1);
+
+        consultant.setStarAverage(newStarAverage);
+    }
     public void setUser(User user) {
         this.user = user;
 

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { setConsultantSessionName } from "../../store/consultSlice";
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -76,7 +77,7 @@ const Button = styled(ButtonBox)`
   border-radius: 30px;
 `;
 
-const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+const OPENVIDU_SERVER_URL = 'https://i10c106.p.ssafy.io';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 const MyCommunity = () => {
@@ -268,7 +269,7 @@ const MyCommunity = () => {
     dispatch(setRole('creator'))
     dispatch(setname('creator'))
 
-    dispatch(setConsultantSessionName2(community_id))
+    dispatch(setConsultantSessionName(community_id))
     console.log('community_id', community_id)
 
 
@@ -300,7 +301,6 @@ const MyCommunity = () => {
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },
     { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 2 },
-    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "01.19(금)", community_id: 3 },
   ];
 
   return (

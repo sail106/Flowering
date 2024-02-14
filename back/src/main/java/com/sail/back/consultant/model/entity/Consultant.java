@@ -1,5 +1,6 @@
 package com.sail.back.consultant.model.entity;
 
+import com.sail.back.career.model.entity.Career;
 import com.sail.back.consultant.model.dto.response.ConsultantDetailResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantListResponse;
 import com.sail.back.consultant.model.dto.response.ConsultantResponse;
@@ -26,30 +27,37 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 
 public class Consultant {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long consultant_id;
 
-    private String self_introduce;
+    @Builder.Default
+    private String self_introduce = "";
 
-    private String simple_introduce;
+    @Builder.Default
+    private String simple_introduce = "";
 
+    @Builder.Default
     @OneToMany(mappedBy = "consultant", cascade = CascadeType.ALL)
     private List<HashTag> hashTags = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "consultant", cascade = CascadeType.ALL)
+    private List<Career> careers = new ArrayList<>();
 
-    private double starAverage;
-    private int reviewnum;
+    @Builder.Default
+    private double starAverage = 0.0;
 
+    @Builder.Default
+    private int reviewnum = 0;
 
     @OneToMany(mappedBy = "consultant")
     private List<Review> reviews;
 
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 
     // HashTag을 Consultant에 추가하는 메서드
     public void addHashTag(HashTag hashTag) {
@@ -57,29 +65,12 @@ public class Consultant {
         hashTag.setConsultant(this);
     }
 
+    public void addcareers(Career career) {
+        careers.add(career);
+        career.setConsultant(this);
+    }
+
 //
-//    public double getStarAverage() {
-//
-//        if (reviews == null || reviews.isEmpty()) {
-//            return 0;
-//        }
-//
-//        int sum = 0;
-//        for (Review review : reviews) {
-//            sum += review.getStar();
-//        }
-//        return (double) sum / reviews.size();
-//    }
-//
-//
-//    public int getReviewnum() {
-//
-//        if (reviews == null || reviews.isEmpty()) {
-//            return 0;
-//        }
-//
-//        return reviews.size();
-//    }
 
     public void setStarAverage(double starAverage) {
         this.starAverage = starAverage;
@@ -124,18 +115,6 @@ public class Consultant {
     }
 
     public ConsultantResponse toResponse() {
-        FindRequest findRequest = FindRequest.builder().
-                id(true)
-                .role(true)
-                .gender(true)
-                .nickname(true)
-                .email(true)
-                .birthdate_month(true)
-                .birthdate_year(true)
-                .status(true)
-                .profile_img_url(true)
-
-                .build();
 
         return ConsultantResponse.builder()
                 .consultantId(this.consultant_id)
@@ -144,7 +123,10 @@ public class Consultant {
                 .simpleIntroduce(this.simple_introduce)
                 .star(this.getStarAverage())
                 .reviewnum(this.getReviewnum())
+                .hashTagsResponses(this.getHashTags().stream().map(HashTag::toHashTagResponse).collect(Collectors.toList()))
+                .careerResponses(this.getCareers().stream().map(Career::toresponse).collect(Collectors.toList()))
                 .build();
     }
+
 
 }

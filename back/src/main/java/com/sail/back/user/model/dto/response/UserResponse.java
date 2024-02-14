@@ -19,7 +19,6 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
 public class UserResponse {

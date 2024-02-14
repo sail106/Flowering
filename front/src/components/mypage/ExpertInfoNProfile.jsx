@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { ButtonBox } from "../common/Button";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState,  useEffect } from "react";
+import axios from "axios";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -75,6 +79,45 @@ const ButtonDiv = styled.div`
 `
 
 const ExpertInfoNProfile = () => {
+
+  const navigate = useNavigate();
+
+  const User = useSelector(
+    (state) => state.auth.logonUser
+  );
+
+  const [consultantData, setConsultantData] = useState(); // 상태 초기화
+  const [allCount, setallCount] = useState(); // 상태 초기화
+  const [todayCount, settodayCount] = useState(); // 상태 초기화
+  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+
+  const mydata = async () => {
+
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      // const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
+      const myinfo = await axios.get(baseurl + "consultant/myinfo", config);
+      const alllist = await axios.get(baseurl + "consultant/myAlllist", config);
+      setConsultantData(myinfo.data.data_body); 
+      setallCount(alllist.data.data_body.length);
+      const today = new Date().toISOString().slice(0, 10);
+      const count = alllist.data.data_body.filter(item => item.time.slice(0, 10) === today).length;
+      settodayCount(count); 
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+    }
+  };
+
+  useEffect(() => {
+    mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
+  }, []);
+
   return (
     <ConsultingDiv>
       <ConsultingProfile>
@@ -82,21 +125,23 @@ const ExpertInfoNProfile = () => {
         <hr></hr>
         <NickName>BIBI</NickName>
         <Body>
-          <Half>당신만의 고유한 아름다움을 찾아드리겠습니다.</Half>
+          <Half>{consultantData?.simple_introduce??''}</Half>
         </Body>
         <ButtonDiv>
+          <Link to={`/expertsprofileregistration`} reloadDocument>
           <MyButton>수정하기</MyButton>
+          </Link>
         </ButtonDiv>
       </ConsultingProfile>
       <ConsultingInfo>
         <Head>컨설팅 정보</Head>
         <Body>
           <span>오늘의 컨설팅 수</span>
-          <span>2개</span>
+          <span>{todayCount}개</span>
         </Body>
         <Body>
-          <p>결과 보고서 완성률</p>
-          <p>100%</p>
+          <p>전체 컨설팅 수</p>
+          <p>{allCount}개</p>
         </Body>
         <Body>
           <span>만족도</span>
@@ -104,11 +149,11 @@ const ExpertInfoNProfile = () => {
             <Stack spacing={1} direction="row" alignItems="center">
               <StyledRating
                 name="half-rating-read"
-                defaultValue={4.9}
+                defaultValue={consultantData?.star??0}
                 precision={0.5}
                 readOnly
               />
-              <span>4.9</span>
+              <span>{consultantData?.star??''}</span>
             </Stack>
           </span>
         </Body>

@@ -5,14 +5,13 @@ import Edit from "./mypage/Edit";
 import Withdrawal from "./mypage/Withdrawal";
 import BIBI from "../assets/BIBI.png";
 import camera from "../assets/camera.png";
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";
-import FirebaseConfig from "./common/FirebaseConfig";
+import { getStorage, ref, uploadString, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ButtonBox } from "./common/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { UserInfo } from "../store/authSlice";
 
 const MyPage = styled(Page)`
   display: flex;
@@ -31,9 +30,9 @@ const MyImg = styled.img`
 
 const CameraImg = styled(MyImg)`
   position: absolute;
-  top: 24%;
+  top: 22%;
   right: 43%;
-  width: 3%;
+  width: 50px;
   height: auto;
   background-color: #e2dfd8;
 `;
@@ -59,11 +58,6 @@ const Mylabel = styled.label`
 const Margin = styled.div`
   height: 35%;
 `;
-if (!getApps().length) {
-  initializeApp(FirebaseConfig);
-} else {
-  getApp();
-}
 
 const Button = styled(ButtonBox)`
   border-radius: 100px;
@@ -73,14 +67,13 @@ const Button = styled(ButtonBox)`
   border-color: "#B1B1B1";
 `;
 
-const storage = getStorage();
-
 const EditMyInfo = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const User = useSelector((state) => state.auth.logonUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { routeid } = useParams();
-  const isAccessible = Number(routeid) === User.id && isAuthenticated && User.role === "USER";
+  const isAccessible = Number(routeid) === User.id && isAuthenticated;
 
   useEffect(() => {
     if (!isAccessible) {
@@ -94,13 +87,32 @@ const EditMyInfo = () => {
   }
 
   const fileInput = useRef(null);
-
+  const storage = getStorage();
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(file.name);
-    await fileRef.put(file);
-    console.log(`${file.name} has been uploaded.`);
+    const storageRef = ref(storage, `${User.id}_profile`);
+    await uploadBytesResumable(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const data = {
+      profile_img_url: url,
+    };
+
+    const baseurl = import.meta.env.VITE_APP_BASE_URL;
+    try {
+      const response = await axios.patch(baseurl + "users/update", data, config);
+      console.log(response.data);
+      console.log("성공");
+      dispatch(UserInfo(true));
+    } catch (error) {
+      console.error("요청 중 에러 발생:", error);
+    }
   };
 
   const [checkEn, setCheckEn] = useState(false);
@@ -169,36 +181,10 @@ const EditMyInfo = () => {
     alert("비밀번호 형식을 다시 확인해주세요!");
   };
 
-  const updateUserInfo = async () => {
-    const data = {
-      pwOne: pwOne,
-      nickname: nickname,
-    };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${state.auth.logonUser.access_token}`,
-        "Content-Type": "application/json",
-        // 다른 필요한 헤더도 추가할 수 있습니다.
-      },
-    };
-    console.log(data);
-    try {
-      const response = await axios.patch(`${baseurl}users/update`, data, config);
-      console.log(response.data);
-      // 요청이 성공하면 navigate 함수를 호출하여 페이지를 이동할 수 있습니다.
-      // navigate('/success');
-    } catch (error) {
-      console.error("Failed to update user info:", error);
-      // 요청이 실패하면 사용자에게 오류 메시지를 보여줄 수 있습니다.
-      // alert('사용자 정보 업데이트에 실패했습니다.');
-    }
-  };
-  console.log("nick", nickname);
-  console.log("pw", pwOne);
   return (
     <>
       <MyPage>
-        <MyImg src={BIBI} alt="프로필 사진" />
+        <MyImg src={User.imageUrl} alt="프로필 사진" />
         <CameraImg src={camera} alt="프로필 사진" onClick={() => fileInput.current && fileInput.current.click()} />
         <input type="file" style={{ display: "none" }} ref={fileInput} onChange={handleFileUpload} />
         <InfoContainer>
@@ -215,7 +201,7 @@ const EditMyInfo = () => {
           <StyledCheck $isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
         </InfoContainer>
         {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne} />}
-        {(!checkPwOne || !checkPwTwo) && <Button onClick={alertMessage}>수정</Button>}
+        {(!checkPwOne || !checkPwTwo) && <Button onClick={alertMessage}>수정하기</Button>}
 
         <Withdrawal />
       </MyPage>

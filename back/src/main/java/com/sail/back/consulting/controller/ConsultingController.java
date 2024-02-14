@@ -37,7 +37,7 @@ public class ConsultingController {
             @AuthenticationPrincipal User user,
             @RequestBody ConsultingCreateRequest reservationCreateRequest) {
 
-        log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
+//        log.info("예약 등록 요청: 사용자 ID - {}, 컨설턴트 ID - {}", user.getId(), consultantId);
 
         UserRole userRole = user.getRole();
 //
@@ -64,6 +64,30 @@ public class ConsultingController {
                 .body(message);
 
     }
+
+
+    @PutMapping("/activate/{consultingId}")
+    public ResponseEntity<MessageUtils> activateReservation(@AuthenticationPrincipal User user,
+                                                          @PathVariable Long consultingId) {
+
+        MessageUtils message = consultingService.activateReservation(user, consultingId);
+        log.info("예약 활성화 성공");
+        return ResponseEntity.ok()
+                .body(message);
+    }
+
+    @PutMapping("/deactivate/{consultingId}")
+    public ResponseEntity<MessageUtils> deactivateReservation(@AuthenticationPrincipal User user,
+                                                            @PathVariable Long consultingId) {
+
+        MessageUtils message = consultingService.deactivateReservation(user, consultingId);
+        log.info("예약 비활성화 성공");
+        return ResponseEntity.ok()
+                .body(message);
+    }
+
+
+
 
     @GetMapping("/{consultingId}")
     public ResponseEntity<MessageUtils<ConsultingResponse>> getReservation(
