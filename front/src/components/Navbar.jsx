@@ -162,6 +162,10 @@ const Navbar = () => {
         <Link to={`/expertmypage/${User.id}`} reloadDocument>
           <StyledPerson />
         </Link>
+      ) : isAuthenticated && User.role === 'ADMIN' ? (
+        <Link to={`/manager`} reloadDocument>
+          <StyledPerson />
+        </Link>
       ) : (
         <Link to="/login" reloadDocument>
           <StyledPerson />

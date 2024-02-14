@@ -301,7 +301,6 @@ const MyCommunity = () => {
   const data = [
     { title: "뷰티 솔루션 컨설팅", time: "10:00", date: "01.19(금)", community_id: 1 },
     { title: "뷰티 솔루션 컨설팅2", time: "11:00", date: "01.19(금)", community_id: 2 },
-    { title: "뷰티 솔루션 컨설팅3", time: "12:00", date: "01.19(금)", community_id: 3 },
   ];
 
   return (

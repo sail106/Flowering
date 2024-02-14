@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const MyPage = styled(Page)`
   display: flex;
