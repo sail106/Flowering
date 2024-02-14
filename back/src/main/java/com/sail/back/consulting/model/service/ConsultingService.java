@@ -73,11 +73,9 @@ public class ConsultingService {
 //                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
         //이미 전문가가 이시간에 일정이 있는경우
         Optional<Consulting> consultingOptional = consultingRepository.findByConsultantAndTime(consultant, consultingCreateRequest.getTime());
-        consultingOptional.ifPresent(
-                consulting -> {
-                    throw new ConsultantException(ConsultantErrorCode.NOT_AVAILABLE);
-                }
-        );
+        if (consultingOptional.isPresent()) {
+            throw new ConsultingException(ConsultingErrorCode.CONSULTANT_HAVE_CONSULTING );
+        }
 
 
 
