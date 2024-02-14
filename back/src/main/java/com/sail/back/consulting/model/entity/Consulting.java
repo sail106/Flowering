@@ -71,7 +71,7 @@ public class Consulting {
     public static MyConsultinglistResponse from(Consulting consulting) {
         return MyConsultinglistResponse.builder()
                 .consulting_id(consulting.getConsulting_id())
-                .consultant(consulting.getConsultant())
+                .consultantResponse(consulting.getConsultant().toResponse())
                 .time(consulting.getTime())
                 .title(consulting.getTitle())
                 .build();
