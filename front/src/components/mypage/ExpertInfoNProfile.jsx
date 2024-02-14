@@ -87,8 +87,10 @@ const ExpertInfoNProfile = () => {
   );
 
   const [consultantData, setConsultantData] = useState(); // 상태 초기화
+  const [allCount, setallCount] = useState(); // 상태 초기화
+  const [todayCount, settodayCount] = useState(); // 상태 초기화
   const accessToken = useSelector(state => state.auth.logonUser.access_token);
-console.log('ppp')
+
   const mydata = async () => {
 
     const config = {
@@ -99,21 +101,22 @@ console.log('ppp')
     };
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log(baseurl)
       // const response = await axios.get("http://i10c106.p.ssafy.io:8080/v1/users/myallconsultinglist", config);
-      const response = await axios.get(baseurl + "consultant/myinfo", config);
-      setConsultantData(response.data.data_body); // 데이터를 상태에 저장
+      const myinfo = await axios.get(baseurl + "consultant/myinfo", config);
+      const alllist = await axios.get(baseurl + "consultant/myAlllist", config);
+      setConsultantData(myinfo.data.data_body); 
+      setallCount(alllist.data.data_body.length);
+      const today = new Date().toISOString().slice(0, 10);
+      const count = alllist.data.data_body.filter(item => item.time.slice(0, 10) === today).length;
+      settodayCount(count); 
     } catch (error) {
       console.error("Failed to update user info:", error);
     }
   };
 
   useEffect(() => {
-    console.log('usee')
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
-
-  // console.log(consultantData.simple_introduce)
 
   return (
     <ConsultingDiv>
@@ -134,11 +137,11 @@ console.log('ppp')
         <Head>컨설팅 정보</Head>
         <Body>
           <span>오늘의 컨설팅 수</span>
-          <span>2개</span>
+          <span>{todayCount}개</span>
         </Body>
         <Body>
-          <p>결과 보고서 완성률</p>
-          <p>100%</p>
+          <p>전체 컨설팅 수</p>
+          <p>{allCount}개</p>
         </Body>
         <Body>
           <span>만족도</span>
@@ -146,11 +149,11 @@ console.log('ppp')
             <Stack spacing={1} direction="row" alignItems="center">
               <StyledRating
                 name="half-rating-read"
-                defaultValue={4.9}
+                defaultValue={consultantData?.star??0}
                 precision={0.5}
                 readOnly
               />
-              <span>4.9</span>
+              <span>{consultantData?.star??''}</span>
             </Stack>
           </span>
         </Body>
