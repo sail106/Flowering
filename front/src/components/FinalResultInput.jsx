@@ -4,11 +4,10 @@ import styled from "styled-components";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-import Input from "../common/Input";
-import { ButtonBox } from "../common/Button";
-import Search from "../modals/Search";
-import ProductList from "../FinalResultInput/ProductList";
-import ConsultingType from "./consultingType";
+import Input from "./common/Input";
+import { ButtonBox } from "./common/Button";
+import Search from "./modals/Search";
+import ProductList from "./FinalResultInput/ProductList";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -166,7 +165,6 @@ const FinalresultInput = () => {
 
   return (
     <Card>
-      <ConsultingType />
       <ConsultingContent>
         <H2>스킨케어</H2>
         <InputSet>

@@ -46,7 +46,7 @@ import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
 import SecondSurveyResult from './components/SecondSurveyResult';
 import FirstSurvey from './components/FirstSurvey';
 import FirstSurveyResult from './components/FirstSurveyResult';
-import FinalresultInput from './components/finalResultForm/FinalResultInput';
+import FinalresultInput from './components/FinalResultInput';
 
 import SecondSurveyEnd from './components/SecondSurveyEnd';
 function App() {
