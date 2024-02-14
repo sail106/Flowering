@@ -76,7 +76,7 @@ const OneToOneVideoChat = () => {
     console.log('in connection  ' + token) //in connection  ws://localhost:4443?sessionId=1&token=tok_MF2VTBpuHQz79T5o
     // token = token.replace('localhost', 'i10c106.p.ssafy.io');
     // console.log('in connection  '+token) // in connection ws://i10c106.p.ssafy.io:4443?sessionId=1&token=tok_BC6nORx9VG3G5RQB
-
+    console.log('iiiiiiiiii' + isMic)
     session
       .connect(
         token, { clientData: myUserName, clientRole: role },
@@ -145,10 +145,10 @@ const OneToOneVideoChat = () => {
             console.log('getCustomer 액션 성공:', response)
 
 
-            
+
             console.log('User 넣기')
 
- 
+
 
 
           }).catch((error) => {
@@ -343,7 +343,7 @@ const OneToOneVideoChat = () => {
       }
     }
 
- 
+
   }
 
   useEffect(() => {
@@ -382,7 +382,7 @@ const OneToOneVideoChat = () => {
 
       try {
         const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-         const config = {
+        const config = {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -634,6 +634,9 @@ const OneToOneVideoChat = () => {
 
                       }
 
+ 
+
+
                     </Grid>
 
                   )
@@ -645,7 +648,33 @@ const OneToOneVideoChat = () => {
                     </SpinnerGrid>
                 }
 
+                <SmallChatContainer>
+                  <ConsultantParticipant />
 
+                  <OneToOneChat />
+
+                  {
+                    isCam && consultant !== undefined && role == CONSULTANT &&
+
+                    <MyVideoContainer>
+                      <UserVideoComponent
+                        streamManager={consultant}
+                      />
+                    </MyVideoContainer>
+
+                  }
+
+                  {
+                    isCam && customer !== undefined && role == "USER" &&
+
+                    <MyVideoContainer>
+                      <UserVideoComponent
+                        streamManager={customer}
+                      />
+                    </MyVideoContainer>
+
+                  }
+                </SmallChatContainer>
 
               </div>
               {/* 
@@ -660,33 +689,7 @@ const OneToOneVideoChat = () => {
               </VideoGroup> */}
 
 
-              <SmallChatContainer>
-                <ConsultantParticipant />
 
-                <OneToOneChat />
-
-                {
-                  isCam && consultant !== undefined && role == CONSULTANT &&
-
-                  <MyVideoContainer>
-                    <UserVideoComponent
-                      streamManager={consultant}
-                    />
-                  </MyVideoContainer>
-
-                }
-
-                {
-                  isCam && customer !== undefined && role == "USER" &&
-
-                  <MyVideoContainer>
-                    <UserVideoComponent
-                      streamManager={customer}
-                    />
-                  </MyVideoContainer>
-
-                }
-              </SmallChatContainer>
 
               {/* </UserVideoSGrid> */}
 
@@ -843,12 +846,15 @@ const VideoContainer = styled(Box)({
 })
 // 내 비디오 컨테이너
 const MyVideoContainer = styled(Box)({
-  width: "33%",
-  // borderRadius: "1rem",
-  // padding: "1rem",
-  // position:
-
+  width: "23%",
+  position: 'absolute',
+  top: 488,
+  left: 290,
+  right: 0,
+  bottom: 0,
+  margin: 'auto',
 })
+
 const Header = styled.div`
     display: flex;
     /* justify-content: ; */

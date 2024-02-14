@@ -13,8 +13,8 @@ const initialState = {
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/sail106.appspot.com/o/anon.jpg?alt=media&token=c8378e56-f874-4051-beac-fa925e121143'
       ,
       name: 'bot',
-      isMic: 'false',
-      isCam: 'false',
+      isMic: 'true',
+      isCam: 'true',
 
     }
   ]

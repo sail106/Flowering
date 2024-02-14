@@ -31,8 +31,8 @@ const initialState = {
 		introduction: '',
 		consultingFile: '',
 		role: '',
-		isMic: 'false',
-		isCam: 'false',
+		isMic: 'true',
+		isCam: 'true',
 		access_token: '',
 		id: '', //pk
 		// refresh_token: '',
