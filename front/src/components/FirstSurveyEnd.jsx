@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button, { ButtonBox } from './common/Button';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Consulting1stepresultpage = styled.div`
 	margin-top: -130px;
@@ -54,6 +55,8 @@ const StepImg = styled.img`
 `;
 
 const Finish1step = () => {
+	const location = useLocation();
+	const consultingId = location.state.value.consultingId;
 	return (
 		<Consulting1stepresultpage>
 			<Margin />
@@ -67,7 +70,7 @@ const Finish1step = () => {
 			<Margin2 />
 
 			<ButtonContainer>
-				<Link to={'/phototest'} reloadDocument>
+				<Link to={{ pathname: `/phototest`, state: { value: { consultingId } } }} reloadDocument>
 					<MyButton1>카메라 테스트 시작</MyButton1>
 				</Link>
 			</ButtonContainer>
