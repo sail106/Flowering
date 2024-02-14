@@ -9,7 +9,8 @@ import Radio, { radioClasses } from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import Sheet from '@mui/joy/Sheet';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import { useSelector } from 'react-redux'; // useSelector import 추가
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExpertById } from '../store/ExpertsListSlice';
 
 export const Title = styled.span`
 	width: 177px;
@@ -156,6 +157,22 @@ const Order = () => {
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
 	// alert('dddd' + selectedDate + " " + selectedTime)
+	const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (selectedid) {
+			// 컴포넌트가 마운트될 때와 selectedid가 변경될 때마다 fetchExpertById 액션을 호출
+			dispatch(fetchExpertById(selectedid))
+				.then((response) => {
+					setExpertData(response);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [selectedid]); // selectedid 추가
+
 	useEffect(() => {
 		if (consultingId !== null) {
 			// 여기서 다음 페이지로 이동
@@ -177,14 +194,17 @@ const Order = () => {
 			value: 'item_price',
 		},
 	];
-	const items = [
-		{
-			consultant_img:
-				'https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/resize/416/quality/80/optimize',
-			item_name: 'LEINA 뷰티 솔루션 컨설팅',
-			item_price: '89,000',
-		},
-	];
+
+	const items =
+		expertData && expertData.payload
+			? [
+					{
+						consultant_img: `${expertData.payload.user_response.profile_img_url}`,
+						item_name: `${expertData.payload.user_response.nickname} 뷰티 솔루션 컨설팅`,
+						item_price: '89,000',
+					},
+			  ]
+			: [];
 
 	const userInfo = {
 		username: `${name}`,
@@ -192,14 +212,11 @@ const Order = () => {
 	};
 
 	useEffect(() => {
-		const jquery = document.createElement('script');
-		jquery.src = 'http://code.jquery.com/jquery-1.12.4.min.js';
 		const iamport = document.createElement('script');
-		iamport.src = 'http://cdn.iamport.kr/js/iamport.payment-1.1.7.js';
-		document.head.appendChild(jquery);
+		iamport.src = 'https://cdn.iamport.kr/v1/iamport.js';
+
 		document.head.appendChild(iamport);
 		return () => {
-			document.head.removeChild(jquery);
 			document.head.removeChild(iamport);
 		};
 	}, []);
@@ -245,7 +262,7 @@ const Order = () => {
 								`${baseurl}consultings/${selectedid}`,
 								{
 									time: selectedDate + 'T' + selectedTime,
-									title: email + '님의 상담',
+									title: name + '님의 상담',
 									// 다른 필요한 데이터
 								},
 								config
