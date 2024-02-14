@@ -16,6 +16,8 @@ import com.sail.back.consulting.model.repository.ConsultingRepository;
 import com.sail.back.global.exception.base.*;
 import com.sail.back.global.utils.MessageUtils;
 import com.sail.back.report.model.service.ReportService;
+import com.sail.back.user.exception.UserErrorCode;
+import com.sail.back.user.exception.UserException;
 import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.UserRole;
 import com.sail.back.user.model.repository.UserRepository;
@@ -30,6 +32,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,13 +75,17 @@ public class ConsultingService {
         if (consultings.size() > 0) {
             throw new ConsultingException(ConsultingErrorCode.ALREADY_IN_CONSULTANT);
         }
+        Optional<List<Consulting>> consultingListOptional = consultingRepository.findAllByUserIdAndTime(userId, consultingCreateRequest.getTime());
 
-        List<Consulting> consultingList = consultingRepository.
-                findAllByUserIdAndTime(userId, consultingCreateRequest.getTime()).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
-
-        if (consultingList.size() > 0) {
-            throw new ConsultingException(ConsultingErrorCode.ALREADY_IN);
+        if (consultingListOptional.isPresent() && !consultingListOptional.get().isEmpty()) {
+            throw new ConsultingException(ConsultingErrorCode.HAVE_CONSULTING);
         }
+//
+//        List<Consulting> consultingList = consultingRepository.
+//                findAllByUserIdAndTime(userId, consultingCreateRequest.getTime()).ifPresent((value -> {
+//                    throw new ConsultingException(ConsultingErrorCode.HAVE_CONSULTING);
+//                }));
+
 
         Consulting consulting = consultingCreateRequest.toEntity();
 
@@ -86,7 +93,7 @@ public class ConsultingService {
 
         consultingRepository.save(consulting);
 
-        Consulting newConsulting= consultingRepository.findByUserIdAndTime(user.getId(),consultingCreateRequest.getTime()).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
+        Consulting newConsulting = consultingRepository.findByUserIdAndTime(user.getId(), consultingCreateRequest.getTime()).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
         reportService.createReport(consultantId, user);
 
         return ConsultingCreateResponse.builder()
