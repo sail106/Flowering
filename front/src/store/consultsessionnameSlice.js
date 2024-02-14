@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../api/Axios';
 
 const initialState = {
-  consultantSessionName: '', 
+  consultantSessionName: '',
 
   participantId: 2,
 
@@ -70,13 +70,13 @@ const consultsessionnameSlice = createSlice({
     setCustomer: (state, { payload }) => {
       state.customer = payload
     },
- 
+
     appendParticipantList: (state, { payload }) => {
       payload.id = state.participantId //처음에 2
       state.participantId = state.participantId + 1
       state.participantList.push(payload)
-      console.log('participant pushed '+payload.name+" "+payload.id+
-      " state.participantId"+state.participantId)
+      console.log('participant pushed ' + payload.name + " " + payload.id +
+        " state.participantId" + state.participantId)
     },
 
   },
@@ -92,7 +92,7 @@ const consultsessionnameSlice = createSlice({
 
 export const { settingModalOn, settingModalOff, setSession, resetSessionName,
   setReservationId, resetMsg, setconsultid, setCustomer, setconsultantSessionName
-  , appendParticipantList,removeconsultantSessionName
+  , appendParticipantList, removeconsultantSessionName
 } = consultsessionnameSlice.actions;
 
 export default consultsessionnameSlice.reducer;

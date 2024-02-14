@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d142c8d3-5f89-48c2-95c0-892f80c9107f" name="Changes" comment="feat: #5 report api init&#10;- 첫번째 설문조사 결과 response 생성&#10;- report 레포지토리 생성&#10;- report 서비스 생성&#10;- 두번째 분석 결과 response 생성&#10;- report 결과 response 생성&#10;- report entity 수정&#10;- report entity에 들어가는 enum 들 수정">
-      <change beforePath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfileRegistration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/experts/ExpertsProfileRegistration.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/service/ConsultingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sail/back/consulting/model/service/ConsultingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/components/PhotoTest.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/components/PhotoTest.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/authSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/authSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/consultsessionnameSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/consultsessionnameSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../settings" beforeDir="false" afterPath="$PROJECT_DIR$/../settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/controller/ConsultingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../back/src/main/java/com/sail/back/consulting/model/entity/Consulting.java" afterDir="false" />

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { IoIosInformationCircle } from "react-icons/io";
 import { Page } from "./common/Page";
-import InfoBox from "./consultingresult/InfoBox";
-import { ButtonBox } from "./common/Button";
+ import { ButtonBox } from "./common/Button";
 import Webcam from "react-webcam";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { getStorage, ref, uploadString, getDownloadURL } from "firebase/storage";

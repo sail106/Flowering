@@ -200,7 +200,7 @@ const MyConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {consultingData.map((row, index) => {
+          {consultingData?.map((row, index) => {
             const date = new Date(row.time);
             const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
             const formattedTime = format(date, 'HH:mm');
