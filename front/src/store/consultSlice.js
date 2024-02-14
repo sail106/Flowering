@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../api/Axios';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const initialState = {
   session: undefined,
@@ -107,10 +109,17 @@ export const getConsultant = createAsyncThunk(
   'consult/getConsultant',
   async (payload, { rejectWithValue }) => {
     try {
+
       console.log(payload)
-
-      const response = await Axios.get(`consultings/` + payload)
-
+      const baseurl = import.meta.env.VITE_APP_BASE_URL;
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${state.auth.logonUser.access_token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      const response = await axios.get(baseurl + `consultings/${payload}`, config);
+      console.log(response.data)
       return response.data
     }
 
