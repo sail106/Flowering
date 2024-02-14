@@ -15,6 +15,7 @@ import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.consulting.model.repository.ConsultingRepository;
 import com.sail.back.global.exception.base.*;
 import com.sail.back.global.utils.MessageUtils;
+import com.sail.back.report.model.service.ReportService;
 import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.UserRole;
 import com.sail.back.user.model.repository.UserRepository;
@@ -46,15 +47,13 @@ public class ConsultingService {
     private final UserRepository userRepository;
     private final ConsultantRepository consultantRepository;
     private final ConsultingRepository consultingRepository;
+    private final ReportService reportService;
 
     public ConsultingCreateResponse createReservation(String role, Long userId, Long consultantId, ConsultingCreateRequest consultingCreateRequest) {
 
         if (UserRole.CONSULTANT.equals(role)) {
             throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
-
         }
-
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(CUSTOMER_NOT_FOUND));
 
@@ -88,6 +87,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
 
         Consulting newConsulting= consultingRepository.findByUserIdAndTime(user.getId(),consultingCreateRequest.getTime()).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
+        reportService.createReport(consultantId, user);
 
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())

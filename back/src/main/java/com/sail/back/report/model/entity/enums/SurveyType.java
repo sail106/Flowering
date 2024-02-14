@@ -32,13 +32,14 @@ public enum SurveyType {
     private String solution;
 
     public SurveyResponse toResponse(){
-        return SurveyResponse.builder()
-                .surveyType(this.name())
-                .content(this.content)
-                .skinType(this.skinType)
-                .solution(this.solution)
-                .strength(this.strength)
-                .weakness(this.weakness)
-                .build();
+        SurveyResponse response = new SurveyResponse();
+        if (this!=null){
+            if (this.name()!=null&&!this.name().isEmpty())response.setSurveyType(this.name());
+            if (this.content!=null&&!this.content.isEmpty())response.setContent(this.content);
+            if (this.skinType!=null&&!this.skinType.isEmpty())response.setSkinType(this.skinType);
+            if (this.solution!=null&&!this.solution.isEmpty())response.setSolution(this.solution);
+            if (this.weakness!=null&&!this.weakness.isEmpty())response.setWeakness(this.getWeakness());
+        }
+        return response;
     }
 }

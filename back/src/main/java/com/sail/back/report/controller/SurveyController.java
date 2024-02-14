@@ -28,7 +28,7 @@ public class SurveyController {
     }
 
     @GetMapping("/find/{consultingId}")
-    public ResponseEntity<MessageUtils> findReport(
+    public ResponseEntity<MessageUtils> findSurvey(
             @AuthenticationPrincipal User user,
             @PathVariable Long consultingId
     ){
