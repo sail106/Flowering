@@ -10,15 +10,15 @@ import {
   ref,
   uploadString,
   getDownloadURL,
-  uploadBytesResumable
+  uploadBytesResumable,
 } from "firebase/storage";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useParams, useNavigate   } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import { ButtonBox } from "./common/Button";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { UserInfo } from "../store/authSlice";
-
+import { S3 } from "aws-sdk";
 const MyPage = styled(Page)`
   display: flex;
   flex-direction: column;
@@ -75,51 +75,78 @@ const Button = styled(ButtonBox)`
 
 const EditMyInfo = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const User = useSelector(
-    (state) => state.auth.logonUser
-  );
+  const User = useSelector((state) => state.auth.logonUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { routeid } = useParams();
-  const isAccessible = (Number(routeid) === User.id && isAuthenticated)
+  const isAccessible = Number(routeid) === User.id && isAuthenticated;
 
   useEffect(() => {
     if (!isAccessible) {
-      alert('잘못된 접근입니다.'); // 시스템 경고창을 띄웁니다.
-      navigate('/'); // 홈으로 리다이렉트합니다.
+      alert("잘못된 접근입니다."); // 시스템 경고창을 띄웁니다.
+      navigate("/"); // 홈으로 리다이렉트합니다.
     }
   }, [isAccessible, navigate]); // isAccessible이 변경될 때마다 이 훅을 실행합니다.
-  
+
   if (!isAccessible) {
     return null; // 이후의 컴포넌트 렌더링을 막기 위해 null을 반환합니다.
   }
 
   const fileInput = useRef(null);
-  const storage = getStorage();
-  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
+
+  // S3
+  const s3 = new S3({
+    region: "ap-northeast-2", // AWS S3 버킷의 리전을 입력하세요
+    accessKeyId: import.meta.env.VITE_APP_ACCESS_KEY, // AWS Access Key ID를 입력하세요
+    secretAccessKey: import.meta.env.VITE_APP_SECRET_KEY, // AWS Secret Access Key를 입력하세요
+    // accessKeyId: "AKIA2UC3EQURXM3FBELT", // AWS Access Key ID를 입력하세요
+    // secretAccessKey: "/FuPhPdcRYL+GmahnILfrJUXOqDYdVT+89gBnijx" // AWS Secret Access Key를 입력하세요
+  });
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    const storageRef = ref(storage, `${User.id}_profile`);
-    await uploadBytesResumable(storageRef, file);
-    const url = await getDownloadURL(storageRef);
     const config = {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
     };
-    const data = {
-      "profile_img_url":url
-    };
-
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
+    // Firebase
+    // const storage = getStorage();
+    // const storageRef = ref(storage, `${User.id}_profile`);
+    // console.log(storageRef)
+    // await uploadBytesResumable(storageRef, file);
+    // const url = await getDownloadURL(storageRef);
+
+    const uploadParams = {
+      Bucket: 'escapefromfirebase', // AWS S3 버킷 이름을 입력하세요
+      Key: `${User.id}_profile`, // 유니크한 파일 이름을 생성합니다
+      Body: file,
+      ACL: "private", // 파일을 공개적으로 접근 가능하게 설정합니다
+    };
+    const uploadResult = await s3.upload(uploadParams).promise();
+    const url = uploadResult.Location; // 업로드된 파일의 URL을 가져옵니다
+    console.log('result',uploadResult)
+    console.log('url',url)
+
     try {
-      const response = await axios.patch( baseurl + "users/update", data, config);
+      const data = {
+        profile_img_url: url
+      };
+
+      const response = await axios.patch(
+        baseurl + "users/update",
+        data,
+        config
+      );
       console.log(response.data);
-      console.log('성공');
-      dispatch(UserInfo(true))
+      console.log("성공");
+      dispatch(UserInfo(true));
+
     } catch (error) {
-      console.error('요청 중 에러 발생:', error);
+      console.error("요청 중 에러 발생:", error);
     }
   };
 
@@ -171,7 +198,7 @@ const EditMyInfo = () => {
 
   const nicknameHandler = (e) => {
     setNickname(e.target.value);
-  }
+  };
 
   useEffect(() => {
     setCheckPwOne(checkEn && checkNum && checkSp && checkLen);
@@ -206,7 +233,12 @@ const EditMyInfo = () => {
         />
         <InfoContainer>
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
-          <Input placeholder={User.nickname} id="nickname" width="90%" onChange={nicknameHandler}></Input>
+          <Input
+            placeholder={User.nickname}
+            id="nickname"
+            width="90%"
+            onChange={nicknameHandler}
+          ></Input>
           <Mylabel htmlFor="pw1">비밀번호</Mylabel>
           <Input
             htmlFor="pw1"
@@ -231,7 +263,7 @@ const EditMyInfo = () => {
           />
           <StyledCheck $isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
         </InfoContainer>
-        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne}/>}
+        {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne} />}
         {(!checkPwOne || !checkPwTwo) && (
           <Button onClick={alertMessage}>수정하기</Button>
         )}

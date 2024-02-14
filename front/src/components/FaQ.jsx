@@ -30,7 +30,7 @@ const FaQ = () => {
     const mydata = async () => {
       try {
         const response = await axios.get(baseurl + "faq/list");
-        console.log(response.data);
+        console.log(response.data.data_body);
         setfaqData(response.data.data_body); // 데이터를 상태에 저장
       } catch (error) {
         console.error("Failed to update user info:", error);
@@ -38,13 +38,12 @@ const FaQ = () => {
     };
     mydata();
   }, []);
-
   return (
     <>
       <MyPage >
         <Header>FAQ</Header>
         {faqData.map((faq, index) => (
-          <FaQBox key={index} question={faq.question} answer={faq.answer} />
+          <FaQBox key={index} question={faq.title} answer={faq.content} />
         ))}
       </MyPage>
       <Margin />
