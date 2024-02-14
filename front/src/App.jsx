@@ -46,7 +46,7 @@ import ExpertsProfileCommon from './components/experts/ExpertsProfilecommon';
 import SecondSurveyResult from './components/SecondSurveyResult';
 import FirstSurvey from './components/FirstSurvey';
 import FirstSurveyResult from './components/FirstSurveyResult';
-// import FinalresultInput from "./components/finalResultForm/FinalResultInput";
+import FinalresultInput from "./components/finalResultForm/FinalResultInput";
 
 import SecondSurveyEnd from './components/SecondSurveyEnd';
 
@@ -103,7 +103,7 @@ function App() {
 					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
 					<Route path='/manager' element={<Manager />} />
 
-					{/* <Route path='/finalresultinput' element={<FinalresultInput />} /> */}
+					<Route path='/finalresultinput' element={<FinalresultInput />} />
 
 					<Route path='/phototest' element={<PhotoTest />} />
 
