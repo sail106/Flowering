@@ -170,7 +170,6 @@
     <attachedChunks>
       <set>
         <option value="jdk-17.0.9-azul-17.0.9-f644763e9732-52037d96" />
-        <option value="jdk-17.0.9-corretto-17.0.9-f644763e9732-ebaef533" />
       </set>
     </attachedChunks>
   </component>

@@ -159,7 +159,7 @@ const EditMyInfo = () => {
   const [pwTwo, setPwTwo] = useState("");
   const [checkPwOne, setCheckPwOne] = useState(false);
   const [checkPwTwo, setCheckPwTwo] = useState(false);
-
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const passwordHandler = (e) => {
     setPwOne(e.target.value);
 
@@ -220,17 +220,8 @@ const EditMyInfo = () => {
     <>
       <MyPage>
         <MyImg src={User.imageUrl} alt="프로필 사진" />
-        <CameraImg
-          src={camera}
-          alt="프로필 사진"
-          onClick={() => fileInput.current && fileInput.current.click()}
-        />
-        <input
-          type="file"
-          style={{ display: "none" }}
-          ref={fileInput}
-          onChange={handleFileUpload}
-        />
+        <CameraImg src={camera} alt="프로필 사진" onClick={() => fileInput.current && fileInput.current.click()} />
+        <input type="file" style={{ display: "none" }} ref={fileInput} onChange={handleFileUpload} />
         <InfoContainer>
           <Mylabel htmlFor="nickname">닉네임</Mylabel>
           <Input
@@ -240,27 +231,13 @@ const EditMyInfo = () => {
             onChange={nicknameHandler}
           ></Input>
           <Mylabel htmlFor="pw1">비밀번호</Mylabel>
-          <Input
-            htmlFor="pw1"
-            id="pw1"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordHandler}
-          />
+          <Input htmlFor="pw1" id="pw1" placeholder="**********" type="password" width="90%" onChange={passwordHandler} />
           <StyledCheck $isValid={checkEn}>✓ 영문</StyledCheck>
           <StyledCheck $isValid={checkNum}>✓ 숫자</StyledCheck>
           <StyledCheck $isValid={checkSp}>✓ 특수문자</StyledCheck>
           <StyledCheck $isValid={checkLen}>✓ 8~20자</StyledCheck>
           <Mylabel htmlFor="pw2">비밀번호 확인</Mylabel>
-          <Input
-            htmlFor="pw2"
-            id="pw2"
-            placeholder="**********"
-            type="password"
-            width="90%"
-            onChange={passwordChecker}
-          />
+          <Input htmlFor="pw2" id="pw2" placeholder="**********" type="password" width="90%" onChange={passwordChecker} />
           <StyledCheck $isValid={checkPwTwo}>✓ 비밀번호가 같아요</StyledCheck>
         </InfoContainer>
         {checkPwOne && checkPwTwo && <Edit nickname={nickname} pwOne={pwOne} />}

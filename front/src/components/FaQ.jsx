@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Page } from "./common/Page";
 import FaQBox from "./faq/FaqBox";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const MyPage = styled(Page)`
   display: flex;
@@ -40,7 +39,7 @@ const FaQ = () => {
   }, []);
   return (
     <>
-      <MyPage >
+      <MyPage>
         <Header>FAQ</Header>
         {faqData.map((faq, index) => (
           <FaQBox key={index} question={faq.title} answer={faq.content} />
