@@ -240,7 +240,7 @@ const ExpertsProfileRegistration = () => {
   console.log('전문가등록' + User.id)
 
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  const [Selectedid, setSelecteid] = useState(null);
+  const [Selectedid, setSelectedid] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
@@ -265,7 +265,7 @@ const ExpertsProfileRegistration = () => {
         console.log(data.data_body)
         console.log(data.data_body.simple_introduce)
         console.log(data.data_body.hash_tags_responses)
-        setSelecteid(data.data_body.consultant_id);
+        setSelectedid(data.data_body.consultant_id);
         setShortIntroduction(data.data_body.simple_introduce)
         setDetailedIntroduction(data.data_body.self_introduce)
 
@@ -275,7 +275,7 @@ const ExpertsProfileRegistration = () => {
         if (data.data_body.hash_tags_responses) {
           setTags(data.data_body.hash_tags_responses.map(tag => ({ id: tag.hashtagId, workplace: tag.workplace })));
         }
-  
+
         // hahstagId
 
       } catch (error) {
@@ -318,7 +318,7 @@ const ExpertsProfileRegistration = () => {
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log('태그스',tags)
+      console.log('태그스', tags)
       const body = {
         self_introduce: detailedIntroduction,
         simple_introduce: shortIntroduction,
@@ -388,10 +388,28 @@ const ExpertsProfileRegistration = () => {
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
+      console.log(workplaces)
+      console.log(employmentPeriods)
+
+      const careers = [];
+
+      // workplaces와 employmentPeriods를 careers 배열에 추가
+      for (let i = 0; i < workplaces.length; i++) {
+        const [startDate, endDate] = employmentPeriods[i].split('~');
+        careers.push({
+          id: null, // id가 없는 경우
+          workplace: workplaces[i],
+          startDateOfEmployment: startDate,
+          endDateOfEmployment: endDate,
+        });
+      }
+
+      console.log(careers[0])
+
       for (const career of careers) { // 경력 객체를 사용하여 반복문을 수행합니다.
         if (!career.id) {
           const body = {
-            consultantId: 1,
+            consultantId: Selectedid,
             workplace: career.workplace,
             start_date_of_employment: career.startDateOfEmployment,
             end_date_of_employment: career.endDateOfEmployment
@@ -541,22 +559,17 @@ const ExpertsProfileRegistration = () => {
 
         <Margin />
 
-        <H4>회사명</H4>
+        {/* <H4>회사명</H4>
         <Career>아모레퍼시픽</Career>
         <H42>근무기간</H42>
-        <Career2>2018.08 ~ 2022.03</Career2>
-        <Remove />
+        <Career2>2018.08 ~ 2022.03</Career2> */}
+        {/* <Remove /> */}
 
 
 
-
-
-
-
-
-        <Plus />
+        {/* <Plus /> */}
         <br />
-        <H5>회사명</H5>
+        {/* <H5>회사명</H5>
         <Put2>
           <Input
             width={"587px"}
@@ -573,14 +586,12 @@ const ExpertsProfileRegistration = () => {
             value={employmentPeriod}
             onChange={(e) => setEmploymentPeriod(e.target.value)}
           />
-        </Put2>
-
-
+        </Put2> */}
 
 
         {workplaces.map((workplace, index) => (
           <div key={index}>
-            <Remove />
+            {/* <Remove /> */}
 
             <br />
             <Company>회사명</Company>
@@ -596,24 +607,19 @@ const ExpertsProfileRegistration = () => {
             <Put2>
               <Input
                 width={"587px"}
-                placeholder="0000-00-00 ~ 0000-00-00"
+                placeholder="0000-00-00~0000-00-00"
                 value={employmentPeriods[index]}
                 onChange={(e) => handleEmploymentPeriodChange(index, e.target.value)}
               />
             </Put2>
             {/* <Remove onClick={() => handleRemoveCareer(index)}/> */}
-            <Plus />
+            {/* <Plus /> */}
 
-            {/* <button onClick={() => handleRemoveCareer(index)}>Remove</button> */}
+            <button onClick={() => handleRemoveCareer(index)}>Remove</button>
           </div>
         ))}
 
-        {/* <button onClick={handleAddCareer}>Add Career</button> */}
-
-
-
-
-
+        <button onClick={handleAddCareer}>Add Career</button>
 
 
 
