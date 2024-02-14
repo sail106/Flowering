@@ -228,7 +228,6 @@ const OneToOneVideoChat = () => {
     }
 
     dispatch(appendParticipantList(mine))
-    alert('myrole' + role)
 
   }
 
