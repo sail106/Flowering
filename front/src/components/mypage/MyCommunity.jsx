@@ -77,7 +77,7 @@ const Button = styled(ButtonBox)`
   border-radius: 30px;
 `;
 
-const OPENVIDU_SERVER_URL = 'http://i10c106.p.ssafy.io';
+const OPENVIDU_SERVER_URL = 'https://i10c106.p.ssafy.io';
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 const MyCommunity = () => {
