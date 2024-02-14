@@ -1,16 +1,35 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { OrderUserTable, DataTable, Content, Filed, BtnList } from './OrderPage';
 import { ButtonBox } from './common/Button';
 import { useNavigate } from 'react-router-dom';
 import success_animation from '../assets/success_animation.gif';
 import processbar from '../assets/processbar.svg';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExpertById } from '../store/ExpertsListSlice';
 
 const OrderResult = () => {
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const location = useLocation();
 	const consultingId = location.state.value.consultingId;
+	const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
+	const dispatch = useDispatch();
+	const { selectedid } = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (selectedid) {
+			// 컴포넌트가 마운트될 때와 selectedid가 변경될 때마다 fetchExpertById 액션을 호출
+			dispatch(fetchExpertById(selectedid))
+				.then((response) => {
+					setExpertData(response);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [selectedid]); // selectedid 추가
+
 	const headers = [
 		{
 			text: 'EXPERT',
@@ -25,14 +44,16 @@ const OrderResult = () => {
 			value: 'item_price',
 		},
 	];
-	const items = [
-		{
-			consultant_img:
-				'https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/resize/416/quality/80/optimize',
-			item_name: `LEINA 뷰티 솔루션 컨설팅`,
-			item_price: '89,000',
-		},
-	];
+	const items =
+		expertData && expertData.payload
+			? [
+					{
+						consultant_img: `${expertData.payload.user_response.profile_img_url}`,
+						item_name: `${expertData.payload.user_response.nickname} 뷰티 솔루션 컨설팅`,
+						item_price: '89,000',
+					},
+			  ]
+			: [];
 
 	const userInfo = {
 		username: `${name}`,
