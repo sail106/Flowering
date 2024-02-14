@@ -206,6 +206,7 @@ public class Report {
         this.surveyType = request.getSurveyType();
     }
     public SurveyResponse toSurveyResponse(){
+        if (this.surveyType==null) return new SurveyResponse();
         return this.surveyType.toResponse();
     }
 
