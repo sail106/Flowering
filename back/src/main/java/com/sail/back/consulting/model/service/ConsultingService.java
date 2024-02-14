@@ -67,14 +67,20 @@ public class ConsultingService {
             throw new ConsultingException(ConsultingErrorCode.MYSELF);
         }
 
-        List<Consulting> consultings = consultingRepository.
-                findAllByConsultantAndTime(consultant, consultingCreateRequest.getTime()).orElseThrow(() ->
-                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
+        //
+//        Consulting consulting = consultingRepository.
+//                findByConsultantAndTime(consultant, consultingCreateRequest.getTime()).ifPresent(() ->value
+//                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
+        //이미 전문가가 이시간에 일정이 있는경우
+        Optional<Consulting> consultingOptional = consultingRepository.findByConsultantAndTime(consultant, consultingCreateRequest.getTime());
+        consultingOptional.ifPresent(
+                consulting -> {
+                    throw new ConsultantException(ConsultantErrorCode.NOT_AVAILABLE);
+                }
+        );
 
 
-        if (consultings.size() > 0) {
-            throw new ConsultingException(ConsultingErrorCode.ALREADY_IN_CONSULTANT);
-        }
+
         Optional<List<Consulting>> consultingListOptional = consultingRepository.findAllByUserIdAndTime(userId, consultingCreateRequest.getTime());
 
         if (consultingListOptional.isPresent() && !consultingListOptional.get().isEmpty()) {
