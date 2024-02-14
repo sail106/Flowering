@@ -83,6 +83,9 @@ const H2 = styled.h3`
 `;
 // ExpertsList component
 const ManagerFaq = () => {
+
+
+  
   return (
     <table>
       <tbody>
