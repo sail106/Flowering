@@ -201,7 +201,7 @@ const MyConsulting = () => {
           </Tr>
         </Thead>
         <Tbody>
-          { consultingData?.map((row, index) => {
+          { consultingData &&consultingData.length > 0 && consultingData?.map((row, index) => {
             const date = new Date(row.time);
             const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
             const formattedTime = format(date, 'HH:mm');
@@ -230,7 +230,9 @@ const MyConsulting = () => {
                 </ButtonTd>
               </Tr>
             );
-          } ) }
+          })
+        
+        }
         </Tbody>
       </Table>
     </Consulting>
