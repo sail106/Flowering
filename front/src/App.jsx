@@ -103,7 +103,7 @@ function App() {
 					<Route path='/expertsprofileregistration' element={<ExpertsProfileRegistration />} />
 					<Route path='/manager' element={<Manager />} />
 
-					<Route path='/finalresultinput' element={<FinalresultInput />} />
+					{/* <Route path='/finalresultinput' element={<FinalresultInput />} /> */}
 
 					<Route path='/phototest' element={<PhotoTest />} />
 
