@@ -604,7 +604,7 @@ const OneToOneVideoChat = () => {
 
                   consultant !== undefined ? (
 
-                    <Grid container item xs={12} sm={4}
+                    <Grid container item xs={12} sm={12}
                       sx={{
                         // height: "80%",
                         // justifyContent: "space-between",
