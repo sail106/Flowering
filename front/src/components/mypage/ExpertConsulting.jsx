@@ -196,7 +196,7 @@ const ExpertConsulting = () => {
 
         return (
           <Tr key={index}>
-            <Td>'{row.user.name}'님 뷰티 컨설팅</Td>
+            <Td>'{row?.user?.name}'님 뷰티 컨설팅</Td>
             <Td>
               <Calendar /> {formattedDate}
               {"  "}|{"  "}

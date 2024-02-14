@@ -581,7 +581,7 @@ const OneToOneVideoChat = () => {
 
             // 세션 연결시
 
-            <SGridContainer container spacing={2}>
+            <SGridContainer container spacing={12}>
               <div>
 
                 <Header>
