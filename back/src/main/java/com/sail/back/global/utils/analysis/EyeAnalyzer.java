@@ -85,21 +85,17 @@ public class EyeAnalyzer {
 
         double leftEyeUpperBlank = leftEyelid.get(leftLowEyeNum).getY()-lowerLeftEyebrow.get(closestLeftEyeBrowNum).getY() ;;
         double rightEyeUpperBlank = rightEyelid.get(rightLowEyeNum).getY()-lowerRightEyebrow.get(closestRightEyeBrowNum).getY();
-
         //눈크기 중간값
         double middleValue = (leftEyeHeight+rightEyeHeight)/2;
-
         //눈썹 사이 거리 중간값
         double middleBrowValue = (leftEyeUpperBlank+rightEyeUpperBlank)/2;
-
         //비교값
         double compareValue = middleValue/middleBrowValue;
-
         log.info(String.valueOf(compareValue));
 
-        if (compareValue > 1.2){
+        if (compareValue > 1.1){
             return EyelidSize.BIG_EYES;
-        }else if(compareValue < 0.8){
+        }else if(compareValue < 0.9){
             return EyelidSize.SMALL_EYES;
         }else{
             return EyelidSize.PERFECT_EYES;
