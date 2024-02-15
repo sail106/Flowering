@@ -948,7 +948,7 @@ const SpinnerGrid = styled(Grid)`
 const SmallChatContainer = styled.div`
   position: absolute;
   width: 31%;
-  top: 10%;
+  top: 20%;
   right: 0;
   /* border: 2px solid black; */
   height: 90%;
