@@ -5,6 +5,7 @@ import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.consulting.model.repository.ConsultingRepository;
 import com.sail.back.global.utils.AnalysisUtils;
+import com.sail.back.global.utils.GPTUtils;
 import com.sail.back.global.utils.analysis.Skin;
 import com.sail.back.global.utils.analysis.XoneYoneXtwoYtwo;
 import com.sail.back.report.exception.ReportErrorCode;
@@ -42,7 +43,7 @@ public class AnalysisService {
     private final AnalysisUtils analysisUtils;
     private final ReportRepository reportRepository;
     private final ConsultingRepository consultingRepository;
-
+    private final GPTUtils gptUtils;
     @Transactional
     public void saveAnalysis(User user, SaveAnalysisRequest request, Long consultingId){
         Consulting consulting = consultingRepository
@@ -50,6 +51,8 @@ public class AnalysisService {
         if (consulting.getUser().getId()!=user.getId()) throw new UserException(UserErrorCode.ACCESS_DENIED);
         Report report = reportRepository
                 .findByConsulting(consulting).orElseThrow(() -> new ReportException(ReportErrorCode.NOT_EXISTS));
+        SurveyType surveyType = report.getSurveyType();
+        if (surveyType==null) throw new ReportException(ReportErrorCode.NOT_READY_SURVEY);
         try {
             FaceLandMarkApiResult faceLandMarkApiResult = analysisUtils.sendAnalysisFaceApi(request.getFaceImgUrl());
             Skin skin = analysisUtils.sendAnalysisSkinApi(request.getFaceImgUrl());
@@ -67,34 +70,45 @@ public class AnalysisService {
             //얼굴
             FaceShape faceShape = analysisUtils.shapeTypeAnalyzer(face);
             XoneYoneXtwoYtwo faceCoordinate = analysisUtils.getFaceCoordinate(face);
+            String faceContent = gptUtils.makeFaceContent(user, faceShape, surveyType);
+
             //코
             NoseSize noseSize = analysisUtils.noseSizeAnalyzer(leftEyeEyelidDto, rightEyeEyelidDto, nose);
             AlarSize alarSize = analysisUtils.alarSizeAnalyzer(nose);
             XoneYoneXtwoYtwo noseCoordinate = analysisUtils.getNoseCoordinate(nose);
+            String noseContent = gptUtils.makeNoseContent(user, noseSize, alarSize);
+
             //눈
             EyelidDirection eyelidDirection = analysisUtils.eyeLidDirectionAnalyzer(leftEyeEyelidDto, rightEyeEyelidDto);
             EyelidWidth eyelidWidth = analysisUtils.eyelidWidthAnalyzer(leftEyeEyelidDto, rightEyeEyelidDto, face);
             EyelidSize eyelidSize = analysisUtils.eyeSizeAnalyzer(leftEyeEyelidDto, rightEyeEyelidDto, leftEyebrow, rightEyebrow);
             XoneYoneXtwoYtwo eyeCoordinate = analysisUtils.getEyeCoordinate(leftEyeEyelidDto, rightEyeEyelidDto);
+            String eyeContent = gptUtils.makeEyeContent(user, eyelidDirection, eyelidWidth, eyelidSize);
+
             //입
             LipRatio lipRatio = analysisUtils.mouthRatioAnalyzer(mouth);
             MouthSize mouthSize = analysisUtils.mouthSizeAnalyzer(mouth, leftEye, rightEye);
             XoneYoneXtwoYtwo mouthCoordinate = analysisUtils.getMouthCoordinate(mouth);
+            String mouthContent = gptUtils.makeMouthContent(user, lipRatio, mouthSize);
 
             //entity에 세팅
             report.analysisSave(
                     faceShape,
                     faceCoordinate,
+                    faceContent,
                     noseSize,
                     alarSize,
                     noseCoordinate,
+                    noseContent,
                     eyelidDirection,
                     eyelidWidth,
                     eyelidSize,
                     eyeCoordinate,
+                    eyeContent,
                     lipRatio,
                     mouthSize,
                     mouthCoordinate,
+                    mouthContent,
                     request.getFaceImgUrl(),
                     skin);
 
