@@ -21,14 +21,12 @@ public class RedisConfig {
 
     // lettuce
     @Bean
-    @Profile("dev")
     public RedisConnectionFactory redisConnectionFactoryDev() {
         return new LettuceConnectionFactory(
                 new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort()));
     }
 
     @Bean
-    @Profile("dev")
     public RedisTemplate<?, ?> redisTemplateDev() {
         RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactoryDev());   //connection
