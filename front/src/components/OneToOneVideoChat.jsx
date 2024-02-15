@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 import { BsRecord2 } from "react-icons/bs";
+import { RiSendPlaneLine } from "react-icons/ri";
 
 import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
 import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
@@ -908,6 +909,13 @@ const OneToOneVideoChat = () => {
 export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
 
+const PlanePos = styled.div`
+  && {
+    position: absolute;
+    right: 25%;
+    top: 15%;
+  }
+`;
 const Input = styled.input`
   && {
     font-size: 1rem;
