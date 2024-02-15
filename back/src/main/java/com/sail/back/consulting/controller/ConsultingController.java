@@ -33,7 +33,7 @@ public class ConsultingController {
 
     //상담예약등록
     @PostMapping("/create/{consultantId}")
-    public ResponseEntity<MessageUtils<ConsultingCreateResponse>> createReservation(
+    public ResponseEntity<MessageUtils> createReservation(
             @PathVariable Long consultantId,
             @AuthenticationPrincipal User user,
             @RequestBody ConsultingCreateRequest reservationCreateRequest) {
@@ -48,7 +48,7 @@ public class ConsultingController {
 
 
         Long customerId = user.getId();
-        ConsultingCreateResponse response = consultingService.createReservation(String.valueOf(userRole), customerId, consultantId, reservationCreateRequest);
+        ConsultingResponse response = consultingService.createReservation(String.valueOf(userRole), customerId, consultantId, reservationCreateRequest);
 
         log.info("예약 등록 성공");
         return ResponseEntity.ok().body(MessageUtils.success(response));
