@@ -563,7 +563,7 @@ const OneToOneVideoChat = () => {
   // ---------- render
   return (
 
-    <SContainer container >
+    <SContainer container > 
       {
 
 
@@ -914,7 +914,7 @@ const SContainer = styled(Box)`
     justify-content: center;
     /* padding: 1rem; */
     /* margin: 3vh; */
-    height: 100%;
+    height: 120%;
     /* border: 2px solid #18c24b99; */
     box-sizing: border-box;
     background-color: #fffafa;
