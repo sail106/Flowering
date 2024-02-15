@@ -271,10 +271,10 @@ const Order = () => {
 							console.log(consultingId);
 						} catch (error) {
 							console.error('Error :', error);
-							// alert('결제 실패');
+							alert(error.response.data.data_header.result_massage);
 						}
 					} else {
-						alert('결제 실패sss');
+						alert('결제 실패');
 					}
 				} catch (error) {
 					console.log('Error while verifying payment:', error);
