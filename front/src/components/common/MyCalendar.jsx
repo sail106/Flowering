@@ -203,7 +203,7 @@ const MyCalendar = () => {
         };
         const response = await axios.get(`${baseurl}users/${selectedid}/getreservation?date=${formattedDate}`, config);
         const isReserved = response.data;
-        console.log("response.data : ", response.data);
+        console.log("response.data.data_body : ", response.data.data_body);
         if (isReserved) {
           console.log(`Date ${formattedDate} is reserved.`);
         } else {
