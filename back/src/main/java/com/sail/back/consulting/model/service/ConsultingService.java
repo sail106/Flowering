@@ -99,7 +99,7 @@ public class ConsultingService {
         Long id = savedConsulting.getConsulting_id();
 
 
-        reportService.createReport(consultantId, user);
+        reportService.createReport(id, user);
 
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
