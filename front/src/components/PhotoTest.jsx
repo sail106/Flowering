@@ -146,7 +146,7 @@ const PhotoTest = () => {
     };
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = axios.patch(baseurl+`analysis/save/${consultingId}`, data, config)
+      const response = axios.post(baseurl+`analysis/save/${consultingId}`, data, config)
       navigate(`/mypage/${User.id}`)
       console.log(response)
     }

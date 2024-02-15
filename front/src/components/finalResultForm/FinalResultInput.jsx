@@ -244,7 +244,7 @@ const FinalresultInput = () => {
     const consultingId = location.state.value.consultingId;
     try {
       // axios를 사용하여 서버로 데이터 전송
-      const response = await axios.patch(
+      const response = await axios.post(
         baseurl + `expert-opinion/save/${consultingId}`,
         {
           data: {
