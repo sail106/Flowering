@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button, { ButtonBox } from './common/Button';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Consulting1stepresultpage = styled.div`
 	margin-top: -130px;
@@ -54,9 +55,15 @@ const StepImg = styled.img`
 	height: 79px;
 `;
 
-const Finish1step = () => {
+const FinalsurveyEnd = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
 	const consultingId = location.state.value.consultingId;
+
+	const goPhoto = () => {
+		navigate('/phototest', { state: { value: { consultingId } } });
+	};
+
 	return (
 		<Consulting1stepresultpage>
 			<Margin />
@@ -70,13 +77,11 @@ const Finish1step = () => {
 			<Margin2 />
 
 			<ButtonContainer>
-				<Link to={{ pathname: `/phototest`, state: { value: { consultingId } } }} reloadDocument>
-					<MyButton1>카메라 테스트 시작</MyButton1>
-				</Link>
+				<MyButton1 onClick={goPhoto()}>다음 테스트로</MyButton1>
 			</ButtonContainer>
 			<Margin2 />
 		</Consulting1stepresultpage>
 	);
 };
 
-export default Finish1step;
+export default FinalsurveyEnd;
