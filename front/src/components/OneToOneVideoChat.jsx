@@ -70,6 +70,7 @@ const OneToOneVideoChat = () => {
   const [customerStream, setCustomerStream] = useState(null);
   const { access_token } = useSelector(state => state.auth.logonUser);
   const User = useSelector((state) => state.auth.logonUser);
+  const [msg, setMsg] = useState('');
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -559,6 +560,59 @@ const OneToOneVideoChat = () => {
     });
   }
 
+  const handleMessage = () => {
+    console.log('bbbbbbbb')
+    if (session && msg.length > 0) {
+
+
+      const mine = {
+        id: messageId,
+        role: role,
+        imageUrl: imageUrl,
+        side: 'left',
+        message: msg,
+        name: name,
+      }
+
+      console.log('my text add ' + messageId)
+      if (role == mine.role)
+        dispatch(appendMessageList(mine))
+
+
+      const data = {
+
+        id: messageId,
+        role: role,
+        imageUrl: imageUrl,
+        name: name,
+        message: msg
+
+      }
+
+      const persondata = {
+        imageUrl: imageUrl,
+        name: name,
+        isMic: isMic,
+        isCam: isCam,
+        role: role
+      };
+
+      session.signal({
+        data: JSON.stringify(data),
+        to: [],
+        type: 'chat'
+      })
+
+      session.signal({
+        persondata: JSON.stringify(persondata),
+        to: [],
+        type: 'participant'
+      })
+
+      setMsg('')
+    }
+
+  }
 
   // ---------- render
   return (
