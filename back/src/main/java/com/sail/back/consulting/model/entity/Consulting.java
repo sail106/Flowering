@@ -1,6 +1,7 @@
 package com.sail.back.consulting.model.entity;
 
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.consulting.model.dto.response.ConsultingIsActiveResponse;
 import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.user.model.dto.request.FindRequest;
 import com.sail.back.user.model.dto.response.MyConsultinglistResponse;
@@ -37,6 +38,8 @@ public class Consulting {
 
     @NotNull
     private LocalDateTime time; //예약일
+
+    private LocalDate  Date; //예약일
 
     @NotNull
     private String title; //제목
@@ -79,6 +82,17 @@ public class Consulting {
 
     public ConsultingResponse toResponse() {
         return ConsultingResponse.builder()
+                .consultingId(this.consulting_id)
+                .consultantData(this.consultant.toResponse())
+                .userResponse(this.user.toResponse())
+                .reservationDateTime(this.time)
+                .active(this.active)
+                .build();
+    }
+
+
+    public ConsultingIsActiveResponse toConsultingIsActiveResponse() {
+        return ConsultingIsActiveResponse.builder()
                 .consultingId(this.consulting_id)
                 .consultantData(this.consultant.toResponse())
                 .userResponse(this.user.toResponse())

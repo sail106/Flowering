@@ -9,6 +9,7 @@ import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.request.ConsultingUpdateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
+import com.sail.back.consulting.model.dto.response.ConsultingIsActiveResponse;
 import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.consulting.model.entity.Consulting;
 //import com.sail.back.consulting.model.repository.ConsultingRepository;
@@ -164,14 +165,11 @@ public class ConsultingService {
 
     }
 
-    public boolean getReservationbydatetime(LocalDateTime time) {
-        Optional<Consulting> consulting = consultingRepository.findByTime(time);
+    public List<ConsultingIsActiveResponse> getReservationbydatetime(LocalDate  date) {
+        List<Consulting> consulting = consultingRepository.findAllByDate(date).orElseThrow(()->new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
 
-        if (consulting.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return consulting.stream().map(Consulting::toConsultingIsActiveResponse).collect(Collectors.toList());
+
     }
 
 //

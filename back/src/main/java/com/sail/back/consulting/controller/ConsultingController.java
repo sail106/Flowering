@@ -4,6 +4,7 @@ import com.sail.back.consulting.exception.ConsultingErrorCode;
 import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
+import com.sail.back.consulting.model.dto.response.ConsultingIsActiveResponse;
 import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.consulting.model.service.ConsultingService;
 import com.sail.back.global.utils.MessageUtils;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -111,15 +113,18 @@ public class ConsultingController {
 
 
     @GetMapping("/getreservation")
-    public ResponseEntity<MessageUtils<Boolean>> getReservationbydatetime(
+    public ResponseEntity<MessageUtils<List<ConsultingIsActiveResponse>>> getReservationbydate(
             LocalDateTime time) {
-
-        boolean res = consultingService.getReservationbydatetime(time);
+        StringBuilder sb = new StringBuilder();
+        sb.append(time);
+        String[] str = sb.toString().split("T");
+        LocalDate date = LocalDate.parse(str[0]);
+        List<ConsultingIsActiveResponse> consultingIsActiveResponses = consultingService.getReservationbydatetime(date);
 
         log.info("컨설팅 정보 유무 조회");
 
         return ResponseEntity.ok()
-                .body(MessageUtils.success(res));
+                .body(MessageUtils.success(consultingIsActiveResponses));
 
     }
 

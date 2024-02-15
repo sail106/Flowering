@@ -28,4 +28,5 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
     Optional<Consulting> findByUserIdAndTime(Long id, LocalDateTime time);
 
     Optional<Consulting> findByTime(LocalDateTime time);
+    Optional<List<Consulting>> findAllByDate(LocalDate date);
 }
