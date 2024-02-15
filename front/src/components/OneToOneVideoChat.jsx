@@ -620,13 +620,13 @@ const OneToOneVideoChat = () => {
                   // justifyContent: "space-between",
                   // gap: 2,
                   width: "100%",
-                  height: "80%",
+                  height: "100%",
                   // display: "flex",
                   // flexDirection: "row",
                   // justifyContent: "center",
                   // alignItems: "center",
-                  marginLeft: "7%",
-                  marginTop: "7%",
+                  marginLeft: "13%",
+                  marginTop: "10%",
                 }}
               >
                 {role == CONSULTANT && customer && (
@@ -647,7 +647,7 @@ const OneToOneVideoChat = () => {
               </Grid>
             ) : (
               <SpinnerGrid item xs={12} sm={2}>
-                <CircularProgress />
+                <CircularProgress />``
               </SpinnerGrid>
             )}
 
@@ -830,7 +830,7 @@ const Plane = styled(RiSendPlaneLine)`
 const PlanePos = styled.div`
   && {
     position: absolute;
-    right: -68%;
+    right: -91%;
     top: 26%;
   }
 `;
@@ -857,7 +857,7 @@ const IContainer = styled(Box)`
     height: 87%;
     /* margin-top: 13%; */
     margin-left: 61%;
-    top: 100%;
+    top: 80%;
     /* background-color: aliceblue; */
   }
 `;
@@ -872,10 +872,10 @@ const VideoContainer = styled(Box)({
 });
 // 내 비디오 컨테이너
 const MyVideoContainer = styled(Box)({
-  width: "23%",
+  width: "50%",
   position: "absolute",
-  top: 488,
-  left: 290,
+  top: 460,
+  left: 10,
   right: 0,
   bottom: 0,
   margin: "auto",
@@ -966,8 +966,8 @@ const SpinnerGrid = styled(Grid)`
 
 const SmallChatContainer = styled.div`
   position: absolute;
-  width: 31%;
-  top: 12%;
+  width: 30%;
+  top: 11%;
   right: 0;
   /* border: 12px solid black; */
   height: 90%;
@@ -1068,12 +1068,12 @@ const MicCamExitGroup = styled.div`
   display: flex;
   flex-direction: row;
   gap: 3;
-  width: 888px;
+  width: 688px;
   background-color: #ffffff;
   position: absolute;
   bottom: 0;
   height: 11%;
   align-items: center;
-  left: 0;
-  top: 100%;
+  left: 12%;
+  top: 89%;
 `;
