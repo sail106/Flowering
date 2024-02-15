@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"; // useSelector import 추가
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useSelector } from "react-redux"; // useSelector import 추가
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Title from "../modify/Title";
@@ -43,71 +42,50 @@ const ButtonContainer = styled.div`
 
 const ExpertsReservation = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [isReserved, setIsReserved] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
   const { selectedDate, selectedTime  } = useSelector(state => state.selected);
   const handleClick = () => {
-    console.log("Button clicked!" + selectedDate + " " + selectedTime);
     navigate('/orderpage');
   };
+
+  // 배열을 4개씩 그룹화하는 함수
+  const chunkArray = (array, chunk_size) => {
+    var results = [];
+    while (array.length) {
+      results.push(array.splice(0, chunk_size));
+    }
+    return results;
+  }
+
+  // isReserved 배열에서 time 값이 '14:00:00'인 요소를 제거
+  const filteredIsReserved = isReserved.filter(item => item.time !== '14:00:00');
+
+  // filteredIsReserved 배열을 4개씩 그룹화
+  const groupedIsReserved = chunkArray(filteredIsReserved, 4);
 
   return (
     <Cal>
       <Margin />
       <Title text={"Reservation"} />
       <Margin2 />
-      <MyCalendar />
-      <M1>
-        <ExpertsRadioButton
-          value="10:00"
-          name="myradio"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="11:00"
-          name="myradio2"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="12:00"
-          name="myradio3"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="13:00"
-          name="myradio4"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-      </M1>
-      <M1>
-        <ExpertsRadioButton
-          value="15:00"
-          name="myradio5"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="16:00"
-          name="myradio6"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="17:00"
-          name="myradio7"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="18:00"
-          name="myradio8"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-      </M1>
+      <MyCalendar setIsReserved={setIsReserved}/>
+      {groupedIsReserved.map((group, groupIndex) => (
+        <M1 key={groupIndex}>
+          {group.map((item, index) => (
+            <ExpertsRadioButton
+              key={index}
+              value={item.time.slice(0, 5)} // value 값을 'xx:00' 형식으로 표시
+              active={item.active}
+              name={`myradio${groupIndex * 4 + index}`}
+              selectedDate={selectedDate}
+              margin-right="10px"
+              selectedValue={selectedValue}
+              setSelectedValue={setSelectedValue}
+            />
+          ))}
+        </M1>
+      ))}
       <ButtonContainer>
         <MyButton onClick={handleClick}>결제하기</MyButton>
       </ButtonContainer>
