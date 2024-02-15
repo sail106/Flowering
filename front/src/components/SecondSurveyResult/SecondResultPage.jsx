@@ -217,7 +217,7 @@ const SecondResultPage = (props) => {
             </FaceImageBox>
             <FaceContent>
               <FaceContentTitle>#{getFaceShapeLabel(data.face_shape_data.face_shape)}</FaceContentTitle>
-              <FaceContentDetail></FaceContentDetail>
+              <FaceContentDetail>{data.face_shape_data.face_content}</FaceContentDetail>
             </FaceContent>
           </FaceContentPart>
           <FaceContentPart>
@@ -232,7 +232,7 @@ const SecondResultPage = (props) => {
               <FaceContentTitle>
                 #{getEyeDirection(data.eye_data.eyelid_direction)} #{getEyeSize(data.eye_data.eyelid_size)} #{getEyeWidth(data.eye_data.eyelid_width)}{" "}
               </FaceContentTitle>
-              <FaceContentDetail></FaceContentDetail>
+              <FaceContentDetail>{data.eye_data.eye_content}</FaceContentDetail>
             </FaceContent>
           </FaceContentPart>
           <FaceContentPart>
@@ -247,7 +247,7 @@ const SecondResultPage = (props) => {
               <FaceContentTitle>
                 #{getMouthSize(data.mouth_data.mouth_size)} #{getLipRatio(data.mouth_data.lip_ratio)}
               </FaceContentTitle>
-              <FaceContentDetail></FaceContentDetail>
+              <FaceContentDetail>{data.mouth_data.mouth_content}</FaceContentDetail>
             </FaceContent>
           </FaceContentPart>
           <FaceContentPart>
@@ -262,7 +262,7 @@ const SecondResultPage = (props) => {
               <FaceContentTitle>
                 #{getNoseSize(data.nose_data.nose_size)} #{getAlarSize(data.nose_data.alar_size)}
               </FaceContentTitle>
-              <FaceContentDetail></FaceContentDetail>
+              <FaceContentDetail>{data.nose_data.nose_content}</FaceContentDetail>
             </FaceContent>
           </FaceContentPart>
         </FaceContentWrapper>

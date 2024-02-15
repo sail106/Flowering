@@ -102,6 +102,7 @@ public class ConsultingService {
 
         reportRepository.save(Report.builder()
                 .consulting(savedConsulting)
+
                 .build());
 
         return savedConsulting.toResponse();
