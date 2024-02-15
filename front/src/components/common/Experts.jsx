@@ -32,7 +32,7 @@ const StyledDiv = styled.div`
   border-top-right-radius: 100px;
   border-top-left-radius: 100px;
   position: absolute;
-  top: 90px;
+  top: 120px;
   left: 120px;
   z-index: 0;
 `;
@@ -131,7 +131,7 @@ const Experts = ({
   return (
     <Container>
       <Image src={imgsrc} width={width} height={height} />
-      <StyledDiv />
+      {/* <StyledDiv /> */}
       <BIBIText>{nickname}</BIBIText>
       <OneText>
         {text}
