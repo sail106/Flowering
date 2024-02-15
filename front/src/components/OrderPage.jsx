@@ -156,10 +156,9 @@ const Order = () => {
 	const { selectedTime, selectedDate } = useSelector((state) => state.selected);
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
-	console.log(selectedDate + 'T' + selectedTime)
+	console.log(selectedDate + 'T' + selectedTime);
 	const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		if (selectedid) {
 			// 컴포넌트가 마운트될 때와 selectedid가 변경될 때마다 fetchExpertById 액션을 호출
@@ -175,6 +174,7 @@ const Order = () => {
 
 	useEffect(() => {
 		if (consultingId !== null) {
+			console.log(consultingId);
 			// 여기서 다음 페이지로 이동
 			navigate('/orderResult', { state: { value: { consultingId } } });
 		}
@@ -236,13 +236,13 @@ const Order = () => {
 				name: `${expertData.payload.user_response.nickname} 뷰티 솔루션 컨설팅`,
 				amount: 89000,
 				buyer_email: `${email}`,
-				buyer_name: `${name}`
+				buyer_name: `${name}`,
 			},
 			async (rsp) => {
 				try {
 					// console.log(rsp);
 					// console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
-					const { data } = await axios.post('https://i10c106.p.ssafy.io/api/verifyIamport/' + rsp.imp_uid );
+					const { data } = await axios.post('https://i10c106.p.ssafy.io/api/verifyIamport/' + rsp.imp_uid);
 					if (rsp.paid_amount === data.response.amount) {
 						console.log('in if');
 						try {
@@ -261,18 +261,17 @@ const Order = () => {
 									time: selectedTime, // 수정된 날짜 및 시간 사용
 									date: selectedDate, // 수정된 날짜 및 시간 사용
 									title: `${name}님의 상담`,
-								  },
+								},
 								config
 							);
-							
-								console.log(name)
+
+							console.log(name);
 							// 요청 성공 시 수행할 작업
-							// console.log('Response:', response.data.data_body);
-							setConsultingId(response.data.data_body.consultingid);
+							setConsultingId(response.data.data_body.consulting_id);
 						} catch (error) {
 							// console.error('Error :', error);
 							alert(error.response.data.data_header.result_message);
-							navigate('/')
+							navigate('/');
 						}
 					} else {
 						alert('결제 실패');

@@ -20,6 +20,7 @@ const OrderResult = () => {
 	useEffect(() => {
 		if (selectedid) {
 			// 컴포넌트가 마운트될 때와 selectedid가 변경될 때마다 fetchExpertById 액션을 호출
+
 			dispatch(fetchExpertById(selectedid))
 				.then((response) => {
 					setExpertData(response);
@@ -64,6 +65,7 @@ const OrderResult = () => {
 
 	const handleTestButtonClick = () => {
 		// 이동하고자 하는 경로로 navigate 함수를 호출
+		console.log(consultingId);
 		navigate('/firstsurvey', { state: { value: { consultingId } } });
 	};
 	const handleLaterButtonClick = () => {
