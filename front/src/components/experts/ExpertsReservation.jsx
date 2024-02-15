@@ -66,6 +66,11 @@ const ExpertsReservation = () => {
   //   setSelectedTime(value);
   // };
 
+  const clickTimeHandler = (e) => {
+    console.log("e.target.value : ", e.target.value)
+    setSelectedTime(e.target.value)
+  }
+
   return (
     <Cal>
       <Margin />
@@ -78,16 +83,16 @@ const ExpertsReservation = () => {
           id="myradio"
           value="10:00"
           htmlFor="myradio"
-          name="btn"
+          name="myradio"
           margin-right="10px"
-        // onClick={() => setSelectedTime("10:00")}
+          onClick={clickTimeHandler}
         />
         <RadioButton
           value="11:00"
           type="radio"
           id="myradio2"
           htmlFor="myradio2"
-          name="btn"
+          name="myradio2"
           margin-right="10px"
           onClick={() => setSelectedTime("11:00")}
         />
@@ -96,7 +101,7 @@ const ExpertsReservation = () => {
           type="radio"
           id="myradio3"
           htmlFor="myradio3"
-          name="btn"
+          name="myradio3"
           margin-right="10px"
           onClick={() => setSelectedTime("12:00")}
         />
@@ -105,7 +110,7 @@ const ExpertsReservation = () => {
           type="radio"
           id="myradio4"
           htmlFor="myradio4"
-          name="btn"
+          name="myradio4"
           margin-right="10px"
           onClick={() => setSelectedTime("13:00")}
         />
@@ -116,7 +121,7 @@ const ExpertsReservation = () => {
           type="radio"
           id="myradio5"
           htmlFor="myradio5"
-          name="btn"
+          name="myradio5"
           margin-right="10px"
           onClick={() => setSelectedTime("15:00")}
         />
@@ -125,7 +130,7 @@ const ExpertsReservation = () => {
           id="myradio6"
           value="16:00"
           htmlFor="myradio6"
-          name="btn"
+          name="myradio6"
           margin-right="10px"
           onClick={() => setSelectedTime("16:00")}
         />
@@ -134,7 +139,7 @@ const ExpertsReservation = () => {
           id="myradio7"
           value="17:00"
           htmlFor="myradio7"
-          name="btn"
+          name="myradio7"
           margin-right="10px"
           onClick={() => setSelectedTime("17:00")}
         />
@@ -143,7 +148,7 @@ const ExpertsReservation = () => {
           id="myradio8"
           value="18:00"
           htmlFor="myradio8"
-          name="btn"
+          name="myradio8"
           margin-right="10px"
           onClick={() => setSelectedTime("18:00")}
         />
