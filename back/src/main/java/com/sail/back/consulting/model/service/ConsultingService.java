@@ -100,7 +100,7 @@ public class ConsultingService {
 
 
         reportService.createReport(id, user);
-
+ 
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
                 .title(consultingCreateRequest.getTitle())
@@ -166,16 +166,6 @@ public class ConsultingService {
 
     }
 
-//    public List<User> getReservationcustomers(Long consultantid) {
-//        List<Consulting> reservations = consultingRepository.
-//                findAllByUserId(consultantid).orElseThrow(() -> new NotFoundException(RESERVATION_NOT_FOUND));
-//        List<User> customers = reservations.stream().
-//                map(Consulting::getUser)
-//                .sorted(Comparator.comparing(User::getCreateAt).reversed())
-//                .collect(Collectors.toList());
-//
-//        return customers;
-//    }
 //
 //    public List<Consulting> getcustomerreservations(Long userid) {
 //        List<Consulting> consultings = consultingRepository.

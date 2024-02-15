@@ -913,6 +913,7 @@ const SContainer = styled(Box)`
 const SGridContainer = styled(Grid)`
     height: 100%; // "90%",
     display: flex;
+    width: 70%;
     /* border: 12px solid #dc121299; */
     // columnGap: 2,
   `;
