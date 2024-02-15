@@ -868,6 +868,10 @@ const Left = styled.div`
     width: 100%;
     border-color: #c71d3f;
     margin-top: 10%;
+    
+    flex-direction: column;
+    justify-content: space-between;
+    
 `;
 const BottomBtn = styled(Button)((props) => ({
   backgroundColor: '#99968D',
