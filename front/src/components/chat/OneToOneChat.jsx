@@ -295,6 +295,7 @@ const IContainer = styled(Box)`
      /* border: 1px solid black; */
     height: 17%;
     /* margin-top: 3%; */
+    top:100%
    }
 `;
 
