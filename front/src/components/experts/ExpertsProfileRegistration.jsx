@@ -3,13 +3,28 @@ import Input from "../common/Input";
 import { ButtonBox } from "../common/Button";
 import { IoMdRemove } from "react-icons/io";
 import { GoPlus } from "react-icons/go";
-import BIBI from "../../assets/BIBI.png"
-import camera from "../../assets/camera.png"
+import BIBI from "../../assets/BIBI.png";
+import camera from "../../assets/camera.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExpertById } from "../../store/ExpertsListSlice";
 import { useEffect, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AiOutlineClose } from "react-icons/ai";
+
+const Close = styled(AiOutlineClose)`
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 20px;
+`;
+
+const Span = styled.span`
+  /* padding-bottom:15px; */
+`;
+
 const MyPage = styled.div`
   width: 100vw;
   position: relative;
@@ -127,14 +142,11 @@ const H52 = styled.h3`
 const Company = styled.h3`
   padding-top: 30px;
   text-align: start;
-   
 `;
 const Workperiod = styled.h3`
   padding-top: 40px;
   text-align: start;
-   
 `;
-
 
 const Put = styled.div`
   margin-left: 150px;
@@ -219,7 +231,11 @@ const InputContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px; /* 이 부분을 추가하여 간격을 조정합니다. */
+`;
 
+const Align = styled.div`
+  align-items: center;
+  display: flex;
 `;
 
 const TagInput = styled.input`
@@ -229,15 +245,13 @@ const TagInput = styled.input`
   border-radius: 5px;
 `;
 const ExpertsProfileRegistration = () => {
-  const User = useSelector(
-    (state) => state.auth.logonUser
-  );
+  const User = useSelector((state) => state.auth.logonUser);
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
 
   const [shortIntroduction, setShortIntroduction] = useState(""); // 한줄 소개
   const [detailedIntroduction, setDetailedIntroduction] = useState(""); // 자세한 소개
 
-  console.log('전문가등록' + User.id)
+  console.log("전문가등록" + User.id);
 
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const [Selectedid, setSelectedid] = useState(null);
@@ -246,12 +260,10 @@ const ExpertsProfileRegistration = () => {
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
   const [tags, setTags] = useState([]);
 
-
-  const [workplace, setWorkplace] = useState('');
-  const [employmentPeriod, setEmploymentPeriod] = useState('');
+  const [workplace, setWorkplace] = useState("");
+  const [employmentPeriod, setEmploymentPeriod] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const config = {
@@ -260,24 +272,28 @@ const ExpertsProfileRegistration = () => {
             "Content-Type": "application/json",
           },
         };
-        const { data } = await axios.get(baseurl + 'consultant/myinfo', config);
-        console.log(data, '나의데이터')
-        console.log(data.data_body)
-        console.log(data.data_body.simple_introduce)
-        console.log(data.data_body.hash_tags_responses)
+        const { data } = await axios.get(baseurl + "consultant/myinfo", config);
+        console.log(data, "나의데이터");
+        console.log(data.data_body);
+        console.log(data.data_body.simple_introduce);
+        console.log(data.data_body.hash_tags_responses);
         setSelectedid(data.data_body.consultant_id);
-        setShortIntroduction(data.data_body.simple_introduce)
-        setDetailedIntroduction(data.data_body.self_introduce)
+        setShortIntroduction(data.data_body.simple_introduce);
+        setDetailedIntroduction(data.data_body.self_introduce);
 
         // setTags(data.data_body.hash_tags.workplace);
         // setTags(data.data_body.hash_tags.map(tag => tag.workplace));
-        console.log('여기까진 성공')
+        console.log("여기까진 성공");
         if (data.data_body.hash_tags_responses) {
-          setTags(data.data_body.hash_tags_responses.map(tag => ({ id: tag.hashtagId, workplace: tag.workplace })));
+          setTags(
+            data.data_body.hash_tags_responses.map((tag) => ({
+              id: tag.hashtagId,
+              workplace: tag.workplace,
+            }))
+          );
         }
 
         // hahstagId
-
       } catch (error) {
         console.error(error);
       }
@@ -285,8 +301,6 @@ const ExpertsProfileRegistration = () => {
 
     fetchData();
   }, [accessToken, baseurl]);
-
-
 
   useEffect(() => {
     if (Selectedid) {
@@ -302,100 +316,103 @@ const ExpertsProfileRegistration = () => {
         });
     }
   }, [Selectedid, dispatch]);
-  const { access_token } = useSelector(state => state.auth.logonUser);
+  const { access_token } = useSelector((state) => state.auth.logonUser);
 
   const handleEnterButtonClick = async () => {
-    console.log(workplaces + " " + employmentPeriods)
+    console.log(workplaces + " " + employmentPeriods);
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log('tooo   ' + token)
+      console.log("tooo   " + token);
 
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log('태그스', tags)
+      console.log("태그스", tags);
       const body = {
         self_introduce: detailedIntroduction,
         simple_introduce: shortIntroduction,
       };
 
-      const response = await axios.put(baseurl + 'consultant/update', body, config);
+      const response = await axios.put(
+        baseurl + "consultant/update",
+        body,
+        config
+      );
 
       // 요청 성공 시 수행할 작업
-      console.log('Response:', response.data);
-      console.log(shortIntroduction)
-      console.log(detailedIntroduction)
-      alert('저장완료')
-    }
-    catch (error) {
-      console.error('Error :', error);
+      console.log("Response:", response.data);
+      console.log(shortIntroduction);
+      console.log(detailedIntroduction);
+      alert("저장완료");
+    } catch (error) {
+      console.error("Error :", error);
       // alert('결제 실패');
     }
 
-
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log('tooo   ' + token)
+      console.log("tooo   " + token);
 
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log(tags)
+      console.log(tags);
 
       for (const tag of tags) {
         if (!tag.id) {
           const body = {
-            workplace: tag.workplace
+            workplace: tag.workplace,
           };
 
-          const response = await axios.post(baseurl + 'hashtags/create', body, config);
+          const response = await axios.post(
+            baseurl + "hashtags/create",
+            body,
+            config
+          );
 
           // 요청 성공 시 수행할 작업
-          console.log('Response:', response.data);
+          console.log("Response:", response.data);
         }
       }
 
-      alert('해시태그저장완료')
-    }
-    catch (error) {
-      console.error('Error :', error);
+      alert("해시태그저장완료");
+    } catch (error) {
+      console.error("Error :", error);
       // alert('결제 실패');
     }
-
-
 
     // employmentPeriod + " " + workplace)
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log('tooo   ' + token)
+      console.log("tooo   " + token);
 
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-      console.log(workplaces)
-      console.log(employmentPeriods)
+      console.log(workplaces);
+      console.log(employmentPeriods);
 
       const careers = [];
 
       // workplaces와 employmentPeriods를 careers 배열에 추가
       for (let i = 0; i < workplaces.length; i++) {
-        const [startDate, endDate] = employmentPeriods[i].split('~');
+        const [startDate, endDate] = employmentPeriods[i].split("~");
         careers.push({
           id: null, // id가 없는 경우
           workplace: workplaces[i],
@@ -404,71 +421,74 @@ const ExpertsProfileRegistration = () => {
         });
       }
 
-      console.log(careers[0])
+      console.log(careers[0]);
 
-      for (const career of careers) { // 경력 객체를 사용하여 반복문을 수행합니다.
+      for (const career of careers) {
+        // 경력 객체를 사용하여 반복문을 수행합니다.
         if (!career.id) {
           const body = {
             consultantId: Selectedid,
             workplace: career.workplace,
             start_date_of_employment: career.startDateOfEmployment,
-            end_date_of_employment: career.endDateOfEmployment
+            end_date_of_employment: career.endDateOfEmployment,
           };
 
-          const response = await axios.post(baseurl + 'careers/create', body, config);
+          const response = await axios.post(
+            baseurl + "careers/create",
+            body,
+            config
+          );
 
           // 요청 성공 시 수행할 작업
-          console.log('Response:', response.data);
+          console.log("Response:", response.data);
         }
       }
 
-      alert('경력저장완료')
-    }
-    catch (error) {
-      console.error('Error :', error);
+      alert("경력저장완료");
+    } catch (error) {
+      console.error("Error :", error);
       // alert('결제 실패');
     }
-
 
     // navigate(`/expertmypage/${User.id}`);
   };
 
   const handleTagInputChange = (e) => {
-    if (e.key === 'Enter' && e.target.value.trim() !== '' && tags.length < 2) {
+    if (e.key === "Enter" && e.target.value.trim() !== "" && tags.length < 2) {
       const newTag = {
         // hashtagId: tags.length + 1, // 태그의 ID를 현재 태그 배열의 길이에 1을 더한 값으로 설정합니다.
-        workplace: e.target.value.trim()
+        workplace: e.target.value.trim(),
       };
-      console.log(newTag)
+      console.log(newTag);
       setTags([...tags, newTag]);
-      e.target.value = '';
+      e.target.value = "";
     }
   };
 
-
   const handleRemoveTag = async (tag) => {
-    console.log(tag)
+    console.log(tag);
     const updatedTags = tags.filter((t) => t.id !== tag.id);
     setTags(updatedTags);
 
     try {
-
       const token = access_token;
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       };
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      const response = await axios.delete(baseurl + `hashtags/${tag.id}`, config);
-      console.log('Response:', response.data);
-      alert('삭제완료');
+      const response = await axios.delete(
+        baseurl + `hashtags/${tag.id}`,
+        config
+      );
+      console.log("Response:", response.data);
+      alert("삭제완료");
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
-
 
   const [workplaces, setWorkplaces] = useState([]);
   const [employmentPeriods, setEmploymentPeriods] = useState([]);
@@ -489,8 +509,8 @@ const ExpertsProfileRegistration = () => {
 
   // 경력 추가 버튼 클릭 시
   const handleAddCareer = () => {
-    setWorkplaces([...workplaces, '']);
-    setEmploymentPeriods([...employmentPeriods, '']);
+    setWorkplaces([...workplaces, ""]);
+    setEmploymentPeriods([...employmentPeriods, ""]);
   };
 
   // 경력 삭제 버튼 클릭 시
@@ -507,13 +527,16 @@ const ExpertsProfileRegistration = () => {
   return (
     <>
       <MyPage>
-        <MyImg src={expertData?.payload?.user_response?.profile_img_url ?? ''} alt="프로필 사진" />
+        <MyImg
+          src={expertData?.payload?.user_response?.profile_img_url ?? ""}
+          alt="프로필 사진"
+        />
         <CameraImg src={camera} alt="프로필 사진" />
         <Container>전문가 소개</Container>
         <PP>
           <Regist>
             <h3>전문가 닉네임</h3>
-            <Nic>{expertData?.payload?.user_response?.nickname ?? ''}   </Nic>
+            <Nic>{expertData?.payload?.user_response?.nickname ?? ""} </Nic>
           </Regist>
 
           <H3>한줄 소개</H3>
@@ -534,7 +557,6 @@ const ExpertsProfileRegistration = () => {
 
           <H33>전문 분야</H33>
 
-
           {/* <Put>
             
             <Input width={"587px"} placeholder="한줄 소개를 입력하세요" />
@@ -543,16 +565,20 @@ const ExpertsProfileRegistration = () => {
 
         <InputContainer>
           {tags.map((tag, index) => (
-            <div key={tag.hashtagId}>
-              <span>{tag.workplace}</span>
-              <button onClick={() => handleRemoveTag(tag)}>Remove</button>
-            </div>
+            <Align key={tag.hashtagId}>
+              <>
+                <Span>{tag.workplace}</Span>
+              </>
+              <Close onClick={() => handleRemoveTag(tag)} />
+            </Align>
           ))}
-          <TagInput
-            type="text"
-            placeholder="hashtag를 입력하세요"
-            onKeyDown={handleTagInputChange}
-          />
+          {tags.length < 2 && (
+            <TagInput
+              type="text"
+              placeholder="hashtag를 입력하세요"
+              onKeyDown={handleTagInputChange}
+            />
+          )}
         </InputContainer>
 
         <Container>경력 사항</Container>
@@ -564,8 +590,6 @@ const ExpertsProfileRegistration = () => {
         <H42>근무기간</H42>
         <Career2>2018.08 ~ 2022.03</Career2> */}
         {/* <Remove /> */}
-
-
 
         {/* <Plus /> */}
         <br />
@@ -588,7 +612,6 @@ const ExpertsProfileRegistration = () => {
           />
         </Put2> */}
 
-
         {workplaces.map((workplace, index) => (
           <div key={index}>
             {/* <Remove /> */}
@@ -609,7 +632,9 @@ const ExpertsProfileRegistration = () => {
                 width={"587px"}
                 placeholder="0000-00-00~0000-00-00"
                 value={employmentPeriods[index]}
-                onChange={(e) => handleEmploymentPeriodChange(index, e.target.value)}
+                onChange={(e) =>
+                  handleEmploymentPeriodChange(index, e.target.value)
+                }
               />
             </Put2>
             {/* <Remove onClick={() => handleRemoveCareer(index)}/> */}
@@ -620,8 +645,6 @@ const ExpertsProfileRegistration = () => {
         ))}
 
         <button onClick={handleAddCareer}>Add Career</button>
-
-
 
         <br />
         <ButtonContainer>

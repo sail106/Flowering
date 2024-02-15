@@ -191,9 +191,10 @@ const MyConsulting = () => {
 					{consultingData &&
 						consultingData.length > 0 &&
 						consultingData?.map((row, index) => {
-							const date = new Date(row.time);
-							const formattedDate = format(date, 'MM.dd(E)', { locale: ko });
-							const formattedTime = format(date, 'HH:mm');
+							const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
+							const formattedDate = format(date, "MM.dd(E)", { locale: ko });
+							const formattedTime = format(date, "HH:mm");
+			  
 
 							return (
 								<Tr key={index}>

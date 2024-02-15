@@ -258,7 +258,8 @@ const Order = () => {
 							const response = await axios.post(
 								`${baseurl}consultings/create/${selectedid}`,
 								{
-									time: formattedDateTime, // 수정된 날짜 및 시간 사용
+									time: selectedTime, // 수정된 날짜 및 시간 사용
+									date: selectedDate, // 수정된 날짜 및 시간 사용
 									title: `${name}님의 상담`,
 								  },
 								config
