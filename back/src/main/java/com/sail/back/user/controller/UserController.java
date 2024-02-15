@@ -44,8 +44,8 @@ public class UserController {
 
         List<Consulting> consultings = consultingService.getReservationbydate(date);
 
-        System.out.println(consultings.get(0).getConsulting_id());
-        System.out.println(consultings.get(0).getUser().getId());
+//        System.out.println(consultings.get(0).getConsulting_id());
+//        System.out.println(consultings.get(0).getUser().getId());
 
         List<ConsultingIsActiveResponse> result = new ArrayList<>();
 //true 는 사용가능 , false 는 비활성화.
