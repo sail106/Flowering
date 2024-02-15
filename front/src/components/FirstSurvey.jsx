@@ -648,7 +648,7 @@ const FirstServeyPage = () => {
 	const [data, setData] = useState(null);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const consultingId = location.state.value.consultingId;
+	const consultingId = location.state.value.consulting_id;
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
 	let point = 0;
 
