@@ -271,7 +271,11 @@ const Order = () => {
 							console.log(consultingId);
 						} catch (error) {
 							console.error('Error :', error);
-							alert(error.response.data.data_header.result_massage);
+							console.error('error.response :', error.response);
+							console.error('error.response.data :', error.response.data);
+							console.error('error.response.data.data_header :', error.response.data.data_header);
+							console.error('error.response.data.data_header.result_message :', error.response.data.data_header.result_message);
+							alert(error.response.data.data_header.result_message);
 						}
 					} else {
 						alert('결제 실패');
