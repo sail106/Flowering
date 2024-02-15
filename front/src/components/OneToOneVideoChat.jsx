@@ -71,6 +71,7 @@ const OneToOneVideoChat = () => {
   const { access_token } = useSelector(state => state.auth.logonUser);
   const User = useSelector((state) => state.auth.logonUser);
   const [msg, setMsg] = useState('');
+  const {  messageId, participantList } = useSelector(state => state.consult)
 
 
   const sessionConnect = (token) => {  //스트림 생성 
