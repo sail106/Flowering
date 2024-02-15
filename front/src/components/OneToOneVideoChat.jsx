@@ -867,7 +867,7 @@ const Left = styled.div`
     /* justify-content: ; */
     width: 100%;
     border-color: #c71d3f;
-    margin-top: 10%;
+    /* margin-top: 10%; */
     
     flex-direction: column;
     justify-content: space-between;
