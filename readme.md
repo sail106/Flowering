@@ -1,6 +1,6 @@
 # 🌸 Flowering : 온라인 피부&뷰티 컨설팅
 
-![프로젝트팜플렛]()
+![프로젝트팜플렛](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12C106/-/raw/develop/docs/img/Pamphlet.png?ref_type=heads)
 
 
 ## Flowering 링크(웹) : [https://i10c106.p.ssafy.io](https://i10c106.p.ssafy.io)
@@ -98,11 +98,11 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 ## 🌷 시스템 아키텍쳐
 
-![시스템 아키텍쳐]()
+![시스템 아키텍쳐](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12C106/-/raw/develop/docs/img/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png?ref_type=heads)
 
 ## 🌷 팀원 역할 분배
 ---
-![역할 배분]()
+![역할 배분](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12C106/-/raw/develop/docs/img/C106%ED%8C%80%EC%97%AD%ED%95%A0.png?ref_type=heads)
 
 ## 🌷 프로젝트 산출물
 ---
