@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import moment from "moment";
 import styled from 'styled-components';
 import axios from 'axios';
+import { formatISO } from 'date-fns';
 
 import 'react-calendar/dist/Calendar.css'
 import { setSelectedDate, setSelectedTime } from '../../store/selectedSlice';
@@ -66,7 +67,7 @@ const StyledCalendar = styled(Calendar)`
   }
 
   & .react-calendar__navigation button:disabled {
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
   }
 
   & .react-calendar__navigation button:enabled:hover,
@@ -125,8 +126,8 @@ const StyledCalendar = styled(Calendar)`
   }
 
   & .react-calendar__tile:disabled {
-    background-color: #f0f0f0;
-    color: #ababab;
+    /* background-color: #f0f0f0; */
+    color: #B1B1B1;
   }
 
   & .react-calendar__month-view__days__day--neighboringMonth:disabled,
@@ -210,6 +211,13 @@ const MyCalendar = ({ setIsReserved }) => {
 
   }, [value, dispatch, setIsReserved]);
 
+  // 오늘 이전의 날짜를 비활성화하는 함수
+  const tileDisabled = ({ date, view }) => {
+    if (view === 'month' && date+1 < new Date()) {
+      return true;
+    }
+  }
+
   return (
     <>
       <StyledCalendar
@@ -218,6 +226,8 @@ const MyCalendar = ({ setIsReserved }) => {
         value={value}
         calendarType="gregory"
         showNeighboringMonth={false}
+        minDate={new Date()} // 오늘 날짜 이전 선택 방지
+        tileDisabled={tileDisabled}
         formatDay={(locale, value) =>
           moment(value).format('D')}
       />
