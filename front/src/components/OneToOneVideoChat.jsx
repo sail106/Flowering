@@ -373,7 +373,7 @@ const OneToOneVideoChat = () => {
     console.log('session' + session)
     // role==CONSULTANT &&
 
-    dispatch(resetParticipant)
+    // dispatch(resetParticipant)
 
     if (role == CONSULTANT && session) {
       session.disconnect();
