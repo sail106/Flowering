@@ -144,8 +144,9 @@ const PhotoTest = () => {
     const data = {
       face_img_url: imageUrl
     };
+    const baseurl = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = axios.patch(`analysis/save/${consultingId}`, data, config)
+      const response = axios.patch(baseurl+`analysis/save/${consultingId}`, data, config)
       navigate(`/mypage/${User.id}`)
       console.log(response)
     }
