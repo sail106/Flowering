@@ -597,7 +597,7 @@ const OneToOneVideoChat = () => {
                         // justifyContent: "space-between",
                         // gap: 2,
                         width: "100%",
-                        height: "100%",
+                        height: "80%",
                         // display: "flex",
                         // flexDirection: "row",
                         // justifyContent: "center",
