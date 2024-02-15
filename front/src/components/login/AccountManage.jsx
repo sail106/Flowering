@@ -21,7 +21,7 @@ const AccountManage = props => {
   return (
     <Account>
       {props.children}
-      <AccountLink to="/pw">비밀번호 찾기</AccountLink>
+      <AccountLink to="/pw2">비밀번호 찾기</AccountLink>
       <AccountLink to="/signup">회원가입</AccountLink>
     </Account>
   );
