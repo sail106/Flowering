@@ -30,9 +30,10 @@ const StyledButton = styled.input`
   }
 `;
 
-const RadioButton = (props) => {
+const ExpertsRadioButton = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
+  console.log("props : ", props)
 
   const clickTimeHandler = async () => {
     setIsChecked(!isChecked);
@@ -68,4 +69,4 @@ const RadioButton = (props) => {
   );
 };
 
-export default RadioButton;
+export default ExpertsRadioButton;

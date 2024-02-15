@@ -32,5 +32,11 @@ public class ReportController {
     ){
         return ResponseEntity.ok().body(MessageUtils.success(reportService.findReport(consultingId, user)));
     }
-
+    @GetMapping("/find/clear-step/{consultingId}")
+    public ResponseEntity<MessageUtils> findClearStep(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long consultingId
+    ){
+        return ResponseEntity.ok().body(MessageUtils.success(reportService.findClearStep(consultingId, user)));
+    }
 }
