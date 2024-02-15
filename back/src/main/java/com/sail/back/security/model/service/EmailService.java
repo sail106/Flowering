@@ -6,6 +6,8 @@ import com.sail.back.security.exception.AuthException;
 import com.sail.back.security.model.repository.EmailCertificationRepository;
 import com.sail.back.security.utils.CertificationUtils;
 import com.sail.back.security.model.entity.CertificationNumber;
+import com.sail.back.user.exception.UserException;
+import com.sail.back.user.model.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.mail.internet.MimeMessage;
 
 import static com.sail.back.security.exception.AuthErrorCode.DIFFERENT_NUMBER;
+import static com.sail.back.user.exception.UserErrorCode.ALREADY_IN_EMAIL;
+import static com.sail.back.user.exception.UserErrorCode.NOT_EXISTS_USER;
 
 
 @RequiredArgsConstructor
@@ -29,12 +33,12 @@ public class EmailService {
     private final CertificationUtils certificationUtil;
     private final EmailCertificationRepository repository;
     private final JavaMailSender mailSender;
-//    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Transactional
     public void sendTempPasswordMail(String email){
         // 가입이 되어있는 회원인지 검증 ( 프론트 로직상 인증하고 들어오지만 재검증)
-//        userMapper.find(FindParam.builder().email(email).build()).orElseThrow(()->new UserException(NOT_EXISTS_USER));
+        userRepository.findByEmail(email).orElseThrow(()->new UserException(NOT_EXISTS_USER));
         sendCodeMail(email);
         //임시 비밀번호 생성
         String tempPassword = certificationUtil.createTempPassword();
@@ -61,8 +65,8 @@ public class EmailService {
     }
     public void sendJoinCodeMail(String email){
         //이미 가입된 이메일인지 검증
-//        userMapper.find(FindParam.builder().email(email).build())
-//                .ifPresent(value ->{ throw new UserException(ALREADY_IN_EMAIL);});
+        userRepository.findByEmail(email)
+                .ifPresent(value ->{ throw new UserException(ALREADY_IN_EMAIL);});
         sendCodeMail(email);
     }
     @Transactional
