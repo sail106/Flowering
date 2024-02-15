@@ -572,7 +572,7 @@ const OneToOneVideoChat = () => {
             // 세션 연결시
 
             <SGridContainer container spacing={12}>
-              <div>
+              <Left>
 
                 <Header>
 
@@ -674,7 +674,7 @@ const OneToOneVideoChat = () => {
                   }
                 </SmallChatContainer>
 
-              </div>
+              </Left>
               {/* 
               <Myspan>
                 뷰티 솔루션 컨설팅
@@ -862,6 +862,17 @@ const Header = styled.div`
     margin-top: 10%;
 `;
 
+const Left = styled.div`
+    display: flex;
+    /* justify-content: ; */
+    width: 100%;
+    border-color: #c71d3f;
+    margin-top: 10%;
+    
+    flex-direction: column;
+    justify-content: space-between;
+    
+`;
 const BottomBtn = styled(Button)((props) => ({
   backgroundColor: '#99968D',
   color: 'white',
