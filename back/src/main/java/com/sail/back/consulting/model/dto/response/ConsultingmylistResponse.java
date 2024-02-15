@@ -28,7 +28,7 @@ public class ConsultingmylistResponse {
 
     private LocalDate date; //예약을 어느날 할건지
 
-    private LocalDateTime  time; //예약을 몇시에 할건지
+    private LocalTime  time; //예약을 몇시에 할건지
 
     private String request;//요청사항
     private Long consultingid;//요청사항

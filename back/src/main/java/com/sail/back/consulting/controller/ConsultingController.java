@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -72,8 +73,8 @@ public class ConsultingController {
 
     @PutMapping("/{consultingId}")
     public ResponseEntity<MessageUtils> modifyReservation(
-            @PathVariable Long consultingId, LocalDateTime time) {
-        MessageUtils message = consultingService.modifyReservation(consultingId, time);
+            @PathVariable Long consultingId, LocalDate  date, LocalTime time) {
+        MessageUtils message = consultingService.modifyReservation(consultingId, date,time);
         log.info("예약 변경 성공");
         return ResponseEntity.ok()
                 .body(message);
@@ -112,21 +113,9 @@ public class ConsultingController {
     }
 
 
-    @GetMapping("/getreservation")
-    public ResponseEntity<MessageUtils<List<ConsultingIsActiveResponse>>> getReservationbydate(
-            LocalDateTime time) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(time);
-        String[] str = sb.toString().split("T");
-        LocalDate date = LocalDate.parse(str[0]);
-        List<ConsultingIsActiveResponse> consultingIsActiveResponses = consultingService.getReservationbydatetime(date);
 
-        log.info("컨설팅 정보 유무 조회");
 
-        return ResponseEntity.ok()
-                .body(MessageUtils.success(consultingIsActiveResponses));
-
-    }
+    //
 
 //
 //    //customer, consultant 자신의 예약내역조회

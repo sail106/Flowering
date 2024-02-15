@@ -7,7 +7,9 @@ import com.sail.back.consultant.model.dto.response.ConsultantResponse;
 import com.sail.back.user.model.dto.response.UserResponse;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +25,6 @@ public class ConsultingResponse {
 
     private ConsultantResponse consultantData;
 
-    private LocalDateTime reservationDateTime;
+    private LocalDate date;
+    private LocalTime time;
 }

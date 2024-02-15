@@ -7,7 +7,9 @@ import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.user.model.dto.response.UserResponse;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,20 +20,12 @@ import java.util.List;
 @Builder
 public class ConsultingIsActiveResponse {
 
-    Long consultingId;
+    LocalTime  time;
     boolean active;
-    private UserResponse userResponse;
-
-    private ConsultantResponse consultantData;
-
-    private LocalDateTime reservationDateTime;
 
 
-    public static  ConsultingIsActiveResponse fromEntity(Consulting consulting) {
-        return ConsultingIsActiveResponse.builder()
-                .active(consulting.isActive())
-                .consultingId(consulting.getConsulting_id())
-                .reservationDateTime(consulting.getTime())
-                .build();
-    }
+//    public static  ConsultingIsActiveResponse fromEntity(Consulting consulting) {
+//        return ConsultingIsActiveResponse.builder()
+//                .active
+//    }
 }

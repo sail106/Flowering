@@ -1,6 +1,7 @@
 package com.sail.back.consulting.model.entity;
 
 import com.sail.back.consultant.model.entity.Consultant;
+import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingIsActiveResponse;
 import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.user.model.dto.request.FindRequest;
@@ -37,9 +38,9 @@ public class Consulting {
     private Consultant consultant;
 
     @NotNull
-    private LocalDateTime time; //예약일
+    private LocalTime time; //예약일
 
-    private LocalDate  Date; //예약일
+    private LocalDate date; //예약일
 
     @NotNull
     private String title; //제목
@@ -51,7 +52,11 @@ public class Consulting {
     }
 
 
-    public void setdatetime(LocalDateTime time) {
+    public void setdate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void settime(LocalTime time) {
         this.time = time;
     }
 
@@ -59,10 +64,12 @@ public class Consulting {
 //    @NotNull
 //    private String sessionId;
 
-    public void create(User user, Consultant consultant
-                        ) {
+    public void create(User user, Consultant consultant, ConsultingCreateRequest consultingCreateRequest
+    ) {
         this.user = user;
         this.consultant = consultant;
+        this.time = consultingCreateRequest.getTime();
+        this.date = consultingCreateRequest.getDate();
 //        this.time = time;
 //        this.title=title;
     }
@@ -76,6 +83,7 @@ public class Consulting {
                 .consulting_id(consulting.getConsulting_id())
                 .consultantResponse(consulting.getConsultant().toResponse())
                 .time(consulting.getTime())
+                .date(consulting.getDate())
                 .title(consulting.getTitle())
                 .build();
     }
@@ -85,18 +93,8 @@ public class Consulting {
                 .consultingId(this.consulting_id)
                 .consultantData(this.consultant.toResponse())
                 .userResponse(this.user.toResponse())
-                .reservationDateTime(this.time)
-                .active(this.active)
-                .build();
-    }
-
-
-    public ConsultingIsActiveResponse toConsultingIsActiveResponse() {
-        return ConsultingIsActiveResponse.builder()
-                .consultingId(this.consulting_id)
-                .consultantData(this.consultant.toResponse())
-                .userResponse(this.user.toResponse())
-                .reservationDateTime(this.time)
+                .time(this.time)
+                .date(this.date)
                 .active(this.active)
                 .build();
     }
