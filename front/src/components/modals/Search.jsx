@@ -79,7 +79,6 @@ function SearchModal(props) {
       },
     };
 
-    console.log(token);
     try {
       const response = await axios.get(
         `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
@@ -87,6 +86,8 @@ function SearchModal(props) {
         config
       );
       setAutocompleteItems(response.data.data_body);
+      // console.log(autocompleteItems)
+      // props.onReceiveItems(response.data.data_body)
     } catch (error) {
       console.error("Error fetching autocomplete data:", error);
     }
@@ -104,6 +105,11 @@ function SearchModal(props) {
     }
   }, [inputValue]);
 
+  const handleItemClick = (item) => {
+    setInputValue(item.product_name);
+    props.onReceiveItem(item); // 이 줄을 추가합니다.
+    setOpen(false)
+  };
   return (
     <>
       <ModalButton onClick={() => setOpen(true)}>{props.title} 추천 제품 이름을 입력하세요.</ModalButton>
@@ -125,7 +131,7 @@ function SearchModal(props) {
             {autocompleteItems.length > 0 && (
               <AutocompleteList>
                 {autocompleteItems.map((item, index) => (
-                  <AutocompleteItem key={index} onClick={() => setInputValue(item.product_name)}>
+                  <AutocompleteItem key={index} onClick={() => handleItemClick(item)}>
                     <img src={item.product_image_uri} alt={item.product_name.replace(/<b>|<\/b>/g, "")} />
                     <div dangerouslySetInnerHTML={{ __html: item.product_name }} /> - {item.price}원
                   </AutocompleteItem>
