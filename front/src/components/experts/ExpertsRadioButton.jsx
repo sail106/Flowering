@@ -14,6 +14,8 @@ const StyledLabel = styled.label`
   margin-right: ${props => props['margin-right'] || '0px'};
   text-align: center;
   line-height: 40px;
+  border-color: ${props => props.active ? 'black' : '#B1B1B1'};
+  color: ${props => props.active ? 'black' : '#B1B1B1'};
   &:hover {
     cursor: pointer;
   }
@@ -38,22 +40,8 @@ const ExpertsRadioButton = (props) => {
   const clickTimeHandler = async () => {
     setIsChecked(!isChecked);
     dispatch(setSelectedTime(props.value));
-
-    // 시간을 누를때마다 axios 요청
-    // try {
-    //   const baseurl = import.meta.env.VITE_APP_BASE_URL;
-    //   const response = await axios.get(`${baseurl}/consultings/getreservation?time=${props.selectedDate}T${props.selectedTime}`);
-    //   const isReserved = response.data;
-    //   if (isReserved) {
-    //     console.log(`Time ${props.value} is reserved.`);
-    //   } else {
-    //     console.log(`Time ${props.value} is available.`);
-    //   }
-    // } catch (error) {
-    //   console.error("Error while checking reservation:", error);
-    // }
   };
-
+  console.log("props.active : ", props.active);
   return (
     <>
       <StyledButton
@@ -63,8 +51,9 @@ const ExpertsRadioButton = (props) => {
         onClick={clickTimeHandler}
         checked={isChecked}
         name={props.name}
+        disabled={!props.active} // active가 false일 때 버튼 비활성화
       />
-      <StyledLabel htmlFor={props.value} margin-right={props['margin-right']} >{props.value}</StyledLabel>
+      <StyledLabel htmlFor={props.value} margin-right={props['margin-right']} active={props.active} >{props.value}</StyledLabel>
     </>
   );
 };

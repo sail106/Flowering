@@ -178,7 +178,7 @@ const StyledCalendar = styled(Calendar)`
   }
 `;
 
-const MyCalendar = () => {
+const MyCalendar = ({ setIsReserved }) => {
   const [value, onChange] = useState(new Date());
   // value 상태 감시
   const navigate = useNavigate();
@@ -202,7 +202,8 @@ const MyCalendar = () => {
           },
         };
         const response = await axios.get(`${baseurl}users/${selectedid}/getreservation?date=${formattedDate}`, config);
-        const isReserved = response.data;
+        const isReserved = response.data.data_body;
+        setIsReserved(isReserved);
         console.log("response.data.data_body : ", response.data.data_body);
         if (isReserved) {
           console.log(`Date ${formattedDate} is reserved.`);
@@ -216,7 +217,7 @@ const MyCalendar = () => {
 
     checkReservation();
 
-  }, [value, dispatch]);
+  }, [value, dispatch, setIsReserved]);
 
   return (
     <>
