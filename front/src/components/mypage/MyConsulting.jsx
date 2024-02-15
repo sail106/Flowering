@@ -217,7 +217,7 @@ const MyConsulting = () => {
 
   // console.log(consultingData)
   const gofinal = async (consulting_id) => {
-    navigate("/finalresult", { state: { value: { consulting_id } } });
+    navigate("/finalresult", { state: { value: { consultingId:consulting_id } } });
   };
   return (
     <Consulting>

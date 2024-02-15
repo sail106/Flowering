@@ -6,7 +6,8 @@ import SecondResultPage from "./SecondSurveyResult/SecondResultPage";
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import ProductList from "./FinalResultInput/ProductList";
-
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 const P = styled.div`
   font-family: "Noto Sans KR";
   white-space: pre-wrap;
@@ -79,19 +80,26 @@ const TitleBox = styled.div`
 
 const FinalResult = () => {
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
+  const { name, role, id, nickname, imageUrl, access_token, email } =
+    useSelector((state) => state.auth.logonUser);
   const [data, setData] = useState(null);
+  const location = useLocation();
+  const consultingId = location.state.value.consultingId;
+  console.log(consultingId);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseurl}report/find/7`, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
+        const response = await axios.get(
+          `${baseurl}report/find/${consultingId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        console.log(response.data.data_body);
         setData(response.data.data_body);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -101,7 +109,11 @@ const FinalResult = () => {
 
   return (
     <>
-      <TitleBox>{data.consulting_data.user_data.name}님 최종 결과 보고서</TitleBox>
+    {data && (
+      <>
+      <TitleBox>
+        {data.consulting_data.user_response.name}님 최종 결과 보고서
+      </TitleBox>
       {data && <FirstSurveyResultPage data={data.survey_data} />}
       <Consulting1stepresultpage>
         {data && <SecondResultPage data={data.analysis_data} />}
@@ -126,7 +138,9 @@ const FinalResult = () => {
           <P2> {data.expert_opinion_data.skincare_night}</P2>
         </InputSet>
         <Margin2 />
-        <ProductList data={data.expert_opinion_data.recommended_skin_products} />
+        <ProductList
+          data={data.expert_opinion_data.recommended_skin_products}
+        />
         <Margin2 />
         <Margin />
         <H2>메이크업</H2>
@@ -185,7 +199,9 @@ const FinalResult = () => {
           </P>
         </InputSet>
         <Margin />
-        <ProductList data={data.expert_opinion_data.recommended_make_up_products} />
+        <ProductList
+          data={data.expert_opinion_data.recommended_make_up_products}
+        />
         <Margin2 />
         <Margin />
         <H2>헤어스타일</H2>
@@ -202,6 +218,7 @@ const FinalResult = () => {
         <P>{data.expert_opinion_data.hairstyle_solution}</P>
         <Margin4 />
       </Consulting1stepresultpage>
+      </>)}
     </>
   );
 };
