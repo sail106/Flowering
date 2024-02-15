@@ -41,6 +41,7 @@ public class ConsultingmylistResponse {
                 .userResponse(consulting.getUser().toResponse())
                 .time(consulting.getTime())
                 .consultingid(consulting.getConsulting_id())
+                .date(consulting.getDate())
                 .build();
     }
 
