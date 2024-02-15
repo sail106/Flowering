@@ -853,6 +853,18 @@ const OneToOneVideoChat = () => {
 export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
 
+const Input = styled.input`
+  && {
+    font-size: 1rem;
+    padding: 0.2rem 1rem;
+    width:  49%;
+      background-color:  #efeaea;
+    margin-left: 5%;
+    border-radius: 19px;
+    height: 42%;
+  }
+`;
+
 const IContainer = styled(Box)`
   && {
     width: 100%;
