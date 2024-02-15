@@ -69,6 +69,7 @@ const OneToOneVideoChat = () => {
   //   const [OV, setOV] = useState(null)
   const [customerStream, setCustomerStream] = useState(null);
   const { access_token } = useSelector(state => state.auth.logonUser);
+  const User = useSelector((state) => state.auth.logonUser);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -241,7 +242,7 @@ const OneToOneVideoChat = () => {
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
     if (role == "USER") {
-      navigate('/mypage')
+      navigate(`/mypage/${User.id}`)
     }
     else if (role == CONSULTANT) {
       navigate('/expertconsulting')
@@ -414,7 +415,7 @@ const OneToOneVideoChat = () => {
 
     if (role === "USER" && session) {
       session.disconnect();
-      navigate('/mypage')
+      navigate(`/mypage/${User.id}`)
 
     }
 
