@@ -39,10 +39,9 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-const StyledRadioButton = styled(RadioButton)`
-  margin-right: 20px;
-  margin: 0 10px; /* 여백을 조절할 값 설정 */
-`;
+// const StyledRadioButton = styled(RadioButton)`
+//   margin-right: 100px;
+// `;
 
 
 const ExpertsReservation = () => {
@@ -74,70 +73,78 @@ const ExpertsReservation = () => {
       <Margin2 />
       <MyCalendar />
       <M1>
-        <StyledRadioButton
+        <RadioButton
           type="radio"
           id="myradio"
           value="10:00"
           htmlFor="myradio"
           name="btn"
+          margin-right="10px"
         // onClick={() => setSelectedTime("10:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           value="11:00"
           type="radio"
           id="myradio2"
           htmlFor="myradio2"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("11:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           value="12:00"
           type="radio"
           id="myradio3"
           htmlFor="myradio3"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("12:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           value="13:00"
           type="radio"
           id="myradio4"
           htmlFor="myradio4"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("13:00")}
         />
       </M1>
       <M1>
-        <StyledRadioButton
+        <RadioButton
           value="15:00"
           type="radio"
           id="myradio5"
           htmlFor="myradio5"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("15:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           type="radio"
           id="myradio6"
           value="16:00"
           htmlFor="myradio6"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("16:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           type="radio"
           id="myradio7"
           value="17:00"
           htmlFor="myradio7"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("17:00")}
         />
-        <StyledRadioButton
+        <RadioButton
           type="radio"
           id="myradio8"
           value="18:00"
           htmlFor="myradio8"
           name="btn"
+          margin-right="10px"
           onClick={() => setSelectedTime("18:00")}
         />
       </M1>
