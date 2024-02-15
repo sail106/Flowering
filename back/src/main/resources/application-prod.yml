@@ -21,7 +21,7 @@ spring:
     pool-name: DevLogHikariCP
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
   data:
     redis:
