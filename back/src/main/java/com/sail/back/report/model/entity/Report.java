@@ -7,10 +7,7 @@ import com.sail.back.product.model.dto.response.ProductResponse;
 import com.sail.back.product.model.entity.Product;
 import com.sail.back.report.model.dto.request.SaveExpertOpinionRequest;
 import com.sail.back.report.model.dto.request.SaveSurveyRequest;
-import com.sail.back.report.model.dto.response.AnalysisResponse;
-import com.sail.back.report.model.dto.response.ExpertOpinionResponse;
-import com.sail.back.report.model.dto.response.ReportResponse;
-import com.sail.back.report.model.dto.response.SurveyResponse;
+import com.sail.back.report.model.dto.response.*;
 import com.sail.back.report.model.dto.response.analysis.*;
 import com.sail.back.report.model.entity.enums.*;
 import jakarta.persistence.*;
@@ -33,6 +30,14 @@ public class Report {
 
     @OneToOne
     private Consulting consulting;
+
+    @Column(name = "survey_clear")
+    private boolean surveyClear;
+    @Column(name = "analysis_clear")
+    private boolean analysisClear;
+    @Column(name = "analysis_opinion_clear")
+    private boolean expertOpinionClear;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "survey_type")
@@ -176,6 +181,7 @@ public class Report {
     public ReportResponse toResponse(List<ProductResponse> recommendedSkinProducts, List<ProductResponse> recommendedMakeUpProducts){
         return ReportResponse.builder()
                 .reportId(this.reportId)
+                .clearStep(this.toClearStepResponse())
                 .surveyData(this.surveyType.toResponse())
                 .consultingData(this.consulting.toResponse())
                 .analysisData(this.toAnalysisResponse())
@@ -204,6 +210,7 @@ public class Report {
 
     public void surveySave(SaveSurveyRequest request){
         this.surveyType = request.getSurveyType();
+        this.surveyClear = true;
     }
     public SurveyResponse toSurveyResponse(){
         if (this.surveyType==null) return new SurveyResponse();
@@ -211,6 +218,7 @@ public class Report {
     }
 
     public void expertOpinionSave(SaveExpertOpinionRequest request){
+        this.expertOpinionClear = true;
         this.skincareSkinState = request.getSkincareSkinState();
         this.skincareSolution = request.getSkincareSolution();
         this.skincareMorning = request.getSkincareMorning();
@@ -244,7 +252,8 @@ public class Report {
             String faceImgUrl,
             Skin skin
             ){
-        
+        this.analysisClear = true;
+
         //얼굴 분석 결과 저장
         this.faceShape = faceShape;
         this.faceX1 = faceCoordinate.getX1();
@@ -329,6 +338,14 @@ public class Report {
                         .analysisResultGlabellaWrinkle(this.analysisResultGlabellaWrinkle)
                         .build())
                 .analysisResultPhotoUrl(this.analysisResultPhotoUrl)
+                .build();
+    }
+
+    public ReportClearStepResponse toClearStepResponse(){
+        return ReportClearStepResponse.builder()
+                .surveyClear(this.surveyClear)
+                .analysisClear(this.analysisClear)
+                .expertOpinionClear(this.expertOpinionClear)
                 .build();
     }
 }
