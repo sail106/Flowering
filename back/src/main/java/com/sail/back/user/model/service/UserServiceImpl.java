@@ -18,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,8 +70,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<MyConsultinglistResponse> myconsultinglist(Long id, LocalDateTime localDateTime) {
 
+        StringBuilder sb=new StringBuilder();
+        sb.append(localDateTime);
 
-        List<Consulting> consultings = consultingRepository.findAllByUserIdAndTime(id, localDateTime).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
+        String []str=sb.toString().split("T");
+        List<Consulting> consultings = consultingRepository.findAllByUserIdAndDateAndTime(id, LocalDate.parse(str[0]) , LocalTime.parse(str[1]) ).orElseThrow(() -> new UserException(UserErrorCode.NO_CONSULTING_AVAILABLE));
 
 
         return consultings.stream().map(Consulting::from).collect(Collectors.toList());

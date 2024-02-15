@@ -240,8 +240,8 @@ const Order = () => {
 			},
 			async (rsp) => {
 				try {
-					console.log(rsp);
-					console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
+					// console.log(rsp);
+					// console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
 					const { data } = await axios.post('https://i10c106.p.ssafy.io/api/verifyIamport/' + rsp.imp_uid );
 					if (rsp.paid_amount === data.response.amount) {
 						console.log('in if');
@@ -266,16 +266,12 @@ const Order = () => {
 							
 								console.log(name)
 							// 요청 성공 시 수행할 작업
-							console.log('Response:', response.data.data_body);
+							// console.log('Response:', response.data.data_body);
 							setConsultingId(response.data.data_body.consultingid);
-							console.log(consultingId);
 						} catch (error) {
-							console.error('Error :', error);
-							console.error('error.response :', error.response);
-							console.error('error.response.data :', error.response.data);
-							console.error('error.response.data.data_header :', error.response.data.data_header);
-							console.error('error.response.data.data_header.result_message :', error.response.data.data_header.result_message);
+							// console.error('Error :', error);
 							alert(error.response.data.data_header.result_message);
+							navigate('/')
 						}
 					} else {
 						alert('결제 실패');

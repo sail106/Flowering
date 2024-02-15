@@ -55,10 +55,12 @@ public class ConsultantService {
 
     public List<ConsultingmylistResponse> getMyConsultingList(User user, LocalDateTime localDateTime) {
         Consultant consultant = consultantRepository.findByUser(user).orElseThrow(() -> new ConsultantException(ConsultantErrorCode.NOT_EXISTS_CONSULTANT));
+    StringBuilder sb=new StringBuilder();
+    sb.append(localDateTime);
 
-
+        String []str=sb.toString().split("T");
         List<Consulting> consultings = consultingRepository.
-                findAllByConsultantAndTime(consultant, localDateTime).orElseThrow(() ->
+                findAllByConsultantAndDateAndTime(consultant,LocalDate.parse(str[0]) ,LocalTime.parse(str[1]) ).orElseThrow(() ->
                         new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
 
         List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
@@ -78,7 +80,7 @@ public class ConsultantService {
 
 
         List<Consulting> consultings = consultingRepository.
-                findAllByConsultantOrderByTimeDesc(consultant).orElseThrow(() ->
+                findAllByConsultantOrderByDateDesc(consultant).orElseThrow(() ->
                         new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
 
         List<ConsultingmylistResponse> consultingmylistResponses = consultings.stream().
