@@ -61,7 +61,7 @@ const ModalButton = styled.button`
   margin-bottom: 7px;
 `;
 
-function SearchModal({title, onReceiveItem}) {
+function Search({title, onReceiveItem}) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [autocompleteItems, setAutocompleteItems] = useState([]);
@@ -104,9 +104,10 @@ function SearchModal({title, onReceiveItem}) {
   }, [inputValue]);
 
   const handleItemClick = (item) => {
-    setInputValue("");
-    onReceiveItem(item); // 이 줄을 추가합니다.
+    console.log(typeof onReceiveItem);
+    onReceiveItem(item); 
     setOpen(false)
+    setInputValue("");
   };
   return (
     <>
@@ -143,4 +144,4 @@ function SearchModal({title, onReceiveItem}) {
   );
 }
 
-export default SearchModal;
+export default Search;
