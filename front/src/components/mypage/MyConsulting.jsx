@@ -170,6 +170,7 @@ const MyConsulting = () => {
       "Content-Type": "application/json",
     },
   };
+  console.log(config.headers)
   const mydata = async () => {
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
