@@ -6,6 +6,9 @@ import com.sail.back.security.exception.AuthException;
 import com.sail.back.security.model.repository.EmailCertificationRepository;
 import com.sail.back.security.utils.CertificationUtils;
 import com.sail.back.security.model.entity.CertificationNumber;
+import com.sail.back.user.exception.UserException;
+import com.sail.back.user.model.entity.User;
+import com.sail.back.user.model.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.mail.internet.MimeMessage;
 
 import static com.sail.back.security.exception.AuthErrorCode.DIFFERENT_NUMBER;
+import static com.sail.back.user.exception.UserErrorCode.ALREADY_IN_EMAIL;
+import static com.sail.back.user.exception.UserErrorCode.NOT_EXISTS_USER;
 
 
 @RequiredArgsConstructor
@@ -29,22 +34,16 @@ public class EmailService {
     private final CertificationUtils certificationUtil;
     private final EmailCertificationRepository repository;
     private final JavaMailSender mailSender;
-//    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Transactional
     public void sendTempPasswordMail(String email){
         // 가입이 되어있는 회원인지 검증 ( 프론트 로직상 인증하고 들어오지만 재검증)
-//        userMapper.find(FindParam.builder().email(email).build()).orElseThrow(()->new UserException(NOT_EXISTS_USER));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(NOT_EXISTS_USER));
         sendCodeMail(email);
         //임시 비밀번호 생성
         String tempPassword = certificationUtil.createTempPassword();
         log.debug("임시비밀번호 생성 = {}", tempPassword);
-        //DB에 업데이트
-//        userMapper.modify(
-//                ModifyParam.builder()
-//                        .email(email)
-//                        .password(passwordEncoder.encode(tempPassword))
-//                        .build());
         //메일 생성 및 전송
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -53,7 +52,8 @@ public class EmailService {
             messageHelper.setTo(email);
             messageHelper.setSubject("[FLOWERING] 임시 비밀번호 안내 입니다.");
             messageHelper.setText(makeTempPasswordTemplate(tempPassword),true);
-
+            user.setPassword(passwordEncoder.encode(tempPassword));
+            userRepository.save(user);
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("메일 생성 오류", e);
@@ -61,8 +61,8 @@ public class EmailService {
     }
     public void sendJoinCodeMail(String email){
         //이미 가입된 이메일인지 검증
-//        userMapper.find(FindParam.builder().email(email).build())
-//                .ifPresent(value ->{ throw new UserException(ALREADY_IN_EMAIL);});
+        userRepository.findByEmail(email)
+                .ifPresent(value ->{ throw new UserException(ALREADY_IN_EMAIL);});
         sendCodeMail(email);
     }
     @Transactional

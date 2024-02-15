@@ -15,6 +15,8 @@ import com.sail.back.consulting.model.entity.Consulting;
 import com.sail.back.consulting.model.repository.ConsultingRepository;
 import com.sail.back.global.exception.base.*;
 import com.sail.back.global.utils.MessageUtils;
+import com.sail.back.report.model.entity.Report;
+import com.sail.back.report.model.repository.ReportRepository;
 import com.sail.back.report.model.service.ReportService;
 import com.sail.back.user.exception.UserErrorCode;
 import com.sail.back.user.exception.UserException;
@@ -50,9 +52,9 @@ public class ConsultingService {
     private final UserRepository userRepository;
     private final ConsultantRepository consultantRepository;
     private final ConsultingRepository consultingRepository;
-    private final ReportService reportService;
+    private final ReportRepository reportRepository;
 
-    public ConsultingCreateResponse createReservation(String role, Long userId, Long consultantId, ConsultingCreateRequest consultingCreateRequest) {
+    public ConsultingResponse createReservation(String role, Long userId, Long consultantId, ConsultingCreateRequest consultingCreateRequest) {
 
         if (UserRole.CONSULTANT.equals(role)) {
             throw new ConsultingException(ConsultingErrorCode.IS_CONSULTANT);
@@ -95,17 +97,14 @@ public class ConsultingService {
         consulting.create(user, consultant);
 
         Consulting savedConsulting = consultingRepository.save(consulting);
-        Long id = savedConsulting.getConsulting_id();
 
 
-        reportService.createReport(id, user);
+        reportRepository.save(Report.builder()
+                .consulting(savedConsulting)
+                .build());
 
-        return ConsultingCreateResponse.builder()
-                .time(consultingCreateRequest.getTime())
-                .title(consultingCreateRequest.getTitle())
-                .consultingid(id)
-                .build();
-    }
+        return savedConsulting.toResponse();
+     }
 
 
     @Transactional
