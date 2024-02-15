@@ -188,6 +188,8 @@ const MyCalendar = () => {
     // setSelectedDate(formattedDate); // 형식화된 날짜를 상태로 설정
     dispatch(setSelectedDate(formattedDate));
     
+    // 여기서 value가 바뀔때마다 axios 요청을 한다.
+    
   }, [value, dispatch]);
 
   return (
