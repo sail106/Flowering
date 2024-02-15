@@ -373,7 +373,7 @@ const OneToOneVideoChat = () => {
     console.log('session' + session)
     // role==CONSULTANT &&
 
-    dispatch(resetParticipant)
+    // dispatch(resetParticipant)
 
     if (role == CONSULTANT && session) {
       session.disconnect();
@@ -595,8 +595,8 @@ const OneToOneVideoChat = () => {
                         // height: "80%",
                         // justifyContent: "space-between",
                         // gap: 2,
-                        width: "70%",
-                        height: "150%",
+                        width: "100%",
+                        height: "100%",
                         // display: "flex",
                         // flexDirection: "row",
                         // justifyContent: "center",
@@ -858,6 +858,8 @@ const Header = styled.div`
     display: flex;
     /* justify-content: ; */
     width: 100%;
+    border-color: #a217be;
+    margin-top: 10%;
 `;
 
 const BottomBtn = styled(Button)((props) => ({
@@ -915,7 +917,7 @@ const SGridContainer = styled(Grid)`
     height: 100%; // "90%",
     display: flex;
     width: 70%;
-    border: 12px solid #dc121299;
+    border: 12px solid #12dc8599;
     // columnGap: 2,
   `;
 
