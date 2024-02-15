@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 import { BsRecord2 } from "react-icons/bs";
+import { RiSendPlaneLine } from "react-icons/ri";
 
 import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
 import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
@@ -58,7 +59,7 @@ const OneToOneVideoChat = () => {
     consultantSessionName
   )
 
-   const [myUserName, setMyUserName] = useState(name)
+  const [myUserName, setMyUserName] = useState(name)
 
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
@@ -70,6 +71,8 @@ const OneToOneVideoChat = () => {
   const [customerStream, setCustomerStream] = useState(null);
   const { access_token } = useSelector(state => state.auth.logonUser);
   const User = useSelector((state) => state.auth.logonUser);
+  const [msg, setMsg] = useState('');
+  const {  messageId, participantList } = useSelector(state => state.consult)
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -559,6 +562,59 @@ const OneToOneVideoChat = () => {
     });
   }
 
+  const handleMessage = () => {
+    console.log('bbbbbbbb')
+    if (session && msg.length > 0) {
+
+
+      const mine = {
+        id: messageId,
+        role: role,
+        imageUrl: imageUrl,
+        side: 'left',
+        message: msg,
+        name: name,
+      }
+
+      console.log('my text add ' + messageId)
+      if (role == mine.role)
+        dispatch(appendMessageList(mine))
+
+
+      const data = {
+
+        id: messageId,
+        role: role,
+        imageUrl: imageUrl,
+        name: name,
+        message: msg
+
+      }
+
+      const persondata = {
+        imageUrl: imageUrl,
+        name: name,
+        isMic: isMic,
+        isCam: isCam,
+        role: role
+      };
+
+      session.signal({
+        data: JSON.stringify(data),
+        to: [],
+        type: 'chat'
+      })
+
+      session.signal({
+        persondata: JSON.stringify(persondata),
+        to: [],
+        type: 'participant'
+      })
+
+      setMsg('')
+    }
+
+  }
 
   // ---------- render
   return (
@@ -575,7 +631,7 @@ const OneToOneVideoChat = () => {
             <SGridContainer container spacing={12}>
               <Left>
 
-                <Header>
+                {/* <Header>
 
                   <IoMdVideocamIcon>
                     <IoMdVideocam />
@@ -585,7 +641,7 @@ const OneToOneVideoChat = () => {
                   <Myspan>
                      컨설팅
                   </Myspan>
-                </Header>
+                </Header> */}
 
                 {
 
@@ -675,6 +731,25 @@ const OneToOneVideoChat = () => {
                   }
                 </SmallChatContainer>
 
+                <IContainer>
+
+                  <Input
+                    value={msg}
+                    placeholder="내용을 입력하세요..."
+                    onChange={(e) => { setMsg(e.target.value) }}
+                    onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
+                  >
+                  </Input>
+
+                  <IconButton onClick={handleMessage} >
+                    {/* <IconButton  > */}
+                    <PlanePos>
+                      <RiSendPlaneLine />
+
+                    </PlanePos>
+                  </IconButton>
+
+                </IContainer>
               </Left>
               {/* 
               <Myspan>
@@ -834,6 +909,40 @@ const OneToOneVideoChat = () => {
 export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
 
+const PlanePos = styled.div`
+  && {
+    position: absolute;
+    right: 25%;
+    top: 15%;
+  }
+`;
+const Input = styled.input`
+  && {
+    font-size: 1rem;
+    padding: 0.2rem 1rem;
+    width:  49%;
+      background-color:  #efeaea;
+    margin-left: 5%;
+    border-radius: 19px;
+    height: 42%;
+  }
+`;
+
+const IContainer = styled(Box)`
+  && {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    background-color:  #ffffff;
+     /* width: ; */
+     /* border: 1px solid black; */
+    height: 17%;
+    margin-top: 13%;
+    top:120%
+   }
+`;
+
 // 비디오 컨테이너
 const VideoContainer = styled(Box)({
   width: "100%",
@@ -841,7 +950,7 @@ const VideoContainer = styled(Box)({
   // borderRadius: "1rem",
   // padding: "1rem",
   // position:"absolute",
-  
+
 
 })
 // 내 비디오 컨테이너
@@ -914,7 +1023,7 @@ const SContainer = styled(Box)`
     justify-content: center;
     /* padding: 1rem; */
     /* margin: 3vh; */
-    height: 100%;
+    height: 120%;
     /* border: 2px solid #18c24b99; */
     box-sizing: border-box;
     background-color: #fffafa;
@@ -948,9 +1057,9 @@ const SpinnerGrid = styled(Grid)`
 const SmallChatContainer = styled.div`
   position: absolute;
   width: 31%;
-  top: 10%;
+  top: 8%;
   right: 0;
-  /* border: 2px solid black; */
+  border: 12px solid black;
   height: 90%;
   `;
 
@@ -1060,4 +1169,5 @@ const MicCamExitGroup = styled(Grid)`
   height: 11%;
   align-items: center;
   left: 0;
+   top: 100%;
   `;

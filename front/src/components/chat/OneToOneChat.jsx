@@ -88,8 +88,8 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
-       console.log('event chat')
- 
+      console.log('event chat')
+
       session.on('signal:participant', addparticiapnt)
 
     }
@@ -114,7 +114,7 @@ const OneToOneChat = () => {
     // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
-     }
+    }
   }
 
   const Foldpos = styled.div`
@@ -147,30 +147,17 @@ const OneToOneChat = () => {
 
         {/* <Bottomcontent> */}
 
-        <IContainer>
 
-          <Input
-            value={msg}
-            placeholder="내용을 입력하세요..."
-            onChange={(e) => { setMsg(e.target.value) }}
-            onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-          >
-          </Input>
-
-          <IconButton onClick={handleMessage} >
-            {/* <IconButton  > */}
-            <PlanePos>
-              <RiSendPlaneLine />
-
-            </PlanePos>
-          </IconButton>
-
-        </IContainer>
 
         {/* </Bottomcontent> */}
 
 
       </ChatContainer>
+
+ 
+
+
+
     </ChatGrid>
   )
 }
@@ -294,7 +281,8 @@ const IContainer = styled(Box)`
      /* width: ; */
      /* border: 1px solid black; */
     height: 17%;
-    /* margin-top: 3%; */
+    margin-top: 13%;
+    top:120%
    }
 `;
 
