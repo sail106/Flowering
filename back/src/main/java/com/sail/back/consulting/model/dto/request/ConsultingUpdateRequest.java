@@ -26,7 +26,7 @@ public class ConsultingUpdateRequest {
 //    private Consultant consultant;
     private LocalDate date; //예약을 어느날 할건지
 
-    private LocalDateTime  time; //예약을 몇시에 할건지
+    private LocalTime  time; //예약을 몇시에 할건지
 
     //요청사항
     private String request;//요청사항
@@ -39,6 +39,7 @@ public class ConsultingUpdateRequest {
 //                .sessionId(this.sessionId)
                 .user(this.user)
                 .time(this.time)
+                .date(this.date)
                 .build();
     }
 

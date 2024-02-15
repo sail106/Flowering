@@ -10,7 +10,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +26,8 @@ public class MyConsultinglistResponse {
 
     private ConsultantResponse consultantResponse;
 
-    private LocalDateTime time; //예약일
+    private LocalDate date; //예약일
+    private LocalTime time; //예약시간
 
     private String sessionId;
 

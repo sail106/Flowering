@@ -9,6 +9,7 @@ import com.sail.back.consulting.exception.ConsultingException;
 import com.sail.back.consulting.model.dto.request.ConsultingCreateRequest;
 import com.sail.back.consulting.model.dto.request.ConsultingUpdateRequest;
 import com.sail.back.consulting.model.dto.response.ConsultingCreateResponse;
+import com.sail.back.consulting.model.dto.response.ConsultingIsActiveResponse;
 import com.sail.back.consulting.model.dto.response.ConsultingResponse;
 import com.sail.back.consulting.model.entity.Consulting;
 //import com.sail.back.consulting.model.repository.ConsultingRepository;
@@ -74,13 +75,13 @@ public class ConsultingService {
 //                findByConsultantAndTime(consultant, consultingCreateRequest.getTime()).ifPresent(() ->value
 //                        new ConsultantException(ConsultantErrorCode.NOT_EXISTS_TIME));
         //이미 전문가가 이시간에 일정이 있는경우
-        Optional<Consulting> consultingOptional = consultingRepository.findByConsultantAndTime(consultant, consultingCreateRequest.getTime());
+        Optional<Consulting> consultingOptional = consultingRepository.findByConsultantAndDateAndTime(consultant, consultingCreateRequest.getDate(), consultingCreateRequest.getTime());
         if (consultingOptional.isPresent()) {
             throw new ConsultingException(ConsultingErrorCode.CONSULTANT_HAVE_CONSULTING);
         }
 
 
-        Optional<List<Consulting>> consultingListOptional = consultingRepository.findAllByUserIdAndTime(userId, consultingCreateRequest.getTime());
+        Optional<List<Consulting>> consultingListOptional = consultingRepository.findAllByUserIdAndDateAndTime(userId, consultingCreateRequest.getDate(), consultingCreateRequest.getTime());
 
         if (consultingListOptional.isPresent() && !consultingListOptional.get().isEmpty()) {
             throw new ConsultingException(ConsultingErrorCode.HAVE_CONSULTING);
@@ -94,7 +95,7 @@ public class ConsultingService {
 
         Consulting consulting = consultingCreateRequest.toEntity();
 
-        consulting.create(user, consultant);
+        consulting.create(user, consultant, consultingCreateRequest);
 
         Consulting savedConsulting = consultingRepository.save(consulting);
 
@@ -104,7 +105,7 @@ public class ConsultingService {
                 .build());
 
         return savedConsulting.toResponse();
-     }
+    }
 
 
     @Transactional
@@ -155,23 +156,21 @@ public class ConsultingService {
 
     }
 
-    public MessageUtils modifyReservation(Long consultingId, LocalDateTime time) {
+    public MessageUtils modifyReservation(Long consultingId, LocalDate date, LocalTime time) {
         Consulting consulting = consultingRepository.findById(consultingId).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_CONSULTING));
 
-        consulting.setdatetime(time);
+        consulting.setdate(date);
+        consulting.settime(time);
         consultingRepository.save(consulting);
         return MessageUtils.success("modifyReservation", "200", "success");
 
     }
 
-    public boolean getReservationbydatetime(LocalDateTime time) {
-        Optional<Consulting> consulting = consultingRepository.findByTime(time);
+    public List<Consulting> getReservationbydate(LocalDate date) {
+        List<Consulting> consulting = consultingRepository.findAllByDate(date).orElseThrow(() -> new ConsultingException(ConsultingErrorCode.NOT_EXISTS_TIME));
 
-        if (consulting.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return consulting;
+
     }
 
 //

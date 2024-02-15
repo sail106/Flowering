@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { BsRecord2 } from "react-icons/bs";
 import { RiSendPlaneLine } from "react-icons/ri";
-
+import { ButtonBox } from './common/Button';
 import { Box, Button, Grid, Typography, ButtonGroup, IconButton, CircularProgress } from '@mui/material'
 import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material';
 import { CiMicrophoneOn } from "react-icons/ci";
@@ -72,7 +72,7 @@ const OneToOneVideoChat = () => {
   const { access_token } = useSelector(state => state.auth.logonUser);
   const User = useSelector((state) => state.auth.logonUser);
   const [msg, setMsg] = useState('');
-  const {  messageId, participantList } = useSelector(state => state.consult)
+  const { messageId, participantList } = useSelector(state => state.consult)
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -731,25 +731,6 @@ const OneToOneVideoChat = () => {
                   }
                 </SmallChatContainer>
 
-                <IContainer>
-
-                  <Input
-                    value={msg}
-                    placeholder="내용을 입력하세요..."
-                    onChange={(e) => { setMsg(e.target.value) }}
-                    onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-                  >
-                  </Input>
-
-                  <IconButton onClick={handleMessage} >
-                    {/* <IconButton  > */}
-                    <PlanePos>
-                      <RiSendPlaneLine />
-
-                    </PlanePos>
-                  </IconButton>
-
-                </IContainer>
               </Left>
               {/* 
               <Myspan>
@@ -889,11 +870,32 @@ const OneToOneVideoChat = () => {
 
                     {/* <BottomBtn variant="contained"  > */}
 
-                    <ExitButton onClick={leaveSession}>
+                    <ExitButton  onClick={leaveSession}>
                       상담 종료하기
                     </ExitButton>
 
                     {/* </ButtonGroup> */}
+
+                    <IContainer>
+
+                      <Input
+                        value={msg}
+                        placeholder="내용을 입력하세요..."
+                        onChange={(e) => { setMsg(e.target.value) }}
+                        onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
+                      >
+                      </Input>
+
+                      <IconButton onClick={handleMessage} >
+                        {/* <IconButton  > */}
+                        <PlanePos>
+                          <RiSendPlaneLine />
+
+                        </PlanePos>
+                      </IconButton>
+
+                    </IContainer>
+
                   </MicCamExitGroup>
                 </>
               }
@@ -920,8 +922,8 @@ const Input = styled.input`
   && {
     font-size: 1rem;
     padding: 0.2rem 1rem;
-    width:  49%;
-      background-color:  #efeaea;
+    width:  300px;
+      /* background-color:  #c21515; */
     margin-left: 5%;
     border-radius: 19px;
     height: 42%;
@@ -934,12 +936,14 @@ const IContainer = styled(Box)`
     display: flex;
     flex-direction: row;
     align-items: center;  
-    background-color:  #ffffff;
-     /* width: ; */
+    /* background-color:  #ffffff; */
      /* border: 1px solid black; */
-    height: 17%;
-    margin-top: 13%;
-    top:120%
+    height: 87%;
+    /* margin-top: 13%; */
+    margin-left: 61%;
+    top:100%;
+    /* background-color: aliceblue; */
+    
    }
 `;
 
@@ -968,7 +972,7 @@ const Header = styled.div`
     display: flex;
     /* justify-content: ; */
     width: 100%;
-    border-color: #a217be;
+    /* border-color: #a217be; */
     margin-top: 10%;
 `;
 
@@ -976,7 +980,7 @@ const Left = styled.div`
     display: flex;
     /* justify-content: ; */
     width: 60%;
-    border-color: #c71d3f;
+    /* border-color: #c71d3f; */
     /* margin-top: 10%; */
     
     flex-direction: column;
@@ -1038,7 +1042,7 @@ const SGridContainer = styled(Grid)`
     height: 100%; // "90%",
     display: flex;
     width: 70%;
-    border: 12px solid #12dc8599;
+    /* border: 12px solid #12dc8599; */
     // columnGap: 2,
   `;
 
@@ -1059,7 +1063,7 @@ const SmallChatContainer = styled.div`
   width: 31%;
   top: 8%;
   right: 0;
-  border: 12px solid black;
+  /* border: 12px solid black; */
   height: 90%;
   `;
 
@@ -1135,9 +1139,12 @@ const CustomIconButton2 = styled(IconButton)`
     }
   `;
 
-const ExitButton = styled(Button)`
-    && {
-      background-color: #f28482;
+const ExitButton = styled(ButtonBox)`
+    display:flex;
+    flex-wrap:nowrap;
+    width: 1100px;
+    height: 40px;
+      /* background-color: #f28482;
       color: white;
       &:hover {
         background-color: #66635c;
@@ -1146,14 +1153,12 @@ const ExitButton = styled(Button)`
       }
       font-weight: normal;
       border-radius: 15px;
-      margin-left: 100px;
+      margin-left: 10%;
       height: 40px;
-      width: 130px;
       margin-bottom: 11px;
-      margin-top: 11px;
-      
-      
-    }
+      margin-top: 11px; */
+      /* width: 300px; */
+       
     
   `;
 
@@ -1162,7 +1167,7 @@ const MicCamExitGroup = styled(Grid)`
     display: flex;
     flex-direction: row;
     gap: 3;
-    width: 72%;  
+    width: 888px;  
       background-color: #ffffff;
       position: absolute;
   bottom: 0;
