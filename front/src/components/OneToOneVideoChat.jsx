@@ -1060,5 +1060,5 @@ const MicCamExitGroup = styled(Grid)`
   height: 11%;
   align-items: center;
   left: 0;
-   top: 90%;
+   top: 100%;
   `;
