@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"; // useSelector import 추가
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useSelector } from "react-redux"; // useSelector import 추가
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Title from "../modify/Title";
@@ -43,15 +42,12 @@ const ButtonContainer = styled.div`
 
 const ExpertsReservation = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isReserved, setIsReserved] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
   const { selectedDate, selectedTime  } = useSelector(state => state.selected);
   const handleClick = () => {
-    console.log("Button clicked!" + selectedDate + " " + selectedTime);
     navigate('/orderpage');
-    console.log("Is it reserved? " + isReserved); // 예약 상태 출력
   };
-  console.log("isReserved : ", isReserved);
 
   // 배열을 4개씩 그룹화하는 함수
   const chunkArray = (array, chunk_size) => {
@@ -74,58 +70,6 @@ const ExpertsReservation = () => {
       <Title text={"Reservation"} />
       <Margin2 />
       <MyCalendar setIsReserved={setIsReserved}/>
-      {/* <M1>
-        <ExpertsRadioButton
-          value="10:00"
-          name="myradio"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="11:00"
-          name="myradio2"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="12:00"
-          name="myradio3"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="13:00"
-          name="myradio4"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-      </M1>
-      <M1>
-        <ExpertsRadioButton
-          value="15:00"
-          name="myradio5"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="16:00"
-          name="myradio6"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="17:00"
-          name="myradio7"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-        <ExpertsRadioButton
-          value="18:00"
-          name="myradio8"
-          margin-right="10px"
-          selectedDate={selectedDate}
-        />
-      </M1> */}
       {groupedIsReserved.map((group, groupIndex) => (
         <M1 key={groupIndex}>
           {group.map((item, index) => (
@@ -136,6 +80,8 @@ const ExpertsReservation = () => {
               name={`myradio${groupIndex * 4 + index}`}
               selectedDate={selectedDate}
               margin-right="10px"
+              selectedValue={selectedValue}
+              setSelectedValue={setSelectedValue}
             />
           ))}
         </M1>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import axios from "axios";
 
 import { setSelectedTime } from "../../store/selectedSlice";
 
@@ -33,15 +32,12 @@ const StyledButton = styled.input`
 `;
 
 const ExpertsRadioButton = (props) => {
-  const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
-  console.log("props : ", props)
 
   const clickTimeHandler = async () => {
-    setIsChecked(!isChecked);
+    props.setSelectedValue(props.value);
     dispatch(setSelectedTime(props.value));
   };
-  console.log("props.active : ", props.active);
   return (
     <>
       <StyledButton
@@ -49,7 +45,7 @@ const ExpertsRadioButton = (props) => {
         id={props.value}
         value={props.value}
         onClick={clickTimeHandler}
-        checked={isChecked}
+        checked={props.selectedValue === props.value}
         name={props.name}
         disabled={!props.active} // active가 false일 때 버튼 비활성화
       />
