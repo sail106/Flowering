@@ -199,13 +199,26 @@ const MyConsulting = () => {
         baseurl + `analysis/find/${consulting_id}`,
         config
       );
-      console.log("first", firstresponse.data);
-      console.log("second", secondresponse.data);
-      if (firstresponse.data.data_body === null) {
+      console.log("first", firstresponse.data.data_body.content);
+      console.log("second", secondresponse.data.data_body);
+      if (
+        firstresponse.data.data_body.content == null &&
+        secondresponse.data.data_body.content == null
+      ) {
+        console.log("1");
         navigate(`/firstsurvey`, { state: { value: { consulting_id } } });
-      } else if (secondresponse.data.data_body === null) {
+      }
+      if (
+        firstresponse.data.data_body.content != null &&
+        secondresponse.data.data_body.content == null
+      ) {
+        console.log("2");
         navigate(`/phototest`, { state: { value: { consulting_id } } });
-      } else {
+      }
+      if (
+        firstresponse.data.data_body.content != null &&
+        secondresponse.data.data_body.content != null
+      ) {
         btnclick(consulting_id);
       }
     } catch (error) {
@@ -216,8 +229,8 @@ const MyConsulting = () => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
   // console.log(consultingData)
-  const gofinal = (consulting_id) => {
-	navigate('/finalresult', { state: { value: {consulting_id } } });
+  const gofinal = async (consulting_id) => {
+    navigate("/finalresult", { state: { value: { consulting_id } } });
   };
   return (
     <Consulting>
@@ -237,7 +250,7 @@ const MyConsulting = () => {
               const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
               const formattedDate = format(date, "MM.dd(E)", { locale: ko });
               const formattedTime = format(date, "HH:mm");
-			 
+
               return (
                 <Tr key={index}>
                   <Td>뷰티 솔루션 컨설팅</Td>
@@ -247,7 +260,9 @@ const MyConsulting = () => {
                     <Clock /> {formattedTime}
                   </Td>
                   <ButtonTd>
-                    <FinalButton onClick={gofinal(row.consulting_id)}>최종 결과 보고서</FinalButton>
+                    <FinalButton onClick={() => gofinal(row.consulting_id)}>
+                      최종 결과 보고서
+                    </FinalButton>
                   </ButtonTd>
                   <ButtonTd>
                     <Link to={`/review/${row.consulting_id}`} reloadDocument>
