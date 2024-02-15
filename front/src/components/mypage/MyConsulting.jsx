@@ -216,7 +216,9 @@ const MyConsulting = () => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
   // console.log(consultingData)
-
+  const gofinal = (consulting_id) => {
+	navigate('/finalresult', { state: { value: {consulting_id } } });
+  };
   return (
     <Consulting>
       <H2>마이 컨설팅</H2>
@@ -235,7 +237,7 @@ const MyConsulting = () => {
               const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
               const formattedDate = format(date, "MM.dd(E)", { locale: ko });
               const formattedTime = format(date, "HH:mm");
-
+			 
               return (
                 <Tr key={index}>
                   <Td>뷰티 솔루션 컨설팅</Td>
@@ -245,7 +247,7 @@ const MyConsulting = () => {
                     <Clock /> {formattedTime}
                   </Td>
                   <ButtonTd>
-                    <FinalButton>최종 결과 보고서</FinalButton>
+                    <FinalButton onClick={gofinal(row.consulting_id)}>최종 결과 보고서</FinalButton>
                   </ButtonTd>
                   <ButtonTd>
                     <Link to={`/review/${row.consulting_id}`} reloadDocument>

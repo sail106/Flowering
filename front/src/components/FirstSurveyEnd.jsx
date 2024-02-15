@@ -77,7 +77,7 @@ const FinalsurveyEnd = () => {
 			<Margin2 />
 
 			<ButtonContainer>
-				<MyButton1 onClick={goPhoto()}>다음 테스트로</MyButton1>
+				<MyButton1 onClick={goPhoto}>다음 테스트로</MyButton1>
 			</ButtonContainer>
 			<Margin2 />
 		</Consulting1stepresultpage>
