@@ -154,25 +154,10 @@ const OneToOneChat = () => {
 
       </ChatContainer>
 
-      <IContainer>
+ 
 
-        <Input
-          value={msg}
-          placeholder="내용을 입력하세요..."
-          onChange={(e) => { setMsg(e.target.value) }}
-          onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
-        >
-        </Input>
 
-        <IconButton onClick={handleMessage} >
-          {/* <IconButton  > */}
-          <PlanePos>
-            <RiSendPlaneLine />
 
-          </PlanePos>
-        </IconButton>
-
-      </IContainer>
     </ChatGrid>
   )
 }

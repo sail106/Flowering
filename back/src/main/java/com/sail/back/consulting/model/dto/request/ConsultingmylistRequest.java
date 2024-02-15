@@ -26,7 +26,8 @@ public class ConsultingmylistRequest {
 
     private Consultant consultant;
 
-    private LocalDateTime time; //예약을 몇시에 할건지
+    private LocalDate date; //예약을 몇시에 할건지
+    private LocalTime time; //예약을 몇시에 할건지
 
     //세션아이디
     private String sessionId;
@@ -38,6 +39,7 @@ public class ConsultingmylistRequest {
                 .consultant(this.consultant)
                 .user(this.user)
                 .time(this.time)
+                .date(this.date)
                 .consulting_id(this.consulting_id)
                 .build();
     }

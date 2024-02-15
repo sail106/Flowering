@@ -215,6 +215,7 @@ const MyCalendar = () => {
     }
 
     checkReservation();
+
   }, [value, dispatch]);
 
   return (
