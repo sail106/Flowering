@@ -187,41 +187,53 @@ const MyConsulting = () => {
       console.error("Failed to update user info:", error);
     }
   };
-  const [isfirstdone, setisfirstdone] = useState(""); // 상태 초기화
-  const [isseconddone, setisseconddone] = useState(""); // 상태 초기화
+  const [clearSteps, setClearSteps] = useState({});
+
+  //   const judge = async (consulting_id) => {
+  //     try {
+  //       const baseurl = import.meta.env.VITE_APP_BASE_URL;
+  //       const response = await axios.get(
+  //         baseurl + `report/find/clear-step/${consulting_id}`,
+  //         config
+  //       );
+
+  //       console.log("res", response.data.data_body);
+  //       if (
+  // 		  response.data.data_body.survey_clear == false &&
+  // 		  response.data.data_body.analysis_clear == false
+  //       ) {
+  //         console.log("1");
+  //         navigate(`/firstsurvey`, { state: { value: { consulting_id } } });
+  //       }
+  //       if (
+  // 		  response.data.data_body.survey_clear != false &&
+  // 		  response.data.data_body.analysis_clear == false
+  //       ) {
+  //         console.log("2");
+  //         navigate(`/phototest`, { state: { value: { consulting_id } } });
+  //       }
+  //       if (
+  //         response.data.data_body.survey_clear != false &&
+  //         response.data.data_body.analysis_clear != false
+  //       ) {
+  //         btnclick(consulting_id);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to update user info:", error);
+  //     }
+  //   };
   const judge = async (consulting_id) => {
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      const firstresponse = await axios.get(
-        baseurl + `survey/find/${consulting_id}`,
+      const response = await axios.get(
+        baseurl + `report/find/clear-step/${consulting_id}`,
         config
       );
-      const secondresponse = await axios.get(
-        baseurl + `analysis/find/${consulting_id}`,
-        config
-      );
-      console.log("first", firstresponse.data.data_body.content);
-      console.log("second", secondresponse.data.data_body);
-      if (
-        firstresponse.data.data_body.content == null &&
-        secondresponse.data.data_body.content == null
-      ) {
-        console.log("1");
-        navigate(`/firstsurvey`, { state: { value: { consulting_id } } });
-      }
-      if (
-        firstresponse.data.data_body.content != null &&
-        secondresponse.data.data_body.content == null
-      ) {
-        console.log("2");
-        navigate(`/phototest`, { state: { value: { consulting_id } } });
-      }
-      if (
-        firstresponse.data.data_body.content != null &&
-        secondresponse.data.data_body.content != null
-      ) {
-        btnclick(consulting_id);
-      }
+      console.log("res", response.data.data_body);
+      setClearSteps((prevSteps) => ({
+        ...prevSteps,
+        [consulting_id]: response.data.data_body,
+      }));
     } catch (error) {
       console.error("Failed to update user info:", error);
     }
@@ -229,6 +241,13 @@ const MyConsulting = () => {
   useEffect(() => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
+
+  useEffect(() => {
+    consultingData?.forEach((row) => {
+      judge(row.consulting_id);
+    });
+  }, [consultingData]);
+
   // console.log(consultingData)
   const gofinal = async (consulting_id) => {
     navigate("/finalresult", { state: { value: { consulting_id } } });
@@ -251,7 +270,34 @@ const MyConsulting = () => {
               const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
               const formattedDate = format(date, "MM.dd(E)", { locale: ko });
               const formattedTime = format(date, "HH:mm");
-
+              const clearStep = clearSteps[row.consulting_id];
+              let btnText = "바로가기";
+              let navigateTo = "";
+              let navigateState = {};
+              let handleClick = () => {};
+              if (clearStep) {
+                if (!clearStep.survey_clear && !clearStep.analysis_clear) {
+                  btnText = "설문 바로가기";
+                  navigateTo = `/firstsurvey`;
+                  navigateState = {
+                    state: { value: { consulting_id: row.consulting_id } },
+                  };
+                  handleClick = () => navigate(navigateTo, navigateState);
+                } else if (
+                  clearStep.survey_clear &&
+                  !clearStep.analysis_clear
+                ) {
+                  btnText = "AI분석 바로가기";
+                  navigateTo = `/phototest`;
+                  navigateState = {
+                    state: { value: { consulting_id: row.consulting_id } },
+                  };
+                  handleClick = () => navigate(navigateTo, navigateState);
+                } else if (clearStep.survey_clear && clearStep.analysis_clear) {
+                  btnText = "바로가기";
+                  handleClick = () => btnclick(row.consulting_id);
+                }
+              }
               return (
                 <Tr key={index}>
                   <Td>뷰티 솔루션 컨설팅</Td>
@@ -274,9 +320,7 @@ const MyConsulting = () => {
                     <Button>일정 변경</Button>
                   </ButtonTd>
                   <ButtonTd>
-                    <Button onClick={() => judge(row.consulting_id)}>
-                      바로가기
-                    </Button>
+                    <Button onClick={handleClick}>{btnText}</Button>
                   </ButtonTd>
                 </Tr>
               );
