@@ -142,7 +142,7 @@ const ExpertConsulting = () => {
       isCam: "true",
     };
 
-
+ 
     try {
       // 여기에 액세스 토큰을 설정합니다.
       // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';
@@ -190,7 +190,7 @@ const ExpertConsulting = () => {
           {consultingData && consultingData.length > 0 && (
             // consultingData가 존재하고 비어 있지 않은 경우에만 map 함수 호출
             consultingData.map((row, index) => {
-              const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
+              const date = new Date(row.date + " " + row.time);
               const formattedDate = format(date, "MM.dd(E)", { locale: ko });
               const formattedTime = format(date, "HH:mm");
 

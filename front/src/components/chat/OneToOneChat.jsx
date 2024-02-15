@@ -135,7 +135,7 @@ const OneToOneChat = () => {
 
         <Foldpos>
 
-          <VscFoldUp />
+          {/* <VscFoldUp /> */}
 
         </Foldpos>
 

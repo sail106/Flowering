@@ -3,10 +3,16 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Stack } from '@mui/material';
 import ChatItem from './ChatItem';
+import { useRef,useEffect } from 'react';
 
 const ChatList = () => {
   const { messageList } = useSelector(state => state.consult)
-
+  const listBoxRef = useRef(null);
+  useEffect(() => {
+    if (listBoxRef.current) {
+      listBoxRef.current.scrollTop = listBoxRef.current.scrollHeight;  // 스크롤 위치를 맨 아래로 이동
+    }
+  }, [messageList]);  
   const msgSetting = () => {
 
     const msgList = [];
@@ -58,7 +64,7 @@ const ChatList = () => {
   };
 
   return (
-    <ListBox>
+    <ListBox ref={listBoxRef}>
       {msgSetting()}
     </ListBox>
   );
@@ -75,4 +81,3 @@ const ListBox = styled(Stack)`
   margin-top: 6%;
   /* border: 6px solid #decfda99; */
 `;
-`overflow-y: auto;` 
