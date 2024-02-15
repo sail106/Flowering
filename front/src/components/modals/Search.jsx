@@ -61,7 +61,7 @@ const ModalButton = styled.button`
   margin-bottom: 7px;
 `;
 
-function SearchModal(props) {
+function SearchModal({title, onReceiveItem}) {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [autocompleteItems, setAutocompleteItems] = useState([]);
@@ -81,9 +81,7 @@ function SearchModal(props) {
 
     try {
       const response = await axios.get(
-        `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,
-
-        config
+        `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,config
       );
       setAutocompleteItems(response.data.data_body);
       // console.log(autocompleteItems)
@@ -106,13 +104,13 @@ function SearchModal(props) {
   }, [inputValue]);
 
   const handleItemClick = (item) => {
-    setInputValue(item.product_name);
-    props.onReceiveItem(item); // 이 줄을 추가합니다.
+    setInputValue("");
+    onReceiveItem(item); // 이 줄을 추가합니다.
     setOpen(false)
   };
   return (
     <>
-      <ModalButton onClick={() => setOpen(true)}>{props.title} 추천 제품 이름을 입력하세요.</ModalButton>
+      <ModalButton onClick={() => setOpen(true)}>{title} 추천 제품 이름을 입력하세요.</ModalButton>
       <Modal open={open} onClose={() => setOpen(false)} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Sheet
           sx={{
