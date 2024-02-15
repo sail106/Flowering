@@ -79,8 +79,8 @@ const ExpertsIntroduction = () => {
 						tag1={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[0]?.workplace ?? '' : ''}
 						tag2={expert.hash_tag_responses.length > 0 ? expert?.hash_tag_responses[1]?.workplace ?? '' : ''}
 						imgsrc={expert.user_response.profile_img_url}
-						width={'280px'}
-						height={'405px'}
+						width={'300px'}
+						height={'355px'}
 						path={'/expertsProfilecommon/' + expert.consultant_id}
 					/>
 				))}
