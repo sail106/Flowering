@@ -7,10 +7,7 @@ import com.sail.back.product.model.dto.response.ProductResponse;
 import com.sail.back.product.model.entity.Product;
 import com.sail.back.report.model.dto.request.SaveExpertOpinionRequest;
 import com.sail.back.report.model.dto.request.SaveSurveyRequest;
-import com.sail.back.report.model.dto.response.AnalysisResponse;
-import com.sail.back.report.model.dto.response.ExpertOpinionResponse;
-import com.sail.back.report.model.dto.response.ReportResponse;
-import com.sail.back.report.model.dto.response.SurveyResponse;
+import com.sail.back.report.model.dto.response.*;
 import com.sail.back.report.model.dto.response.analysis.*;
 import com.sail.back.report.model.entity.enums.*;
 import jakarta.persistence.*;
@@ -34,6 +31,14 @@ public class Report {
     @OneToOne
     private Consulting consulting;
 
+    @Column(name = "survey_clear")
+    private boolean surveyClear;
+    @Column(name = "analysis_clear")
+    private boolean analysisClear;
+    @Column(name = "analysis_opinion_clear")
+    private boolean expertOpinionClear;
+
+
     @Enumerated(EnumType.STRING)
     @Column(name = "survey_type")
     private SurveyType surveyType;
@@ -50,6 +55,8 @@ public class Report {
     private int faceX2;
     @Column(name = "analysis_face_y2")
     private int faceY2;
+    @Column(length = 500, name = "analysis_face_content")
+    private String faceContent;
 
     //눈 분석 결과 저장
     @Enumerated(EnumType.STRING)
@@ -69,6 +76,8 @@ public class Report {
     private int eyeX2;
     @Column(name = "analysis_eye_y2")
     private int eyeY2;
+    @Column(length = 500, name = "analysis_eye_content")
+    private String eyeContent;
 
     //코 분석 결과 저장
     @Enumerated(EnumType.STRING)
@@ -85,6 +94,8 @@ public class Report {
     private int noseX2;
     @Column(name = "analysis_nose_y2")
     private int noseY2;
+    @Column(length = 500, name = "analysis_nose_content")
+    private String noseContent;
 
 
     @Enumerated(EnumType.STRING)
@@ -101,6 +112,8 @@ public class Report {
     private int lipX2;
     @Column(name = "analysis_lips_y2")
     private int lipY2;
+    @Column(length = 500, name = "analysis_mouth_content")
+    private String mouthContent;
 
 
     @Column(length = 100, name = "analysis_result_pores")
@@ -174,9 +187,10 @@ public class Report {
 
 
     public ReportResponse toResponse(List<ProductResponse> recommendedSkinProducts, List<ProductResponse> recommendedMakeUpProducts){
-        return ReportResponse.builder()
+
+        ReportResponse response = ReportResponse.builder()
                 .reportId(this.reportId)
-                .surveyData(this.surveyType.toResponse())
+                .clearStep(this.toClearStepResponse())
                 .consultingData(this.consulting.toResponse())
                 .analysisData(this.toAnalysisResponse())
                 .expertOpinionData(ExpertOpinionResponse.builder()
@@ -200,10 +214,17 @@ public class Report {
                         .recommendedMakeUpProducts(recommendedMakeUpProducts)
                         .build())
                 .build();
+        if (this.surveyType==null){
+            response.setSurveyData(new SurveyResponse());
+        }else {
+            response.setSurveyData(this.surveyType.toResponse());
+        }
+        return response;
     }
 
     public void surveySave(SaveSurveyRequest request){
         this.surveyType = request.getSurveyType();
+        this.surveyClear = true;
     }
     public SurveyResponse toSurveyResponse(){
         if (this.surveyType==null) return new SurveyResponse();
@@ -211,6 +232,7 @@ public class Report {
     }
 
     public void expertOpinionSave(SaveExpertOpinionRequest request){
+        this.expertOpinionClear = true;
         this.skincareSkinState = request.getSkincareSkinState();
         this.skincareSolution = request.getSkincareSolution();
         this.skincareMorning = request.getSkincareMorning();
@@ -231,26 +253,32 @@ public class Report {
     public void analysisSave(
             FaceShape faceShape,
             XoneYoneXtwoYtwo faceCoordinate,
+            String faceContent,
             NoseSize noseSize,
             AlarSize alarSize,
             XoneYoneXtwoYtwo noseCoordinate,
+            String noseContent,
             EyelidDirection eyelidDirection,
             EyelidWidth eyelidWidth,
             EyelidSize eyelidSize,
             XoneYoneXtwoYtwo eyeCoordinate,
+            String eyeContent,
             LipRatio lipRatio,
             MouthSize mouthSize,
             XoneYoneXtwoYtwo mouthCoordinate,
+            String mouthContent,
             String faceImgUrl,
             Skin skin
             ){
-        
+        this.analysisClear = true;
+
         //얼굴 분석 결과 저장
         this.faceShape = faceShape;
         this.faceX1 = faceCoordinate.getX1();
         this.faceY1 = faceCoordinate.getY1();
         this.faceX2 = faceCoordinate.getX2();
         this.faceY2 = faceCoordinate.getY2();
+        this.faceContent = faceContent;
 
         //눈 분석 결과 저장
         this.eyelidDirection = eyelidDirection;
@@ -260,7 +288,8 @@ public class Report {
         this.eyeY1 = eyeCoordinate.getY1();
         this.eyeX2 = eyeCoordinate.getX2();
         this.eyeY2 = eyeCoordinate.getY2();
-        
+        this.eyeContent = eyeContent;
+
         //코 분석 결과 저장
         this.noseSize = noseSize;
         this.alarSize = alarSize;
@@ -268,6 +297,7 @@ public class Report {
         this.noseY1 = noseCoordinate.getY1();
         this.noseX2 = noseCoordinate.getX2();
         this.noseY2 = noseCoordinate.getY2();
+        this.noseContent = noseContent;
 
         //입 분석 결과
         this.mouthSize = mouthSize;
@@ -276,7 +306,8 @@ public class Report {
         this.lipY1 = mouthCoordinate.getY1();
         this.lipX2 = mouthCoordinate.getX2();
         this.lipY2 = mouthCoordinate.getY2();
-        
+        this.mouthContent = mouthContent;
+
         //이미지 URL 저장
         this.analysisResultPhotoUrl = faceImgUrl;
         
@@ -297,6 +328,7 @@ public class Report {
                         .y1(this.eyeY1)
                         .x2(this.eyeX2)
                         .y2(this.eyeY2)
+                        .eyeContent(this.eyeContent)
                         .build())
                 .faceShapeData(FaceShapeResponse.builder()
                         .faceShape(this.faceShape)
@@ -304,6 +336,7 @@ public class Report {
                         .y1(this.faceY1)
                         .x2(this.faceX2)
                         .y2(this.faceY2)
+                        .faceContent(this.faceContent)
                         .build())
                 .mouthData(MouthResponse.builder()
                         .mouthSize(this.mouthSize)
@@ -312,6 +345,7 @@ public class Report {
                         .y1(this.lipY1)
                         .x2(this.lipX2)
                         .y2(this.lipY2)
+                        .mouthContent(this.mouthContent)
                         .build())
                 .noseData(NoseResponse.builder()
                         .alarSize(this.alarSize)
@@ -320,6 +354,7 @@ public class Report {
                         .y1(this.noseY1)
                         .x2(this.noseX2)
                         .y2(this.noseY2)
+                        .noseContent(this.noseContent)
                         .build())
                 .skinData(SkinResponse.builder()
                         .analysisResultAcne(this.analysisResultAcne)
@@ -329,6 +364,14 @@ public class Report {
                         .analysisResultGlabellaWrinkle(this.analysisResultGlabellaWrinkle)
                         .build())
                 .analysisResultPhotoUrl(this.analysisResultPhotoUrl)
+                .build();
+    }
+
+    public ReportClearStepResponse toClearStepResponse(){
+        return ReportClearStepResponse.builder()
+                .surveyClear(this.surveyClear)
+                .analysisClear(this.analysisClear)
+                .expertOpinionClear(this.expertOpinionClear)
                 .build();
     }
 }

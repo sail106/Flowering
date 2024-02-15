@@ -113,12 +113,12 @@ public class GlobalExceptionHandler {
                 .body(MessageUtils.fail(HttpStatus.BAD_REQUEST.name(),errorMessages.toString()));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<MessageUtils> authExceptionHandler(Exception e){
-        log.error("================================");
-        log.error(Arrays.toString(e.getStackTrace()));
-        log.error("================================");
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
-                .body(MessageUtils.fail(INTERNAL_SERVER_ERROR.name(), "이유를 모르는 서버 에러 입니다. 죄송합니다."));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<MessageUtils> authExceptionHandler(Exception e){
+//        log.error("================================");
+//        log.error(Arrays.toString(e.getStackTrace()));
+//        log.error("================================");
+//        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+//                .body(MessageUtils.fail(INTERNAL_SERVER_ERROR.name(), "이유를 모르는 서버 에러 입니다. 죄송합니다."));
+//    }
 }

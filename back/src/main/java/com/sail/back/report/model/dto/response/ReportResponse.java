@@ -16,6 +16,8 @@ public class ReportResponse {
 
     private Long reportId;
 
+    private ReportClearStepResponse clearStep;
+
     private ConsultingResponse consultingData;
 
     private SurveyResponse surveyData;
@@ -23,4 +25,5 @@ public class ReportResponse {
     private AnalysisResponse analysisData;
 
     private ExpertOpinionResponse expertOpinionData;
+
 }

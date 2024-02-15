@@ -8,6 +8,7 @@ import com.sail.back.product.model.entity.Product;
 import com.sail.back.product.model.entity.enums.ProductType;
 import com.sail.back.product.model.repository.ProductRepository;
 import com.sail.back.report.exception.ReportException;
+import com.sail.back.report.model.dto.response.ReportClearStepResponse;
 import com.sail.back.report.model.dto.response.ReportResponse;
 import com.sail.back.report.model.entity.Report;
 import com.sail.back.report.model.repository.ReportRepository;
@@ -56,6 +57,15 @@ public class ReportService {
                 .collect(Collectors.partitioningBy(response -> response.getRecommendedProductType() == ProductType.SKIN));
 
         return report.toResponse(partitionedProducts.get(true), partitionedProducts.get(false));
+    }
+
+    public ReportClearStepResponse findClearStep(Long consultingId, User user){
+        Consulting consulting = consultingRepository
+                .findById(consultingId).orElseThrow(() -> new ConsultingException(NOT_EXISTS_CONSULTING));
+        if (!(consulting.getUser().getId()==user.getId()||consulting.getConsultant().getUser().getId()==user.getId())) throw new UserException(UserErrorCode.ACCESS_DENIED);
+        Report report = reportRepository
+                .findByConsulting(consulting).orElseThrow(() -> new ReportException(NOT_EXISTS));
+        return report.toClearStepResponse();
     }
 
 }

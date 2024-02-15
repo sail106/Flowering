@@ -22,4 +22,5 @@ public class EyeResponse {
     private int y1;
     private int x2;
     private int y2;
+    private String eyeContent;
 }

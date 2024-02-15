@@ -37,6 +37,7 @@ public enum SurveyType {
             if (this.name()!=null&&!this.name().isEmpty())response.setSurveyType(this.name());
             if (this.content!=null&&!this.content.isEmpty())response.setContent(this.content);
             if (this.skinType!=null&&!this.skinType.isEmpty())response.setSkinType(this.skinType);
+            if (this.strength!=null&&!this.strength.isEmpty()) response.setStrength(this.strength);
             if (this.solution!=null&&!this.solution.isEmpty())response.setSolution(this.solution);
             if (this.weakness!=null&&!this.weakness.isEmpty())response.setWeakness(this.getWeakness());
         }
