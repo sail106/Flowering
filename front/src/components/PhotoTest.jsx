@@ -8,7 +8,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { S3 } from "aws-sdk";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const BackPage = styled(Page)`
   height: auto;
@@ -137,7 +137,8 @@ const PhotoTest = () => {
       }
     });
   }, [webcamRef, User]);
-
+  const location = useLocation();
+	const consultingId = location.state.value.consultingId;
   const fetchData = async () => {
     // const { routeid } = useParams();
     const data = {
@@ -229,7 +230,7 @@ const PhotoTest = () => {
           <img key={imageUrl} src={imageUrl} alt="From Firebase Storage" />
           )}
       </div>
-          <Mybutton>결과 보기</Mybutton>
+          <Mybutton onClick={fetchData}>결과 보기</Mybutton>
     </BackPage>
   );
 };

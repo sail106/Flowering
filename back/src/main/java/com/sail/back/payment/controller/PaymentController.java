@@ -8,10 +8,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -25,6 +22,7 @@ public class PaymentController {
     public IamportResponse<Payment> paymentByImpUid(
             @PathVariable("imp_uid") String imp_uid
     ) throws IamportResponseException, IOException {
+        log.error("결제 요청은 들어옴 ={}",imp_uid);
         return paymentUtils.getIamportClient().paymentByImpUid(imp_uid);
     }
 
