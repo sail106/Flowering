@@ -189,39 +189,6 @@ const MyConsulting = () => {
   };
   const [clearSteps, setClearSteps] = useState({});
 
-  //   const judge = async (consulting_id) => {
-  //     try {
-  //       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  //       const response = await axios.get(
-  //         baseurl + `report/find/clear-step/${consulting_id}`,
-  //         config
-  //       );
-
-  //       console.log("res", response.data.data_body);
-  //       if (
-  // 		  response.data.data_body.survey_clear == false &&
-  // 		  response.data.data_body.analysis_clear == false
-  //       ) {
-  //         console.log("1");
-  //         navigate(`/firstsurvey`, { state: { value: { consulting_id } } });
-  //       }
-  //       if (
-  // 		  response.data.data_body.survey_clear != false &&
-  // 		  response.data.data_body.analysis_clear == false
-  //       ) {
-  //         console.log("2");
-  //         navigate(`/phototest`, { state: { value: { consulting_id } } });
-  //       }
-  //       if (
-  //         response.data.data_body.survey_clear != false &&
-  //         response.data.data_body.analysis_clear != false
-  //       ) {
-  //         btnclick(consulting_id);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to update user info:", error);
-  //     }
-  //   };
   const judge = async (consulting_id) => {
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
@@ -317,9 +284,9 @@ const MyConsulting = () => {
                       <Button>리뷰 작성</Button>
                     </Link>
                   </ButtonTd>
-                  <ButtonTd>
+                  {/* <ButtonTd>
                     <Button>일정 변경</Button>
-                  </ButtonTd>
+                  </ButtonTd> */}
                   <ButtonTd>
                     <Button onClick={handleClick}>{btnText}</Button>
                   </ButtonTd>

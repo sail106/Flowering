@@ -142,7 +142,7 @@ const PhotoTest = () => {
   const fetchData = async () => {
     // const { routeid } = useParams();
     const data = {
-      face_img_url: imageUrl, // 이미지 URL
+      face_img_url: imageUrl
     };
     try {
       const response = axios.patch(`analysis/save/${consultingId}`, data, config)
