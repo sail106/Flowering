@@ -276,7 +276,7 @@ const MyConsulting = () => {
               let handleClick = () => {};
               if (clearStep) {
                 if (!clearStep.survey_clear && !clearStep.analysis_clear) {
-                  btnText = "첫번째 설문 바로가기";
+                  btnText = "설문 바로가기";
                   navigateTo = `/firstsurvey`;
                   navigateState = {
                     state: { value: { consulting_id: row.consulting_id } },
@@ -286,7 +286,7 @@ const MyConsulting = () => {
                   clearStep.survey_clear &&
                   !clearStep.analysis_clear
                 ) {
-                  btnText = "사진 테스트 바로가기";
+                  btnText = "AI분석 바로가기";
                   navigateTo = `/phototest`;
                   navigateState = {
                     state: { value: { consulting_id: row.consulting_id } },
