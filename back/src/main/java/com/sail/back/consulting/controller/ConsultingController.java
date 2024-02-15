@@ -11,6 +11,7 @@ import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.entity.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -105,6 +106,20 @@ public class ConsultingController {
         log.info("컨설팅 번호의 정보 가져오기");
         return ResponseEntity.ok()
                 .body(MessageUtils.success(consultingResponse));
+
+    }
+
+
+    @GetMapping("/getreservation")
+    public ResponseEntity<MessageUtils<Boolean>> getReservationbydatetime(
+            LocalDateTime time) {
+
+        boolean res = consultingService.getReservationbydatetime(time);
+
+        log.info("컨설팅 정보 유무 조회");
+
+        return ResponseEntity.ok()
+                .body(MessageUtils.success(res));
 
     }
 

@@ -74,9 +74,8 @@ public class ConsultingService {
         //이미 전문가가 이시간에 일정이 있는경우
         Optional<Consulting> consultingOptional = consultingRepository.findByConsultantAndTime(consultant, consultingCreateRequest.getTime());
         if (consultingOptional.isPresent()) {
-            throw new ConsultingException(ConsultingErrorCode.CONSULTANT_HAVE_CONSULTING );
+            throw new ConsultingException(ConsultingErrorCode.CONSULTANT_HAVE_CONSULTING);
         }
-
 
 
         Optional<List<Consulting>> consultingListOptional = consultingRepository.findAllByUserIdAndTime(userId, consultingCreateRequest.getTime());
@@ -100,7 +99,7 @@ public class ConsultingService {
 
 
         reportService.createReport(id, user);
- 
+
         return ConsultingCreateResponse.builder()
                 .time(consultingCreateRequest.getTime())
                 .title(consultingCreateRequest.getTitle())
@@ -164,6 +163,16 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         return MessageUtils.success("modifyReservation", "200", "success");
 
+    }
+
+    public boolean getReservationbydatetime(LocalDateTime time) {
+        Optional<Consulting> consulting = consultingRepository.findByTime(time);
+
+        if (consulting.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 //
