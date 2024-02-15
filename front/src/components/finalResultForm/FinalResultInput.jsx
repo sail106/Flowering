@@ -8,7 +8,8 @@ import { ButtonBox } from "../common/Button";
 import Search from "../modals/Search";
 // import ProductList from "../FinalResultInput/ProductList";
 import ConsultingType from "./ConsultingType";
-
+import { IoClose } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
   margin: 80px;
@@ -106,12 +107,13 @@ const FaqAnswer = styled.div`
   /* text-align: center; */
   margin-top: 1%;
   margin-bottom: 2%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 `;
 
 const Image = styled.img`
   display: flex;
   width: 150px;
+  height: 150px;
 `;
 
 const ContentsDiv = styled.div`
@@ -119,11 +121,23 @@ const ContentsDiv = styled.div`
   margin-left: 3%;
 `;
 
+const Close = styled(IoClose)`
+  justify-content: center;
+  margin: 30px;
+  font-size: 30px;
+  cursor: pointer;
+`;
+
 const NameDiv = styled.h3``;
 
 const TextInput = styled.textarea`
-  width: 90%;
+  padding: 10px 0 0 10px;
+  width: 100%;
   height: 45%;
+  &:focus {
+    outline: none;
+  }
+  border-radius: 10px;
 `;
 
 const FinalresultInput = () => {
@@ -154,17 +168,84 @@ const FinalresultInput = () => {
   const [productList, setProductList] = useState(null);
 
   const Token = useSelector((state) => state.auth.logonUser);
-
+  const navigate = useNavigate();
   // 값이 변경될 때마다 호출되는 함수
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
   };
 
+  const [makeup, setMakeup] = useState([]);
+  const [skin, setSkin] = useState([]);
+  const [skindescriptions, setSkinDescriptions] = useState(
+    skin.map((item) => item.product_description || "")
+  );
+  const [makeupdescriptions, setMakeupDescriptions] = useState(
+    makeup.map((item) => item.product_description || "")
+  );
+
+  const skinDescriptionChange = (index, value) => {
+    const newDescriptions = [...skindescriptions];
+    newDescriptions[index] = value;
+    setSkinDescriptions(newDescriptions);
+    const newSkin = [...skin];
+    newSkin[index].product_description = value;
+    setSkin(newSkin);
+  };
+
+  const makeupDescriptionChange = (index, value) => {
+    const newDescriptions = [...makeupdescriptions];
+    newDescriptions[index] = value;
+    setMakeupDescriptions(newDescriptions);
+    const newMakeup = [...makeup];
+    newMakeup[index].product_description = value;
+    setMakeup(newMakeup);
+  };
+
+  useEffect(() => {
+    // setTextInputs(makeup.map(() => ""));
+    setSkinDescriptions(skin.map((item) => item.product_description || ""));
+    setMakeupDescriptions(makeup.map((item) => item.product_description || ""));
+    console.log(skin);
+    console.log(makeup);
+  }, [skin, makeup]);
+
+  const ReceiveSkin = (item) => {
+    console.log(item);
+    setSkin((prevSkin) => [...prevSkin, item]);
+    console.log(makeup);
+  };
+
+  const ReceiveMakeup = (item) => {
+    console.log(item);
+    setMakeup((prevMakeup) => [...prevMakeup, item]);
+    console.log(makeup);
+  };
+
+  // 제거
+  const RemoveSkin = (indexToRemove) => {
+    setSkin((prevSkin) =>
+      prevSkin.filter((_, index) => index !== indexToRemove)
+    );
+  };
+  const RemoveMakeup = (indexToRemove) => {
+    setMakeup((prevMakeup) =>
+      prevMakeup.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  function extractData(inputString) {
+    const splitData = inputString.split("</b>");
+    return splitData[splitData.length - 1]; // 마지막 부분 반환
+  }
+
   const handleSubmit = async () => {
+    const baseurl = import.meta.env.VITE_APP_BASE_URL;
+    const location = useLocation();
+    const consultingId = location.state.value.consultingId;
     try {
       // axios를 사용하여 서버로 데이터 전송
-      const response = await axios.post(
-        "http://i10c106.p.ssafy.io/api/v1/expert-opinion/save/1",
+      const response = await axios.patch(
+        baseurl + `expert-opinion/save/${consultingId}`,
         {
           data: {
             skincare_skin_state: `${skinCondition}`,
@@ -183,47 +264,37 @@ const FinalresultInput = () => {
             hairstyle_haircolor: `${hairColor}`,
             hairstyle_hairstyle: `${hairStyle}`,
             hairstyle_solution: `${hairstyleSolution}`,
-            product_list: productList,
+            productList: [
+              ...makeup.map((item) => ({
+                product_purchase_link: item.product_purchase_link,
+                product_name: item.product_name,
+                product_image_uri: item.product_image_uri,
+                product_description: item.product_description,
+                recommended_product_type: "MAKEUP",
+              })),
+              ...skin.map((item) => ({
+                product_purchase_link: item.product_purchase_link,
+                product_name: item.product_name,
+                product_image_uri: item.product_image_uri,
+                product_description: item.product_description,
+                recommended_product_type: "SKIN",
+              })),
+            ],
           },
           headers: {
             Authorization: `Bearer ${Token.access_token}`,
+            "Content-Type": "application/json",
           },
         }
       );
+
+      navigate(`/`);
       console.log(response.data); // 성공적으로 데이터를 보낸 후 서버의 응답을 로그에 기록
     } catch (error) {
       console.error("Error submitting data:", error);
     }
   };
-  const [makeup, setMakeup] = useState([]);
-  const [textInputs, setTextInputs] = useState(makeup.map(() => ""));
 
-  useEffect(() => {
-    setTextInputs(makeup.map(() => ""));
-    console.log(makeup);
-  }, [makeup]);
-
-  const handleReceiveItems = (item) => {
-    console.log(item);
-    setMakeup((prevMakeup) => [...prevMakeup, item]);
-    console.log(makeup);
-  };
-
-  // 제거
-  const handleRemoveItem = (indexToRemove) => {
-    setMakeup((prevMakeup) =>
-      prevMakeup.filter((_, index) => index !== indexToRemove)
-    );
-  };
-  const handleRemoveItemById = (idToRemove) => {
-    setMakeup((prevMakeup) =>
-      prevMakeup.filter((item) => item.id !== idToRemove)
-    );
-  };
-  function extractData(inputString) {
-    const splitData = inputString.split("</b>");
-    return splitData[splitData.length - 1]; // 마지막 부분 반환
-  }
   return (
     <Card>
       <ConsultingType />
@@ -276,10 +347,10 @@ const FinalresultInput = () => {
             <IoMdSearch />
           </H3>
           <Put>
-            <Search onReceiveItem={handleReceiveItems} title={"스킨케어"} />
+            <Search onReceiveItem={ReceiveSkin} title={"스킨케어"} />
           </Put>
         </ModalBox>
-        {makeup.map((item, index) => {
+        {skin.map((item, index) => {
           const productName = extractData(item.product_name);
 
           return (
@@ -288,15 +359,11 @@ const FinalresultInput = () => {
               <ContentsDiv>
                 <NameDiv>{productName}</NameDiv>
                 <TextInput
-                  value={textInputs[index]}
-                  onChange={(e) => {
-                    const newTextInput = [...textInputs];
-                    newTextInput[index] = e.target.value;
-                    setTextInputs(newTextInput);
-                  }}
+                  value={skindescriptions[index]}
+                  onChange={(e) => skinDescriptionChange(index, e.target.value)}
                 />
-                <p>{item.product_description}</p>
               </ContentsDiv>
+              <Close onClick={() => RemoveSkin(index)} />
             </FaqAnswer>
           );
         })}
@@ -402,10 +469,27 @@ const FinalresultInput = () => {
             <IoMdSearch />
           </H3>
           <Put>
-            <Search title={"메이크업"}></Search>
+            <Search onReceiveItem={ReceiveMakeup} title={"메이크업"} />
           </Put>
         </ModalBox>
-        {/* <ProductList></ProductList> */}
+        {makeup.map((item, index) => {
+          const productName = extractData(item.product_name);
+          return (
+            <FaqAnswer key={index}>
+              <Image src={item.product_image_uri} />
+              <ContentsDiv>
+                <NameDiv>{productName}</NameDiv>
+                <TextInput
+                  value={makeupdescriptions[index]}
+                  onChange={(e) =>
+                    makeupDescriptionChange(index, e.target.value)
+                  }
+                />
+              </ContentsDiv>
+              <Close onClick={() => RemoveMakeup(index)} />
+            </FaqAnswer>
+          );
+        })}
         <Margin2 />
         <H2>헤어스타일</H2>
         <InputSet>
@@ -438,8 +522,7 @@ const FinalresultInput = () => {
         />
         <Margin2 />
         <ButtonContainer>
-          <MyButton1>임시저장</MyButton1>
-          <MyButton>제출하기</MyButton>
+          <MyButton onClick={handleSubmit}>제출하기</MyButton>
         </ButtonContainer>
         <Margin2 />
       </ConsultingContent>
