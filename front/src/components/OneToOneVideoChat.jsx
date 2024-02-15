@@ -575,7 +575,7 @@ const OneToOneVideoChat = () => {
             <SGridContainer container spacing={12}>
               <Left>
 
-                <Header>
+                {/* <Header>
 
                   <IoMdVideocamIcon>
                     <IoMdVideocam />
@@ -585,7 +585,7 @@ const OneToOneVideoChat = () => {
                   <Myspan>
                      컨설팅
                   </Myspan>
-                </Header>
+                </Header> */}
 
                 {
 
