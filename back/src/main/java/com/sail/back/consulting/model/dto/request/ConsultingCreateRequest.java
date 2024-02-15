@@ -25,7 +25,7 @@ import java.time.LocalTime;
 
 public class ConsultingCreateRequest {
 
- 
+
     private LocalTime time; //예약을 몇시에 할건지
     private LocalDate date; //예약을 몇시에 할건지
     private String title; //예약을 몇시에 할건지
@@ -36,7 +36,7 @@ public class ConsultingCreateRequest {
                 .time(this.time)
                 .date(this.date)
                 .title(this.title)
-                .build();
+                .build(); 
     }
 
 }
