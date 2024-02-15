@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
 import styled from "styled-components";
 import axios from "axios";
@@ -96,6 +96,36 @@ const ReviewInput = styled.textarea`
   }
 `;
 
+const FaqAnswer = styled.div`
+  color: #6d6d6d;
+  font-family: Noto Sans KR;
+  width: 100%;
+  line-height: 175%;
+  display: flex;
+  /* justify-content: center; */
+  /* text-align: center; */
+  margin-top: 1%;
+  margin-bottom: 2%;
+  border: 1px solid black;
+`;
+
+const Image = styled.img`
+  display: flex;
+  width: 150px;
+`;
+
+const ContentsDiv = styled.div`
+  width: 100%;
+  margin-left: 3%;
+`;
+
+const NameDiv = styled.h3``;
+
+const TextInput = styled.textarea`
+  width: 90%;
+  height: 45%;
+`;
+
 const FinalresultInput = () => {
   // 각 Input에 대한 상태(state) 정의
   const [skinCondition, setSkinCondition] = useState("");
@@ -133,50 +163,67 @@ const FinalresultInput = () => {
   const handleSubmit = async () => {
     try {
       // axios를 사용하여 서버로 데이터 전송
-      const response = await axios.post("http://i10c106.p.ssafy.io/api/v1/expert-opinion/save/1", {
-        data: {
-          skincare_skin_state: `${skinCondition}`,
-          skincare_solution: `${skincareSolution}`,
-          skincare_morning: `${morningSkincareRoutine}`,
-          skincare_night: `${eveningSkincareRoutine}`,
-          makeup_facetype: `${faceType}`,
-          makeup_facialexpression: `${faceMood}`,
-          makeup_solution: `${makeupSolution}`,
-          makeup_shading: `${shading}`,
-          makeup_blusher: `${blusher}`,
-          makeup_highlighting: `${highlighting}`,
-          makeup_lipmakeup: `${lipMakeup}`,
-          makeup_eyemakeup: `${eyeMakeup}`,
-          makeup_skinmakeup: `${faceMakeup}`,
-          hairstyle_haircolor: `${hairColor}`,
-          hairstyle_hairstyle: `${hairStyle}`,
-          hairstyle_solution: `${hairstyleSolution}`,
-          product_list: productList,
-        },
-        headers: {
-          Authorization: `Bearer ${Token.access_token}`,
-        },
-      });
+      const response = await axios.post(
+        "http://i10c106.p.ssafy.io/api/v1/expert-opinion/save/1",
+        {
+          data: {
+            skincare_skin_state: `${skinCondition}`,
+            skincare_solution: `${skincareSolution}`,
+            skincare_morning: `${morningSkincareRoutine}`,
+            skincare_night: `${eveningSkincareRoutine}`,
+            makeup_facetype: `${faceType}`,
+            makeup_facialexpression: `${faceMood}`,
+            makeup_solution: `${makeupSolution}`,
+            makeup_shading: `${shading}`,
+            makeup_blusher: `${blusher}`,
+            makeup_highlighting: `${highlighting}`,
+            makeup_lipmakeup: `${lipMakeup}`,
+            makeup_eyemakeup: `${eyeMakeup}`,
+            makeup_skinmakeup: `${faceMakeup}`,
+            hairstyle_haircolor: `${hairColor}`,
+            hairstyle_hairstyle: `${hairStyle}`,
+            hairstyle_solution: `${hairstyleSolution}`,
+            product_list: productList,
+          },
+          headers: {
+            Authorization: `Bearer ${Token.access_token}`,
+          },
+        }
+      );
       console.log(response.data); // 성공적으로 데이터를 보낸 후 서버의 응답을 로그에 기록
     } catch (error) {
       console.error("Error submitting data:", error);
     }
   };
   const [makeup, setMakeup] = useState([]);
+  const [textInputs, setTextInputs] = useState(makeup.map(() => ""));
 
-const handleReceiveItems = (item) => {
-  console.log(item);
-  setMakeup((prevMakeup) => [...prevMakeup, item]);
-};
+  useEffect(() => {
+    setTextInputs(makeup.map(() => ""));
+    console.log(makeup);
+  }, [makeup]);
 
-// 제거
-const handleRemoveItem = (indexToRemove) => {
-  setMakeup((prevMakeup) => prevMakeup.filter((_, index) => index !== indexToRemove));
-};
-const handleRemoveItemById = (idToRemove) => {
-  setMakeup((prevMakeup) => prevMakeup.filter((item) => item.id !== idToRemove));
-};
+  const handleReceiveItems = (item) => {
+    console.log(item);
+    setMakeup((prevMakeup) => [...prevMakeup, item]);
+    console.log(makeup);
+  };
 
+  // 제거
+  const handleRemoveItem = (indexToRemove) => {
+    setMakeup((prevMakeup) =>
+      prevMakeup.filter((_, index) => index !== indexToRemove)
+    );
+  };
+  const handleRemoveItemById = (idToRemove) => {
+    setMakeup((prevMakeup) =>
+      prevMakeup.filter((item) => item.id !== idToRemove)
+    );
+  };
+  function extractData(inputString) {
+    const splitData = inputString.split("</b>");
+    return splitData[splitData.length - 1]; // 마지막 부분 반환
+  }
   return (
     <Card>
       <ConsultingType />
@@ -196,7 +243,11 @@ const handleRemoveItemById = (idToRemove) => {
         <Margin2 />
         {/* <hr /> */}
         <H3>전문가 솔루션</H3>
-        <ReviewInput placeholder="솔루션을 입력해주세요" value={skincareSolution} onChange={(e) => handleInputChange(e, setSkincareSolution)} />
+        <ReviewInput
+          placeholder="솔루션을 입력해주세요"
+          value={skincareSolution}
+          onChange={(e) => handleInputChange(e, setSkincareSolution)}
+        />
         <InputSet>
           <H3>아침 :</H3>
           <Put>
@@ -228,11 +279,27 @@ const handleRemoveItemById = (idToRemove) => {
             <Search onReceiveItem={handleReceiveItems} title={"스킨케어"} />
           </Put>
         </ModalBox>
-        {makeup.map((item, index) => (
-        <li key={index}>
-          {item.price}
-        </li>
-      ))}
+        {makeup.map((item, index) => {
+          const productName = extractData(item.product_name);
+
+          return (
+            <FaqAnswer key={index}>
+              <Image src={item.product_image_uri} />
+              <ContentsDiv>
+                <NameDiv>{productName}</NameDiv>
+                <TextInput
+                  value={textInputs[index]}
+                  onChange={(e) => {
+                    const newTextInput = [...textInputs];
+                    newTextInput[index] = e.target.value;
+                    setTextInputs(newTextInput);
+                  }}
+                />
+                <p>{item.product_description}</p>
+              </ContentsDiv>
+            </FaqAnswer>
+          );
+        })}
         <Margin2 />
         <H2>메이크업</H2>
         <InputSet>
@@ -242,7 +309,7 @@ const handleRemoveItemById = (idToRemove) => {
               width="1175px"
               value={faceType}
               onChange={(e) => handleInputChange(e, setFaceType)}
-              placeholder="얼굴 유형을 입력하세요" 
+              placeholder="얼굴 유형을 입력하세요"
             />
           </Put>
         </InputSet>
