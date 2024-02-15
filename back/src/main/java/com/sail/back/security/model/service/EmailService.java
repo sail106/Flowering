@@ -7,6 +7,7 @@ import com.sail.back.security.model.repository.EmailCertificationRepository;
 import com.sail.back.security.utils.CertificationUtils;
 import com.sail.back.security.model.entity.CertificationNumber;
 import com.sail.back.user.exception.UserException;
+import com.sail.back.user.model.entity.User;
 import com.sail.back.user.model.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -38,17 +39,11 @@ public class EmailService {
     @Transactional
     public void sendTempPasswordMail(String email){
         // 가입이 되어있는 회원인지 검증 ( 프론트 로직상 인증하고 들어오지만 재검증)
-        userRepository.findByEmail(email).orElseThrow(()->new UserException(NOT_EXISTS_USER));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserException(NOT_EXISTS_USER));
         sendCodeMail(email);
         //임시 비밀번호 생성
         String tempPassword = certificationUtil.createTempPassword();
         log.debug("임시비밀번호 생성 = {}", tempPassword);
-        //DB에 업데이트
-//        userMapper.modify(
-//                ModifyParam.builder()
-//                        .email(email)
-//                        .password(passwordEncoder.encode(tempPassword))
-//                        .build());
         //메일 생성 및 전송
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -57,7 +52,8 @@ public class EmailService {
             messageHelper.setTo(email);
             messageHelper.setSubject("[FLOWERING] 임시 비밀번호 안내 입니다.");
             messageHelper.setText(makeTempPasswordTemplate(tempPassword),true);
-
+            user.setPassword(passwordEncoder.encode(tempPassword));
+            userRepository.save(user);
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("메일 생성 오류", e);
