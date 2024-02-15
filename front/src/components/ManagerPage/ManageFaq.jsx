@@ -2,8 +2,12 @@ import styled from "styled-components";
 import { IoCloseOutline } from "react-icons/io5";
 import Input from "../common/Input";
 import { GoPlus } from "react-icons/go";
+import { useState, useEffect, Fragment } from "react";
+import axios from "axios";
+import FaQBox from "../faq/FaqBox";
+import { useSelector } from "react-redux";
 
-const Span = styled.th`
+const Span = styled.div`
   font-family: Noto Sans KR;
   font-size: 20px;
   font-style: normal;
@@ -13,7 +17,7 @@ const Margin = styled.div`
   margin: 100px;
 `;
 
-const Answer = styled.th`
+const Answer = styled.div`
   color: #383838;
   font-family: "Noto Sans KR";
   font-size: 17px;
@@ -23,7 +27,7 @@ const Answer = styled.th`
   font-weight: 500;
 `;
 
-const FaqRow = styled.tr`
+const FaqRow = styled.span`
   display: flex;
   justify-content: start;
   margin-right: 330px;
@@ -39,8 +43,7 @@ const GoPlus1 = styled(GoPlus)`
   font-weight: bold;
   font-size: 25px;
   cursor: pointer;
-  position: absolute;
-  right: 405px;
+  margin-top: 15px;
 `;
 
 const ReviewInput = styled.textarea`
@@ -54,6 +57,7 @@ const ReviewInput = styled.textarea`
   resize: none;
   font-size: 14px;
   margin-left: 15px;
+  margin-top: 15px;
 
   &:focus {
     outline: none;
@@ -67,13 +71,11 @@ const Box = styled.div`
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
 `;
 
-const Put = styled.div`
-  margin-top: -10px;
-  margin-bottom: 20px;
-  margin-left: 10px;
+const PutMargin = styled.div`
+  margin-top: 50px;
 `;
 
 const H2 = styled.h3`
@@ -81,91 +83,129 @@ const H2 = styled.h3`
   font-size: 30px;
   padding-left: 8px;
 `;
+
+const InputBox = styled.input`
+  border: 1px solid gray;
+  width: 800px;
+  padding: 15px;
+  &::placeholder {
+    color: #b1b1b1;
+  }
+  border-width: 0 0 1px;
+  &:focus {
+    outline: none;
+  }
+  margin-bottom: 15px;
+  margin-left: 15px;
+`;
+
+const Align = styled.div``;
 // ExpertsList component
 const ManagerFaq = () => {
-
-
-  
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+  const [faqData, setfaqData] = useState([]);
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  };
+  const mydata = async () => {
+    try {
+      const response = await axios.get(baseurl + "faq/list");
+      setfaqData(response.data.data_body); // 데이터를 상태에 저장
+      console.log(response.data.data_body);
+    } catch (error) {
+      console.error("Failed to update user info:", error);
+    }
+  };
+  useEffect(() => {
+    mydata();
+  }, []);
+  const DeleteFaq = async (faq_id) => {
+    try {
+      const response = await axios.delete(
+        baseurl + `faq/delete/${faq_id}`,
+        config
+      );
+      console.log(response);
+      mydata();
+      // 여기에서 필요한 경우 추가적인 상태 업데이트를 수행할 수 있습니다.
+    } catch (error) {
+      console.error("Error deleting FAQ:", error);
+    }
+  };
+  const AddFaq = async () => {
+    const data = {
+      title: question,
+      content: answer,
+    };
+    try {
+      const response = await axios.post(baseurl + "faq/add", data, config);
+      console.log(response);
+      setQuestion('')
+      setAnswer('')
+      mydata();
+      // 필요한 경우 추가적인 상태 업데이트를 수행합니다.
+    } catch (error) {
+      console.error("Error adding FAQ:", error);
+    }
+  };
   return (
-    <table>
-      <tbody>
-        <Box>
-          <FaqRow>
-            <Span>Q. </Span>
-            <Answer>컨설팅은 어떻게 진행되나요?</Answer>
-          </FaqRow>
-          <CloseOutline />
-        </Box>
-
-        <FaqRow>
-          <Span>A. </Span>
-          <Answer>
-            컨설팅은 사전 피부 진단 설문, AI 얼굴형 분석, 전문가 컨설팅, 최종
-            보고서 총 4단계로 진행됩니다. <br />
-            사전 피부 진단 설문 : 사전 설문을 기반으로 피부 진단 테스트를
-            실시합니다. <br />
-            AI 얼굴 분석 : 기본 촬영 데이터를 바탕으로 AI로 얼굴을 분석합니다.{" "}
-            <br />
-            전문가 컨설팅 : 뷰티 전문가가 분석데이터를 바탕으로 화상 컨설팅을
-            진행합니다.
-            <br /> 최종 보고서 : 컨설팅 결과 보고서를 전송해드립니다.
-          </Answer>
-        </FaqRow>
-        <br />
-
-        <Box>
-          <FaqRow>
-            <Span>Q. </Span>
-            <Answer>결과 보고서는 어떻게 받아볼 수 있나요?</Answer>
-          </FaqRow>
-          <CloseOutline />
-        </Box>
-        <FaqRow>
-          <Span>A. </Span>
-          <Answer>
-            결과 보고서는 마이페이지에서 약 3시간 이후에 받아보실 수 있습니다.
-            <br />
-            전문가님이 수기로 작성하다보니 다소 시간이 걸리는 점
-            참고부탁드립니다.
-          </Answer>
-        </FaqRow>
-        <br />
+    <>
+      <Align>
+        {faqData.map((faq, index) => (
+          <Fragment>
+            <Box>
+              <FaqRow>
+                <Span>Q. </Span>
+                <Answer>{faq.title}</Answer>
+              </FaqRow>
+              <CloseOutline onClick={() => DeleteFaq(faq.faq_id)} />
+            </Box>
+            <Box>
+              <FaqRow>
+                <Span>A. </Span>
+                <Answer>
+                  {faq.content.split("\n").map((line, index) => (
+                    <Fragment key={index}>
+                      {line}
+                      <br />
+                    </Fragment>
+                  ))}
+                </Answer>
+              </FaqRow>
+            </Box>
+            <PutMargin/>
+          </Fragment>
+        ))}
 
         <Box>
           <FaqRow>
             <Span>Q. </Span>
-
-            <Answer>전문가는 어떻게 배정되나요?</Answer>
+            <InputBox
+              placeholder="질문을 입력해주세요"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+            />
           </FaqRow>
-          <CloseOutline />
+          <GoPlus1 onClick={AddFaq} />
         </Box>
         <FaqRow>
           <Span>A. </Span>
-          <Answer>
-            전문가는 전문가의 프로필을 보시고 마음에 드는 분을 선택하여 예약하실
-            수 있습니다. <br /> 다양한 분야의 전문성을 가진 전문가분들이 여러분
-            계시기에 고객님의 니즈에 따라 잘 선택해주시기 바랍니다.
-          </Answer>
-        </FaqRow>
-        <br />
-        <Box>
-          <FaqRow>
-            <Span>Q. </Span>
-            <Put>
-              <Input width={"807px"} placeholder="질문을 입력해주세요" />
-            </Put>
-            <GoPlus1 />
-          </FaqRow>
-        </Box>
-        <FaqRow>
-          <Span>A. </Span>
-          <ReviewInput placeholder=" 답변을 입력해주세요" />
+          <ReviewInput
+            placeholder=" 답변을 입력해주세요"
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+          />
         </FaqRow>
         <Margin />
-        <H2>Contents</H2>
-        <hr />
-      </tbody>
-    </table>
+      </Align>
+      <H2>Contents</H2>
+    </>
   );
 };
 

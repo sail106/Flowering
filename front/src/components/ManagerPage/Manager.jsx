@@ -82,7 +82,7 @@ const Manager = () => {
       <ExpertsList />
       <ManagerFaq />
       <Margin />
-      <ContentsBox />
+      {/* <ContentsBox /> */}
       <Margin />
       <Center>
         <div>
