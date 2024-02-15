@@ -626,7 +626,7 @@ const OneToOneVideoChat = () => {
                   // justifyContent: "center",
                   // alignItems: "center",
                   marginLeft: "7%",
-                  marginTop: "7%",
+                  marginTop: "17%",
                 }}
               >
                 {role == CONSULTANT && customer && (
