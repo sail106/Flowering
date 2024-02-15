@@ -69,6 +69,7 @@ const OneToOneVideoChat = () => {
   //   const [OV, setOV] = useState(null)
   const [customerStream, setCustomerStream] = useState(null);
   const { access_token } = useSelector(state => state.auth.logonUser);
+  const User = useSelector((state) => state.auth.logonUser);
 
 
   const sessionConnect = (token) => {  //스트림 생성 
@@ -241,7 +242,7 @@ const OneToOneVideoChat = () => {
   const deleteSubscriber = (streamManager) => {
     console.log('deleteSubscriber')
     if (role == "USER") {
-      navigate('/mypage')
+      navigate(`/mypage/${User.id}`)
     }
     else if (role == CONSULTANT) {
       navigate('/expertconsulting')
@@ -414,7 +415,7 @@ const OneToOneVideoChat = () => {
 
     if (role === "USER" && session) {
       session.disconnect();
-      navigate('/mypage')
+      navigate(`/mypage/${User.id}`)
 
     }
 
@@ -572,7 +573,7 @@ const OneToOneVideoChat = () => {
             // 세션 연결시
 
             <SGridContainer container spacing={12}>
-              <div>
+              <Left>
 
                 <Header>
 
@@ -580,9 +581,9 @@ const OneToOneVideoChat = () => {
                     <IoMdVideocam />
 
                   </IoMdVideocamIcon>
+
                   <Myspan>
                      컨설팅
-
                   </Myspan>
                 </Header>
 
@@ -596,7 +597,7 @@ const OneToOneVideoChat = () => {
                         // justifyContent: "space-between",
                         // gap: 2,
                         width: "100%",
-                        height: "100%",
+                        height: "80%",
                         // display: "flex",
                         // flexDirection: "row",
                         // justifyContent: "center",
@@ -674,7 +675,7 @@ const OneToOneVideoChat = () => {
                   }
                 </SmallChatContainer>
 
-              </div>
+              </Left>
               {/* 
               <Myspan>
                 뷰티 솔루션 컨설팅
@@ -862,6 +863,17 @@ const Header = styled.div`
     margin-top: 10%;
 `;
 
+const Left = styled.div`
+    display: flex;
+    /* justify-content: ; */
+    width: 60%;
+    border-color: #c71d3f;
+    /* margin-top: 10%; */
+    
+    flex-direction: column;
+    justify-content: space-between;
+    
+`;
 const BottomBtn = styled(Button)((props) => ({
   backgroundColor: '#99968D',
   color: 'white',

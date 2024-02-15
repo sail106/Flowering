@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 // import LoginForm from "./components/LoginForm";
 import PasswordFindForm from './components/PasswordFindForm';
+import PasswordFindForm2 from './components/PWFind/PwFindForm2'
 import SpinnerTest from './components/SpinnerTest';
 import SignupForm from './components/signup/SignupForm';
 import SignupPw from './components/signup/SignupPw';
@@ -75,6 +76,7 @@ function App() {
 					<Route path='/' element={<MainPage />} />
 					<Route path='/login' element={<LoginForm />} />
 					<Route path='/pw' element={<PasswordFindForm />} />
+					<Route path='/pw2' element={<PasswordFindForm2 />} />
 					<Route path='/test' element={<SpinnerTest />} />
 					<Route path='/signup' element={<SignupForm />} />
 					<Route path='/signupPw' element={<SignupPw />} />
