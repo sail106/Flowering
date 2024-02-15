@@ -581,7 +581,7 @@ const OneToOneVideoChat = () => {
 
                   </IoMdVideocamIcon>
                   <Myspan>
-                    뷰티 솔루션 컨설팅
+                     컨설팅
 
                   </Myspan>
                 </Header>
@@ -836,10 +836,11 @@ export default OneToOneVideoChat
 // 비디오 컨테이너
 const VideoContainer = styled(Box)({
   width: "100%",
-  height: "100%"
+  height: "100%",
   // borderRadius: "1rem",
   // padding: "1rem",
-  // position:
+  // position:"absolute",
+  
 
 })
 // 내 비디오 컨테이너
@@ -914,7 +915,7 @@ const SGridContainer = styled(Grid)`
     height: 100%; // "90%",
     display: flex;
     width: 70%;
-    /* border: 12px solid #dc121299; */
+    border: 12px solid #dc121299;
     // columnGap: 2,
   `;
 
