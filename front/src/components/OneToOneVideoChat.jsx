@@ -580,9 +580,9 @@ const OneToOneVideoChat = () => {
                     <IoMdVideocam />
 
                   </IoMdVideocamIcon>
+
                   <Myspan>
                      컨설팅
-
                   </Myspan>
                 </Header>
 
@@ -865,9 +865,9 @@ const Header = styled.div`
 const Left = styled.div`
     display: flex;
     /* justify-content: ; */
-    width: 100%;
+    width: 60%;
     border-color: #c71d3f;
-    margin-top: 10%;
+    /* margin-top: 10%; */
     
     flex-direction: column;
     justify-content: space-between;
