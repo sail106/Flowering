@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Calendar from 'react-calendar';
 import moment from "moment";
 import styled from 'styled-components';
+import axios from 'axios';
 
 import 'react-calendar/dist/Calendar.css'
 import { setSelectedDate, setSelectedTime } from '../../store/selectedSlice';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 const StyledCalendar = styled(Calendar)`
   &.react-calendar {
@@ -182,13 +183,39 @@ const MyCalendar = () => {
   // value 상태 감시
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { selectedid } = useSelector(state => state.auth)
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
 
   useEffect(() => {
-    const formattedDate = moment(value).format('YYYY-MM-DD'); // 선택된 날짜를 형식화
-    // setSelectedDate(formattedDate); // 형식화된 날짜를 상태로 설정
-    console.log(formattedDate)
-    dispatch(setSelectedDate(formattedDate));
-    
+    const checkReservation = async () => {
+      const formattedDate = moment(value).format('YYYY-MM-DD'); // 선택된 날짜를 형식화
+      // setSelectedDate(formattedDate); // 형식화된 날짜를 상태로 설정
+      dispatch(setSelectedDate(formattedDate));
+      // 여기서 value가 바뀔때마다 axios 요청을 한다.
+
+      try {
+        const baseurl = import.meta.env.VITE_APP_BASE_URL;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await axios.get(`${baseurl}users/${selectedid}/getreservation?date=${formattedDate}`, config);
+        const isReserved = response.data;
+        console.log("response.data : ", response.data);
+        if (isReserved) {
+          console.log(`Date ${formattedDate} is reserved.`);
+        } else {
+          console.log(`Date ${formattedDate} is available.`);
+        }
+      } catch (error) {
+        console.error("Error while checking reservation:", error);
+      }
+    }
+
+    checkReservation();
+
   }, [value, dispatch]);
 
   return (

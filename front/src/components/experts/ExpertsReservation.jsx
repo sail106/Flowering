@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux"; // useSelector import 추가
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+
 import Title from "../modify/Title";
 import MyCalendar from "../common/MyCalendar";
+import ExpertsRadioButton from "./ExpertsRadioButton";
 import { ButtonBox } from "../common/Button";
-import RadioButton from "../common/RadioButton";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux"; // useSelector import 추가
 import { setSelectedDate, setSelectedTime } from "../../store/selectedSlice";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const MyButton = styled(ButtonBox)`
   border-radius: 300px;
@@ -39,32 +41,14 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-// const StyledRadioButton = styled(RadioButton)`
-//   margin-right: 100px;
-// `;
-
-
 const ExpertsReservation = () => {
   const navigate = useNavigate();
-
-  const { selectedTime, selectedDate } = useSelector(state => state.selected);
-  //   const { role, imageUrl } = useSelector(state => state.auth.logonUser)
-
+  const dispatch = useDispatch();
+  const { selectedDate, selectedTime  } = useSelector(state => state.selected);
   const handleClick = () => {
-
     console.log("Button clicked!" + selectedDate + " " + selectedTime);
-    // 클릭 이벤트에 대한 추가적인 동작 구현
-    navigate('/orderpage')
+    navigate('/orderpage');
   };
-
-  // useEffect(() => {
-  //   console.log('selectedTime', selectedTime);
-  // }, [selectedTime]);
-
-  // const handleRadioChange = (value) => {
-  //   console.log('settt' + selectedTime)
-  //   setSelectedTime(value);
-  // };
 
   return (
     <Cal>
@@ -73,79 +57,55 @@ const ExpertsReservation = () => {
       <Margin2 />
       <MyCalendar />
       <M1>
-        <RadioButton
-          type="radio"
-          id="myradio"
+        <ExpertsRadioButton
           value="10:00"
-          htmlFor="myradio"
-          name="btn"
+          name="myradio"
           margin-right="10px"
-        // onClick={() => setSelectedTime("10:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
+        <ExpertsRadioButton
           value="11:00"
-          type="radio"
-          id="myradio2"
-          htmlFor="myradio2"
-          name="btn"
+          name="myradio2"
           margin-right="10px"
-          onClick={() => setSelectedTime("11:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
+        <ExpertsRadioButton
           value="12:00"
-          type="radio"
-          id="myradio3"
-          htmlFor="myradio3"
-          name="btn"
+          name="myradio3"
           margin-right="10px"
-          onClick={() => setSelectedTime("12:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
+        <ExpertsRadioButton
           value="13:00"
-          type="radio"
-          id="myradio4"
-          htmlFor="myradio4"
-          name="btn"
+          name="myradio4"
           margin-right="10px"
-          onClick={() => setSelectedTime("13:00")}
+          selectedDate={selectedDate}
         />
       </M1>
       <M1>
-        <RadioButton
+        <ExpertsRadioButton
           value="15:00"
-          type="radio"
-          id="myradio5"
-          htmlFor="myradio5"
-          name="btn"
+          name="myradio5"
           margin-right="10px"
-          onClick={() => setSelectedTime("15:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
-          type="radio"
-          id="myradio6"
+        <ExpertsRadioButton
           value="16:00"
-          htmlFor="myradio6"
-          name="btn"
+          name="myradio6"
           margin-right="10px"
-          onClick={() => setSelectedTime("16:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
-          type="radio"
-          id="myradio7"
+        <ExpertsRadioButton
           value="17:00"
-          htmlFor="myradio7"
-          name="btn"
+          name="myradio7"
           margin-right="10px"
-          onClick={() => setSelectedTime("17:00")}
+          selectedDate={selectedDate}
         />
-        <RadioButton
-          type="radio"
-          id="myradio8"
+        <ExpertsRadioButton
           value="18:00"
-          htmlFor="myradio8"
-          name="btn"
+          name="myradio8"
           margin-right="10px"
-          onClick={() => setSelectedTime("18:00")}
+          selectedDate={selectedDate}
         />
       </M1>
       <ButtonContainer>
