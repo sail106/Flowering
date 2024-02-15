@@ -156,7 +156,7 @@ const Order = () => {
 	const { selectedTime, selectedDate } = useSelector((state) => state.selected);
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
-	// alert('dddd' + selectedDate + " " + selectedTime)
+	console.log(selectedDate + 'T' + selectedTime)
 	const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
 	const dispatch = useDispatch();
 
@@ -222,7 +222,8 @@ const Order = () => {
 	}, []);
 
 	const requestPay = () => {
-		console.log('ssss' + selectedDate + 'T' + selectedTime);
+		const formattedDateTime = `${selectedDate}T${selectedTime}`;
+		console.log('Formatted DateTime:', formattedDateTime);
 		const IMP = window?.IMP;
 		IMP.init('imp03878765');
 
@@ -232,20 +233,17 @@ const Order = () => {
 				pg: selectedPaymentId,
 				pay_method: 'card',
 				merchant_uid: new Date().getTime(),
-				name: '테스트 상품',
-				amount: 1,
+				name: `${expertData.payload.user_response.nickname} 뷰티 솔루션 컨설팅`,
+				amount: 89000,
 				buyer_email: `${email}`,
-				buyer_name: `${name}`,
-				buyer_tel: '010-1234-5678',
-				buyer_addr: '서울특별시',
-				buyer_postcode: '123-456',
+				buyer_name: `${name}`
 			},
 			async (rsp) => {
 				try {
 					console.log(rsp);
 					console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
 					// const { data } = await axios.post('http://i10c106.p.ssafy.io:8080/verifyIamport/' + rsp.imp_uid );
-					const { data } = await axios.post(`https://i10c106.p.ssafy.io/api/verifyIamport/${rsp.imp_uid}`);
+					const { data } = await axios.post(`http://localhost:8080/verifyIamport/${rsp.imp_uid}`);
 					if (rsp.paid_amount === data.response.amount) {
 						console.log('in if');
 						try {
@@ -259,14 +257,14 @@ const Order = () => {
 							};
 
 							const response = await axios.post(
-								`${baseurl}consultings/${selectedid}`,
+								`${baseurl}consultings/create/${selectedid}`,
 								{
-									time: selectedDate + 'T' + selectedTime,
-									title: name + '님의 상담',
-									// 다른 필요한 데이터
-								},
+									time: formattedDateTime, // 수정된 날짜 및 시간 사용
+									title: `${name}님의 상담`,
+								  },
 								config
 							);
+							
 								console.log(name)
 							// 요청 성공 시 수행할 작업
 							console.log('Response:', response.data.data_body);

@@ -102,7 +102,7 @@ const ExpertsList = () => {
     };
   
     const handleSquareClick = () => {
-      axios.post(baseurl + 'admin/toconsultant', { email: inputValue }, config)
+      axios.put(baseurl + 'admin/toconsultant', { email: inputValue }, config)
         .then(response => {
           // 요청 성공 시 처리할 로직 작성
           console.log(response.data);
