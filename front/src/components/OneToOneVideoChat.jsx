@@ -858,7 +858,8 @@ const Header = styled.div`
     display: flex;
     /* justify-content: ; */
     width: 100%;
-    border-color: black;
+    border-color: #a217be;
+    margin-top: 10%;
 `;
 
 const BottomBtn = styled(Button)((props) => ({
