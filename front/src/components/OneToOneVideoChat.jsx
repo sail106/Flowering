@@ -175,7 +175,7 @@ const OneToOneVideoChat = () => {
         console.log("session" + session);
         dispatch(setSession(session));
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   // 마이크 권한을 변경하는 함수
@@ -259,12 +259,12 @@ const OneToOneVideoChat = () => {
     if (data.role !== role) {
       console.log(
         "  dataid  role  message role" +
-          " " +
-          data.id +
-          " " +
-          role +
-          data.message +
-          data.role
+        " " +
+        data.id +
+        " " +
+        role +
+        data.message +
+        data.role
       );
 
       dispatch(appendMessageList(data));
@@ -519,9 +519,9 @@ const OneToOneVideoChat = () => {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-            "/openvidu/api/sessions/" +
-            String(sessionId) +
-            "/connection",
+          "/openvidu/api/sessions/" +
+          String(sessionId) +
+          "/connection",
           data,
           {
             headers: {
@@ -761,19 +761,19 @@ const OneToOneVideoChat = () => {
                       )}
                     </CustomVideoButton>
 
-                    <CustomIconButton2 onClick={() => {}}>
+                    <CustomIconButton2 onClick={() => { }}>
                       {<GoShare />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => {}}>
+                    <CustomIconButton2 onClick={() => { }}>
                       {<BsRecord2 />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => {}}>
+                    <CustomIconButton2 onClick={() => { }}>
                       {<LiaComment />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => {}}>
+                    <CustomIconButton2 onClick={() => { }}>
                       {<GoShare />}
                     </CustomIconButton2>
 
@@ -782,8 +782,8 @@ const OneToOneVideoChat = () => {
 
                     {/* <BottomBtn variant="contained"  > */}
 
-                    <ExitButton  onClick={leaveSession}>
-                      <Exit/ >
+                    <ExitButton onClick={leaveSession}>
+                      <Exit />
                     </ExitButton>
 
                     {/* </ButtonGroup> */}
@@ -802,12 +802,12 @@ const OneToOneVideoChat = () => {
                         }}
                       ></Input>
 
-                        <PlanePos>
-                      <IconButton onClick={handleMessage}>
-                        {/* <IconButton  > */}
+                      <PlanePos>
+                        <IconButton onClick={handleMessage}>
+                          {/* <IconButton  > */}
                           <Plane />
-                      </IconButton>
-                        </PlanePos>
+                        </IconButton>
+                      </PlanePos>
                     </IContainer>
                   </MicCamExitGroup>
                 </>
@@ -988,7 +988,7 @@ const CustomMicButton = styled(IconButton)`
   && {
     /* background-color: #f28482; */
     background-color: ${({ isCam }) =>
-      isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
+    isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
 
     color: white;
     &:hover {
@@ -1010,7 +1010,7 @@ const CustomVideoButton = styled(IconButton)`
   && {
     /* background-color: #f28482; */
     background-color: ${({ isCam }) =>
-      isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
+    isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
 
     color: white;
     &:hover {
