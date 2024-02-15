@@ -279,7 +279,7 @@ const MyConsulting = () => {
                   btnText = "설문 바로가기";
                   navigateTo = `/firstsurvey`;
                   navigateState = {
-                    state: { value: { consulting_id: row.consulting_id } },
+                    state: { value: { consultingId: row.consulting_id } },
                   };
                   handleClick = () => navigate(navigateTo, navigateState);
                 } else if (
@@ -289,7 +289,7 @@ const MyConsulting = () => {
                   btnText = "AI분석 바로가기";
                   navigateTo = `/phototest`;
                   navigateState = {
-                    state: { value: { consulting_id: row.consulting_id } },
+                    state: { value: { consultingId: row.consulting_id } },
                   };
                   handleClick = () => navigate(navigateTo, navigateState);
                 } else if (clearStep.survey_clear && clearStep.analysis_clear) {
