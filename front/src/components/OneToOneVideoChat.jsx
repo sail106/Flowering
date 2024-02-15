@@ -58,7 +58,7 @@ const OneToOneVideoChat = () => {
     consultantSessionName
   )
 
-   const [myUserName, setMyUserName] = useState(name)
+  const [myUserName, setMyUserName] = useState(name)
 
   const [publisher, setPublisher] = useState(undefined)
   const [consultant, setConsultant] = useState(undefined)
@@ -563,7 +563,7 @@ const OneToOneVideoChat = () => {
   // ---------- render
   return (
 
-    <SContainer container > 
+    <SContainer container >
       {
 
 
@@ -675,6 +675,25 @@ const OneToOneVideoChat = () => {
                   }
                 </SmallChatContainer>
 
+                <IContainer>
+
+                  <Input
+                    value={msg}
+                    placeholder="내용을 입력하세요..."
+                    onChange={(e) => { setMsg(e.target.value) }}
+                    onKeyUp={(e) => { if (e.key === 'Enter') { handleMessage() } }}
+                  >
+                  </Input>
+
+                  <IconButton onClick={handleMessage} >
+                    {/* <IconButton  > */}
+                    <PlanePos>
+                      <RiSendPlaneLine />
+
+                    </PlanePos>
+                  </IconButton>
+
+                </IContainer>
               </Left>
               {/* 
               <Myspan>
@@ -834,6 +853,21 @@ const OneToOneVideoChat = () => {
 export default OneToOneVideoChat
 // 전체포함 margin으로 띄운 상태
 
+const IContainer = styled(Box)`
+  && {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    background-color:  #ffffff;
+     /* width: ; */
+     /* border: 1px solid black; */
+    height: 17%;
+    margin-top: 13%;
+    top:120%
+   }
+`;
+
 // 비디오 컨테이너
 const VideoContainer = styled(Box)({
   width: "100%",
@@ -841,7 +875,7 @@ const VideoContainer = styled(Box)({
   // borderRadius: "1rem",
   // padding: "1rem",
   // position:"absolute",
-  
+
 
 })
 // 내 비디오 컨테이너
@@ -948,9 +982,9 @@ const SpinnerGrid = styled(Grid)`
 const SmallChatContainer = styled.div`
   position: absolute;
   width: 31%;
-  top: 20%;
+  top: 8%;
   right: 0;
-  /* border: 2px solid black; */
+  border: 12px solid black;
   height: 90%;
   `;
 
