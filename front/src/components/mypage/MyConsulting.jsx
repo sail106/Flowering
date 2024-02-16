@@ -110,8 +110,6 @@ const MyConsulting = () => {
   const [isactive, Setisactive] = useState(null);
 
   const btnclick = async (consulting_id) => {
-    console.log("consulting_id " + consulting_id);
-
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
       console.log("tooo   " + token);
@@ -186,7 +184,6 @@ const MyConsulting = () => {
         baseurl + `report/find/clear-step/${consulting_id}`,
         config
       );
-      console.log("res", response.data.data_body);
       setClearSteps((prevSteps) => ({
         ...prevSteps,
         [consulting_id]: response.data.data_body,
@@ -223,7 +220,6 @@ const MyConsulting = () => {
           {consultingData &&
             consultingData.length > 0 &&
             consultingData?.map((row, index) => {
-				console.log(row.consulting_id)
               const date = new Date(row.date + " " + row.time); // date와 time을 합쳐서 Date 객체 생성
               const formattedDate = format(date, "MM.dd(E)", { locale: ko });
               const formattedTime = format(date, "HH:mm");

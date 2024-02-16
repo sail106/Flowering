@@ -133,7 +133,6 @@ const PhotoTest = () => {
         console.error(err);
       } else {
         const url = data.Location;
-        console.log(url);
         setImageUrl(`${url}?t=${Date.now()}`);
       }
     });
@@ -154,8 +153,6 @@ const PhotoTest = () => {
         data,
         config
       );
-
-      console.log(response);
     } catch (error) {
       console.error("Error :", error);
     } finally {

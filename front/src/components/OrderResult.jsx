@@ -65,7 +65,6 @@ const OrderResult = () => {
 
 	const handleTestButtonClick = () => {
 		// 이동하고자 하는 경로로 navigate 함수를 호출
-		console.log(consultingId);
 		navigate('/firstsurvey', { state: { value: { consultingId } } });
 	};
 	const handleLaterButtonClick = () => {
