@@ -6,7 +6,10 @@
 ## Flowering 링크(웹) : [https://i10c106.p.ssafy.io](https://i10c106.p.ssafy.io)
 ## 소개 영상 보기 : [youtube](https://youtu.be/Eyb5xEbmk2A)
 * 컨설팅
-  * <img src="docs\컨설팅신청.gif" width=350>
+  ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
+
+* 설문
+  ![설문](/uploads/13029f5ed0cf0ece1b5d3f96b859b164/설문.gif)
 
 ## 🌷 프로젝트 진행기간
 2024.01.08(월) ~ 2024.02.16(금) (총 39일) <br>
@@ -121,6 +124,5 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 
 ## 🌷 프로젝트 결과물
-- [포팅메뉴얼](./exec/포팅_메뉴얼.docx)
-- [중간발표자료](./ppt/중간발표.pptx)
-- [최종발표자료](./ppt/최종발표.pptx)
+- [포팅메뉴얼](./exec/Flowering_포팅_메뉴얼.docx)
+- [최종발표자료](./exec/FLOWERING 최종 발표.pptx)
