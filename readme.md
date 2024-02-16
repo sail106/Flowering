@@ -119,7 +119,7 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 ## 🌷 프로젝트 결과물
 - [포팅메뉴얼](/exec/Flowering_포팅_메뉴얼.docx)
-- [최종발표자료](/exec/FLOWERING 최종 발표.pptx)
+- [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
 
 ## 구현 화면
 * 컨설팅
@@ -137,8 +137,6 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 * 컨설팅
   ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
-
-
 
 * 진단결과, 촬영 테스트
   ![포토테스트](/uploads/066aef4f6bc44a835d418d2dd945df68/포토테스트.gif)
