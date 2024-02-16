@@ -8,7 +8,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { S3 } from "aws-sdk";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner.jsx";
 
 const BackPage = styled(Page)`
   height: auto;
@@ -138,21 +139,29 @@ const PhotoTest = () => {
     });
   }, [webcamRef, User]);
   const location = useLocation();
-	const consultingId = location.state.value.consultingId;
+  const consultingId = location.state.value.consultingId;
+  const [isLoading, setLoading] = useState(false); // loading state 초기화
+
   const fetchData = async () => {
-    // const { routeid } = useParams();
+    setLoading(true); // fetch 시작 전에 loading state를 true로 설정
     const data = {
-      face_img_url: imageUrl
+      face_img_url: imageUrl,
     };
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
     try {
-      const response = axios.post(baseurl+`analysis/save/${consultingId}`, data, config)
-      navigate(`/mypage/${User.id}`)
-      console.log(response)
+      const response = await axios.post(
+        baseurl + `analysis/save/${consultingId}`,
+        data,
+        config
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error :", error);
+    } finally {
+      setLoading(false); // fetch가 끝나면 loading state를 false로 설정
+      navigate(`/mypage/${User.id}`);
     }
-    catch (error) {
-        console.error('Error :', error);
-			}
   };
 
   return (
@@ -229,9 +238,11 @@ const PhotoTest = () => {
       <div>
         {imageUrl && (
           <img key={imageUrl} src={imageUrl} alt="From Firebase Storage" />
-          )}
+        )}
       </div>
-          <Mybutton onClick={fetchData}>결과 보기</Mybutton>
+      <Mybutton onClick={fetchData}>
+        {isLoading ? <LoadingSpinner /> : "결과 보기"}
+      </Mybutton>
     </BackPage>
   );
 };
