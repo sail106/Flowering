@@ -98,6 +98,10 @@ const Finish2step = () => {
 	}, [data]); // Re-fetch when Token.access_token changes
 
 
+	const goHome = () => {
+		navigate('/')
+	  };
+	
 	return (
 		<Consulting1stepresultpage>
 			<Margin />
