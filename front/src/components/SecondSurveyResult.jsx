@@ -49,7 +49,6 @@ const SecondServeyResult = () => {
 		})
 			.then((res) => {
 				setData(res.data.data_body);
-				console.log(res.data.data_body);
 			})
 			.catch((error) => {
 				console.log(error);

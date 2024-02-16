@@ -1,12 +1,17 @@
-import Title from "../modify/Title";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
+
+import Title from "../modify/Title";
 import { ButtonBox } from "../common/Button";
 import LEINA from "../../assets/LEINA.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate   } from 'react-router-dom';
 import { useSelector } from "react-redux";
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -24,7 +29,6 @@ const MyButton = styled(ButtonBox)`
 const Cal = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 `;
 
