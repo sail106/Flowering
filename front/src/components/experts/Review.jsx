@@ -6,7 +6,7 @@ import { ButtonBox } from "../common/Button";
 import LEINA from "../../assets/LEINA.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate   } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -93,37 +93,45 @@ const Review = () => {
   const navigate = useNavigate();
   const [consultantData, setConsultantData] = useState([]); // 상태 초기화
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
-  const accessToken = useSelector(state => state.auth.logonUser.access_token);
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
+
   const config = {
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json'
-    }
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
   };
-  
+
   const submitReview = async () => {
     const data = {
-      content:review,
-      star:rating,
-      consultantid:Number(routeid)
+      content: review,
+      star: rating,
+      consultantid: Number(routeid),
     };
+    console.log(data);
     try {
-      const response = await axios.post(baseurl + "review/create",data,config);
-      console.log(response.data)
-      navigate('/'); 
+      const response = await axios.post(
+        baseurl + "review/create",
+        data,
+        config
+      );
+      alert("등록되었습니다!");
+      navigate("/");
       window.scrollTo(0, 0);
     } catch (error) {
       console.error("Failed to submit review:", error);
     }
   };
 
-
   const mydata = async () => {
     try {
-      const response = await axios.get(baseurl + `consultings/${routeid}`, config);
-      console.log(response.data.data_body.consultant_data.user_response);
-      console.log('성공');
-      setConsultantData(response.data.data_body.consultant_data.user_response); // 데이터를 상태에 저장
+      const response = await axios.get(
+        baseurl + `consultant/detail/${routeid}`,
+        config
+      );
+
+      console.log(response.data.data_body); // 데이터를 상태에 저장
+      setConsultantData(response.data.data_body); // 데이터를 상태에 저장
     } catch (error) {
       console.error("Failed to update user info:", error);
     }
@@ -132,17 +140,22 @@ const Review = () => {
   useEffect(() => {
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
+
   return (
     <Cal>
       <Margin2 />
       <Title text={"Review"} />
       <CashCard>
-        <Img src={consultantData.profile_img_url} alt="" />
-        <Cashtext>
-          <p>{consultantData.nickname} 뷰티 솔루션 컨설팅</p>
-          <p>￦89,000</p>
-        </Cashtext>
+        {consultantData.user_response && (
+          <>
+            <Img src={consultantData.user_response.profile_img_url} alt="" />
+            <Cashtext>
+              <p>{consultantData.user_response.nickname} 뷰티 솔루션 컨설팅</p>
+            </Cashtext>
+          </>
+        )}
       </CashCard>
+
       <Margin />
       <Text>컨설팅은 만족하셨나요?</Text>
       <Stack spacing={1} direction="row" alignItems="center">
