@@ -113,7 +113,8 @@ const PhotoTest = () => {
     const base64Image = imageSrc.split(";base64,").pop();
     const byteCharacters = atob(base64Image);
     const byteArrays = [];
-
+    const location = useLocation();
+    const consultingId = location.state.value.consultingId;
     for (let i = 0; i < byteCharacters.length; i++) {
       byteArrays.push(byteCharacters.charCodeAt(i));
     }
@@ -123,7 +124,7 @@ const PhotoTest = () => {
 
     const uploadParams = {
       Bucket: "escapefromfirebase",
-      Key: `${User.id}_phototest`,
+      Key: `${consultingId}_phototest`,
       Body: blob,
       ACL: "private",
     };
@@ -137,8 +138,7 @@ const PhotoTest = () => {
       }
     });
   }, [webcamRef, User]);
-  const location = useLocation();
-  const consultingId = location.state.value.consultingId;
+
   const [isLoading, setLoading] = useState(false); // loading state 초기화
 
   const fetchData = async () => {
