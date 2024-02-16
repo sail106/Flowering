@@ -4,7 +4,7 @@
 
 
 ## Flowering 링크(웹) : [https://i10c106.p.ssafy.io](https://i10c106.p.ssafy.io)
-## 소개 영상 보기 : [youtube]()
+## 소개 영상 보기 : [youtube](https://youtu.be/Eyb5xEbmk2A)
 
 ## 🌷 프로젝트 진행기간
 2024.01.08(월) ~ 2024.02.16(금) (총 39일) <br>
@@ -48,9 +48,9 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 ## 🌷 주요 기술
 
 **FRONT-END**
-- REACT 버전적어주세요
-- VITE
-- Redux
+- REACT `18.2.0`
+- VITE  `5.0.8`
+- Redux `5.0.1`
 - Firebase 
 - OpenVidu
 - ReactWebCam
