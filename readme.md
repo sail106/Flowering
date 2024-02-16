@@ -5,6 +5,8 @@
 
 ## Flowering 링크(웹) : [https://i10c106.p.ssafy.io](https://i10c106.p.ssafy.io)
 ## 소개 영상 보기 : [youtube](https://youtu.be/Eyb5xEbmk2A)
+* 컨설팅
+  * <img src="![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)" width=350>
 
 ## 🌷 프로젝트 진행기간
 2024.01.08(월) ~ 2024.02.16(금) (총 39일) <br>
