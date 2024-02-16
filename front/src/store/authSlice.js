@@ -285,7 +285,6 @@ const authSlice = createSlice({
 
 			.addCase(UserInfo.rejected, (state) => {
 				state.status = 'failed';
-				console.log('실패!');
 			});
 	},
 });
