@@ -45,8 +45,8 @@ const ColoredText = styled.span`
 
 const FirstSurveyResultPage = (props) => {
   const data = props.data;
-  const mbtiLetters = data.survey_type.split(""); // survey_type을 한 글자씩 나누어 배열로 만듭니다.
-
+  const mbtiLetters = data?.survey_type?.split("")??[]; // survey_type을 한 글자씩 나누어 배열로 만듭니다.
+  
   return (
     <Consulting1stepresultpage>
       <Margin />
