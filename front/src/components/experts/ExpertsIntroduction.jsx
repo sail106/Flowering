@@ -25,7 +25,6 @@ const ExpertsIntroduction = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	useEffect(() => {
-		console.log('ssss');
 		const fetchData = async () => {
 			try {
 				const token = access_token; // 여기에 액세스 토큰을 설정합니다.
@@ -40,7 +39,6 @@ const ExpertsIntroduction = () => {
 				const response = await axios.get(baseurl + 'consultant/list', config);
 
 				// 요청 성공 시 수행할 작업
-				console.log('data_body  :', response.data.data_body);
 
 				setExpertsData(response.data.data_body); // response.data를 expertsData에 저장
 				dispatch(setExpertList(response.data.data_body));
@@ -56,8 +54,6 @@ const ExpertsIntroduction = () => {
 	}, [access_token]);
 
 	if (expertsData.length > 0) {
-		console.log('succcc' + JSON.stringify(expertsData[1]));
-
 		if (expertsData[1]?.hash_tag_responses.length ?? '' > 0) {
 			console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
 		}
