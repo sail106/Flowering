@@ -113,8 +113,6 @@ const PhotoTest = () => {
     const base64Image = imageSrc.split(";base64,").pop();
     const byteCharacters = atob(base64Image);
     const byteArrays = [];
-    const location = useLocation();
-    const consultingId = location.state.value.consultingId;
     for (let i = 0; i < byteCharacters.length; i++) {
       byteArrays.push(byteCharacters.charCodeAt(i));
     }
