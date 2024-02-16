@@ -39,12 +39,12 @@ const Text = styled.div`
 `;
 
 const StyledSmallDiv1 = styled(StyledSmallDiv)`
-  top: 1070px;
+  top: 970px;
   left: 250px;
 `;
 
 const StyledSmallDiv2 = styled(StyledSmallDiv)`
-  top: 1070px;
+  top: 970px;
   left: 340px;
 `;
 const H2 = styled.h2`
@@ -146,9 +146,9 @@ const ExpertsProfile = () => {
 
         </p>
         <Margin />
-        <h2>경력사항</h2>
+        {/* <h2>경력사항</h2>
         <p>아모레퍼시픽 | 2018.08 ~ 2022.03</p>
-        <Margin />
+        <Margin /> */}
         <h2>전문분야</h2>
 
         <StyledSmallDiv1>{expertData?.payload?.hash_tags[0]?.workplace ?? ''}</StyledSmallDiv1>
