@@ -223,7 +223,7 @@ const SecondResultPage = (props) => {
           <FaceContentPart>
             <FaceImageBox>
               <ImageCutter
-                imageUrl="src\assets\261143_20210325180240_500.jpg"
+                imageUrl={data.analysis_result_photo_url}
                 topLeft={{ x: data.eye_data.x1, y: data.eye_data.y1 }}
                 bottomLeft={{ x: data.eye_data.x2, y: data.eye_data.y2 }}
               />
@@ -238,7 +238,7 @@ const SecondResultPage = (props) => {
           <FaceContentPart>
             <FaceImageBox>
               <ImageCutter
-                imageUrl="src\assets\261143_20210325180240_500.jpg"
+                imageUrl={data.analysis_result_photo_url}
                 topLeft={{ x: data.mouth_data.x1, y: data.mouth_data.y1 }}
                 bottomLeft={{ x: data.mouth_data.x2, y: data.mouth_data.y2 }}
               />
@@ -253,7 +253,7 @@ const SecondResultPage = (props) => {
           <FaceContentPart>
             <FaceImageBox>
               <ImageCutter
-                imageUrl="src\assets\261143_20210325180240_500.jpg"
+                imageUrl={data.analysis_result_photo_url}
                 topLeft={{ x: data.nose_data.x1, y: data.nose_data.y1 }}
                 bottomLeft={{ x: data.nose_data.x2, y: data.nose_data.y2 }}
               />
