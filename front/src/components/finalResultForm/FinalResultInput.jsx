@@ -244,10 +244,20 @@ const FinalresultInput = () => {
       "Content-Type": "application/json",
     },
   };
+
   const handleSubmit = async () => {
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
     console.log('s',skin)
     console.log('m',makeup)
+    makeup.forEach(item => {
+      item.product_name = extractData(item.product_name);
+    });
+    skin.forEach(item => {
+      item.product_name = extractData(item.product_name);
+    });
+    console.log('sssss',skin)
+    console.log('mmmmm',makeup)
+    
     const data = {skincare_skin_state: `${skinCondition}`,
     skincare_solution: `${skincareSolution}`,
     skincare_morning: `${morningSkincareRoutine}`,
@@ -264,23 +274,24 @@ const FinalresultInput = () => {
     hairstyle_haircolor: `${hairColor}`,
     hairstyle_hairstyle: `${hairStyle}`,
     hairstyle_solution: `${hairstyleSolution}`,
-    productList: [
+    product_list: [
       ...makeup.map((item) => ({
         product_purchase_link: item.product_purchase_link,
         product_name: item.product_name,
         product_image_uri: item.product_image_uri,
         product_description: item.product_description,
-        recommended_product_type: "MAKEUP",
+        recommended_product_type: "BEAUTY"
       })),
       ...skin.map((item) => ({
         product_purchase_link: item.product_purchase_link,
         product_name: item.product_name,
         product_image_uri: item.product_image_uri,
         product_description: item.product_description,
-        recommended_product_type: "SKIN",
+        recommended_product_type: "SKIN"
       })),
     ]}
     console.log(data)
+    console.log(accessToken)
     try {
       // axios를 사용하여 서버로 데이터 전송
       const response = await axios.post(
