@@ -168,6 +168,7 @@ const FinalresultInput = () => {
   const [productList, setProductList] = useState(null);
 
   const Token = useSelector((state) => state.auth.logonUser);
+  const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const navigate = useNavigate();
   // 값이 변경될 때마다 호출되는 함수
   const handleInputChange = (e, setter) => {
@@ -205,20 +206,18 @@ const FinalresultInput = () => {
     // setTextInputs(makeup.map(() => ""));
     setSkinDescriptions(skin.map((item) => item.product_description || ""));
     setMakeupDescriptions(makeup.map((item) => item.product_description || ""));
-    console.log(skin);
-    console.log(makeup);
   }, [skin, makeup]);
-
+  
   const ReceiveSkin = (item) => {
-    console.log(item);
     setSkin((prevSkin) => [...prevSkin, item]);
-    console.log(makeup);
+    console.log(skin);
+    
   };
-
+  
   const ReceiveMakeup = (item) => {
-    console.log(item);
     setMakeup((prevMakeup) => [...prevMakeup, item]);
     console.log(makeup);
+
   };
 
   // 제거
@@ -237,55 +236,55 @@ const FinalresultInput = () => {
     const splitData = inputString.split("</b>");
     return splitData[splitData.length - 1]; // 마지막 부분 반환
   }
-
+  const location = useLocation();
+  const consultingId = location.state.value.consultingId;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  };
   const handleSubmit = async () => {
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
-    const location = useLocation();
-    const consultingId = location.state.value.consultingId;
+    console.log('s',skin)
+    console.log('m',makeup)
+    const data = {skincare_skin_state: `${skinCondition}`,
+    skincare_solution: `${skincareSolution}`,
+    skincare_morning: `${morningSkincareRoutine}`,
+    skincare_night: `${eveningSkincareRoutine}`,
+    makeup_facetype: `${faceType}`,
+    makeup_facialexpression: `${faceMood}`,
+    makeup_solution: `${makeupSolution}`,
+    makeup_shading: `${shading}`,
+    makeup_blusher: `${blusher}`,
+    makeup_highlighting: `${highlighting}`,
+    makeup_lipmakeup: `${lipMakeup}`,
+    makeup_eyemakeup: `${eyeMakeup}`,
+    makeup_skinmakeup: `${faceMakeup}`,
+    hairstyle_haircolor: `${hairColor}`,
+    hairstyle_hairstyle: `${hairStyle}`,
+    hairstyle_solution: `${hairstyleSolution}`,
+    productList: [
+      ...makeup.map((item) => ({
+        product_purchase_link: item.product_purchase_link,
+        product_name: item.product_name,
+        product_image_uri: item.product_image_uri,
+        product_description: item.product_description,
+        recommended_product_type: "MAKEUP",
+      })),
+      ...skin.map((item) => ({
+        product_purchase_link: item.product_purchase_link,
+        product_name: item.product_name,
+        product_image_uri: item.product_image_uri,
+        product_description: item.product_description,
+        recommended_product_type: "SKIN",
+      })),
+    ]}
+    console.log(data)
     try {
       // axios를 사용하여 서버로 데이터 전송
       const response = await axios.post(
-        baseurl + `expert-opinion/save/${consultingId}`,
-        {
-          data: {
-            skincare_skin_state: `${skinCondition}`,
-            skincare_solution: `${skincareSolution}`,
-            skincare_morning: `${morningSkincareRoutine}`,
-            skincare_night: `${eveningSkincareRoutine}`,
-            makeup_facetype: `${faceType}`,
-            makeup_facialexpression: `${faceMood}`,
-            makeup_solution: `${makeupSolution}`,
-            makeup_shading: `${shading}`,
-            makeup_blusher: `${blusher}`,
-            makeup_highlighting: `${highlighting}`,
-            makeup_lipmakeup: `${lipMakeup}`,
-            makeup_eyemakeup: `${eyeMakeup}`,
-            makeup_skinmakeup: `${faceMakeup}`,
-            hairstyle_haircolor: `${hairColor}`,
-            hairstyle_hairstyle: `${hairStyle}`,
-            hairstyle_solution: `${hairstyleSolution}`,
-            productList: [
-              ...makeup.map((item) => ({
-                product_purchase_link: item.product_purchase_link,
-                product_name: item.product_name,
-                product_image_uri: item.product_image_uri,
-                product_description: item.product_description,
-                recommended_product_type: "MAKEUP",
-              })),
-              ...skin.map((item) => ({
-                product_purchase_link: item.product_purchase_link,
-                product_name: item.product_name,
-                product_image_uri: item.product_image_uri,
-                product_description: item.product_description,
-                recommended_product_type: "SKIN",
-              })),
-            ],
-          },
-          headers: {
-            Authorization: `Bearer ${Token.access_token}`,
-            "Content-Type": "application/json",
-          },
-        }
+        baseurl + `expert-opinion/save/${consultingId}`,data,config
       );
 
       navigate(`/`);
