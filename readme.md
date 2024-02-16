@@ -57,7 +57,7 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 - Styled Component
 
 **BACK-END**
-- Springboot 버전 적어주세요
+- Springboot `3.2.0`
 - Spring Data JPA
 - Spring Security
 - Spring Validation
