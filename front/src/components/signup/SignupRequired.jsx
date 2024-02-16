@@ -9,7 +9,7 @@ import CenterContainer from "../common/CenterContainer";
 import Button from "../common/Button";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { UserInfo } from "../../store/authSlice";
@@ -24,13 +24,6 @@ const SignupRequired = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.auth.logonUser.access_token);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const userInfo = useSelector((state) => state.auth.userInfo);
-
-  useEffect(() => {
-    if (userInfo) {
-      console.log("userInfo updated : ", userInfo);
-    }
-  }, [userInfo]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,11 +51,9 @@ const SignupRequired = () => {
         userData,
         config
       );
-      // console.log(response.data);
       dispatch(UserInfo());
       alert("회원가입 완료!");
-      console.log("userInfo : ", userInfo);
-      // navigate("/");
+      navigate("/");
     } catch (error) {
       console.error("Error occurred:", error);
     }
