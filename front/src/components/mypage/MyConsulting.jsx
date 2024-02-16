@@ -145,8 +145,6 @@ const MyConsulting = () => {
   };
 
   useEffect(() => {
-    console.log("isactive", isactive);
-
     if (isactive === null) {
       // isactive가 null일 때는 아무것도 하지 않음
       return;
@@ -170,7 +168,6 @@ const MyConsulting = () => {
       "Content-Type": "application/json",
     },
   };
-  console.log(config.headers)
   const mydata = async () => {
     try {
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
@@ -180,8 +177,6 @@ const MyConsulting = () => {
         baseurl + "users/myallconsultinglist",
         config
       );
-      console.log(response.data);
-      console.log("성공");
       setConsultingData(response.data.data_body); // 데이터를 상태에 저장
     } catch (error) {
       console.error("Failed to update user info:", error);
