@@ -171,6 +171,7 @@ const MyConsulting = () => {
         config
       );
       setConsultingData(response.data.data_body); // 데이터를 상태에 저장
+      console.log(response.data.data_body)
     } catch (error) {
       console.error("Failed to update user info:", error);
     }
@@ -265,7 +266,7 @@ const MyConsulting = () => {
                     </FinalButton>
                   </ButtonTd>
                   <ButtonTd>
-                    <Link to={`/review/${row.consulting_id}`} reloadDocument>
+                    <Link to={`/review/${row.consultant_response.consultant_id}`} reloadDocument>
                       <Button>리뷰 작성</Button>
                     </Link>
                   </ButtonTd>
