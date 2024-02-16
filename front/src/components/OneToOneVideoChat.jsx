@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
 import { BsRecord2 } from "react-icons/bs";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { ButtonBox } from "./common/Button";
@@ -100,6 +98,7 @@ const OneToOneVideoChat = () => {
 
       .then(() => {
 
+
         let publisher = OV.initPublisher(undefined, {
           // 오디오 소스: undefined로 설정하여 기본 오디오 장치 사용
           audioSource: undefined,
@@ -132,6 +131,7 @@ const OneToOneVideoChat = () => {
         setPublisher(publisher); // stream 생성....
 
         if (role === "USER") {
+
           dispatch(setCustomer(publisher));
 
           const persondata = {
@@ -154,6 +154,7 @@ const OneToOneVideoChat = () => {
           //payload 에 consultingid 가 온다.
           dispatch(getCustomer(consultantSessionName))
             .then((response) => {
+
             })
             .catch((error) => {
               console.error("getCustomer 액션 실패:", error);
@@ -161,19 +162,22 @@ const OneToOneVideoChat = () => {
           // 위는 customer 가져오는 로직
         }
 
+
         dispatch(setSession(session));
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   // 마이크 권한을 변경하는 함수
   const handleAudioPermissionChange = () => {
     // dispatch(setAudioPermission(isMic)); // 토글
+
   };
 
   // 카메라 권한을 변경하는 함수
   const handleVideoPermissionChange = () => {
     // dispatch(setVideoPermission(isCam)); // 토글
+
   };
 
   useEffect(() => {
@@ -183,6 +187,7 @@ const OneToOneVideoChat = () => {
   }, [isMic, isCam]);
 
   useEffect(() => {
+
   }, [role]);
 
   //   const onbeforeunload = () => {
@@ -217,6 +222,7 @@ const OneToOneVideoChat = () => {
   }, []);
 
   const deleteSubscriber = (streamManager) => {
+
     if (role == "USER") {
       navigate(`/mypage/${User.id}`);
     } else if (role == CONSULTANT) {
@@ -235,7 +241,8 @@ const OneToOneVideoChat = () => {
   const textChat = (event) => {
     const data = JSON.parse(event.data);
 
-
+    if (data.role !== role) {
+      
 
       dispatch(appendMessageList(data));
     }
@@ -243,14 +250,15 @@ const OneToOneVideoChat = () => {
 
   useEffect(() => {
 
-    if (session) {
 
+    if (session) {
+    
 
       session.on("streamCreated", streamCreated);
-
+   
 
       session.on("streamDestroyed", streamDestroyed);
-
+    
 
       session.on("exception", exception);
 
@@ -266,6 +274,7 @@ const OneToOneVideoChat = () => {
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole;
 
+
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber));
 
@@ -278,6 +287,7 @@ const OneToOneVideoChat = () => {
         dispatch(getConsultant(consultantSessionName))
           .then((response) => {
 
+
             const Consultant = {
               ///////////////
               // imageUrl: response.data_body.imageUrl,
@@ -286,6 +296,7 @@ const OneToOneVideoChat = () => {
               isMic: "true",
               isCam: "true",
             };
+ 
 
             dispatch(appendParticipantList(Consultant));
           })
@@ -320,7 +331,7 @@ const OneToOneVideoChat = () => {
 
   //   // 컨설턴트, 고객 종료시 분리 필요
   const leaveSession = () => {
-
+ 
     // role==CONSULTANT &&
 
     // dispatch(resetParticipant)
@@ -338,12 +349,12 @@ const OneToOneVideoChat = () => {
           },
         };
         const baseurl = import.meta.env.VITE_APP_BASE_URL;
-
+        
         const url = `${baseurl}consultings/deactivate/${consultantSessionName}`;
 
         const response = axios.put(url, null, config);
 
-   
+
       } catch (error) {
         console.error("Error :", error);
         // alert('결제 실패');
@@ -412,6 +423,7 @@ const OneToOneVideoChat = () => {
   //    */
 
   const getToken = () => {
+
     return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
@@ -440,9 +452,9 @@ const OneToOneVideoChat = () => {
 
         .catch((response) => {
 
-
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
+
             resolve(sessionId);
           }
         });
@@ -450,7 +462,6 @@ const OneToOneVideoChat = () => {
   };
 
   const createToken = (sessionId) => {
-
     return new Promise((resolve, reject) => {
       const data = {
         type: "WEBRTC",
@@ -471,9 +482,9 @@ const OneToOneVideoChat = () => {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-          "/openvidu/api/sessions/" +
-          String(sessionId) +
-          "/connection",
+            "/openvidu/api/sessions/" +
+            String(sessionId) +
+            "/connection",
           data,
           {
             headers: {
@@ -486,7 +497,6 @@ const OneToOneVideoChat = () => {
           }
         )
         .then((response) => {
-
           resolve(response.data.token);
         })
         .catch((error) => reject(error));
@@ -494,7 +504,6 @@ const OneToOneVideoChat = () => {
   };
 
   const handleMessage = () => {
-
     if (session && msg.length > 0) {
       const mine = {
         id: messageId,
@@ -571,13 +580,13 @@ const OneToOneVideoChat = () => {
                   // justifyContent: "space-between",
                   // gap: 2,
                   width: "100%",
-                  height: "100%",
+                  height: "80%",
                   // display: "flex",
                   // flexDirection: "row",
                   // justifyContent: "center",
                   // alignItems: "center",
-                  marginLeft: "13%",
-                  marginTop: "10%",
+                  marginLeft: "7%",
+                  marginTop: "7%",
                 }}
               >
                 {role == CONSULTANT && customer && (
@@ -598,7 +607,7 @@ const OneToOneVideoChat = () => {
               </Grid>
             ) : (
               <SpinnerGrid item xs={12} sm={2}>
-                <CircularProgress />``
+                <CircularProgress />
               </SpinnerGrid>
             )}
 
@@ -712,19 +721,19 @@ const OneToOneVideoChat = () => {
                       )}
                     </CustomVideoButton>
 
-                    <CustomIconButton2 onClick={() => { }}>
+                    <CustomIconButton2 onClick={() => {}}>
                       {<GoShare />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => { }}>
+                    <CustomIconButton2 onClick={() => {}}>
                       {<BsRecord2 />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => { }}>
+                    <CustomIconButton2 onClick={() => {}}>
                       {<LiaComment />}
                     </CustomIconButton2>
 
-                    <CustomIconButton2 onClick={() => { }}>
+                    <CustomIconButton2 onClick={() => {}}>
                       {<GoShare />}
                     </CustomIconButton2>
 
@@ -733,8 +742,8 @@ const OneToOneVideoChat = () => {
 
                     {/* <BottomBtn variant="contained"  > */}
 
-                    <ExitButton onClick={leaveSession}>
-                      <Exit />
+                    <ExitButton  onClick={leaveSession}>
+                      <Exit/ >
                     </ExitButton>
 
                     {/* </ButtonGroup> */}
@@ -753,12 +762,12 @@ const OneToOneVideoChat = () => {
                         }}
                       ></Input>
 
-                      <PlanePos>
-                        <IconButton onClick={handleMessage}>
-                          {/* <IconButton  > */}
+                        <PlanePos>
+                      <IconButton onClick={handleMessage}>
+                        {/* <IconButton  > */}
                           <Plane />
-                        </IconButton>
-                      </PlanePos>
+                      </IconButton>
+                        </PlanePos>
                     </IContainer>
                   </MicCamExitGroup>
                 </>
@@ -781,7 +790,7 @@ const Plane = styled(RiSendPlaneLine)`
 const PlanePos = styled.div`
   && {
     position: absolute;
-    right: -91%;
+    right: -68%;
     top: 26%;
   }
 `;
@@ -808,7 +817,7 @@ const IContainer = styled(Box)`
     height: 87%;
     /* margin-top: 13%; */
     margin-left: 61%;
-    top: 80%;
+    top: 100%;
     /* background-color: aliceblue; */
   }
 `;
@@ -823,10 +832,10 @@ const VideoContainer = styled(Box)({
 });
 // 내 비디오 컨테이너
 const MyVideoContainer = styled(Box)({
-  width: "50%",
+  width: "23%",
   position: "absolute",
-  top: 460,
-  left: 10,
+  top: 488,
+  left: 290,
   right: 0,
   bottom: 0,
   margin: "auto",
@@ -917,8 +926,8 @@ const SpinnerGrid = styled(Grid)`
 
 const SmallChatContainer = styled.div`
   position: absolute;
-  width: 30%;
-  top: 11%;
+  width: 31%;
+  top: 12%;
   right: 0;
   /* border: 12px solid black; */
   height: 90%;
@@ -939,7 +948,7 @@ const CustomMicButton = styled(IconButton)`
   && {
     /* background-color: #f28482; */
     background-color: ${({ isCam }) =>
-    isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
+      isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
 
     color: white;
     &:hover {
@@ -961,7 +970,7 @@ const CustomVideoButton = styled(IconButton)`
   && {
     /* background-color: #f28482; */
     background-color: ${({ isCam }) =>
-    isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
+      isCam ? "#df6060" : "#0c0c0c"}; // Conditional background color
 
     color: white;
     &:hover {
@@ -1019,12 +1028,12 @@ const MicCamExitGroup = styled.div`
   display: flex;
   flex-direction: row;
   gap: 3;
-  width: 688px;
+  width: 888px;
   background-color: #ffffff;
   position: absolute;
   bottom: 0;
   height: 11%;
   align-items: center;
-  left: 12%;
-  top: 89%;
+  left: 0;
+  top: 100%;
 `;
