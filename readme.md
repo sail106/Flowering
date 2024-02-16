@@ -5,11 +5,7 @@
 
 ## Flowering 링크(웹) : [https://i10c106.p.ssafy.io](https://i10c106.p.ssafy.io)
 ## 소개 영상 보기 : [youtube](https://youtu.be/Eyb5xEbmk2A)
-* 컨설팅
-  ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
 
-* 설문
-  ![설문](/uploads/13029f5ed0cf0ece1b5d3f96b859b164/설문.gif)
 
 ## 🌷 프로젝트 진행기간
 2024.01.08(월) ~ 2024.02.16(금) (총 39일) <br>
@@ -41,7 +37,6 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 > 사람들과 함께 나만의 뷰티 팁이나 피부 관련 고민을 나눌 수 있는 화상 커뮤니티입니다.
 - **내 커뮤니티 개설**
   - 내가 원하는 시간에 맞춰서 사람들에게 꿀팁을 공유할 수 있어요.
-  - 
 
 ### ✔ CONTENTS
 > 숨겨진 피부 관리 꿀팁, 유행하는 화장법에 대한 정보를 얻을 수 있어요.
@@ -118,11 +113,18 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 - [아키텍처](./docs/서비스_아키텍처.md)
 - [목업](./docs/목업.md)
 - [컨벤션](./docs/컨벤션.md)
-- [API](./docs/API.md)
+- [API 명세서](./docs/API.md)
 - [ERD](./docs/ERD.md)
-- [회의록](./docs/회의록.md)
-
+- [회의록 및 회고록](./docs/회의록.md)
+- [트러블슈팅](./docs/버그리포트.md)
 
 ## 🌷 프로젝트 결과물
 - [포팅메뉴얼](./exec/Flowering_포팅_메뉴얼.docx)
 - [최종발표자료](./exec/FLOWERING 최종 발표.pptx)
+
+## 구현 화면
+* 컨설팅
+  ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
+
+* 설문
+  ![설문](/uploads/13029f5ed0cf0ece1b5d3f96b859b164/설문.gif)
