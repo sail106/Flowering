@@ -92,7 +92,6 @@ const SignupPw = () => {
 
     const response = await axios.post(`${baseurl}users/regist`, body);
 
-    console.log(response);
     // 로그인 시키기
     dispatch(
       loginUser({
