@@ -581,7 +581,7 @@ const ExpertsProfileRegistration = () => {
           )}
         </InputContainer>
 
-        <Container>경력 사항</Container>
+        {/* <Container>경력 사항</Container> */}
 
         <Margin />
 
@@ -612,9 +612,9 @@ const ExpertsProfileRegistration = () => {
           />
         </Put2> */}
 
-        {workplaces.map((workplace, index) => (
+        {/* workplaces.map((workplace, index) => (
           <div key={index}>
-            {/* <Remove /> */}
+            { <Remove /> }
 
             <br />
             <Company>회사명</Company>
@@ -640,11 +640,11 @@ const ExpertsProfileRegistration = () => {
             {/* <Remove onClick={() => handleRemoveCareer(index)}/> */}
             {/* <Plus /> */}
 
-            <button onClick={() => handleRemoveCareer(index)}>Remove</button>
-          </div>
-        ))}
+            {/* <button onClick={() => handleRemoveCareer(index)}>Remove</button> */}
+          {/* </div> */}
+        {/* ))} */}
 
-        <button onClick={handleAddCareer}>Add Career</button>
+        {/* <button onClick={handleAddCareer}>Add Career</button> */}
 
         <br />
         <ButtonContainer>
