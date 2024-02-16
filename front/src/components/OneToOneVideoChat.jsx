@@ -94,15 +94,11 @@ const OneToOneVideoChat = () => {
 
   const sessionConnect = (token) => {
     //스트림 생성
-    console.log("in connection  " + token); //in connection  ws://localhost:4443?sessionId=1&token=tok_MF2VTBpuHQz79T5o
-    // token = token.replace('localhost', 'i10c106.p.ssafy.io');
-    // console.log('in connection  '+token) // in connection ws://i10c106.p.ssafy.io:4443?sessionId=1&token=tok_BC6nORx9VG3G5RQB
-    console.log("iiiiiiiiii" + isMic);
+
     session
       .connect(token, { clientData: myUserName, clientRole: role })
 
       .then(() => {
-        console.log("tokk  " + token);
 
         let publisher = OV.initPublisher(undefined, {
           // 오디오 소스: undefined로 설정하여 기본 오디오 장치 사용
@@ -135,9 +131,7 @@ const OneToOneVideoChat = () => {
         session.publish(publisher);
         setPublisher(publisher); // stream 생성....
 
-        console.log("streamcreate");
         if (role === "USER") {
-          console.log("setcustomer");
           dispatch(setCustomer(publisher));
 
           const persondata = {
@@ -160,9 +154,6 @@ const OneToOneVideoChat = () => {
           //payload 에 consultingid 가 온다.
           dispatch(getCustomer(consultantSessionName))
             .then((response) => {
-              console.log("getCustomer 액션 성공:", response);
-
-              console.log("User 넣기");
             })
             .catch((error) => {
               console.error("getCustomer 액션 실패:", error);
@@ -170,9 +161,6 @@ const OneToOneVideoChat = () => {
           // 위는 customer 가져오는 로직
         }
 
-        console.log("publisher" + publisher.stream);
-        console.log("customer " + customer.stream);
-        console.log("session" + session);
         dispatch(setSession(session));
       })
       .catch((error) => { });
@@ -181,24 +169,20 @@ const OneToOneVideoChat = () => {
   // 마이크 권한을 변경하는 함수
   const handleAudioPermissionChange = () => {
     // dispatch(setAudioPermission(isMic)); // 토글
-    console.log(isMic);
   };
 
   // 카메라 권한을 변경하는 함수
   const handleVideoPermissionChange = () => {
     // dispatch(setVideoPermission(isCam)); // 토글
-    console.log(isCam);
   };
 
   useEffect(() => {
     // setIsMic(isMic);
     // setIsCam(isCam);
-    console.log("ismic" + isMic);
-    console.log("iscam" + isCam);
+
   }, [isMic, isCam]);
 
   useEffect(() => {
-    console.log("role" + role);
   }, [role]);
 
   //   const onbeforeunload = () => {
@@ -214,9 +198,6 @@ const OneToOneVideoChat = () => {
 
     dispatch(setSession(getOV.initSession()));
     setOV(getOV);
-
-    if (role == "CONSULTANT")
-      console.log("consultantSessionName", consultantSessionName);
 
     const mine = {
       id: 11,
@@ -236,7 +217,6 @@ const OneToOneVideoChat = () => {
   }, []);
 
   const deleteSubscriber = (streamManager) => {
-    console.log("deleteSubscriber");
     if (role == "USER") {
       navigate(`/mypage/${User.id}`);
     } else if (role == CONSULTANT) {
@@ -245,10 +225,9 @@ const OneToOneVideoChat = () => {
   };
   const addparticiapnt = (event) => {
     const data = JSON.parse(event.data);
-    // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
-      console.log("datarole role " + data.role, " ", role, data.name);
+
       dispatch(appendParticipantList(data));
     }
   };
@@ -256,32 +235,22 @@ const OneToOneVideoChat = () => {
   const textChat = (event) => {
     const data = JSON.parse(event.data);
 
-    if (data.role !== role) {
-      console.log(
-        "  dataid  role  message role" +
-        " " +
-        data.id +
-        " " +
-        role +
-        data.message +
-        data.role
-      );
+
 
       dispatch(appendMessageList(data));
     }
   };
 
   useEffect(() => {
-    console.log("ssssssssssssss" + session);
 
     if (session) {
-      console.log("inn");
+
 
       session.on("streamCreated", streamCreated);
-      console.log("inn");
+
 
       session.on("streamDestroyed", streamDestroyed);
-      console.log("inn");
+
 
       session.on("exception", exception);
 
@@ -296,11 +265,10 @@ const OneToOneVideoChat = () => {
   const streamCreated = (event) => {
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole;
-    // console.log('streamcreated ' + customer.stream)
 
     if (role === CONSULTANT) {
       dispatch(setCustomer(subscriber));
-      console.log("customer " + subscriber.stream);
+
     } else if (role === "USER") {
       // alert('setconsultantsubscriber')
       setConsultant(subscriber);
@@ -309,7 +277,6 @@ const OneToOneVideoChat = () => {
         // payload 에 consultingid 가 온다.
         dispatch(getConsultant(consultantSessionName))
           .then((response) => {
-            console.log("getConsultant 액션 성공:", response);
 
             const Consultant = {
               ///////////////
@@ -319,7 +286,6 @@ const OneToOneVideoChat = () => {
               isMic: "true",
               isCam: "true",
             };
-            console.log("Consultant 넣기");
 
             dispatch(appendParticipantList(Consultant));
           })
@@ -354,7 +320,7 @@ const OneToOneVideoChat = () => {
 
   //   // 컨설턴트, 고객 종료시 분리 필요
   const leaveSession = () => {
-    console.log("session" + session);
+
     // role==CONSULTANT &&
 
     // dispatch(resetParticipant)
@@ -372,16 +338,12 @@ const OneToOneVideoChat = () => {
           },
         };
         const baseurl = import.meta.env.VITE_APP_BASE_URL;
-        console.log(
-          baseurl + "consultings/deactivate/" + consultantSessionName,
-          config
-        );
+
         const url = `${baseurl}consultings/deactivate/${consultantSessionName}`;
 
         const response = axios.put(url, null, config);
 
-        // 요청 성공 시 수행할 작업
-        console.log("Response:", response.data);
+   
       } catch (error) {
         console.error("Error :", error);
         // alert('결제 실패');
@@ -424,13 +386,11 @@ const OneToOneVideoChat = () => {
       )
 
       .then((response) => {
-        console.log("deletesession then" + response.data.id);
-        console.log("deletesession then" + response.id);
+
         resolve(response.data.id); // consultatnt email == session id.
       })
 
       .catch((response) => {
-        // console.log('createsession catchhh')
 
         var error = Object.assign({}, response);
       });
@@ -452,7 +412,6 @@ const OneToOneVideoChat = () => {
   //    */
 
   const getToken = () => {
-    console.log(mySessionId);
     return createSession(mySessionId).then((sessionId) =>
       createToken(sessionId)
     );
@@ -461,8 +420,6 @@ const OneToOneVideoChat = () => {
   const createSession = (sessionId) => {
     return new Promise((resolve, reject) => {
       const data = JSON.stringify({ customSessionId: String(sessionId) });
-
-      console.log("createsessionnn with sessionid" + sessionId);
 
       axios
         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
@@ -477,20 +434,15 @@ const OneToOneVideoChat = () => {
         })
 
         .then((response) => {
-          console.log(" sessionId  " + sessionId);
 
-          console.log("createsession then" + response.data.id);
-          console.log("createsession then" + response.id);
           resolve(response.data.id); // consultatnt email == session id.
         })
 
         .catch((response) => {
-          // console.log('createsession catchhh')
-          console.log("createsession catchhh");
+
 
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
-            console.log("409");
             resolve(sessionId);
           }
         });
@@ -498,7 +450,7 @@ const OneToOneVideoChat = () => {
   };
 
   const createToken = (sessionId) => {
-    console.log("tokennnnnn" + sessionId);
+
     return new Promise((resolve, reject) => {
       const data = {
         type: "WEBRTC",
@@ -534,7 +486,7 @@ const OneToOneVideoChat = () => {
           }
         )
         .then((response) => {
-          console.log("creattokensuccess");
+
           resolve(response.data.token);
         })
         .catch((error) => reject(error));
@@ -542,7 +494,7 @@ const OneToOneVideoChat = () => {
   };
 
   const handleMessage = () => {
-    console.log("bbbbbbbb");
+
     if (session && msg.length > 0) {
       const mine = {
         id: messageId,
@@ -553,7 +505,6 @@ const OneToOneVideoChat = () => {
         name: name,
       };
 
-      console.log("my text add " + messageId);
       if (role == mine.role) dispatch(appendMessageList(mine));
 
       const data = {

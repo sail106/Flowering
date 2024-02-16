@@ -251,7 +251,6 @@ const ExpertsProfileRegistration = () => {
   const [shortIntroduction, setShortIntroduction] = useState(""); // 한줄 소개
   const [detailedIntroduction, setDetailedIntroduction] = useState(""); // 자세한 소개
 
-  console.log("전문가등록" + User.id);
 
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const [Selectedid, setSelectedid] = useState(null);
@@ -273,17 +272,14 @@ const ExpertsProfileRegistration = () => {
           },
         };
         const { data } = await axios.get(baseurl + "consultant/myinfo", config);
-        console.log(data, "나의데이터");
-        console.log(data.data_body);
-        console.log(data.data_body.simple_introduce);
-        console.log(data.data_body.hash_tags_responses);
+
         setSelectedid(data.data_body.consultant_id);
         setShortIntroduction(data.data_body.simple_introduce);
         setDetailedIntroduction(data.data_body.self_introduce);
 
         // setTags(data.data_body.hash_tags.workplace);
         // setTags(data.data_body.hash_tags.map(tag => tag.workplace));
-        console.log("여기까진 성공");
+
         if (data.data_body.hash_tags_responses) {
           setTags(
             data.data_body.hash_tags_responses.map((tag) => ({
@@ -307,9 +303,7 @@ const ExpertsProfileRegistration = () => {
       dispatch(fetchExpertById(Selectedid))
         .then((response) => {
           setExpertData(response);
-          console.log(response);
-          console.log(response.payload.user_response.nickname);
-          console.log(Selectedid);
+
         })
         .catch((error) => {
           console.error(error);
@@ -319,10 +313,10 @@ const ExpertsProfileRegistration = () => {
   const { access_token } = useSelector((state) => state.auth.logonUser);
 
   const handleEnterButtonClick = async () => {
-    console.log(workplaces + " " + employmentPeriods);
+
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log("tooo   " + token);
+
 
       const config = {
         headers: {
@@ -332,7 +326,7 @@ const ExpertsProfileRegistration = () => {
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log("태그스", tags);
+
       const body = {
         self_introduce: detailedIntroduction,
         simple_introduce: shortIntroduction,
@@ -345,9 +339,7 @@ const ExpertsProfileRegistration = () => {
       );
 
       // 요청 성공 시 수행할 작업
-      console.log("Response:", response.data);
-      console.log(shortIntroduction);
-      console.log(detailedIntroduction);
+
       alert("저장완료");
     } catch (error) {
       console.error("Error :", error);
@@ -356,7 +348,7 @@ const ExpertsProfileRegistration = () => {
 
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log("tooo   " + token);
+
 
       const config = {
         headers: {
@@ -366,7 +358,7 @@ const ExpertsProfileRegistration = () => {
       };
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
-      console.log(tags);
+
 
       for (const tag of tags) {
         if (!tag.id) {
@@ -381,7 +373,7 @@ const ExpertsProfileRegistration = () => {
           );
 
           // 요청 성공 시 수행할 작업
-          console.log("Response:", response.data);
+
         }
       }
 
@@ -394,7 +386,7 @@ const ExpertsProfileRegistration = () => {
     // employmentPeriod + " " + workplace)
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log("tooo   " + token);
+
 
       const config = {
         headers: {
@@ -405,8 +397,6 @@ const ExpertsProfileRegistration = () => {
 
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
 
-      console.log(workplaces);
-      console.log(employmentPeriods);
 
       const careers = [];
 
@@ -420,8 +410,6 @@ const ExpertsProfileRegistration = () => {
           endDateOfEmployment: endDate,
         });
       }
-
-      console.log(careers[0]);
 
       for (const career of careers) {
         // 경력 객체를 사용하여 반복문을 수행합니다.
@@ -439,8 +427,6 @@ const ExpertsProfileRegistration = () => {
             config
           );
 
-          // 요청 성공 시 수행할 작업
-          console.log("Response:", response.data);
         }
       }
 
@@ -459,14 +445,14 @@ const ExpertsProfileRegistration = () => {
         // hashtagId: tags.length + 1, // 태그의 ID를 현재 태그 배열의 길이에 1을 더한 값으로 설정합니다.
         workplace: e.target.value.trim(),
       };
-      console.log(newTag);
+
       setTags([...tags, newTag]);
       e.target.value = "";
     }
   };
 
   const handleRemoveTag = async (tag) => {
-    console.log(tag);
+
     const updatedTags = tags.filter((t) => t.id !== tag.id);
     setTags(updatedTags);
 
@@ -483,7 +469,7 @@ const ExpertsProfileRegistration = () => {
         baseurl + `hashtags/${tag.id}`,
         config
       );
-      console.log("Response:", response.data);
+
       alert("삭제완료");
     } catch (error) {
       console.error("Error:", error);

@@ -53,7 +53,7 @@ export default function Edit({ nickname, pwOne }) {
         "Content-Type": "application/json",
       },
     };
-    console.log("데이터 확인", data);
+
     try {
       const response = await axios.patch("http://i10c106.p.ssafy.io:8080/v1/users/update", data, config);
       dispatch(UserInfo(true));

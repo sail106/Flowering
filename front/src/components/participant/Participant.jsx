@@ -21,7 +21,7 @@ const Participant = ({ streamManager, audioPermission }) => {
   const handleFoldUp = () => {
     // Fold up 버튼을 누를 때 ParticipantContainer의 표시 여부를 토글합니다.
     setParticipantContainerVisible((prevVisible) => !prevVisible);
-    console.log('Fold up 버튼 클릭!');
+
   };
 
   const [msg, setMsg] = useState('')

@@ -156,7 +156,7 @@ const Order = () => {
 	const { selectedTime, selectedDate } = useSelector((state) => state.selected);
 	const { name, role, id, nickname, imageUrl, access_token, email } = useSelector((state) => state.auth.logonUser);
 	const baseurl = import.meta.env.VITE_APP_BASE_URL;
-	console.log(selectedDate + 'T' + selectedTime);
+	
 	const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -167,14 +167,13 @@ const Order = () => {
 					setExpertData(response);
 				})
 				.catch((error) => {
-					console.log(error);
+
 				});
 		}
 	}, [selectedid]); // selectedid 추가
 
 	useEffect(() => {
 		if (consultingId !== null) {
-			console.log(consultingId);
 			// 여기서 다음 페이지로 이동
 			navigate('/orderResult', { state: { value: { consultingId } } });
 		}
@@ -223,7 +222,6 @@ const Order = () => {
 
 	const requestPay = () => {
 		const formattedDateTime = `${selectedDate}T${selectedTime}`;
-		console.log('Formatted DateTime:', formattedDateTime);
 		const IMP = window?.IMP;
 		IMP.init('imp03878765');
 
@@ -240,11 +238,9 @@ const Order = () => {
 			},
 			async (rsp) => {
 				try {
-					// console.log(rsp);
-					// console.log(`${baseurl}verifyIamport/` + rsp.imp_uid);
+
 					const { data } = await axios.post('https://i10c106.p.ssafy.io/api/verifyIamport/' + rsp.imp_uid);
 					if (rsp.paid_amount === data.response.amount) {
-						console.log('in if');
 						try {
 							const token = access_token; // 여기에 액세스 토큰을 설정합니다.
 							const config = {
@@ -265,7 +261,6 @@ const Order = () => {
 								config
 							);
 
-							console.log(name);
 							// 요청 성공 시 수행할 작업
 							setConsultingId(response.data.data_body.consulting_id);
 						} catch (error) {
@@ -277,7 +272,6 @@ const Order = () => {
 						alert('결제 실패');
 					}
 				} catch (error) {
-					console.log('Error while verifying payment:', error);
 					alert('결제 실패');
 				}
 			}

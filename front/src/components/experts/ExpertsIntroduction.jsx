@@ -55,7 +55,7 @@ const ExpertsIntroduction = () => {
 
 	if (expertsData.length > 0) {
 		if (expertsData[1]?.hash_tag_responses.length ?? '' > 0) {
-			console.log('succcc', expertsData[1].hash_tag_responses[0].workplace);
+
 		}
 	}
 

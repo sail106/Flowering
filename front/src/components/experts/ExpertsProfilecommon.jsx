@@ -73,7 +73,7 @@ const ExpertsProfile = () => {
       dispatch(fetchExpertById(selectedid)).then((response) => {
         setExpertData(response);
       }).catch((error) => {
-        console.log('error');
+
       });
 
     }

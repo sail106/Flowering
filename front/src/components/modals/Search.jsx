@@ -84,7 +84,7 @@ function Search({title, onReceiveItem}) {
         `${baseurl}product/search?query=${encodeURIComponent(inputValue)}&display=5&start=1&sort=sim`,config
       );
       setAutocompleteItems(response.data.data_body);
-      // console.log(autocompleteItems)
+
       // props.onReceiveItems(response.data.data_body)
     } catch (error) {
       console.error("Error fetching autocomplete data:", error);
@@ -104,7 +104,7 @@ function Search({title, onReceiveItem}) {
   }, [inputValue]);
 
   const handleItemClick = (item) => {
-    console.log(typeof onReceiveItem);
+
     onReceiveItem(item); 
     setOpen(false)
     setInputValue("");

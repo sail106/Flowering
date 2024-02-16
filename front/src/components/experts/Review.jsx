@@ -104,7 +104,7 @@ const Review = () => {
       star: rating,
       consultantid: Number(routeid),
     };
-    console.log(data);
+
     try {
       const response = await axios.post(
         baseurl + "review/create",
@@ -126,7 +126,6 @@ const Review = () => {
         config
       );
 
-      console.log(response.data.data_body); // 데이터를 상태에 저장
       setConsultantData(response.data.data_body); // 데이터를 상태에 저장
     } catch (error) {
       console.error("Failed to update user info:", error);

@@ -55,14 +55,14 @@ const OneToManyVideoChat = () => {
   //   const [OV, setOV] = useState(null)
 
   useEffect(() => {
-    console.log('community_id', community_id);
+
   }, [community_id]);
   
 alert("onetoma")
 
 
   const sessionConnect = (token) => {
-    console.log('in connection  ')
+
 
     session
       .connect(
@@ -70,7 +70,7 @@ alert("onetoma")
       )
 
       .then(() => {
-        console.log('tokk  ' + token)
+
 
         let publisher = OV.initPublisher(undefined, {
           audioSource: undefined,
@@ -87,15 +87,9 @@ alert("onetoma")
 
         session.publish(publisher);
         setPublisher(publisher);
-        // dispatch(getCustomer(consultingid)).then((response) => {
 
-        //   console.log('getCustomer 액션 성공:', response)
-        // }).catch((error) => {
-        //   console.error('getCustomer 액션 실패:', error);
-        // })
         dispatch(getCreatorid(community_id)).then((response)=>{
-                    console.log('getCreatorid 액션 성공:', response)
-
+ 
         }).catch((error)=>{
 
         })
@@ -112,7 +106,6 @@ alert("onetoma")
   }
 
   useEffect(() => {
-    console.log('session' + session)
     if (session) {
       session.on('streamCreated', streamCreated)
       session.on('streamDestroyed', streamDestroyed)
@@ -124,18 +117,18 @@ alert("onetoma")
   // 마이크 권한을 변경하는 함수
   const handleAudioPermissionChange = () => {
     // dispatch(setAudioPermission(isMic)); // 토글
-    console.log(isMic)
+
   };
 
   // 카메라 권한을 변경하는 함수
   const handleVideoPermissionChange = () => {
     // dispatch(setVideoPermission(isCam)); // 토글
-    console.log(isCam)
+
 
   };
 
   useEffect(() => {
-    console.log('session', session);
+
   }, [session]);
 
 
@@ -143,9 +136,6 @@ alert("onetoma")
 
     setIsMic(isMic);
     setIsCam(isCam);
-
-    console.log('ismicchanged' + isMic)
-    console.log('iscamchanged' + isCam)
 
   }, [isMic, isCam]);
 
@@ -220,7 +210,7 @@ alert("onetoma")
 
   //   // 컨설턴트, 고객 종료시 분리 필요
   const leaveSession = () => {
-    console.log('session' + session)
+
 
     if (session) {
       session.disconnect();
@@ -270,8 +260,6 @@ alert("onetoma")
     return new Promise((resolve, reject) => {
       const data = JSON.stringify({ customSessionId: String(sessionId) });
 
-      console.log('createsessionnn with sessionid' + sessionId)
-
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
@@ -285,13 +273,10 @@ alert("onetoma")
         })
 
         .then((response) => {
-          console.log('createsession then')
           resolve(response.data.id); // consultatnt email == session id.
         })
 
         .catch((response) => {
-          // console.log('createsession catchhh')
-          console.log('createsession catchhh')
 
           var error = Object.assign({}, response);
           if (error?.response?.status === 409) {
@@ -302,7 +287,7 @@ alert("onetoma")
   }
 
   const createToken = (sessionId) => {
-    console.log('tokennnnnn')
+
     return new Promise((resolve, reject) => {
       const data = {
         "type": "WEBRTC",

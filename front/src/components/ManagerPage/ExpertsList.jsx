@@ -105,7 +105,7 @@ const ExpertsList = () => {
       axios.put(baseurl + 'admin/toconsultant', { email: inputValue }, config)
         .then(response => {
           // 요청 성공 시 처리할 로직 작성
-          console.log(response.data);
+
           alert('승격되었습니다!')
         })
         .catch(error => {

@@ -26,7 +26,7 @@ const OrderResult = () => {
 					setExpertData(response);
 				})
 				.catch((error) => {
-					console.log(error);
+
 				});
 		}
 	}, [selectedid]); // selectedid 추가

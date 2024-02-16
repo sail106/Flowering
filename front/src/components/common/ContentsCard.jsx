@@ -57,9 +57,7 @@ const ContentsCard = ({
   borderColor, backgroundColor, color,onClick,community_id
 }) => {
 
-  const onButtonClick = () => {
-    console.log('버튼클릭')
-  };
+
   return (
 
     <Card margin-top={cardMarginTop}>

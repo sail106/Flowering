@@ -112,7 +112,7 @@ const MyConsulting = () => {
   const btnclick = async (consulting_id) => {
     try {
       const token = access_token; // 여기에 액세스 토큰을 설정합니다.
-      console.log("tooo   " + token);
+
 
       const config = {
         headers: {
@@ -171,7 +171,7 @@ const MyConsulting = () => {
         config
       );
       setConsultingData(response.data.data_body); // 데이터를 상태에 저장
-      console.log(response.data.data_body)
+
     } catch (error) {
       console.error("Failed to update user info:", error);
     }

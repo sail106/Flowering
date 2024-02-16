@@ -31,7 +31,7 @@ const SmallChat = () => {
   }
 
   const handleMessage = () => {
-    console.log('daaaaaaaa')
+
     if (session && msg.length > 0) {
       const mine = {
         id: messageId,

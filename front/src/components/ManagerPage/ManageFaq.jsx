@@ -117,7 +117,7 @@ const ManagerFaq = () => {
     try {
       const response = await axios.get(baseurl + "faq/list");
       setfaqData(response.data.data_body); // 데이터를 상태에 저장
-      console.log(response.data.data_body);
+
     } catch (error) {
       console.error("Failed to update user info:", error);
     }
@@ -131,7 +131,7 @@ const ManagerFaq = () => {
         baseurl + `faq/delete/${faq_id}`,
         config
       );
-      console.log(response);
+
       mydata();
       // 여기에서 필요한 경우 추가적인 상태 업데이트를 수행할 수 있습니다.
     } catch (error) {
@@ -145,7 +145,7 @@ const ManagerFaq = () => {
     };
     try {
       const response = await axios.post(baseurl + "faq/add", data, config);
-      console.log(response);
+
       setQuestion('')
       setAnswer('')
       mydata();

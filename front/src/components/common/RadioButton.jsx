@@ -36,7 +36,6 @@ const RadioButton = (props) => {
   const handleButtonClick = () => {
     setIsChecked(!isChecked);
     dispatch(setSelectedTime(props.value))
-    console.log("ASDADA");
   };
   return (
     <>

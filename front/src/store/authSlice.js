@@ -53,7 +53,7 @@ const initialState = {
 export const UserInfo = createAsyncThunk('auth/UserInfo', async ({ info }, { rejectWithValue, getState }) => {
 	try {
 		const baseurl = import.meta.env.VITE_APP_BASE_URL;
-		console.log('userinfo');
+
 		const state = getState(); // 전체 Redux 상태를 얻습니다.
 		const config = {
 			headers: {
