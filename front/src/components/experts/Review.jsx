@@ -147,7 +147,7 @@ const Review = () => {
 
   return (
     <Cal>
-      <Margin2 />
+      {/* <Margin2 />
       <Title text={"Review"} />
       <CashCard>
         {consultantData.user_response && (
@@ -181,7 +181,7 @@ const Review = () => {
         onChange={(event) => setReview(event.target.value)}
       />
 
-      <MyButton onClick={submitReview}>작성완료</MyButton>
+      <MyButton onClick={submitReview}>작성완료</MyButton> */}
     </Cal>
   );
 };
