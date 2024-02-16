@@ -1,14 +1,13 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from "styled-components";
-import { ButtonBox } from "../common/Button";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
 import { OpenVidu } from 'openvidu-browser';
-import { setCommunityid,   setSession } from "../../store/communitySlice";
-import axios from 'axios';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { ButtonBox } from "../common/Button";
+import { setCommunityid,   setSession } from "../../store/communitySlice";
 import { setConsultantSessionName } from "../../store/consultSlice";
 
 const Clock = styled(LuClock3)`
@@ -100,172 +99,7 @@ const MyCommunity = () => {
 
   const [myUserName, setMyUserName] = useState(nickname)
 
-  // const streamDestroyed = (event) => {
-  //   deleteSubscriber(event.stream.streamManager);
-  // }
-
-  // const exception = (exception) => {
-  //   console.warn(exception);
-  // }
-
-  // useEffect(() => {
-  //   console.log('cccccccccc'+community_id)
-  //   if (session) {
-
-  //     // session.on('streamCreated', streamCreated)
-  //     // console.log('streamDestroyed '  )
-  //     // session.on('streamDestroyed', streamDestroyed)
-  //     // console.log('exception '  )
-  //     // session.on('exception', exception)
-  //     // console.log('seesion is  ' + session)
-  //     // console.log('community_id is  ' + community_id)
-  //     getToken().then(sessionConnect)
-  //   }
-
-  // }, [session])
-
-
-  // const sessionConnect = (token) => {
-  //   console.log('in connection  ')
-
-  //   session
-  //     .connect(
-  //       token, { clientData: myUserName, clientRole: role },
-  //     )
-
-  //     .then(() => {
-  //       console.log('tokk  ' + token)
-
-  //       let publisher = OV.initPublisher(undefined, {
-  //         audioSource: undefined,
-  //         videoSource: undefined,
-  //         publishAudio: true,
-  //         publishVideo: true,
-  //         resolution: '1280x960',
-  //         frameRate: 30,
-  //         insertMode: 'APPEND',
-  //         mirror: false,
-  //       });
-
-  //       publisher.subscribeToRemote()
-  //       console.log(' OneToManyVideoChat')
-
-  //       session.publish(publisher);
-
-  //       setPublisher(publisher);
-
-  //       // if (role === CUSTOMER) { dispatch(setCustomer(publisher)) }
-  //       // if (role === CUSTOMER) 
-
-  //       setCreator(publisher)
-
-
-  //       navigate('/OneToManyVideoChat')
-
-  //     })
-  //     .catch((error) => { });
-  // }
-
-  // const joinSession = (communityId) => {
-  //   const getOV = new OpenVidu();
-  //   dispatch(setSession(getOV.initSession()))
-  //   setOV(getOV)
-  //   console.log('session setCommunityid'+session)
-
-  //   dispatch(setCommunityid(communityId))
-
-
-  //   console.log(communityId);
-  // }
-
-
-  // const getToken = () => {
-  //   console.log('commid' + community_id)
-  //   return createSession(community_id).then((sessionId) => createToken(sessionId));
-  // }
-
-  // const createToken = (sessionId) => {
-
-  //   console.log(sessionId)
-  //   console.log(sessionId.customSessionId)
-  //   console.log(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection")
-  //   return new Promise((resolve, reject) => {
-  //     const data = {
-  //       "type": "WEBRTC",
-  //       "role": "PUBLISHER",
-  //       "kurentoOptions": {
-  //         "videoMaxRecvBandwidth": 1000,
-  //         "videoMinRecvBandwidth": 300,
-  //         "videoMaxSendBandwidth": 1000,
-  //         "videoMinSendBandwidth": 300,
-  //         "allowedFilters": [
-  //           "GStreamerFilter",
-  //           "FaceOverlayFilter",
-  //           "ChromaFilter"
-  //         ]
-  //       }
-  //     };
-  //     console.log( "beforeconnect")
-
-  //     axios
-  //       .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + String(sessionId) + "/connection", data, {
-  //         headers: {
-  //           Authorization: 'Basic ' + btoa(
-  //             'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET
-  //           ),
-  //           'Content-Type': 'application/json',
-  //           'Access-Control-Allow-Origin': '*',
-  //           'Access-Control-Allow-Methods': 'GET,POST',
-  //         },
-  //       })
-  //       .then((response) => {
-  //         resolve(response.data.token);
-  //       })
-  //       .catch((error) => reject(error));
-  //   });
-  // }
-
-  // const createSession = (sessionId) => {
-  //   return new Promise((resolve, reject) => {
-
-  //     const data = JSON.stringify({ customSessionId: String(sessionId) });
-
-
-  //     console.log('Basic ' + btoa(
-  //       'OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET))
-
-  //     console.log('session added' + session)
-  //     console.log(sessionId)
-
-  //     console.log(data)
-  //     console.log(OPENVIDU_SERVER_URL + '/openvidu/api/sessions')
-
-  //     axios
-  //       .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-  //         headers: {
-  //           Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-  //           'Content-Type': 'application/json',
-
-  //           // 'Access-Control-Allow-Origin': '*',
-  //           // 'Access-Control-Allow-Methods': 'GET,POST',
-  //         },
-
-  //       })
-
-  //       .then((response) => {
-  //         resolve(response.data);
-  //       })
-  //       .catch((response) => {
-  //         var error = Object.assign({}, response);
-  //         if (error?.response?.status === 409) {
-  //           resolve(sessionId);
-  //         }
-  //       });
-  //   });
-  // }
-
   const btnclick = (community_id) => {
-    console.log('click' + community_id)
     dispatch(setRole('creator'))
     dispatch(setname('creator'))
 
@@ -280,14 +114,12 @@ const MyCommunity = () => {
       isCam: 'true',
     };
 
-    console.log('dddddddddddd')
     dispatch(appendParticipantList(consultant))
     // consultant 가져오는 로직 
 
 
     //payload 에 consultingid 가 온다.
     dispatch(getCustomer(consultingid)).then((response) => {
-
       console.log('getCustomer 액션 성공:', response)
     }).catch((error) => {
       console.error('getCustomer 액션 실패:', error);
@@ -327,7 +159,6 @@ const MyCommunity = () => {
                 <Button>수정하기</Button>
               </ButtonTd>
               <ButtonTd>
-                {/* Passing the community_id as an argument */}
                 <Button onClick={() => btnclick(row.community_id)}>바로가기</Button>
               </ButtonTd>
             </Tr>

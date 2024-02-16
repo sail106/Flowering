@@ -129,7 +129,7 @@ const Navbar = () => {
         <Link to={"/beautyconsulting"} reloadDocument>
           Consulting
         </Link>
-        <Link to={"/communityHome"} reloadDocument>
+        <Link to={"/"} reloadDocument>
           Community
         </Link>
         <Link to={"#"} reloadDocument>

@@ -214,11 +214,9 @@ const authSlice = createSlice({
 		},
 
 		setRole: (state, { payload }) => {
-			console.log('settrolll' + payload);
 			state.logonUser.role = payload;
 		},
 		setSelectedId: (state, { payload }) => {
-			console.log('settt  ');
 			state.selectedid = payload;
 		},
 		setname: (state, { payload }) => {
