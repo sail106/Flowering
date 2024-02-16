@@ -33,9 +33,7 @@ const DashSpan = styled.span`
 `;
 
 const LogoHandler = async () => {
-  const response = await axios.get('https://i10c106.p.ssafy.io/api/oauth2/authorization/naver')
-  console.log("LogoHandler!");
-  console.log("response : ", response);
+  alert("준비중입니다");
 }
 
 const SnsManage = () => {

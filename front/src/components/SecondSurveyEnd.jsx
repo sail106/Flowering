@@ -6,54 +6,54 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Consulting1stepresultpage = styled.div`
-	margin-top: -180px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  margin-top: -180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const MyButton1 = styled(ButtonBox)`
-	background-color: #f28482;
-	border-color: #f28482;
-	border-radius: 300px;
-	margin: 80px;
-	width: 230.145px;
-	height: 59.143px;
+  background-color: #f28482;
+  border-color: #f28482;
+  border-radius: 300px;
+  margin: 80px;
+  width: 230.145px;
+  height: 59.143px;
 `;
 const ButtonContainer = styled.div`
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const Margin = styled.div`
-	margin: 110px;
+  margin: 110px;
 `;
 const Margin2 = styled.div`
-	margin-top: -10px;
+  margin-top: -10px;
 `;
 
 const H3 = styled.h3`
-	font-family: 'Noto Sans KR';
-	font-size: 25px;
-	text-align: center;
+  font-family: "Noto Sans KR";
+  font-size: 25px;
+  text-align: center;
 `;
 
 const P = styled.p`
-	font-family: 'Noto Sans KR';
-	font-size: 18px;
-	color: gray;
-	text-align: center;
+  font-family: "Noto Sans KR";
+  font-size: 18px;
+  color: gray;
+  text-align: center;
 `;
 
 const CheckImg = styled.img`
-	width: 65px;
-	height: 65px;
+  width: 65px;
+  height: 65px;
 `;
 
 const StepImg = styled.img`
-	margin-top: 30px;
-	width: 675px;
-	height: 79px;
+  margin-top: 30px;
+  width: 675px;
+  height: 79px;
 `;
 
 const Finish2step = () => {
@@ -120,12 +120,12 @@ const Finish2step = () => {
 			<StepImg src='src/assets/2step_test.png' alt='1차 설문 완료, 2차 사진 테스트 진행 예정' />
 			<Margin2 />
 
-			<ButtonContainer>
-				<MyButton1>홈으로 돌아가기</MyButton1>
-			</ButtonContainer>
-			<Margin2 />
-		</Consulting1stepresultpage>
-	);
+      <ButtonContainer>
+        <MyButton1 onClick={goHome}>홈으로 돌아가기</MyButton1>
+      </ButtonContainer>
+      <Margin2 />
+    </Consulting1stepresultpage>
+  );
 };
 
 export default Finish2step;

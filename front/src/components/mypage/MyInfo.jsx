@@ -1,11 +1,12 @@
-import styled from "styled-components";
-import { ButtonBox } from "../common/Button";
 import { Link } from "react-router-dom";
-import BIBI from "../../assets/BIBI.png";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { Co2Sharp } from "@mui/icons-material";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { useState } from "react";
+
+import { ButtonBox } from "../common/Button";
+
+
 const InfoDiv = styled.span`
   margin: 0% 12%;
   height: 695px;
@@ -57,7 +58,6 @@ const StyledButton = styled(ButtonBox)`
 
 const MyButton = () => {
   const User = useSelector((state) => state.auth.logonUser);
-  console.log(User)
   return (
     <Link to={`/editmyinfo/${User.id}`} reloadDocument>
       <StyledButton>내 정보 수정하기</StyledButton>

@@ -1,14 +1,14 @@
-import Title from "../modify/Title";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
-import Experts from "../common/Experts";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+
+import Title from "../modify/Title";
+import Experts from "../common/Experts";
 import { StyledSmallDiv } from "../common/Experts";
 import Review from "./ExpertsCard";
-import { useLocation, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchExpertById } from "../../store/ExpertsListSlice";
-import { useEffect, useState } from "react";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -62,41 +62,16 @@ const Intro = styled.p`
 `;
 
 const ExpertsProfile = () => {
-
-  // const location = useLocation();
-  // const id = location.state.id;
-
-  // const { selectedid } = useSelector(state => state.ExpertsList)
   const { selectedid } = useSelector(state => state.auth)
-
   const dispatch = useDispatch();
-
   const [expertData, setExpertData] = useState(null); // 응답 데이터를 저장할 상태
-  const [review, setreview] = useState(null);
-
-  console.log('key ' + selectedid)
-
 
   useEffect(() => {
-    console.log('keyyyy' + selectedid)
-
     if (selectedid) {
 
       // 컴포넌트가 마운트될 때 fetchExpertById 액션을 호출
       dispatch(fetchExpertById(selectedid)).then((response) => {
-        console.log('ExpertsProfile', response);
-        console.log(JSON.stringify(response, null, 2)); //잘받음
-        console.log(JSON.stringify(response.payload.user_response, null, 2));
         setExpertData(response);
-        console.log('expppp' + expertData?.payload.user_response.nickname ?? ' ')
-        // console.log('expppp' + expertData?.payload.hash_tag_responses[0].workplace??' ')
-        console.log('expppp' + expertData?.payload.hash_tags[0].workplace ?? ' ')
-        console.log('expppp' + expertData?.payload.reviews[0].content ?? ' ')
-        console.log('expppp' + expertData?.payload.reviews.length ?? ' ')
-        console.log('expppp' + expertData?.payload.star ?? ' ')
-        console.log(expertData?.payload.simple_introduce ?? '')
-
-
       }).catch((error) => {
         console.log('error');
       });
@@ -104,17 +79,6 @@ const ExpertsProfile = () => {
     }
 
   }, []);
-
-
-  // dispatch(fetchExpertById({ id: id })).then((response) => {
-  //   console.log('ExpertsProfile' + response)
-  //   console.log(JSON.stringify(response, null, 2));
-  //   setExpertData(response)
-
-  // }).catch((error) => {
-  //   console.log('error')
-
-  // })
 
   return (
     <>
@@ -124,7 +88,6 @@ const ExpertsProfile = () => {
         <Experts
           nickname={expertData?.payload.user_response.nickname ?? ''}
           text={expertData?.payload.simple_introduce ?? ''}
-          // text={"당신만의 고유한 아름다움을 찾아드리겠습니다."}
           rate={expertData?.payload.star ?? ' '}
 
           ratenum={expertData?.payload.reviews.length ?? ''}
@@ -160,9 +123,7 @@ const ExpertsProfile = () => {
         <Stack spacing={1} direction="row" alignItems="center">
           <StyledRating
             name="half-rating-read"
-            // defaultValue={expertData?.payload.star ?? ' '}
             value={parseFloat(expertData?.payload.star ?? ' ')}
-
             precision={0.5}
             readOnly
           />
@@ -172,8 +133,6 @@ const ExpertsProfile = () => {
         <hr></hr>
 
         <Margin2 />
-
-
         {expertData?.payload.reviews?.map((review, index) => {
           // 날짜 형식 변환
           const dateString = new Date(review.user.createAt);
@@ -193,29 +152,6 @@ const ExpertsProfile = () => {
           );
 
         })}
-
-
-
-        {/* 
-        <Review
-          name={"루루라"}
-          date={"23/01/26"}
-          rate={4.6}
-          desc={`정말로 탁월했습니다. 내 피부 타입과 스킨케어 루틴에 대한 전문적인
-          조언을 받아서 피부 상태가 훨씬 개선되었어요. 감사합니다!`}
-        />
-        <Review
-          name={"미미로띠"}
-          date={"24/01/21"}
-          rate={4.8}
-          desc={`말로 인상적이었습니다. 나에게 딱 맞는 화장품과 메이크업 스타일에 대한 조언을 받아서 자신감이 생겼어요. 다시 한 번 감사드립니다!`}
-        />
-        <Review
-          name={"바비"}
-          date={"24/01/18"}
-          rate={4.8}
-          desc={`정말로 훌륭했습니다. 나에게 어울리는 헤어 스타일과 색조에 대한 조언을 받아서 완전히 새로운 모습으로 변할 수 있었어요.  너무 감사합니다!`}
-        /> */}
       </Text>
     </>
   );

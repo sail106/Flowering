@@ -9,8 +9,6 @@ const initialState = {
 };
 
 export const fetchExpertById = createAsyncThunk("ExpertsList/fetchExpertById", async (selectedid, { rejectWithValue, getState }) => {
-  console.log("fff " + selectedid);
-
   const state = getState(); // 전체 Redux 상태를 얻습니다.
 
   const config = {
@@ -21,14 +19,8 @@ export const fetchExpertById = createAsyncThunk("ExpertsList/fetchExpertById", a
     },
   };
 
-  // const response = await axios.get(`http://i10c106.p.ssafy.io:8080/v1/users/info?role=true`, config);
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
-
   const response = await axios.get(baseurl + `consultant/detail/${selectedid}`, config);
-
-  // console.log('sss' + response.data_body)
-  console.dir("sss" + response.data.data_body);
-  console.log(JSON.stringify(response.data.data_body, null, 2));
 
   return response.data.data_body;
 });
@@ -39,7 +31,6 @@ const ExpertsListSlice = createSlice({
 
   reducers: {
     setExpertList: (state, { payload }) => {
-      console.log("xxx");
       state.ExpertList.push(payload); // ExpertList를 새로운 데이터로 설정합니다.
     },
 
@@ -71,7 +62,7 @@ export const {
   setCustomer,
   setConsultantSessionName,
   appendParticipantList,
-  setExpertList, // 이 부분을 추가합니다.
+  setExpertList,
   setSeletedId,
 } = ExpertsListSlice.actions;
 
