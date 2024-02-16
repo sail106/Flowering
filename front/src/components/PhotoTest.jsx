@@ -160,7 +160,7 @@ const PhotoTest = () => {
       console.error("Error :", error);
     } finally {
       setLoading(false); // fetch가 끝나면 loading state를 false로 설정
-      navigate(`/mypage/${User.id}`);
+      navigate(`/secondsurveyresult`, { state: { value: { consultingId } } });
     }
   };
 
