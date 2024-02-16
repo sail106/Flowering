@@ -174,6 +174,9 @@ const ExpertConsulting = () => {
     };
     mydata(); // 컴포넌트가 마운트될 때 mydata 함수 실행
   }, []);
+  const gofinal = async (consulting_id) => {
+    navigate("/finalresultInput", { state: { value: { consultingId:consulting_id } } });
+  };
 
   return (
     <Consulting>
@@ -204,7 +207,7 @@ const ExpertConsulting = () => {
                     <Clock /> {formattedTime}
                   </Td>
                   <ButtonTd>
-                    <FinalButton>최종 결과 보고서 작성하기</FinalButton>
+                    <FinalButton onClick={() => gofinal(row.consultingid)}>최종 결과 보고서 작성하기</FinalButton>
                   </ButtonTd>
                   <ButtonTd>
                     <Button onClick={() => buttonclick(row.consultingid)}>
