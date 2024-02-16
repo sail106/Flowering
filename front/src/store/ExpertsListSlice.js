@@ -35,7 +35,7 @@ const ExpertsListSlice = createSlice({
     },
 
     setSeletedId: (state, { payload }) => {
-      console.log("xxx");
+
       state.selectedid = payload;
     },
   },
@@ -43,7 +43,7 @@ const ExpertsListSlice = createSlice({
   extraReducers: (builder) => {
     // builder
     //   .addCase(getConsultantSessionName.fulfilled, (state, { payload }) => {
-    //     console.log('xxxxx')
+
     //     state.consultantSessionName = payload.sessionId;
     //   });
   },

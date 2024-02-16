@@ -51,7 +51,6 @@ const SecondServeyResult = () => {
 				setData(res.data.data_body);
 			})
 			.catch((error) => {
-				console.log(error);
 				throw new Error(error);
 			});
 	}, [access_token]);

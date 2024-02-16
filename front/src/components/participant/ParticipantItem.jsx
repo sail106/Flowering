@@ -15,7 +15,7 @@ const ParticipantItem = ({
   isCam,
 }) => {
 
-  console.log(isMic)
+
   return (
 
     <GridContainer container alignItems="center">

@@ -104,7 +104,7 @@ const MyCommunity = () => {
     dispatch(setname('creator'))
 
     dispatch(setConsultantSessionName(community_id))
-    console.log('community_id', community_id)
+
 
 
     const consultant = {
@@ -120,9 +120,9 @@ const MyCommunity = () => {
 
     //payload 에 consultingid 가 온다.
     dispatch(getCustomer(consultingid)).then((response) => {
-      console.log('getCustomer 액션 성공:', response)
+
     }).catch((error) => {
-      console.error('getCustomer 액션 실패:', error);
+
     })
     // 위는 consultant 가져오는 로직 
 

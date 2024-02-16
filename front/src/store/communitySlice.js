@@ -57,7 +57,7 @@ export const getCreatorid = createAsyncThunk(
       const response = await Axios.get(`community/getinfo/`+payload )
       return response.data
     } catch (err) {
-      console.log(err)
+
       return rejectWithValue(err)
     }
   }

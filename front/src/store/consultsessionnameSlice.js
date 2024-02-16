@@ -27,7 +27,7 @@ export const getconsultantSessionName = createAsyncThunk(
       const response = await Axios.post(`consultings/join`, { reservationId: reservationId })
       return response.data
     } catch (err) {
-      console.log(err)
+
       return rejectWithValue(err)
     }
   }
@@ -75,8 +75,7 @@ const consultsessionnameSlice = createSlice({
       payload.id = state.participantId //처음에 2
       state.participantId = state.participantId + 1
       state.participantList.push(payload)
-      console.log('participant pushed ' + payload.name + " " + payload.id +
-        " state.participantId" + state.participantId)
+
     },
 
   },

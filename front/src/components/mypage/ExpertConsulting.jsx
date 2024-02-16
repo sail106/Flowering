@@ -109,11 +109,11 @@ const ExpertConsulting = () => {
   };
   const baseurl = import.meta.env.VITE_APP_BASE_URL;
   const buttonclick = async (consultingid) => {
-    console.log('click' + consultingid)
+
     dispatch(setRole('CONSULTANT'))
     dispatch(setname(name))
     dispatch(setconsultantSessionName(consultingid))
-    console.log('consultingid', consultingid)
+
 
     const consultant = {
       imageUrl: imageUrl,
@@ -128,10 +128,10 @@ const ExpertConsulting = () => {
     //payload 에 consultingid 가 온다.
     dispatch(getCustomer(consultingid))
       .then((response) => {
-        console.log("getCustomer 액션 성공:", response);
+
       })
       .catch((error) => {
-        console.error("getCustomer 액션 실패:", error);
+
       });
     // 위는 consultant 가져오는 로직
 
@@ -147,13 +147,12 @@ const ExpertConsulting = () => {
       // 여기에 액세스 토큰을 설정합니다.
       // const token='eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwicm9sZSI6IkNPTlNVTFRBTlQiLCJpYXQiOjE3MDc2NzIyNjcsImV4cCI6MTcwNzc1ODY2N30.3sta_Jud2eTX2jlAUX1XUgZAKAjpb6nc_3j6RWdvqFY';
 
-      console.log(baseurl + "consultings/activate/" + consultingid, config);
       const url = `${baseurl}consultings/activate/${consultingid}`;
 
       const response = await axios.put(url, null, config);
 
       // 요청 성공 시 수행할 작업
-      console.log("Response:", response.data);
+
     } catch (error) {
       console.error("Error :", error);
       // alert('결제 실패');
@@ -166,7 +165,7 @@ const ExpertConsulting = () => {
     const mydata = async () => {
       try {
         const alllist = await axios.get(baseurl + "consultant/myAlllist", config);
-        console.log(alllist)
+
         setconsultingData(alllist.data.data_body);
       } catch (error) {
         console.error("Failed to update user info:", error);

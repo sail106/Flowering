@@ -85,7 +85,7 @@ const FinalResult = () => {
   const [data, setData] = useState(null);
   const location = useLocation();
   const consultingId = location.state.value.consultingId;
-  console.log(consultingId);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +98,6 @@ const FinalResult = () => {
             },
           }
         );
-        console.log(response.data.data_body);
         setData(response.data.data_body);
       } catch (error) {
         console.error("Error fetching data:", error);

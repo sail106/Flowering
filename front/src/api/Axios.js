@@ -11,7 +11,6 @@ export const baseURL = 'http://i10c106.p.ssafy.io:8080/v1/';
 
 const getToken = () => {
 	const accessToken = useSelector(selectAccessToken);
-	console.log('getoken' + accessToken);
 	return accessToken;
 };
 
@@ -31,7 +30,6 @@ export const imgAxios = baseAxios.create({
 });
 
 Axios.interceptors.request.use((config) => {
-	console.log('toooo' + getToken());
 	if (getToken()) {
 		config.headers.Authorization = `Bearer ${getToken()}`;
 	}

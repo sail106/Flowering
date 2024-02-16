@@ -96,6 +96,8 @@ const PhotoTest = () => {
   const webcamRef = useRef(null);
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState(null);
+  const location = useLocation();
+  const consultingId = location.state.value.consultingId;
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -113,8 +115,6 @@ const PhotoTest = () => {
     const base64Image = imageSrc.split(";base64,").pop();
     const byteCharacters = atob(base64Image);
     const byteArrays = [];
-    const location = useLocation();
-    const consultingId = location.state.value.consultingId;
     for (let i = 0; i < byteCharacters.length; i++) {
       byteArrays.push(byteCharacters.charCodeAt(i));
     }

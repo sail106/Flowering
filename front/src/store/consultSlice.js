@@ -41,11 +41,6 @@ export const postConsultingResult = createAsyncThunk(
   'consult/postConsultingResult',
   async (payload, { rejectWithValue }) => {
     try {
-      // let formData = new FormData()
-      // formData.append('consultingFinishRequest' )
-      // formData.append('file', payload.files[0])
-      // console.log(formData)
-      // const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
 
       alert('진단 결과가 저장되었습니다. 컨설팅을 종료합니다.')
       return response.data
@@ -66,10 +61,7 @@ export const makeResult = createAsyncThunk(
   'consult/makeResult',
   async (payload, { rejectWithValue }) => {
     try {
-      // let formData = new FormData()
-      // formData.append('consultingFinishRequest' )
-      // formData.append('file', payload.files[0])
-      // console.log(formData)
+
       const response = await Axios.post(`report/create/` + payload.consultingFinishRequest.consultingid)
 
       return response.data
@@ -89,7 +81,7 @@ export const getCustomer = createAsyncThunk(
   'consult/getCustomer',
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('payload' + payload)
+
 
       const response = await Axios.get(`consultings/` + payload)
 
@@ -110,7 +102,7 @@ export const getConsultant = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
 
-      console.log(payload)
+
       const baseurl = import.meta.env.VITE_APP_BASE_URL;
       const config = {
         headers: {
@@ -119,7 +111,7 @@ export const getConsultant = createAsyncThunk(
         }
       };
       const response = await axios.get(baseurl + `consultings/${payload}`, config);
-      console.log(response.data)
+
       return response.data
     }
 
@@ -138,7 +130,7 @@ export const getConsultantSessionName = createAsyncThunk(
 
       return response.data
     } catch (err) {
-      console.log(err)
+
       return rejectWithValue(err)
     }
   }
@@ -199,17 +191,11 @@ const consultSlice = createSlice({
     },
 
     appendMessageList: (state, { payload }) => {
-      console.log('payload state' + payload.id + " " + state.messageId)
 
       if (payload.id >= state.messageId) {
         state.messageId = payload.id + 1
       }
 
-      //  else {
-      //   console.log('payload state'+payload.id + " "+state.messageId)
-      //   payload.id = state.messageId
-      //   state.messageId = state.messageId + 1
-      // }
       state.messageList.push(payload)
     },
 

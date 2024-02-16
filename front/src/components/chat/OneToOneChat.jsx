@@ -33,7 +33,7 @@ const OneToOneChat = () => {
   }
 
   const handleMessage = () => {
-    console.log('bbbbbbbb')
+
     if (session && msg.length > 0) {
 
 
@@ -46,7 +46,6 @@ const OneToOneChat = () => {
         name: name,
       }
 
-      console.log('my text add ' + messageId)
       if (role == mine.role)
         dispatch(appendMessageList(mine))
 
@@ -88,7 +87,6 @@ const OneToOneChat = () => {
 
   useEffect(() => {
     if (session) {
-      console.log('event chat')
 
       session.on('signal:participant', addparticiapnt)
 
@@ -100,7 +98,6 @@ const OneToOneChat = () => {
     const data = JSON.parse(event.data)
 
     if (data.role !== role) {
-      console.log('  dataid  role  message role' + ' ' + data.id + ' ' + role + data.message + data.role)
 
       dispatch(appendMessageList(data));
     }
@@ -111,7 +108,6 @@ const OneToOneChat = () => {
 
   const addparticiapnt = (event) => {
     const data = JSON.parse(event.data)
-    // console.log('data length message role' + ' ' + data.length + data.message + data.role)
 
     if (data.role !== role) {
     }

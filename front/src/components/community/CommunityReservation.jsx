@@ -82,7 +82,6 @@ const CommunityReservation = () => {
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     setImage(selectedImage);
-    console.log("selectedImage : ", selectedImage)
   }
 
   const reservationHandler = async () => {
@@ -94,10 +93,9 @@ const CommunityReservation = () => {
       time: selectedTime.slice(0,5),
     }
     const response = await axios.post('http://i10c106.p.ssafy.io:8080//v1/community/add', body)
-    console.log(response);
+
   }
 
-  console.log("image : ", image);
 
 
   return (

@@ -24,10 +24,10 @@ const ChatList = () => {
 
     for (; i < messageList.length; i++) {
       // for (; i < 5; i++) {
-        console.log('hhhh'+name)
+
         
       if (messageList[i].name== "bot") {
-        console.log('booot')
+
         msgList.push(
           <ChatItem
             // key={messageList[i].id}
@@ -57,7 +57,7 @@ const ChatList = () => {
         );
 
       }
-      console.log(messageList[i].message)
+
     }
 
     return msgList;

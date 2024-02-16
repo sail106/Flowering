@@ -69,7 +69,6 @@ const Finish2step = () => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		console.log('innn');
 
 		const fetchData = async () => {
 			try {
@@ -81,7 +80,7 @@ const Finish2step = () => {
 						},
 					}
 				);
-				console.log(response.data.data_body);
+
 				setData(response.data.data_body);
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -93,7 +92,6 @@ const Finish2step = () => {
 
 	useEffect(() => {
 
-		console.log(data);
 
 	}, [data]); // Re-fetch when Token.access_token changes
 

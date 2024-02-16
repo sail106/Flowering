@@ -721,7 +721,7 @@ const FirstServeyPage = () => {
 						navigate('/firstsurveyresult', { state: { value: { consultingId } } });
 					})
 					.catch((error) => {
-						console.log(error);
+
 						throw new Error(error);
 					});
 			}

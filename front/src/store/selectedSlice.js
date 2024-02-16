@@ -14,7 +14,7 @@ export const getConsultantSessionName = createAsyncThunk("selectedTime/getConsul
 
     return response.data;
   } catch (err) {
-    console.log(err);
+
     return rejectWithValue(err);
   }
 });

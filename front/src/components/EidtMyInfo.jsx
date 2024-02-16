@@ -114,12 +114,6 @@ const EditMyInfo = () => {
       },
     };
     const baseurl = import.meta.env.VITE_APP_BASE_URL;
-    // Firebase
-    // const storage = getStorage();
-    // const storageRef = ref(storage, `${User.id}_profile`);
-    // console.log(storageRef)
-    // await uploadBytesResumable(storageRef, file);
-    // const url = await getDownloadURL(storageRef);
 
     const uploadParams = {
       Bucket: 'escapefromfirebase', // AWS S3 버킷 이름을 입력하세요
@@ -140,10 +134,7 @@ const EditMyInfo = () => {
         data,
         config
       );
-      console.log(response.data);
-      console.log("성공");
       dispatch(UserInfo(true));
-      console.log(User)
     } catch (error) {
       console.error("요청 중 에러 발생:", error);
     }
