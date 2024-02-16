@@ -123,7 +123,7 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 ## 구현 화면
 * 컨설팅
-  ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
+  ![Uploading 컨설팅신청.gif…]()
 
 * 설문
   ![설문](/uploads/13029f5ed0cf0ece1b5d3f96b859b164/설문.gif)
