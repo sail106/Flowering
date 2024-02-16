@@ -1,16 +1,17 @@
-import styled from "styled-components";
-import { ButtonBox } from "../common/Button";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { LuClock3 } from "react-icons/lu";
 import { IoCalendarOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { setRole, setname } from "../../store/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { setconsultantSessionName } from "../../store/consultsessionnameSlice";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
+
+import { setRole, setname } from "../../store/authSlice";
+import { setconsultantSessionName } from "../../store/consultsessionnameSlice";
+import { ButtonBox } from "../common/Button";
+
 
 const Clock = styled(LuClock3)`
   padding-bottom: 4px;
@@ -130,18 +131,12 @@ const MyConsulting = () => {
       );
 
       // 요청 성공 시 수행할 작업
-      console.log("Response:", response.data);
-      console.log("data_body  :", response.data.data_body);
       Setisactive(response.data.data_body.active);
       dispatch(setconsultantSessionName(consulting_id));
-
-      console.log("isactive" + isactive);
     } catch (error) {
       console.error("Error :", error);
       // alert('결제 실패');
     }
-
-    console.log("isactive" + isactive);
   };
 
   useEffect(() => {
@@ -210,7 +205,6 @@ const MyConsulting = () => {
     });
   }, [consultingData]);
 
-  // console.log(consultingData)
   const gofinal = async (consulting_id) => {
     navigate("/finalresult", { state: { value: { consultingId:consulting_id } } });
   };
@@ -279,9 +273,6 @@ const MyConsulting = () => {
                       <Button>리뷰 작성</Button>
                     </Link>
                   </ButtonTd>
-                  {/* <ButtonTd>
-                    <Button>일정 변경</Button>
-                  </ButtonTd> */}
                   <ButtonTd>
                     <Button onClick={handleClick}>{btnText}</Button>
                   </ButtonTd>
