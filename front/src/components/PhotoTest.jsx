@@ -96,6 +96,8 @@ const PhotoTest = () => {
   const webcamRef = useRef(null);
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState(null);
+  const location = useLocation();
+  const consultingId = location.state.value.consultingId;
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
