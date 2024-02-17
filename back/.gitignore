@@ -4,3 +4,5 @@ application*.yml
 .idea
 /back/.idea
 build/
+
+/back/secure-settings
