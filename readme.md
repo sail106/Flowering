@@ -123,20 +123,21 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 ## 구현 화면
 * 컨설팅
-  ![컨설팅신청](https://github.com/sail106/Flowering/assets/77579884/50f586e0-0134-4292-8334-a56505adb0bd)
+
+  <img src="./docs/img/컨설팅신청.gif" alt="컨설팅신청" width="350"/>
 
 * 설문
-  ![설문](/uploads/13029f5ed0cf0ece1b5d3f96b859b164/설문.gif)
 
-  * 회원가입
-  ![회원가입](/uploads/f912361a5d2da43f851403ec51f7f63d/회원가입.gif)
+  <img src="./docs/img/설문.gif" alt="설문" width="350"/>
+
+* 회원가입
+
+  <img src="./docs/img/회원가입.gif" alt="회원가입" width="350"/>
 
 * 로그인
-<br/>
-  ![로그인](/uploads/b097b9bcd5360771e9120042ddd289ab/로그인.gif)
 
-* 컨설팅
-  ![컨설팅신청](/uploads/c9664698ec6aa83cc8845246a57dd554/컨설팅신청.gif)
+  <img src="./docs/img/로그인.gif" alt="로그인" width="350"/>
 
 * 진단결과, 촬영 테스트
-  ![포토테스트](/uploads/066aef4f6bc44a835d418d2dd945df68/포토테스트.gif)
+
+  <img src="./docs/img/포토테스트.gif" alt="진단결과" width="350"/>
