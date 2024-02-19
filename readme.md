@@ -3,7 +3,10 @@
 ![프로젝트팜플렛](/docs/img/Pamphlet.png)
 
 ## Flowering 링크(웹) : [링크](https://i10c106.p.ssafy.io)
-## 소개 영상 보기 : [youtube](https://youtu.be/Eyb5xEbmk2A)
+
+## 소개 영상 보기 
+
+[![youtube](https://img.youtube.com/vi/Eyb5xEbmk2A/3.jpg)](https://youtu.be/Eyb5xEbmk2A)
 
 
 ## 🌷 프로젝트 진행기간
@@ -97,13 +100,15 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 
 ## 🌷 시스템 아키텍쳐
 
-![시스템 아키텍쳐](/docs/img/아키텍처.png)
+![역할 배분](./docs/img/아키텍처.png)
 
-## 🌷 팀원 역할 분배
----
-![역할 배분](docs/img/C106팀역할.png)
+
+## 🌷 팀원 역할 분배 [링크](./docs/역할배분.md)
+
+![역할 배분](./docs/img/팀원소개최종.png)
 
 ## 🌷 프로젝트 산출물
+
 ---
 - [기능명세서](/docs/기능명세서.md)
 - [기획서](/docs/기획서.md)
@@ -116,10 +121,14 @@ SSAFY 10기 2학기 공통 프로젝트 - Flowering
 - [ERD](/docs/ERD.md)
 - [회의록 및 회고록](/docs/회의록.md)
 - [트러블슈팅](/docs/버그리포트.md)
+---
 
 ## 🌷 프로젝트 결과물
+
+---
 - [포팅메뉴얼](/exec/Flowering_포팅_메뉴얼.docx)
 - [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
+---
 
 ## 구현 화면
 * 컨설팅
