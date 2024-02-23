@@ -18,6 +18,7 @@ pipeline {
         GITHUB_CREDENTIALS_ID = 'Github-access-token'
         GITLAB_CREDENTIALS_ID = 'GitLab-access-token' // GitLab 크리덴셜 ID 추가
         REPO = 's10-webmobile1-sub2/S10P12C106'
+        BRANCH = 'feat/#6-frontcommunity-communitypage2'
     }
 
     stages {
