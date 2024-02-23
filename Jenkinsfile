@@ -12,7 +12,7 @@ pipeline {
         FRONT_TAG = 'v1.0'
         BACK_TAG = 'v2.1'
         REDIS_TAG = 'alpine'
-        DOCKER_USER_ID = 'rlagudals0420'
+        DOCKER_USER_ID = 'junwon1131'
         // Docker Hub 및 GitHub 크리덴셜 ID
         DOCKER_HUB_CREDENTIALS_ID = 'Docker-hub'
         GITHUB_CREDENTIALS_ID = 'Github-access-token'
