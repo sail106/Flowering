@@ -22,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component
 public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
     private final TokenService tokenService;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;

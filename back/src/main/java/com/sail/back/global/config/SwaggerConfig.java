@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
                         description = "Default Server URL")
         }
 )
+
 @Configuration
 @RequiredArgsConstructor
 public class SwaggerConfig {
@@ -29,5 +30,4 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
-
 }

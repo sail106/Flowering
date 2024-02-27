@@ -18,10 +18,10 @@ pipeline {
         GITHUB_CREDENTIALS_ID = 'Github-access-token'
         GITLAB_CREDENTIALS_ID = 'GitLab-access-token' // GitLab 크리덴셜 ID 추가
         REPO = 's10-webmobile1-sub2/S10P12C106'
-        BRANCH = 'feat/#6-frontcommunity-communitypage2'
     }
 
     stages {
+
         stage('Setup Environment') {
             steps {
                 dir("${env.WORKSPACE}/back") {
@@ -39,6 +39,7 @@ pipeline {
                 }
             }
         }
+
         stage('Build') {
             steps {
                 script {
@@ -60,6 +61,7 @@ pipeline {
                     sh 'docker-compose -f back/docker-compose.yml build'
                 }
             }
+
         }
         stage('Docker Login') {
             steps {
@@ -69,7 +71,8 @@ pipeline {
                 }
             }
         }
-        stage('Tag and Push') { 
+
+        stage('Tag and Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker-compose -f back/docker-compose.yml push'
@@ -97,6 +100,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Up') {
             steps {
                 script {

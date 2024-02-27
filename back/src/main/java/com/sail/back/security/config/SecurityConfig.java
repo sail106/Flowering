@@ -3,8 +3,10 @@ package com.sail.back.security.config;
 import com.sail.back.security.filter.JwtFilter;
 import com.sail.back.security.handler.AuthFailureHandler;
 import com.sail.back.security.handler.ExceptionHandlerFilter;
+import com.sail.back.security.handler.NotFound403Handler;
 import com.sail.back.security.handler.OAuthSuccessHandler;
 import com.sail.back.security.model.service.CustomOAuth2Service;
+import com.sail.back.security.utils.HttpRequestEndpointChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,7 @@ public class SecurityConfig{
     private final OAuthSuccessHandler oAuth2SuccessHandler;
     private final AuthFailureHandler authFailureHandler;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final NotFound403Handler failure403Handler;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -41,19 +44,21 @@ public class SecurityConfig{
                 .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests( auth -> auth
                         .requestMatchers(ALLOWED_URIS).permitAll() // 특정 경로 인증 미요구
                         .anyRequest().authenticated() // 나머지 경로는 인증 요구
                 )
+
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
                                 .authenticationEntryPoint(authFailureHandler)
+                                .authenticationEntryPoint(failure403Handler)
                 )
+
 
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// JwtFilter 추가
                 .addFilterBefore(exceptionHandlerFilter, JwtFilter.class) // ExceptionHandlerFilter 추가
-
-                .oauth2Login(customizer ->
+                .oauth2Login( customizer ->
                         customizer
                                 .failureHandler(authFailureHandler)
                                 .successHandler(oAuth2SuccessHandler)

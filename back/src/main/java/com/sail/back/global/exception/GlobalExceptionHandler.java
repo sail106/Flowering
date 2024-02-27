@@ -19,6 +19,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Arrays;
 
@@ -27,6 +28,13 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+//
+//    @ExceptionHandler(NoHandlerFoundException.class)
+//    public ResponseEntity<String> handleNoHandlerFoundException(NoHandlerFoundException ex) {
+//        System.out.println("ssssss");
+//        String errorMessage = "존재하지 않는 url 입니다";
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+//    }
 
     @ExceptionHandler(UserException.class)
     public ResponseEntity userExceptionHandler(UserException e){

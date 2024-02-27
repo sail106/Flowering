@@ -30,8 +30,8 @@ public class AdminService {
     private final UserRepository userRepository;
     private final ConsultantRepository consultantRepository;
 
-    public ResponseEntity<MessageUtils> toConsultant(  User me, UserToConsultantRequest userToConsultantRequest) {
-        System.out.println("consultatnttt"+ userToConsultantRequest.getEmail());
+    public ResponseEntity<MessageUtils> toConsultant(User me, UserToConsultantRequest userToConsultantRequest) {
+        System.out.println("consultatnttt" + userToConsultantRequest.getEmail());
 
 //        User user = userRepository.findById(userToConsultantRequest.getId()).
 //                orElseThrow(() -> new UserException(UserErrorCode.NOT_EXISTS_USER));
@@ -41,7 +41,7 @@ public class AdminService {
 
         user.setRole(UserRole.CONSULTANT);
 
-        if(!me.getRole().equals(UserRole.ADMIN)){
+        if (!me.getRole().equals(UserRole.ADMIN)) {
             throw new AdminException(AdminErrorCode.NOT_ADMIN);
         }
 
