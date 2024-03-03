@@ -26,13 +26,15 @@ import java.util.Collections;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig{
-    private static final String[] ALLOWED_URIS = {"/v1/users/regist","/v1/auth/**","/v1/faq/**","/v1/email/**","/v1/contents/**","/verifyIamport/**","/v1/product/**","/api/chatgpt/**"};
+    private static final String[] ALLOWED_URIS = {"/v1/users/regist","/v1/auth/**", "/v1/oauth/**","/v1/faq/**"
+            ,"/v1/email/**","/v1/contents/**","/verifyIamport/**","/v1/product/**","/api/chatgpt/**" };
     private final JwtFilter jwtFilter;
     private final CustomOAuth2Service customOAuth2Service;
     private final OAuthSuccessHandler oAuth2SuccessHandler;
     private final AuthFailureHandler authFailureHandler;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
     private final NotFound403Handler failure403Handler;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -54,7 +56,6 @@ public class SecurityConfig{
                                 .authenticationEntryPoint(authFailureHandler)
                                 .authenticationEntryPoint(failure403Handler)
                 )
-
 
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)// JwtFilter 추가
                 .addFilterBefore(exceptionHandlerFilter, JwtFilter.class) // ExceptionHandlerFilter 추가

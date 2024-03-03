@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.jwt")
-public class JwtProperties {
-    private String access;
+public class JwtProperties { //키값과 제한 시간
+    private String access;  //키값
     private String refresh;
     private Long accesstime;
     private Long refreshtime;

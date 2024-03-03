@@ -32,6 +32,7 @@ public class JwtUtils {
     private String refreshSecretKey;
 
     private final UnsafeTokenRepository unsafeTokenRepository;
+
     @PostConstruct
     protected void init(){
         accessSecretKey = Base64.getEncoder().encodeToString(

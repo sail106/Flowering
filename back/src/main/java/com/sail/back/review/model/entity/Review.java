@@ -81,6 +81,7 @@ public class Review {
 
         consultant.setStarAverage(newStarAverage);
     }
+
     public void setUser(User user) {
         this.user = user;
 

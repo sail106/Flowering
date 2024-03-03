@@ -3,6 +3,7 @@ package com.sail.back.security.model.service;
 import com.sail.back.security.model.entity.OAuthAttribute;
 import com.sail.back.user.model.entity.enums.UserRole;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -18,10 +19,11 @@ import java.util.Map;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
+        log.info("loaduser");
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = service.loadUser(userRequest); //OAuth2 정보를 가져온다.
 
@@ -33,6 +35,7 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
         OAuthAttribute oAuthAttribute = OAuthAttribute.of(registrationId, originAttribute);
 
         return new DefaultOAuth2User(Collections.singleton(()-> UserRole.USER.name()),oAuthAttribute.convertToMap(),"email");
+
     }
 
 }

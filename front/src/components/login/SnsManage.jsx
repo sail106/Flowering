@@ -31,12 +31,53 @@ const DashSpan = styled.span`
   margin-left: 10px;
   color: #D0D5DD;
 `;
+ 
 
 const LogoHandler = async () => {
-  alert("준비중입니다");
-}
+  const baseurl = import.meta.env.VITE_APP_BASE_URL;
+
+
+  try {
+    // 로그인 페이지로 이동
+    // const res=axios.get(`${baseurl}auth/oauth`)
+    const response = await axios.get(`${baseurl}oauth/`);
+
+    window.location.href = response.data;
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+// const fetchData = async () => {
+//   try {
+//     const code = getCodeFromUrl();
+//     const state = getStateFromUrl(); // 상태도 가져와야 합니다.
+
+//     console.log('code:', code);
+//     console.log('state:', state);
+
+//     if (code && state) {
+//       try {
+//         const response = await axios.get(
+//           `${baseurl}oauth/naver/login/callback?code=${code}&state=${state}`
+//         );
+//         console.log(response);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
+
+// fetchData();
+
+
 
 const SnsManage = () => {
+
   return (
     <>
       <SnsWordContainer><DashSpan>——————</DashSpan> SNS 계정으로 로그인 <DashSpan>——————</DashSpan></SnsWordContainer>
@@ -55,7 +96,7 @@ const SnsManage = () => {
         />
       </ImgContainer>
     </>
-    
+
   )
 }
 

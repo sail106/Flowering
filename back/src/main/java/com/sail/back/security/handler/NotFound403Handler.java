@@ -26,7 +26,7 @@ public class NotFound403Handler extends Http403ForbiddenEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         if (!httpRequestEndpointChecker.isEndpointExist(request)) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND,"resoucs not found");
         } else {
             super.commence(request,response,exception);
         }

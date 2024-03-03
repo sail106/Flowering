@@ -29,6 +29,7 @@ public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+      log.info("oauthsucccc");
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
         User oauth2user = User.of(oAuth2User);
@@ -37,6 +38,7 @@ public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         //회원 가입 일 경우
         Optional<User> optionalUser = userRepository.findByEmail(oauth2user.getEmail());
+
         if (optionalUser.isPresent()){
             //로그인인 경우
             User user = optionalUser.get();
@@ -44,6 +46,7 @@ public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                     MessageUtils.success(tokenService.generatedToken(user.getId(), user.getRole().name()))
             ));
         }
+
         else {
             //회원가입일 경우
             User saveUser = userRepository.save(oauth2user);

@@ -14,7 +14,9 @@ public class HttpRequestEndpointChecker {
 
 
     public boolean isEndpointExist(HttpServletRequest request){
+
         for(HandlerMapping handlerMapping: dispatcherServlet.getHandlerMappings()){
+
             try {
                 HandlerExecutionChain handlerExecutionChain=handlerMapping.getHandler(request);
                 if(handlerExecutionChain!=null){
@@ -22,10 +24,12 @@ public class HttpRequestEndpointChecker {
                 }
             }catch (Exception e){
                 return  false;
-
             }
+
         }
+
         return false;
 
     }
+
 }
